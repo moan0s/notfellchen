@@ -7,6 +7,15 @@ from .feeds import LatestAdoptionNoticesFeed
 from . import views
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
+from django.contrib.sitemaps.views import sitemap
+from .sitemap import StaticViewSitemap, AdoptionNoticeSitemap, AnimalSitemap
+
+sitemaps = {
+    "static": StaticViewSitemap,
+    "vermittlungen": AdoptionNoticeSitemap,
+    "tiere": AnimalSitemap,
+}
+
 urlpatterns = [
     path("", views.index, name="index"),
     path("rss/", LatestAdoptionNoticesFeed(), name="rss"),
@@ -94,5 +103,10 @@ urlpatterns = [
     ## External Site ##
     ###################
     path('external-site/', views.external_site_warning, name="external-site"),
+
+    ###############
+    ## TECHNICAL ##
+    ###############
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
 
 ]
