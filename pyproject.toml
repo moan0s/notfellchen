@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
+
+[project]
+name = "notfellchen"
+description = "A tool to help."
+authors = [
+  {name = "moanos", email = "julian-samuel@gebuehr.net"},
+]
+maintainers = [
+  {name = "moanos", email = "julian-samuel@gebuehr.net"},
+]
+keywords = ["matrix", "registration", "bot", "user", "registration", "API"  ]
+license = {text = "AGPL-3.0-or-later"}
+classifiers = [
+    "Environment :: Web",
+    "License :: OSI Approved :: GNU Affero General Public License v3",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+    "Framework :: Django",
+]
+dependencies = [
+    "Django",
+    "coverage",
+    "codecov",
+    "sphinx",
+    "sphinx-rtd-theme",
+    "gunicorn",
+    "fontawesomefree",
+    "whitenoise"
+]
+dynamic = ["version", "readme"]
+
+[project.urls]
+homepage = "https://hyteck.de"
+repository = "https://github.com/moan0s/notfellchen/"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+nf-manage = 'notfellchen.main:main'
+
+
+[tool.setuptools.dynamic]
+version = {attr = "notfellchen.__version__"}
+readme = {file = "README.md"}
+
