@@ -54,7 +54,7 @@ DEBUG = config.getboolean('django', 'debug', fallback=False)
 
 """ DATABASE """
 DB_BACKEND = config.get("database", "backend", fallback="sqlite3")
-DB_NAME = config.get("database", "name", fallback="ilmo.sqlite3")
+DB_NAME = config.get("database", "name", fallback="notfellchen.sqlite3")
 DB_USER = config.get("database", "user", fallback='')
 DB_PASSWORD = config.get("database", "password", fallback='')
 DB_HOST = config.get("database", "host", fallback='')
