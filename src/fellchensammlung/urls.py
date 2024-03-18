@@ -13,4 +13,5 @@ urlpatterns = [
     path("suchen/", views.search, name="search"),
     # ex: /vermitteln/
     path("vermitteln/", views.add_adoption, name="add-adoption"),
+    path("ueber-uns/", views.about, name="about"),
 ]

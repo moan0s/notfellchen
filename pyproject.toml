@@ -31,7 +31,8 @@ dependencies = [
     "gunicorn",
     "fontawesomefree",
     "whitenoise",
-    "model_bakery"
+    "model_bakery",
+    "markdown",
 ]
 dynamic = ["version", "readme"]
 

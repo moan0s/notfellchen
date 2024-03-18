@@ -1,7 +1,8 @@
 from django.shortcuts import render
+import markdown
 
 from django.http import HttpResponse
-from fellchensammlung.models import AdoptionNotice
+from fellchensammlung.models import AdoptionNotice, MarkdownContent
 
 
 def index(request):
@@ -24,4 +25,15 @@ def search(request):
     return render(request, 'fellchensammlung/search.html')
 def add_adoption(request):
     return render(request, 'fellchensammlung/add_adoption.html')
+
+def about(request):
+    md = markdown.Markdown(extensions=["fenced_code"])
+    markdown_content = MarkdownContent.objects.first()
+    markdown_content.content = md.convert(markdown_content.content)
+    context = {"markdown_content": markdown_content}
+    return render(
+        request,
+        "fellchensammlung/about.html",
+        context=context
+    )
 

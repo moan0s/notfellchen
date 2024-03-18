@@ -1,0 +1,7 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+      <h1>{{ markdown_content.title }}</h1>
+      <p>{{ markdown_content.content|safe }}</p>
+{% endblock %}
