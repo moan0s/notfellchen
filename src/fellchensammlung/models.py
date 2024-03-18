@@ -1,5 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+
+
+class Image(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images')
+    alt_text = models.TextField(max_length=2000)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
 
 
 class Species(models.Model):
@@ -56,6 +67,7 @@ class Animal(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
+    photos = models.ManyToManyField(Image, blank=True)
 
 
 class AdoptionNotice(models.Model):
@@ -71,6 +83,7 @@ class AdoptionNotice(models.Model):
     further_information = models.URLField(null=True, blank=True, verbose_name=_('Link to further information'))
     group_only = models.BooleanField(default=False, verbose_name=_('Only group adoption'))
     animals = models.ManyToManyField(Animal)
+    photos = models.ManyToManyField(Image, blank=True)
 
 
 class MarkdownContent(models.Model):
@@ -85,4 +98,3 @@ class MarkdownContent(models.Model):
 
     def __str__(self):
         return self.title
-

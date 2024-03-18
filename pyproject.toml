@@ -33,6 +33,7 @@ dependencies = [
     "whitenoise",
     "model_bakery",
     "markdown",
+    "Pillow",
 ]
 dynamic = ["version", "readme"]
 
