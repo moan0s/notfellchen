@@ -48,7 +48,6 @@ class RescueOrganization(models.Model):
     website = models.URLField(null=True, blank=True, verbose_name=_('Website'))
 
 
-
 class Animal(models.Model):
     def __str__(self):
         return f"{self.name}"
@@ -57,6 +56,7 @@ class Animal(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
+
 
 class AdoptionNotice(models.Model):
     def __str__(self):
@@ -71,4 +71,18 @@ class AdoptionNotice(models.Model):
     further_information = models.URLField(null=True, blank=True, verbose_name=_('Link to further information'))
     group_only = models.BooleanField(default=False, verbose_name=_('Only group adoption'))
     animals = models.ManyToManyField(Animal)
+
+
+class MarkdownContent(models.Model):
+    """
+    Base class to store markdown content
+    """
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+
+    class Meta:
+        verbose_name_plural = "Markdown content"
+
+    def __str__(self):
+        return self.title
 
