@@ -18,6 +18,10 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
 
+    if sys.argv[1] == "populate":
+        from fellchensammlung.populate_with_testdata import populate_with_testdata
+        populate_with_testdata()
+
     execute_from_command_line(sys.argv)
 
 

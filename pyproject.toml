@@ -30,7 +30,8 @@ dependencies = [
     "sphinx-rtd-theme",
     "gunicorn",
     "fontawesomefree",
-    "whitenoise"
+    "whitenoise",
+    "model_bakery"
 ]
 dynamic = ["version", "readme"]
 
