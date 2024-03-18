@@ -1,0 +1,14 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% translate "Notfellchen - Vermittlungen finden" %}</h1>
+  <p>{% translate "Alle Tiere brauchen ein liebendes Zuhause. Damit keins vergessen wird gibt es diese Seite. Entwickelt und betreut von " %}<em><a href="https://hyteck.de">moanos</a></em>!</p>
+  <h2>{% translate "Aktuelle Vermittlungen" %}</h2>
+  <ul>
+    {% for adoption_notice in latest_adoptions  %}
+    <li>{{ adoption_notice.name }}: {{ adoption_notice.animals }} </li>
+
+  {% endfor %}
+    </ul>
+{% endblock %}
