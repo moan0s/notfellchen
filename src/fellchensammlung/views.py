@@ -1,10 +1,13 @@
 from django.shortcuts import render
 
 from django.http import HttpResponse
+from fellchensammlung.models import AdoptionNotice
 
 
 def index(request):
-    return HttpResponse("Hello, world. Look at all the little guys&girls and non-binary pals!")
+    latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")[:5]
+    output = ", ".join([q.name for q in latest_adoption_list])
+    return HttpResponse(output)
 
 
 def adoption_notice_detail(request, adoption_notice_id):
