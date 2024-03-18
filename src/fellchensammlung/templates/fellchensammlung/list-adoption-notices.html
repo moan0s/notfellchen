@@ -1,0 +1,20 @@
+{% load custom_tags %}
+<ul>
+    {% for adoption_notice in adoption_notices %}
+        <li>
+            <div>
+                <h1>{{ adoption_notice.name }}</h1>
+                <p><b>Notfellchen:</b>  {{ adoption_notice.animals.all|join_link:", " | safe }}
+                <ul>
+                    {% for animal in adoption_notice.animal_list %}
+                        <li>{{ animal.name }}</li>
+                    {% endfor %}
+                </ul>
+                </p>
+                <p>{{ adoption_notice.description }}</p>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
@@ -63,6 +64,10 @@ class Animal(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    def get_absolute_url(self):
+        """Returns the url to access a detailed page for the animal."""
+        return reverse('animal-detail', args=[str(self.id)])
+
     date_of_birth = models.DateField(null=True, blank=True, verbose_name=_('Date of birth'))
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
@@ -84,6 +89,10 @@ class AdoptionNotice(models.Model):
     group_only = models.BooleanField(default=False, verbose_name=_('Only group adoption'))
     animals = models.ManyToManyField(Animal)
     photos = models.ManyToManyField(Image, blank=True)
+
+    @property
+    def animals_list(self):
+        return self.animals.all()
 
 
 class MarkdownContent(models.Model):
