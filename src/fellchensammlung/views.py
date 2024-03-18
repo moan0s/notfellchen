@@ -5,9 +5,11 @@ from fellchensammlung.models import AdoptionNotice
 
 
 def index(request):
+    """View function for home page of site."""
     latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")[:5]
-    output = ", ".join([q.name for q in latest_adoption_list])
-    return HttpResponse(output)
+    context = {"latest_adoptions": latest_adoption_list}
+
+    return render(request, 'fellchensammlung/index.html', context=context)
 
 
 def adoption_notice_detail(request, adoption_notice_id):
