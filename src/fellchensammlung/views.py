@@ -2,7 +2,7 @@ from django.shortcuts import render
 import markdown
 
 from django.http import HttpResponse
-from fellchensammlung.models import AdoptionNotice, MarkdownContent
+from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal
 
 
 def index(request):
@@ -18,8 +18,9 @@ def adoption_notice_detail(request, adoption_notice_id):
 
 
 def animal_detail(request, animal_id):
-    response = "You're looking at animal %s."
-    return HttpResponse(response % animal_id)
+    animal = Animal.objects.get(id=animal_id)
+    context = {"animal": animal}
+    return render(request, 'fellchensammlung/detail_animal.html', context=context)
 
 def search(request):
     latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")[:5]

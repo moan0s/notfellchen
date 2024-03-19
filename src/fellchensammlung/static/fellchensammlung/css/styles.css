@@ -282,3 +282,20 @@ h1 {
         -webkit-transform: scale(1, 1);
     }
 }
+
+.detail-animal-header {
+    border: 2px lavender solid;
+    border-radius: 5px;
+}
+
+.species {
+    display: inline;
+    border: darkgray 2px solid;
+    border-radius: 0.3rem;
+    background: aliceblue;
+    padding: 2px;
+}
+
+.inline {
+    display: inline;
+}

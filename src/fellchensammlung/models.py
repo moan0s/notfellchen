@@ -2,6 +2,9 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+from datetime import datetime
+
+from fellchensammlung.tools import misc
 
 
 class Image(models.Model):
@@ -61,18 +64,39 @@ class RescueOrganization(models.Model):
 
 
 class Animal(models.Model):
-    def __str__(self):
-        return f"{self.name}"
+    MALE_NEUTERED = "M_N"
+    MALE = "M"
+    FEMALE_NEUTERED = "F_N"
+    FEMALE = "F"
+    SEX_CHOICES = {
+        MALE_NEUTERED: "male_neutered",
+        MALE: "male",
+        FEMALE_NEUTERED: "female_neutered",
+        FEMALE: "female",
+    }
 
-    def get_absolute_url(self):
-        """Returns the url to access a detailed page for the animal."""
-        return reverse('animal-detail', args=[str(self.id)])
-
-    date_of_birth = models.DateField(null=True, blank=True, verbose_name=_('Date of birth'))
+    date_of_birth = models.DateField(verbose_name=_('Date of birth'))
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
     photos = models.ManyToManyField(Image, blank=True)
+    sex = models.CharField(max_length=20, choices=SEX_CHOICES, )
+
+    def __str__(self):
+        return f"{self.name}"
+
+    @property
+    def age(self):
+        return datetime.today().date() - self.date_of_birth
+
+    @property
+    def hr_age(self):
+        """Returns a human-readable age based on the date of birth."""
+        return misc.age_as_hr_string(self.age)
+
+    def get_absolute_url(self):
+        """Returns the url to access a detailed page for the animal."""
+        return reverse('animal-detail', args=[str(self.id)])
 
 
 class AdoptionNotice(models.Model):
