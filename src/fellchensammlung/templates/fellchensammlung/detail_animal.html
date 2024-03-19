@@ -1,0 +1,23 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load custom_tags %}
+{% load i18n %}
+
+{% block content %}
+    <div class="detail-animal-header">
+        <h1 class="inline">{{ animal.name }}</h1>
+        <div class="species">{{ animal.species }}</div>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <th>Alter</th>
+                <th>Geschlecht</th>
+            </tr>
+            <tr>
+                <td>{{ animal.hr_age }}</td>
+                <td>{{ animal.sex }}</td>
+            </tr>
+        </table>
+    </div>
+    <p>{{ animal.description }}</p>
+{% endblock %}
