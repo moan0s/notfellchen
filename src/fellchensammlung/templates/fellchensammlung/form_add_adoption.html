@@ -1,0 +1,13 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>Vermitteln</h1>
+    Bitte mach dich zunächst mit unseren Regeln vertraut. Dann trage hier die ersten Informationen ein.
+    Du bekommst in einem weiteren Schritt die Möglichkeit einzelne Tiere zu deiner Vermittlung hinzuzufügen und Fotos hochzuladen.
+    <form method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Weiter</button>
+    </form>
+{% endblock %}

@@ -11,15 +11,6 @@ class Command(BaseCommand):
 
     @staticmethod
     def populate_db():
-        rat1 = baker.make_recipe(
-            'fellchensammlung.rat'
-        )
-        rat2 = baker.make_recipe(
-            'fellchensammlung.rat'
-        )
-        cat = baker.make_recipe(
-            'fellchensammlung.cat'
-        )
         rescue1 = baker.make_recipe(
             'fellchensammlung.rescue_org'
         )
@@ -27,9 +18,13 @@ class Command(BaseCommand):
             'fellchensammlung.rescue_org'
         )
 
-        baker.make(AdoptionNotice, name="Vermittung1", animals=[rat1, rat2], organization=rescue1)
+        adoption1 = baker.make(AdoptionNotice, name="Vermittung1", organization=rescue1)
 
-        baker.make(AdoptionNotice, name="Vermittung2", animals=[cat], organization=rescue2)
+        adoption2 = baker.make(AdoptionNotice, name="Vermittung2",  organization=rescue2)
+
+        rat1 = baker.make(Animal, name="Rat1", adoption_notice=adoption1)
+        rat2 = baker.make(Animal, name="Rat2", adoption_notice=adoption1)
+        cat1 = baker.make(Animal, name="Cat1", adoption_notice=adoption1)
 
         User.objects.create_user('test', password='foobar')
         User.objects.create_superuser(username="admin", password="admin")

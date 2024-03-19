@@ -91,6 +91,9 @@ SEC_POLICY = config.get("security", "Policy",
 
 """ LOCATIONS """
 STATIC_ROOT = config.get("locations", "static", fallback="/notfellchen/static")
+MEDIA_ROOT = config.get("locations", "media", fallback="/notfellchen/static")
+MEDIA_URL = '/media/'
+
 
 # see https://docs.djangoproject.com/en/3.2/ref/settings/#std-setting-ALLOWED_HOSTS
 ALLOWED_HOSTS = [config.get("notfellchen", "host", fallback='*')]
