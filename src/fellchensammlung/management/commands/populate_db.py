@@ -22,9 +22,12 @@ class Command(BaseCommand):
 
         adoption2 = baker.make(AdoptionNotice, name="Vermittung2",  organization=rescue2)
 
-        rat1 = baker.make(Animal, name="Rat1", adoption_notice=adoption1)
-        rat2 = baker.make(Animal, name="Rat2", adoption_notice=adoption1)
-        cat1 = baker.make(Animal, name="Cat1", adoption_notice=adoption1)
+        cat = baker.make(Species, name="Katze")
+        rat = baker.make(Species, name="Farbratte")
+
+        rat1 = baker.make(Animal, name="Rat1", adoption_notice=adoption1, species=rat)
+        rat2 = baker.make(Animal, name="Rat2", adoption_notice=adoption1, species=rat)
+        cat1 = baker.make(Animal, name="Cat1", adoption_notice=adoption2, species=cat)
 
         User.objects.create_user('test', password='foobar')
         User.objects.create_superuser(username="admin", password="admin")
