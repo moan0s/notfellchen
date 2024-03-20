@@ -299,3 +299,26 @@ h1 {
 .inline {
     display: inline;
 }
+
+.container-list-rules {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.card-rule {
+    width: 25%;
+    margin: 10px;
+    margin-bottom: 20px;
+
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 2%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 920px) {
+    .card-rule {
+        width: 100%;
+    }
+}
