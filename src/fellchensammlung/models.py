@@ -117,6 +117,12 @@ class Animal(models.Model):
         """Returns a human-readable age based on the date of birth."""
         return misc.age_as_hr_string(self.age)
 
+    @property
+    def photos_list(self):
+        """"""
+        print(self.photos.all())
+        return self.photos.all()
+
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the animal."""
         return reverse('animal-detail', args=[str(self.id)])

@@ -1,5 +1,5 @@
 from django import forms
-from .models import AdoptionNotice, Animal
+from .models import AdoptionNotice, Animal, Image
 
 
 class DateInput(forms.DateInput):
@@ -14,6 +14,7 @@ class AdoptionNoticeForm(forms.ModelForm):
             'searching_since': DateInput(),
         }
 
+
 class AnimalForm(forms.ModelForm):
     class Meta:
         model = Animal
@@ -22,3 +23,9 @@ class AnimalForm(forms.ModelForm):
         widgets = {
             'date_of_birth': DateInput(),
         }
+
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ('title', 'image', 'alt_text')

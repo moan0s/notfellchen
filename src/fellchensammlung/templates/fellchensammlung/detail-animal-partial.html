@@ -1,3 +1,4 @@
+{% load static %}
 <div class="detail-animal"></div>
 <div class="detail-animal-header">
     <h1 class="inline">{{ animal.name }}</h1>
@@ -16,4 +17,8 @@
     </table>
 </div>
 <p>{{ animal.description }}</p>
+<h2>Bilder</h2>
+{% for image in animal.photos_list %}
+<img src="/media/{{ image.image }}">
+{% endfor %}
 </div>
