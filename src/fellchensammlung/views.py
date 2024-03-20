@@ -16,7 +16,9 @@ def index(request):
 
 
 def adoption_notice_detail(request, adoption_notice_id):
-    return HttpResponse("You're looking at adoption notice %s." % adoption_notice_id)
+    adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
+    context = {"adoption_notice": adoption_notice}
+    return render(request, 'fellchensammlung/detail_adoption_notice.html', context=context)
 
 
 def animal_detail(request, animal_id):

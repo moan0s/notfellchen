@@ -78,8 +78,8 @@ class AdoptionNotice(models.Model):
     photos = models.ManyToManyField(Image, blank=True)
 
     @property
-    def animals_list(self):
-        return self.animals.all()
+    def animals(self):
+        return Animal.objects.filter(adoption_notice=self)
 
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the animal."""
