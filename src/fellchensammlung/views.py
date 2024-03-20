@@ -10,7 +10,7 @@ from .forms import AdoptionNoticeForm, AnimalForm
 def index(request):
     """View function for home page of site."""
     latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")[:5]
-    context = {"latest_adoptions": latest_adoption_list}
+    context = {"adoption_notices": latest_adoption_list}
 
     return render(request, 'fellchensammlung/index.html', context=context)
 
