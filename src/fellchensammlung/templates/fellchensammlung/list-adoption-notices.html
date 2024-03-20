@@ -5,11 +5,6 @@
             <div>
                 <h1><a href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a></h1>
                 <p><b>Notfellchen:</b>  {{ adoption_notice.animals.all|join_link:", " | safe }}
-                <ul>
-                    {% for animal in adoption_notice.animal_list %}
-                        <li>{{ animal.name }}</li>
-                    {% endfor %}
-                </ul>
                 </p>
                 <p>{{ adoption_notice.description }}</p>
             </div>
