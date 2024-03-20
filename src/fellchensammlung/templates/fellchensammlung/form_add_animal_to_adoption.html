@@ -1,0 +1,13 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>Vermitteln</h1>
+    Hier kannst du jetzt einzelne Tiere zu deiner Vermittlung hinzufügen. Lad auch gerne Fotos hoch. Gruppenfotos kannst du im nächsten Schritt hochladen.
+    <form method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="button_add_another_animal" type="submit">Speichern und nächstes Tier hinzufügen</button>
+        <button name="button_save_and_continue" type="submit">Speichern und weiter</button>
+    </form>
+{% endblock %}
