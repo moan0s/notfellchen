@@ -19,9 +19,9 @@
         </table>
     </div>
     <p>{{ adoption_notice.description }}</p>
-    <div class="list-animal">
+    <div class="animals">
         {% for animal in adoption_notice.animals %}
-            {% include "fellchensammlung/detail-animal-partial.html" %}
+            {% include "fellchensammlung/partial-animal-card.html" %}
         {% endfor %}
     </div>
 {% endblock %}

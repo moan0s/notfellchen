@@ -361,3 +361,23 @@ h1 {
     max-width: 100%;
     border-radius: 10%;
 }
+
+.animals {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type:none;
+}
+
+.card-animal {
+    flex: 1 16%;
+    margin: 10px;
+    border-radius: 3%;
+    border: 4px grey solid;
+    padding: 5px;
+}
+
+.card-animal img {
+    max-width: 100%;
+    border-radius: 10%;
+    margin: 5px;
+}

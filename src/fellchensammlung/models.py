@@ -122,9 +122,9 @@ class Animal(models.Model):
     FEMALE_NEUTERED = "F_N"
     FEMALE = "F"
     SEX_CHOICES = {
-        MALE_NEUTERED: "male_neutered",
+        MALE_NEUTERED: "neutered male",
         MALE: "male",
-        FEMALE_NEUTERED: "female_neutered",
+        FEMALE_NEUTERED: "neutered female",
         FEMALE: "female",
     }
 
@@ -148,9 +148,18 @@ class Animal(models.Model):
         """Returns a human-readable age based on the date of birth."""
         return misc.age_as_hr_string(self.age)
 
-    @property
-    def photos_list(self):
-        """"""
+    def get_photo(self):
+        """
+        Selects a random photo from the animal
+        """
+        photos = self.photos.all()
+        if len(photos) > 0:
+            return photos[0]
+
+    def get_photos(self):
+        """
+        Selects all photos from the animal
+        """
         return self.photos.all()
 
     def get_absolute_url(self):

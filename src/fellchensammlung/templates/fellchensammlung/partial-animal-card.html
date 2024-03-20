@@ -1,0 +1,13 @@
+<div class="card-animal">
+    <div class="detail-animal-header">
+        <h1 class="inline">{{ animal.name }}</h1>
+        <div class="species">{{ animal.species }}</div>
+        <div class="species">{{ animal.get_sex_display }}</div>
+    </div>
+    {% if animal.get_photo %}
+        <img src="/media/{{ animal.get_photo.image }}" alt="{{ animal.get_photo.alt_text }}">
+        </div>
+    {% else %}
+        No photos
+    {% endif %}
+</div>
