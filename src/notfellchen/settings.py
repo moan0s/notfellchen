@@ -105,6 +105,9 @@ print(f"Allowed hosts: {ALLOWED_HOSTS}")
 # This is adjusted based on this guide https://testdriven.io/blog/django-docker-traefik/
 # compression and caching support (see https://whitenoise.readthedocs.io/en/latest/#quickstart-for-django-apps)
 STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },

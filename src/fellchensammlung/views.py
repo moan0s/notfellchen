@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 import markdown
 
-from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule
+from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule, Image
 from .forms import AdoptionNoticeForm, AnimalForm
 
 
@@ -53,6 +53,12 @@ def add_animal_to_adoption(request, adoption_notice_id):
             form.cleaned_data["adoption_notice_id"] = adoption_notice_id
             instance = form.save(commit=False)
             instance.adoption_notice_id = adoption_notice_id
+
+            if 'image' in request.FILES:
+                image_instance = Image(image=request.FILES['image'])
+                image_instance.save()
+                instance.photos.add(image_instance)
+
             instance.save()
             if "button_add_another_animal" in request.POST:
                 return redirect(reverse("add-animal-to-adoption", args=[str(adoption_notice_id)]))

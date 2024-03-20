@@ -17,7 +17,8 @@ class AdoptionNoticeForm(forms.ModelForm):
 class AnimalForm(forms.ModelForm):
     class Meta:
         model = Animal
-        fields = ['name', "species", "sex", "date_of_birth", "description", "photos"]
+        picture = forms.ImageField(label='Image', required=False)
+        fields = ['name', "species", "sex", "date_of_birth", "description"]
         widgets = {
             'date_of_birth': DateInput(),
         }

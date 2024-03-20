@@ -7,6 +7,7 @@
     <form method = "post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <input type="file" name="picture">
         <button name="button_add_another_animal" type="submit">Speichern und nächstes Tier hinzufügen</button>
         <button name="button_save_and_continue" type="submit">Speichern und weiter</button>
     </form>

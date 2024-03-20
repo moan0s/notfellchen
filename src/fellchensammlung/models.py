@@ -11,7 +11,6 @@ class Image(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images')
     alt_text = models.TextField(max_length=2000)
-    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
