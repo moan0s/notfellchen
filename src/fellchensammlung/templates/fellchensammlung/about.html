@@ -2,6 +2,6 @@
 {% load i18n %}
 
 {% block content %}
-      <h1>{{ markdown_content.title }}</h1>
-      <p>{{ markdown_content.content|safe }}</p>
+    <h1>Rules</h1>
+    {% include "fellchensammlung/list-rules.html" %}
 {% endblock %}

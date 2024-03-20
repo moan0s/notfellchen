@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 import markdown
 
-from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal
+from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule
 from .forms import AdoptionNoticeForm, AnimalForm
 
 
@@ -64,10 +64,8 @@ def add_animal_to_adoption(request, adoption_notice_id):
 
 
 def about(request):
-    md = markdown.Markdown(extensions=["fenced_code"])
-    markdown_content = MarkdownContent.objects.first()
-    markdown_content.content = md.convert(markdown_content.content)
-    context = {"markdown_content": markdown_content}
+    rules = Rule.objects.all()
+    context = {"rules": rules}
     return render(
         request,
         "fellchensammlung/about.html",

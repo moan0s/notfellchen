@@ -135,3 +135,16 @@ class MarkdownContent(models.Model):
 
     def __str__(self):
         return self.title
+
+class Rule(models.Model):
+    """
+    Class to store rules
+    """
+    title = models.CharField(max_length=200)
+
+    # Markdown is allowed in rule text
+    rule_text = models.TextField()
+
+    def __str__(self):
+        return self.title
+
