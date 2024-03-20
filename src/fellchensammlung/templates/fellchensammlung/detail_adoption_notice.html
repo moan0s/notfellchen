@@ -1,0 +1,27 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load custom_tags %}
+{% load i18n %}
+
+{% block content %}
+    <div class="detail-animal-adoption-header">
+        <h1 class="inline">{{ adoption_notice.name }}</h1>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <th>Ort</th>
+                <th>Suchen seit</th>
+            </tr>
+            <tr>
+                <td>{{ adoption_notice.location.name }}, {{ adoption_notice.location.postcode }}</td>
+                <td>{{ adoption_notice.searching_since }}</td>
+            </tr>
+        </table>
+    </div>
+    <p>{{ adoption_notice.description }}</p>
+    <div class="list-animal">
+        {% for animal in adoption_notice.animals %}
+            {% include "fellchensammlung/detail-animal-partial.html" %}
+        {% endfor %}
+    </div>
+{% endblock %}
