@@ -18,7 +18,11 @@
 </div>
 <p>{{ animal.description }}</p>
 <h2>Bilder</h2>
-{% for image in animal.photos_list %}
-<img src="/media/{{ image.image }}">
-{% endfor %}
+<div class="photos">
+    {% for image in animal.photos_list %}
+        <div class="card-photo">
+            <img src="/media/{{ image.image }}" alt="{{ image.alt_text }}">
+        </div>
+    {% endfor %}
+</div>
 </div>

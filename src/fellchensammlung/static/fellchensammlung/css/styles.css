@@ -1,3 +1,8 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
 .content-box {
     margin-top: 25px;
 }
@@ -321,4 +326,19 @@ h1 {
     .card-rule {
         width: 100%;
     }
+}
+
+.photos {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card-photo {
+    flex: 1 16%;
+    margin: 10px;
+}
+
+.card-photo img {
+    max-width: 100%;
+    border-radius: 10%;
 }
