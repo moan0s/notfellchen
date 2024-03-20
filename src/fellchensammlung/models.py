@@ -81,6 +81,10 @@ class AdoptionNotice(models.Model):
     def animals_list(self):
         return self.animals.all()
 
+    def get_absolute_url(self):
+        """Returns the url to access a detailed page for the animal."""
+        return reverse('adoption-notice-detail', args=[str(self.id)])
+
 
 class Animal(models.Model):
     MALE_NEUTERED = "M_N"

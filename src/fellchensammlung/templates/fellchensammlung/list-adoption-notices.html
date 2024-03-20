@@ -3,7 +3,7 @@
     {% for adoption_notice in adoption_notices %}
         <li>
             <div>
-                <h1>{{ adoption_notice.name }}</h1>
+                <h1><a href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a></h1>
                 <p><b>Notfellchen:</b>  {{ adoption_notice.animals.all|join_link:", " | safe }}
                 <ul>
                     {% for animal in adoption_notice.animal_list %}
