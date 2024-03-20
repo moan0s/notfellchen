@@ -84,6 +84,37 @@ class AdoptionNotice(models.Model):
         """Returns the url to access a detailed page for the animal."""
         return reverse('adoption-notice-detail', args=[str(self.id)])
 
+    def get_photos(self):
+        """
+        First trys to get group photos that are attached to the adoption notice if there is none it trys to fetch
+        them from the animals
+        """
+        group_photos = self.photos.all()
+        if len(group_photos) > 0:
+            return group_photos
+        else:
+            photos = []
+            for animal in self.animals:
+                photos.extend(animal.photos.all())
+            if len(photos) > 0:
+                return photos
+
+    def get_photo(self):
+        """
+        Returns the first photo it finds.
+        First trys to get group photos that are attached to the adoption notice if there is none it trys to fetch
+        them from the animals
+        """
+        group_photos = self.photos.all()
+        if len(group_photos) > 0:
+            return group_photos[0]
+        else:
+            photos = []
+            for animal in self.animals:
+                photos.extend(animal.photos.all())
+            if len(photos) > 0:
+                return photos[0]
+
 
 class Animal(models.Model):
     MALE_NEUTERED = "M_N"
