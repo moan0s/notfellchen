@@ -120,7 +120,6 @@ class Animal(models.Model):
     @property
     def photos_list(self):
         """"""
-        print(self.photos.all())
         return self.photos.all()
 
     def get_absolute_url(self):
