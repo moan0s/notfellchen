@@ -26,7 +26,7 @@ def animal_detail(request, animal_id):
 
 
 def search(request):
-    latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")[:5]
+    latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
     context = {"adoption_notices": latest_adoption_list}
     return render(request, 'fellchensammlung/search.html', context=context)
 
