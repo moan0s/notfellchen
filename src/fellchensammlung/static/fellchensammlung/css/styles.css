@@ -4,7 +4,7 @@ html, body {
 }
 
 .content-box {
-    margin-top: 25px;
+    margin: 20px;
 }
 
 .sidebar-nav {
@@ -106,56 +106,6 @@ h1 {
     height: 40px;
 }
 
-.sidebar-nav {
-    z-index: 1;
-    top: 20px;
-    left: 10px;
-    background-color: #4ba3cd;
-    overflow-x: hidden;
-    padding: 8px 0;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-.sidebar-nav-top {
-    padding-left: 0px;
-    float: left;
-}
-
-
-.sidebar-nav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: black;
-    display: block;
-}
-
-.sidebar-nav a:hover {
-    background-color: #4090b6;
-}
-
-.main {
-    margin-left: 160px; /* Same as the width of the sidenav */
-    font-size: 28px; /* Increased text to enable scrolling */
-    padding: 0px 10px;
-}
-
-@media screen and (max-height: 450px) {
-    .sidebar-nav {
-        padding-top: 15px;
-    }
-
-    .sidebar-nav a {
-        font-size: 18px;
-    }
-}
-
-.sidebar-nav li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
 
 .btn {
     border: 2px solid #4090b6;
@@ -291,18 +241,23 @@ h1 {
 .detail-animal-header {
     border: 2px lavender solid;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.tag {
+    border: black 1px solid;
+    border-radius: 0.3rem;
+    padding: 2px;
+    margin: 2px;
+}
+
+.sex {
+    background: #F0DEDE;
 }
 
 .species {
-    display: inline;
-    border: darkgray 2px solid;
-    border-radius: 0.3rem;
-    background: aliceblue;
-    padding: 2px;
-}
-
-.inline {
-    display: inline;
+    background: #F8ECD7;
 }
 
 .container-list-rules {
@@ -362,6 +317,10 @@ h1 {
     border-radius: 10%;
 }
 
+.table-adoption-notice-info {
+    margin-top: 10px;
+}
+
 .animals {
     display: flex;
     flex-wrap: wrap;
@@ -370,10 +329,16 @@ h1 {
 
 .card-animal {
     flex: 1 16%;
-    margin: 10px;
+    margin: 10px 10px 10px 0px;
     border-radius: 3%;
     border: 4px grey solid;
     padding: 5px;
+}
+
+@media (max-width: 920px) {
+    .card-animal {
+        flex: 1 100%;
+    }
 }
 
 .card-animal img {
@@ -381,3 +346,4 @@ h1 {
     border-radius: 10%;
     margin: 5px;
 }
+

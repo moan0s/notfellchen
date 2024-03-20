@@ -4,21 +4,32 @@
 
 {% block content %}
     <div class="detail-animal-adoption-header">
-        <h1 class="inline">{{ adoption_notice.name }}</h1>
+        <h1>{{ adoption_notice.name }}</h1>
     </div>
-    <div>
+    <div class="table-adoption-notice-info">
         <table>
             <tr>
                 <th>Ort</th>
                 <th>Suchen seit</th>
             </tr>
             <tr>
-                <td>{{ adoption_notice.location.name }}, {{ adoption_notice.location.postcode }}</td>
+                {% if adoption_notice.location %}
+                    <td>{{ adoption_notice.location.name }}, {{ adoption_notice.location.postcode }}</td>
+                {% else %}
+                    <td>Kein Ort angegeben</td>
+                {% endif %}
                 <td>{{ adoption_notice.searching_since }}</td>
             </tr>
         </table>
     </div>
-    <p>{{ adoption_notice.description }}</p>
+    <p>
+        {% if adoption_notice.description %}
+            {{ adoption_notice.description }}
+        {% else %}
+            Keine Beschreibung angegeben
+        {% endif %}
+    </p>
+
     <div class="animals">
         {% for animal in adoption_notice.animals %}
             {% include "fellchensammlung/partial-animal-card.html" %}
