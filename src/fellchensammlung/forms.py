@@ -1,5 +1,5 @@
 from django import forms
-from .models import AdoptionNotice, Animal, Image
+from .models import AdoptionNotice, Animal, Image, Report, ModerationAction
 
 
 class DateInput(forms.DateInput):
@@ -29,3 +29,15 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ('title', 'image', 'alt_text')
+
+
+class ReportForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ('reported_broken_rules', 'comment')
+
+
+class ModerationActionForm(forms.ModelForm):
+    class Meta:
+        model = ModerationAction
+        fields = ('action', 'public_comment', 'private_comment')

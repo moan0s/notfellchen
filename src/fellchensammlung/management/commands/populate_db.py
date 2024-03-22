@@ -33,6 +33,18 @@ class Command(BaseCommand):
         rule2 = baker.make(Rule,
                            title="Keep al least the minimum number of animals for species",
                            rule_text="This is not markdown")
+        rule3 = baker.make(Rule,
+                           title="Rule three",
+                           rule_text="Everything needs at least three rules")
+
+        report1 = baker.make(Report, reported_broken_rules=[rule1, rule2], comment="This seems sketchy")
+
+        moderation_action1 = baker.make(ModerationAction,
+                                        action=ModerationAction.COMMENT,
+                                        public_comment="This has been seen by a moderator")
+        moderation_action1 = baker.make(ModerationAction,
+                                        action=ModerationAction.DELETE,
+                                        public_comment="A moderator has deleted the reported content")
 
         User.objects.create_user('test', password='foobar')
         User.objects.create_superuser(username="admin", password="admin")

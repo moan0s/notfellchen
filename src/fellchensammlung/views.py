@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 import markdown
 
-from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule, Image
-from .forms import AdoptionNoticeForm, AnimalForm, ImageForm
+from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule, Image, Report, ModerationAction
+from .forms import AdoptionNoticeForm, AnimalForm, ImageForm, ReportForm
 
 
 def index(request):
@@ -81,3 +81,40 @@ def about(request):
         "fellchensammlung/about.html",
         context=context
     )
+
+
+def report_adoption(request, adoption_notice_id):
+    """
+    Form to report adoption notices
+    """
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+
+        if form.is_valid():
+            report_instance = form.save(commit=False)
+            report_instance.adoption_notice_id = adoption_notice_id
+            report_instance.status = Report.WAITING
+            report_instance.save()
+            return redirect(reverse("report-detail-success", args=[report_instance.pk], ))
+    else:
+        form = ReportForm()
+    return render(request, 'fellchensammlung/form-report.html', {'form': form})
+
+
+def report_detail(request, report_id, form_complete=False):
+    """
+    Detailed view of a report, including moderation actions
+    """
+    report = Report.objects.get(pk=report_id)
+    moderation_actions = ModerationAction.objects.filter(report_id=report_id)
+
+    context = {"report": report, "moderation_actions": moderation_actions, "form_complete": form_complete}
+
+    return render(request, 'fellchensammlung/detail-report.html', context)
+
+
+def report_detail_success(request, report_id):
+    """
+    Calls the report detail view with form_complete set to true, so success message shows
+    """
+    return report_detail(request, report_id, form_complete=True)

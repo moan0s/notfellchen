@@ -1,0 +1,14 @@
+<div class="report">
+    <h2>Meldung von {{ report.adoption_notice.name }}</h2>
+    {% if report.reported_broken_rules %}
+    Regeln gegen die Verstoßen wurde
+    <ul>
+    {% for rule in report.get_reported_rules %}
+        <li>{{ rule }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    <p><b>Kommentar zur Meldung:</b>
+        {{ report.comment }}
+    </p>
+</div>

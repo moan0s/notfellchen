@@ -20,4 +20,11 @@ urlpatterns = [
          name="add-animal-to-adoption"),
 
     path("ueber-uns/", views.about, name="about"),
+
+    #############
+    ## Reports ##
+    #############
+    path("melden/<int:adoption_notice_id>/", views.report_adoption, name="report-adoption-notices"),
+    path("meldung/<uuid:report_id>/", views.report_detail, name="report-detail"),
+    path("meldung/<uuid:report_id>/sucess", views.report_detail_success, name="report-detail-success"),
 ]

@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -180,6 +182,7 @@ class MarkdownContent(models.Model):
     def __str__(self):
         return self.title
 
+
 class Rule(models.Model):
     """
     Class to store rules
@@ -192,3 +195,55 @@ class Rule(models.Model):
     def __str__(self):
         return self.title
 
+
+class Report(models.Model):
+    ACTION_TAKEN = "action taken"
+    NO_ACTION_TAKEN = "no action taken"
+    WAITING = "waiting"
+    STATES = {
+        ACTION_TAKEN: "Action was taken",
+        NO_ACTION_TAKEN: "No action was taken",
+        WAITING: "Waiting for moderator action",
+    }
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text=_('ID dieses reports'),
+                          verbose_name=_('ID'))
+    status = models.CharField(max_length=30, choices=STATES)
+    reported_broken_rules = models.ManyToManyField(Rule, blank=True)
+    adoption_notice = models.ForeignKey("AdoptionNotice", on_delete=models.CASCADE)
+    comment = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"[{self.status}]: {self.adoption_notice.name}"
+
+    def get_reported_rules(self):
+        return self.reported_broken_rules.all()
+
+    def get_moderation_actions(self):
+        return ModerationAction.objects.filter(report=self)
+
+
+class ModerationAction(models.Model):
+    BAN = "user_banned"
+    DELETE = "content_deleted"
+    COMMENT = "comment"
+    OTHER = "other_action_taken"
+    NONE = "no_action_taken"
+    ACTIONS = {
+        BAN: "User was banned",
+        DELETE: "Content was deleted",
+        COMMENT: "Comment was added",
+        OTHER: "Other action was taken",
+        NONE: "No action was taken"
+    }
+    action = models.CharField(max_length=30, choices=ACTIONS.items())
+    created_at = models.DateTimeField(auto_now_add=True)
+    public_comment = models.TextField(blank=True)
+    # Only visible to moderator
+    private_comment = models.TextField(blank=True)
+    report = models.ForeignKey(Report, on_delete=models.CASCADE)
+
+    # TODO: Needs field for moderator that performed the action
+
+    def __str__(self):
+        return f"[{self.action}]: {self.public_comment}"

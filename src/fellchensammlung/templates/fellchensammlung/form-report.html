@@ -1,0 +1,12 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>Melden</h1>
+    Wenn diese Vermittlung nicht unseren <a href='{% url "about" %}'>Regeln</a> entspricht, wähle bitte eine der folgenden Regeln aus und hinterlasse einen Kommentar der es detaillierter erklärt, insbesondere wenn der Regelverstoß nicht offensichtlich ist.
+    <form method = "post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button-report" type="submit">Melden</button>
+    </form>
+{% endblock %}
