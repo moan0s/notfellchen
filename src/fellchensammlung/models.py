@@ -86,6 +86,9 @@ class AdoptionNotice(models.Model):
         """Returns the url to access a detailed page for the animal."""
         return reverse('adoption-notice-detail', args=[str(self.id)])
 
+    def get_report_url(self):
+        return reverse('report-adoption-notice', args=[str(self.id)])
+
     def get_photos(self):
         """
         First trys to get group photos that are attached to the adoption notice if there is none it trys to fetch

@@ -1,0 +1,35 @@
+{% load custom_tags %}
+<div class="card-adoption-notice">
+    <div>
+        <div class="header-card-adoption-notice">
+            <h1><a href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a></h1>
+            <a href="{{ adoption_notice.get_report_url }}">Melden</a>
+        </div>
+        <p><b>Notfellchen:</b> {{ adoption_notice.animals.all|join_link:", " | safe }}
+        </p>
+        <p>
+            <b>Ort</b>
+            {% if adoption_notice.location %}
+                {{ adoption_notice.location }}
+            {% else %}
+                Keine Ort angegeben
+            {% endif %}
+        </p>
+        <p>
+            {% if adoption_notice.description %}
+                {{ adoption_notice.description }}
+            {% else %}
+                Keine Beschreibung
+            {% endif %}
+        </p>
+        {% if adoption_notice.get_photo %}
+            <div class="adoption-notice-img">
+                <img title="{{ adoption_notice.get_photo.title }}"
+                     src="/media/{{ adoption_notice.get_photo.image }}"
+                     alt="{{ adoption_notice.get_photo.alt_text }}">
+            </div>
+        {% else %}
+            No photo
+        {% endif %}
+    </div>
+</div>
