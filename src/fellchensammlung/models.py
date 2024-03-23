@@ -5,6 +5,8 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 from fellchensammlung.tools import misc
 
@@ -250,3 +252,75 @@ class ModerationAction(models.Model):
 
     def __str__(self):
         return f"[{self.action}]: {self.public_comment}"
+
+
+class Language(models.Model):
+    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
+    name = models.CharField(max_length=200,
+                            help_text=_("Enter a natural languages name (e.g. English, French, Japanese etc.)."),
+                            unique=True)
+
+    languagecode = models.CharField(max_length=10,
+                                    # Translators: This helptext includes an URL
+                                    help_text=_(
+                                        "Enter the language code for this language. For further information see  http://www.i18nguy.com/unicode/language-identifiers.html"),
+                                    verbose_name=_('Language code'))
+
+    def __str__(self):
+        """String for representing the Model object (in Admin site etc.)"""
+        return self.name
+
+    class Meta:
+        verbose_name = _('Language')
+        verbose_name_plural = _('Languages')
+
+
+"""
+Membership
+"""
+
+
+class Member(models.Model):
+    """
+    Model that holds a user's profile, including the django user model
+
+    It is created upon creation of a new django user (see add_member)
+    The trust levels act as permission system and can be displayed as a badge for the user
+    """
+
+    # Admins can perform all actions and have the highest trust associated with them
+    # Moderators can make moderation decisions regarding the deletion of content
+    # Coordinators can create adoption notices without them being checked
+    # Members can create adoption notices that must be activated
+    ADMIN = "admin"
+    MODERATOR = "Moderator"
+    COORDINATOR = "Koordinator*in"
+    MEMBER = "Mitglied"
+    TRUES_LEVEL = {
+        ADMIN: "Administrator*in",
+        MODERATOR: "Moderator*in",
+        COORDINATOR: "Koordinator*in",
+        MEMBER: "Mitglied",
+    }
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_('User'))
+    preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
+                                           verbose_name=_('Preferred language'))
+    trust_level = models.CharField(choices=TRUES_LEVEL, max_length=100, default=MEMBER)
+
+    class Meta:
+        verbose_name = _('Member')
+        verbose_name_plural = _('Members')
+
+    @receiver(post_save, sender=User)
+    def add_member(sender, instance, created, raw, using, **kwargs):
+        if len(Member.objects.filter(user=instance)) != 1:
+            Member.objects.create(user=instance)
+
+    def __str__(self):
+        return str(self.user)
+
+    def get_absolute_url(self):
+        return reverse("member-detail", args=[str(self.user.id)])
+
+

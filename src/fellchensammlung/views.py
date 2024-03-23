@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 import markdown
 
-from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule, Image, Report, ModerationAction
+from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule, Image, Report, ModerationAction, \
+    Member
 from .forms import AdoptionNoticeForm, AnimalForm, ImageForm, ReportForm
 
 
@@ -118,3 +119,9 @@ def report_detail_success(request, report_id):
     Calls the report detail view with form_complete set to true, so success message shows
     """
     return report_detail(request, report_id, form_complete=True)
+
+
+def member_detail(request, user):
+    member = Member.objects.get(user=user)
+    context = {"member": member}
+    return render(request, 'fellchensammlung/detail-member.html', context=context)
