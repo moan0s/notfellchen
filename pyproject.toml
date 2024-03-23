@@ -45,7 +45,7 @@ repository = "https://github.com/moan0s/notfellchen/"
 where = ["src"]
 
 [project.scripts]
-nf-manage = 'notfellchen.main:main'
+nf = 'notfellchen.main:main'
 
 
 [tool.setuptools.dynamic]
