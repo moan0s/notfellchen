@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import User
+from django.core.files import File
 
 from fellchensammlung.models import *
 from fellchensammlung import baker_recipes
@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
         adoption1 = baker.make(AdoptionNotice, name="Vermittung1", organization=rescue1)
 
-        adoption2 = baker.make(AdoptionNotice, name="Vermittung2",  organization=rescue2)
+        adoption2 = baker.make(AdoptionNotice, name="Vermittung2", organization=rescue2)
 
         cat = baker.make(Species, name="Katze")
         rat = baker.make(Species, name="Farbratte")
@@ -28,6 +28,17 @@ class Command(BaseCommand):
         rat1 = baker.make(Animal, name="Rat1", adoption_notice=adoption1, species=rat)
         rat2 = baker.make(Animal, name="Rat2", adoption_notice=adoption1, species=rat)
         cat1 = baker.make(Animal, name="Cat1", adoption_notice=adoption2, species=cat)
+
+        animal_photo_combination = [(cat1, "cat1.jpeg"), (rat1, "rat1.jpg"), (rat2, "rat2.jpg")]
+        for animal, filename in animal_photo_combination:
+            image_object = Image()
+            image_object.alt_text = f"Picture of {animal}"
+            image_object.title = f"Picture of {animal}"
+            image_object.image.save(f"{filename}", File(open(f"./src/fellchensammlung/tests/assets/{filename}", 'rb')))
+            image_object.save()
+
+            animal.photos.add(image_object)
+
 
         rule1 = baker.make(Rule, title="Be excellent ot each other", rule_text="This is **markdown**")
         rule2 = baker.make(Rule,
