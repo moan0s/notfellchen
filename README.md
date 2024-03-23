@@ -2,7 +2,7 @@
 
 [notfellchen.org](https://notfellchen.org) ist eine Sammelstelle für Tier-Vermittlungen. Die Idee entstand, da in der
 deutschsprachigen Rattencommunity ein wilder Mix aus Websites, Foren und Facebookgruppen besteht die Ratten vermitteln.
-Diese Website soll die besthenende Communities NICHT ersetzten, jedoch ermöglichen, dass Menschen die Ratten aufnehmen
+Diese Website soll die bestehende Communities NICHT ersetzten, jedoch ermöglichen, dass Menschen die Ratten aufnehmen
 wollen Informationen einfach finden und nicht bereits in jeder Gruppe sein müssen.
 
 Wir nehmen Angebote auf die
@@ -17,4 +17,4 @@ Wir legen großen Wert darauf, dass hier kommerzielle Angebote keinen Platz habe
 Vermittlung von Ratten aus geplanten Vermehrungen oder aus Zooladenkäufen die schwanger wurden. Wir wollen Zooladenkäufe
 in keinem Fall unterstützen und empfehlen hier den Weg über eine Rattenhilfe.
 
-Auch seriöse Züchter\*innen können hier nicht vermitteln, das Angbot ist für Ratten, die sonst kein artgerechtes Zuhause finden können.
+Auch seriöse Züchter\*innen können hier nicht vermitteln, das Angebot ist für Ratten, die sonst kein artgerechtes Zuhause finden können.
