@@ -94,11 +94,11 @@ STATIC_ROOT = config.get("locations", "static", fallback="/notfellchen/static")
 MEDIA_ROOT = config.get("locations", "media", fallback="/notfellchen/static")
 MEDIA_URL = '/media/'
 
+host = config.get("notfellchen", "host", fallback='*')
 
 # see https://docs.djangoproject.com/en/3.2/ref/settings/#std-setting-ALLOWED_HOSTS
-ALLOWED_HOSTS = [config.get("notfellchen", "host", fallback='*')]
-CSRF_TRUSTED_ORIGINS = [f"https://{config.get('notfellchen', 'host', fallback='')}"]
-print(f"Allowed hosts: {ALLOWED_HOSTS}")
+ALLOWED_HOSTS = [host]
+CSRF_TRUSTED_ORIGINS = [f"https://{host}"]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
