@@ -18,13 +18,13 @@ def index(request):
 def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
     context = {"adoption_notice": adoption_notice}
-    return render(request, 'fellchensammlung/detail_adoption_notice.html', context=context)
+    return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 
 def animal_detail(request, animal_id):
     animal = Animal.objects.get(id=animal_id)
     context = {"animal": animal}
-    return render(request, 'fellchensammlung/detail_animal.html', context=context)
+    return render(request, 'fellchensammlung/details/detail_animal.html', context=context)
 
 
 def search(request):
@@ -42,7 +42,7 @@ def add_adoption(request):
             return redirect(reverse("add-animal-to-adoption", args=[instance.pk]))
     else:
         form = AdoptionNoticeForm()
-    return render(request, 'fellchensammlung/form_add_adoption.html', {'form': form})
+    return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
 
 
 def add_animal_to_adoption(request, adoption_notice_id):
@@ -69,7 +69,7 @@ def add_animal_to_adoption(request, adoption_notice_id):
     else:
         form = AnimalForm()
         image_form = ImageForm(request.POST, request.FILES, prefix="image_")
-    return render(request, 'fellchensammlung/form_add_animal_to_adoption.html',
+    return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html',
                   {'form': form, "image_form": image_form})
 
 
@@ -99,7 +99,7 @@ def report_adoption(request, adoption_notice_id):
             return redirect(reverse("report-detail-success", args=[report_instance.pk], ))
     else:
         form = ReportForm()
-    return render(request, 'fellchensammlung/form-report.html', {'form': form})
+    return render(request, 'fellchensammlung/forms/form-report.html', {'form': form})
 
 
 def report_detail(request, report_id, form_complete=False):
@@ -111,7 +111,7 @@ def report_detail(request, report_id, form_complete=False):
 
     context = {"report": report, "moderation_actions": moderation_actions, "form_complete": form_complete}
 
-    return render(request, 'fellchensammlung/detail-report.html', context)
+    return render(request, 'fellchensammlung/details/detail-report.html', context)
 
 
 def report_detail_success(request, report_id):
@@ -124,4 +124,4 @@ def report_detail_success(request, report_id):
 def member_detail(request, user):
     member = Member.objects.get(user=user)
     context = {"member": member}
-    return render(request, 'fellchensammlung/detail-member.html', context=context)
+    return render(request, 'fellchensammlung/details/detail-member.html', context=context)
