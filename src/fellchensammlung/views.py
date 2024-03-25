@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.urls import reverse
-import markdown
+from .mail import mail_admins_new_report
 
 from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule, Image, Report, ModerationAction, \
     Member
@@ -96,6 +95,7 @@ def report_adoption(request, adoption_notice_id):
             report_instance.adoption_notice_id = adoption_notice_id
             report_instance.status = Report.WAITING
             report_instance.save()
+            mail_admins_new_report(report_instance)
             return redirect(reverse("report-detail-success", args=[report_instance.pk], ))
     else:
         form = ReportForm()

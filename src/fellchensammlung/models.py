@@ -221,6 +221,10 @@ class Report(models.Model):
     def __str__(self):
         return f"[{self.status}]: {self.adoption_notice.name}"
 
+    def get_absolute_url(self):
+        """Returns the url to access a detailed page for the report."""
+        return reverse('report-detail', args=[str(self.id)])
+
     def get_reported_rules(self):
         return self.reported_broken_rules.all()
 
