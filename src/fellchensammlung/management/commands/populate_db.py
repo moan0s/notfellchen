@@ -58,7 +58,15 @@ class Command(BaseCommand):
                                         public_comment="A moderator has deleted the reported content")
 
         User.objects.create_user('test', password='foobar')
-        User.objects.create_superuser(username="admin", password="admin")
+        u_admin1 = User.objects.create_superuser(username="admin", password="admin", email="admin1@example.org")
+        admin1 = Member.objects.get(user=u_admin1)
+        admin1.trust_level = Member.ADMIN
+        admin1.save()
+
+        u_mod1 = User.objects.create_user(username="mod1", password="mod", email="mod1@example.org")
+        mod1 = Member.objects.get(user=u_mod1)
+        mod1.trust_level = Member.MODERATOR
+        mod1.save()
 
     def handle(self, *args, **options):
         self.populate_db()
