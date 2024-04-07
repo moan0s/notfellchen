@@ -1,0 +1,10 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% translate "Modqueue" %}</h1>
+    <p>{% translate "Erlaube oder blockiere Vermittlungsanzeigen die bisher noch zurückgehaltemn werden " %}</p>
+    {% for report in reports %}
+        {% include "fellchensammlung/partials/partial-report.html" %}
+    {% endfor %}
+{% endblock %}

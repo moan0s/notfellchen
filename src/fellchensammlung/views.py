@@ -125,3 +125,9 @@ def member_detail(request, user):
     member = Member.objects.get(user=user)
     context = {"member": member}
     return render(request, 'fellchensammlung/details/detail-member.html', context=context)
+
+
+def modqueue(request):
+    open_reports = Report.objects.filter(status=Report.WAITING)
+    context = {"reports": open_reports}
+    return render(request, 'fellchensammlung/modqueue.html', context=context)
