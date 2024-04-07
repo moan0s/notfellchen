@@ -369,5 +369,6 @@ h1 {
     max-width: 100%;
     border-radius: 10%;
     margin: 5px;
+    max-height: 250px;
 }
 
