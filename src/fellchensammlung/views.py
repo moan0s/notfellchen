@@ -121,8 +121,8 @@ def report_detail_success(request, report_id):
     return report_detail(request, report_id, form_complete=True)
 
 
-def member_detail(request, user):
-    member = Member.objects.get(user=user)
+def member_detail(request, user_id):
+    member = Member.objects.get(id=user_id)
     context = {"member": member}
     return render(request, 'fellchensammlung/details/detail-member.html', context=context)
 

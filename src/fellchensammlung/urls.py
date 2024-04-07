@@ -32,6 +32,7 @@ urlpatterns = [
     ###########
     ## USERS ##
     ###########
+    # ex: user/1
     path("user/<int:user_id>/", views.member_detail, name="user-detail"),
 
 ]

@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from datetime import datetime
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.contrib.auth.models import Group
 
 from fellchensammlung.tools import misc
 
@@ -326,5 +327,3 @@ class Member(models.Model):
 
     def get_absolute_url(self):
         return reverse("member-detail", args=[str(self.user.id)])
-
-
