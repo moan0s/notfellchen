@@ -1,5 +1,6 @@
 from django import forms
 from .models import AdoptionNotice, Animal, Image, Report, ModerationAction
+from django_registration.forms import RegistrationForm
 
 
 class DateInput(forms.DateInput):
@@ -41,3 +42,7 @@ class ModerationActionForm(forms.ModelForm):
     class Meta:
         model = ModerationAction
         fields = ('action', 'public_comment', 'private_comment')
+
+
+class CustomRegistrationForm(RegistrationForm):
+    pass

@@ -77,6 +77,7 @@ else:
     EMAIL_USE_SSL = config.getboolean('mail', 'ssl', fallback=False)
 
 """USER MANAGEMENT"""
+AUTH_USER_MODEL = "fellchensammlung.User"
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 REGISTRATION_OPEN = True
 REGISTRATION_SALT = "notfellchen"
