@@ -1,5 +1,5 @@
 from django import forms
-from .models import AdoptionNotice, Animal, Image, Report, ModerationAction
+from .models import AdoptionNotice, Animal, Image, Report, ModerationAction, User
 from django_registration.forms import RegistrationForm
 
 
@@ -45,4 +45,5 @@ class ModerationActionForm(forms.ModelForm):
 
 
 class CustomRegistrationForm(RegistrationForm):
-    pass
+    class Meta(RegistrationForm.Meta):
+        model = User
