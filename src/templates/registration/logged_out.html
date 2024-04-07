@@ -1,0 +1,7 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+  <p>{% translate "Logged out" %}!</p>
+  <a href="{% url 'login'%}">{% translate "Click here to login again." %}</a>
+{% endblock %}

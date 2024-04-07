@@ -76,6 +76,10 @@ else:
     EMAIL_USE_TLS = config.getboolean('mail', 'tls', fallback=False)
     EMAIL_USE_SSL = config.getboolean('mail', 'ssl', fallback=False)
 
+"""USER MANAGEMENT"""
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
+REGISTRATION_OPEN = True
+REGISTRATION_SALT = "notfellchen"
 
 """ SECURITY.TXT """
 SEC_CONTACT = config.get("security", "Contact", fallback="julian-samuel@gebuehr.net")

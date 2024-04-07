@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from . import views
 
@@ -34,5 +34,8 @@ urlpatterns = [
     ###########
     # ex: user/1
     path("user/<int:user_id>/", views.member_detail, name="user-detail"),
+
+    path('accounts/', include('django_registration.backends.activation.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 
 ]
