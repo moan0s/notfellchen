@@ -211,7 +211,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = config.get('locale', 'default', fallback='en')
+LANGUAGE_CODE = config.get('locale', 'default', fallback='de')
 LANGUAGE_COOKIE_NAME = "selected-language"
 TIME_ZONE = config.get('locale', 'timezone', fallback='UTC')
 
