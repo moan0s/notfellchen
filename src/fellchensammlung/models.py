@@ -9,8 +9,6 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 
-
-
 from fellchensammlung.tools import misc
 
 
@@ -70,6 +68,11 @@ class RescueOrganization(models.Model):
 
 
 class AdoptionNotice(models.Model):
+    class Meta:
+        permissions = [
+            ("create_active_adoption_notice", "Can create an active adoption notice"),
+        ]
+
     def __str__(self):
         return f"{self.name}"
 
@@ -205,6 +208,9 @@ class Rule(models.Model):
 
 
 class Report(models.Model):
+    class Meta:
+        permissions = []
+
     ACTION_TAKEN = "action taken"
     NO_ACTION_TAKEN = "no action taken"
     WAITING = "waiting"
