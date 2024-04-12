@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 20:50+0000\n"
+"POT-Creation-Date: 2024-04-12 21:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:223
+#: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:225
 msgid "English"
 msgstr ""
 
-#: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:224
+#: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:226
 msgid "German"
 msgstr ""
 
@@ -156,6 +156,10 @@ msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:13
 msgid "No preferred language set."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/header.html:44
+msgid "change"
 msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/index.html:5

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 20:50+0000\n"
-"PO-Revision-Date: 2024-04-12 23:05+0200\n"
+"POT-Creation-Date: 2024-04-12 21:43+0000\n"
+"PO-Revision-Date: 2024-04-12 23:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:223
+#: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:225
 msgid "English"
 msgstr "Englisch"
 
-#: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:224
+#: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:226
 msgid "German"
 msgstr "Deutsch"
 
@@ -143,23 +143,27 @@ msgstr "Bevorzugte Sprache"
 
 #: src/fellchensammlung/models.py:329
 msgid "Member"
-msgstr ""
+msgstr "Mitglied"
 
 #: src/fellchensammlung/models.py:330
 msgid "Members"
-msgstr ""
+msgstr "Mitglieder"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:7
 msgid "Username"
-msgstr ""
+msgstr "Username"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:8
 msgid "E-Mail"
-msgstr ""
+msgstr "E-Mail"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:13
 msgid "No preferred language set."
-msgstr ""
+msgstr "Keine bevorzugte Sprache hinterlegt"
+
+#: src/fellchensammlung/templates/fellchensammlung/header.html:44
+msgid "change"
+msgstr "ändern"
 
 #: src/fellchensammlung/templates/fellchensammlung/index.html:5
 msgid "Notfellchen - Vermittlungen finden"
