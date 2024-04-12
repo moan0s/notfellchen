@@ -138,12 +138,13 @@ MIDDLEWARE = [
     # Static file serving & caching
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    # Needs to be after SessionMiddleware and before CommonMiddleware
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'notfellchen.urls'
@@ -211,6 +212,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = config.get('locale', 'default', fallback='en')
+LANGUAGE_COOKIE_NAME = "selected-language"
 TIME_ZONE = config.get('locale', 'timezone', fallback='UTC')
 
 USE_I18N = True
@@ -220,7 +222,7 @@ USE_L10N = True
 USE_TZ = True
 
 LANGUAGES = (
-    ('en-us', _('English')),
+    ('en', _('English')),
     ('de', _('German')),
 )
 

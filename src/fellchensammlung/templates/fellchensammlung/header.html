@@ -22,9 +22,26 @@
                     <button type="submit">Ausloggen</button>
                 </form>
             </div>
-            {% else %}
+        {% else %}
             <a href="{% url "django_registration_register" %}">Registrieren</a>
             <a href="{% url "login" %}">Einloggen</a>
         {% endif %}
+
+        <form action="{% url 'change-language' %}" method="post" onchange='this.form.submit()'>
+        {% csrf_token %}
+        <select name="language" onchange='this.form.submit()'>
+            {% get_current_language as LANGUAGE_CODE_CURRENT %}
+            {% get_available_languages as LANGUAGES %}
+            {% for language in LANGUAGES %}
+                <option value="{{ language.0 }}" {% if language.0 == LANGUAGE_CODE_CURRENT %} selected{% endif %}>
+                    {{ language.0|language_name_local }}
+                </option>
+                <!--<option value="{{ language.0 }}" {% if language.0 == LANGUAGE_CODE %} selected{% endif %}>
+            {{ language.0|language_name_local }} ({{ language.0 }})
+        </option>-->
+            {% endfor %}
+        </select>
+        <!--<input type="submit" value={% translate "change" %}>-->
+        </form>
     </div>
 </div>

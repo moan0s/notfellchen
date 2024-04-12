@@ -1,0 +1,311 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-12 20:50+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:223
+msgid "English"
+msgstr ""
+
+#: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:224
+msgid "German"
+msgstr ""
+
+#: src/fellchensammlung/mail.py:13
+msgid "New report"
+msgstr ""
+
+#: src/fellchensammlung/mail.py:15
+msgid "Moin,"
+msgstr ""
+
+#: src/fellchensammlung/mail.py:16
+msgid "es wurde eine Vermittlung gemeldet."
+msgstr ""
+
+#: src/fellchensammlung/models.py:26
+msgid "Enter a animal species"
+msgstr ""
+
+#: src/fellchensammlung/models.py:27
+msgid "Name"
+msgstr ""
+
+#: src/fellchensammlung/models.py:34 src/fellchensammlung/models.py:35
+msgid "Species"
+msgstr ""
+
+#: src/fellchensammlung/models.py:54 src/fellchensammlung/models.py:82
+#: src/fellchensammlung/models.py:146
+msgid "Description"
+msgstr ""
+
+#: src/fellchensammlung/models.py:62
+msgid "Trusted"
+msgstr ""
+
+#: src/fellchensammlung/models.py:64
+msgid "Instagram profile"
+msgstr ""
+
+#: src/fellchensammlung/models.py:65
+msgid "Facebook profile"
+msgstr ""
+
+#: src/fellchensammlung/models.py:66
+msgid "Fediverse profile"
+msgstr ""
+
+#: src/fellchensammlung/models.py:67
+msgid "Website"
+msgstr ""
+
+#: src/fellchensammlung/models.py:79
+msgid "Created at"
+msgstr ""
+
+#: src/fellchensammlung/models.py:80
+msgid "Searching for a home since"
+msgstr ""
+
+#: src/fellchensammlung/models.py:84
+msgid "Organization"
+msgstr ""
+
+#: src/fellchensammlung/models.py:85
+msgid "Link to further information"
+msgstr ""
+
+#: src/fellchensammlung/models.py:86
+msgid "Only group adoption"
+msgstr ""
+
+#: src/fellchensammlung/models.py:144
+msgid "Date of birth"
+msgstr ""
+
+#: src/fellchensammlung/models.py:222
+msgid "ID dieses reports"
+msgstr ""
+
+#: src/fellchensammlung/models.py:223
+msgid "ID"
+msgstr ""
+
+#: src/fellchensammlung/models.py:273
+msgid "Enter a natural languages name (e.g. English, French, Japanese etc.)."
+msgstr ""
+
+#: src/fellchensammlung/models.py:279
+msgid ""
+"Enter the language code for this language. For further information see  "
+"http://www.i18nguy.com/unicode/language-identifiers.html"
+msgstr ""
+
+#: src/fellchensammlung/models.py:280
+msgid "Language code"
+msgstr ""
+
+#: src/fellchensammlung/models.py:287
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:11
+msgid "Language"
+msgstr ""
+
+#: src/fellchensammlung/models.py:288
+msgid "Languages"
+msgstr ""
+
+#: src/fellchensammlung/models.py:323
+msgid "User"
+msgstr ""
+
+#: src/fellchensammlung/models.py:325
+msgid "Preferred language"
+msgstr ""
+
+#: src/fellchensammlung/models.py:329
+msgid "Member"
+msgstr ""
+
+#: src/fellchensammlung/models.py:330
+msgid "Members"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:7
+msgid "Username"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:8
+msgid "E-Mail"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:13
+msgid "No preferred language set."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/index.html:5
+msgid "Notfellchen - Vermittlungen finden"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/index.html:6
+msgid ""
+"Alle Tiere brauchen ein liebendes Zuhause. Damit keins vergessen wird gibt "
+"es diese Seite. Entwickelt und betreut von "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/index.html:8
+msgid "Aktuelle Vermittlungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/modqueue.html:5
+msgid "Modqueue"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/modqueue.html:6
+msgid ""
+"Erlaube oder blockiere Vermittlungsanzeigen die bisher noch zurückgehaltemn "
+"werden "
+msgstr ""
+
+#: src/templates/django_registration/activate.html:6
+msgid "Account activation failed"
+msgstr ""
+
+#: src/templates/django_registration/activation_complete.html:5
+msgid "You are now activated. Have fun."
+msgstr ""
+
+#: src/templates/django_registration/activation_email_body.txt:2
+msgid "Activate account at"
+msgstr ""
+
+#: src/templates/django_registration/activation_email_body.txt:4
+msgid "Activate by clicking this link"
+msgstr ""
+
+#: src/templates/django_registration/activation_email_body.txt:5
+msgid "or open the following link in your browser"
+msgstr ""
+
+#: src/templates/django_registration/activation_email_body.txt:8
+#, python-format
+msgid "Link is valid for %(expiration_days)s days."
+msgstr ""
+
+#: src/templates/django_registration/activation_email_subject.txt:1
+msgid "Account activation on"
+msgstr ""
+
+#: src/templates/django_registration/activation_failed.html:5
+msgid ""
+"Activation failed. Please send an e-mail to info@notfellchen.org to get an "
+"account."
+msgstr ""
+
+#: src/templates/django_registration/registration_closed.html:5
+msgid "Registration is currently closed."
+msgstr ""
+
+#: src/templates/django_registration/registration_complete.html:5
+msgid "You are now registered. Activation email sent."
+msgstr ""
+
+#: src/templates/django_registration/registration_form.html:10
+msgid "Submit"
+msgstr ""
+
+#: src/templates/django_registration/registration_form.html:13
+#: src/templates/registration/login.html:11
+msgid "You're already logged in."
+msgstr ""
+
+#: src/templates/registration/logged_out.html:5
+msgid "Logged out"
+msgstr ""
+
+#: src/templates/registration/logged_out.html:6
+msgid "Click here to login again."
+msgstr ""
+
+#: src/templates/registration/login.html:7
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+
+#: src/templates/registration/login.html:13
+msgid "Please login to see this page."
+msgstr ""
+
+#: src/templates/registration/login.html:30
+msgid "login"
+msgstr ""
+
+#: src/templates/registration/login.html:34
+msgid "Lost password?"
+msgstr ""
+
+#: src/templates/registration/password_reset_complete.html:5
+msgid "The password has been changed!"
+msgstr ""
+
+#: src/templates/registration/password_reset_confirmation.html:6
+msgid "Please enter (and confirm) your new password."
+msgstr ""
+
+#: src/templates/registration/password_reset_confirmation.html:12
+msgid "New password"
+msgstr ""
+
+#: src/templates/registration/password_reset_confirmation.html:17
+msgid "Confirm password"
+msgstr ""
+
+#: src/templates/registration/password_reset_confirmation.html:22
+msgid "Change my password"
+msgstr ""
+
+#: src/templates/registration/password_reset_confirmation.html:27
+msgid "Password reset failed"
+msgstr ""
+
+#: src/templates/registration/password_reset_confirmation.html:28
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used. Please request a new password reset."
+msgstr ""
+
+#: src/templates/registration/password_reset_done.html:5
+msgid ""
+"We've emailed you instructions for setting your password. If they haven't "
+"arrived in a few minutes, check your spam folder."
+msgstr ""
+
+#: src/templates/registration/password_reset_email.html:2
+msgid "Someone asked for password reset for your email. Follow the link below:"
+msgstr ""
+
+#: src/templates/registration/password_reset_form.html:10
+msgid "Password reset"
+msgstr ""
+
+#: src/templates/registration/password_reset_form.html:11
+msgid "Provide the e-mail address that is connected with your account"
+msgstr ""
+
+#: src/templates/registration/password_reset_form.html:13
+msgid "Reset"
+msgstr ""

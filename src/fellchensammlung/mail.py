@@ -12,8 +12,8 @@ from notfellchen.settings import host
 def mail_admins_new_report(report):
     subject = _("New report")
     for moderator in Member.objects.filter(Q(trust_level=Member.MODERATOR) | Q(trust_level=Member.ADMIN)):
-        greeting = _("Moin,\r\n")
-        new_report_text = "es wurde eine Vermittlung gemeldet.\r\n"
+        greeting = _("Moin,") + "\r\n"
+        new_report_text = _("es wurde eine Vermittlung gemeldet.") + "\r\n"
         if len(report.reported_broken_rules.all()) > 0:
             reported_rules_text = f"Ein Verstoß gegen die folgenden Regeln wurde gemeldet [{', '.join(report.reported_broken_rules.all())}]\r\n"
         else:

@@ -1,6 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from .mail import mail_admins_new_report
+from notfellchen import settings
 
 from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule, Image, Report, ModerationAction, \
     Member
@@ -13,6 +16,24 @@ def index(request):
     context = {"adoption_notices": latest_adoption_list}
 
     return render(request, 'fellchensammlung/index.html', context=context)
+
+
+def change_language(request):
+    if request.method == 'POST':
+        language_code = request.POST.get('language')
+        if language_code:
+            if language_code != settings.LANGUAGE_CODE and language_code in list(zip(*settings.LANGUAGES))[0]:
+                redirect_path = f'/{language_code}/'
+            elif language_code == settings.LANGUAGE_CODE:
+                redirect_path = '/'
+            else:
+                response = HttpResponseRedirect('/')
+                return response
+            from django.utils import translation
+            translation.activate(language_code)
+            response = HttpResponseRedirect(redirect_path)
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
+    return response
 
 
 def adoption_notice_detail(request, adoption_notice_id):
@@ -33,6 +54,7 @@ def search(request):
     return render(request, 'fellchensammlung/search.html', context=context)
 
 
+@login_required
 def add_adoption(request):
     if request.method == 'POST':
         form = AdoptionNoticeForm(request.POST, request.FILES)
@@ -45,6 +67,7 @@ def add_adoption(request):
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
 
 
+@login_required
 def add_animal_to_adoption(request, adoption_notice_id):
     if request.method == 'POST':
         form = AnimalForm(request.POST)
