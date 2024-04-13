@@ -17,5 +17,5 @@ RUN nf compilemessages --ignore venv
 
 COPY docker/notfellchen.bash /bin/notfellchen
 
-EXPOSE 8345
+EXPOSE 7345
 CMD ["notfellchen"]

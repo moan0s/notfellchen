@@ -18,5 +18,5 @@ exec gunicorn notfellchen.wsgi \
     --max-requests 1200 \
     --max-requests-jitter 50 \
     --log-level=info \
-    --bind 0.0.0.0:8345
+    --bind 0.0.0.0:7345
 
