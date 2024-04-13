@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-13 11:09+0000\n"
-"PO-Revision-Date: 2024-04-13 13:22+0200\n"
+"PO-Revision-Date: 2024-04-13 13:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -316,20 +316,20 @@ msgstr "Allow or block adtoption notices that are currently filtered out"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:8
 msgid "Notfellchen"
-msgstr ""
+msgstr "Notfellchen"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:15
 msgid "Keine Ort angegeben"
-msgstr ""
+msgstr "No location given"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:22
 msgid "Keine Beschreibung"
-msgstr ""
+msgstr "No description"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:32
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:11
 msgid "Keine Foto"
-msgstr ""
+msgstr "No picture"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:3
 #, python-format
@@ -341,11 +341,11 @@ msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:8
 msgid "Regeln gegen die Verstoßen wurde"
-msgstr ""
+msgstr "Rules that were broken"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:15
 msgid "Kommentar zur Meldung"
-msgstr ""
+msgstr "Comment"
 
 #: src/templates/django_registration/activate.html:6
 msgid "Account activation failed"
