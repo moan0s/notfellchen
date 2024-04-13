@@ -1,0 +1,11 @@
+# Exclude everything and allow only the necessary files
+*
+!/docker/
+!/src/
+!/src/manage.py
+!/pyproject.toml
+
+# Python
+*.py[cod]
+__pycache__
+
