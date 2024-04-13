@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-12 21:43+0000\n"
+"POT-Creation-Date: 2024-04-13 10:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:225
+#: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:209
 msgid "English"
 msgstr ""
 
-#: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:226
+#: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:210
 msgid "German"
 msgstr ""
 
@@ -146,6 +146,10 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
+#: src/fellchensammlung/templates/fellchensammlung/about.html:5
+msgid "Regeln"
+msgstr ""
+
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:7
 msgid "Username"
 msgstr ""
@@ -156,6 +160,18 @@ msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:13
 msgid "No preferred language set."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/header.html:22
+msgid "Ausloggen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/header.html:26
+msgid "Registrieren"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/header.html:27
+msgid "Einloggen"
 msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:44

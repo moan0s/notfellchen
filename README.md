@@ -23,7 +23,7 @@ Zuhause finden können.
 
 # Developer Notes
 
-Because of a wired bug the inital migrations must run two times as the first time the permissions
+Because of a wired bug the initial migrations must run two times as the first time the permissions
 for `create_active_adoption_notice` are created but can not yet be accessed and on the second time this permission will
 be added to groups.
 

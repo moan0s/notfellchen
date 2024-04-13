@@ -19,12 +19,12 @@
                 <p>{{ user.username }}</p>
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit">Ausloggen</button>
+                    <button type="submit">{% translate "Ausloggen"%}</button>
                 </form>
             </div>
         {% else %}
-            <a href="{% url "django_registration_register" %}">Registrieren</a>
-            <a href="{% url "login" %}">Einloggen</a>
+            <a href="{% url "django_registration_register" %}">{% translate "Registrieren" %}</a>
+            <a href="{% url "login" %}">{% translate "Einloggen" %}</a>
         {% endif %}
 
         <form action="{% url 'change-language' %}" method="post" onchange='this.form.submit()'>
