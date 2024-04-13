@@ -34,7 +34,8 @@ dependencies = [
     "model_bakery",
     "markdown",
     "Pillow",
-    "django-registration"
+    "django-registration",
+    "psycopg2-binary"
 ]
 dynamic = ["version", "readme"]
 
