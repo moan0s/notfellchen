@@ -8,9 +8,9 @@
     <p><strong>{% translate "E-Mail" %}:</strong> {{ member.user.email }}</p>
 
     {% if member.preferred_language %}
-        <p><strong>{% translate "Language" %}:</strong> {{ member.preferred_language }}</p>
+        <p><strong>{% translate "Sprache" %}:</strong> {{ member.preferred_language }}</p>
     {% else %}
-        <p>{% translate "No preferred language set." %}</p>
+        <p>{% translate "Keine bevorzugte Sprache gesetzt." %}</p>
     {% endif %}
     
 {% endblock %}

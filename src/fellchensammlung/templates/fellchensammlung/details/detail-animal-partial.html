@@ -7,8 +7,8 @@
 <div>
     <table>
         <tr>
-            <th>Alter</th>
-            <th>Geschlecht</th>
+            <th>{% translate "Alter" %}</th>
+            <th>{% translate "Geschlecht" %}</th>
         </tr>
         <tr>
             <td>{{ animal.hr_age }}</td>
@@ -17,7 +17,7 @@
     </table>
 </div>
 <p>{{ animal.description }}</p>
-<h2>Bilder</h2>
+<h2>{% translate "Bilder" %}</h2>
 <div class="photos">
     {% for image in animal.photos_list %}
         <div class="card-photo">

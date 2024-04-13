@@ -6,30 +6,29 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-13 10:44+0000\n"
-"PO-Revision-Date: 2024-04-13 12:45+0200\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: de\n"
+"POT-Creation-Date: 2024-04-13 11:09+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
 
 #: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:209
 msgid "English"
-msgstr "Englisch"
+msgstr ""
 
 #: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:210
 msgid "German"
-msgstr "Deutsch"
+msgstr ""
 
 #: src/fellchensammlung/mail.py:13
-msgid "New report"
-msgstr "Neue Meldung"
+msgid "Neue Meldung"
+msgstr ""
 
 #: src/fellchensammlung/mail.py:15
 msgid "Moin,"
@@ -40,130 +39,224 @@ msgid "es wurde eine Vermittlung gemeldet."
 msgstr ""
 
 #: src/fellchensammlung/models.py:26
-msgid "Enter a animal species"
-msgstr "Gib die Tierart an"
+msgid "Name der Tierart"
+msgstr ""
 
 #: src/fellchensammlung/models.py:27
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
-#: src/fellchensammlung/models.py:34 src/fellchensammlung/models.py:35
-msgid "Species"
-msgstr "Tierart"
+#: src/fellchensammlung/models.py:34
+msgid "Tierart"
+msgstr ""
+
+#: src/fellchensammlung/models.py:35
+msgid "Tierarten"
+msgstr ""
 
 #: src/fellchensammlung/models.py:54 src/fellchensammlung/models.py:82
 #: src/fellchensammlung/models.py:146
-msgid "Description"
-msgstr "Beschreibung"
+msgid "Beschreibung"
+msgstr ""
 
 #: src/fellchensammlung/models.py:62
-msgid "Trusted"
-msgstr "Vertrauenswürdig"
+msgid "Vertrauenswürdig"
+msgstr ""
 
 #: src/fellchensammlung/models.py:64
-msgid "Instagram profile"
-msgstr "Instagram Profil"
+msgid "Instagram Profil"
+msgstr ""
 
 #: src/fellchensammlung/models.py:65
-msgid "Facebook profile"
-msgstr "Facebook Profil"
+msgid "Facebook Profil"
+msgstr ""
 
 #: src/fellchensammlung/models.py:66
-msgid "Fediverse profile"
-msgstr "Fediverse Profil"
+msgid "Fediverse Profil"
+msgstr ""
 
 #: src/fellchensammlung/models.py:67
 msgid "Website"
-msgstr "Website"
+msgstr ""
 
 #: src/fellchensammlung/models.py:79
-msgid "Created at"
-msgstr "Veröffentlicht am"
+msgid "Erstellt am"
+msgstr ""
 
 #: src/fellchensammlung/models.py:80
-msgid "Searching for a home since"
-msgstr "Sucht nach einem Zuhause seit"
+msgid "Sucht nach einem Zuhause seit"
+msgstr ""
 
 #: src/fellchensammlung/models.py:84
-msgid "Organization"
-msgstr "Organisation"
+msgid "Organisation"
+msgstr ""
 
 #: src/fellchensammlung/models.py:85
-msgid "Link to further information"
-msgstr "Link zur mehr Informationen"
+msgid "Link zu mehr Informationen"
+msgstr ""
 
 #: src/fellchensammlung/models.py:86
-msgid "Only group adoption"
-msgstr "Ausschließlich Adoption der ganzen Gruppe möglich"
+msgid "Ausschließlich Gruppenadoption"
+msgstr ""
 
 #: src/fellchensammlung/models.py:144
-msgid "Date of birth"
-msgstr "Geburtstag"
+msgid "Geburtsdatum"
+msgstr ""
 
 #: src/fellchensammlung/models.py:222
 msgid "ID dieses reports"
-msgstr "ID des Reports"
+msgstr ""
 
 #: src/fellchensammlung/models.py:223
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #: src/fellchensammlung/models.py:273
-msgid "Enter a natural languages name (e.g. English, French, Japanese etc.)."
-msgstr "Gib den Namen einer natürlichen Sprache ein (Detusch, Englisch etc..)"
+msgid "Der Name einer natürliche Sprache wie Deutsch, Englisch oder Arabisch."
+msgstr ""
 
 #: src/fellchensammlung/models.py:279
 msgid ""
-"Enter the language code for this language. For further information see  "
-"http://www.i18nguy.com/unicode/language-identifiers.html"
+"Der standartisierte Sprachcode. Mehr Informationen: http://www.i18nguy.com/"
+"unicode/language-identifiers.html"
 msgstr ""
-"Gib den Language Code der Sprache ein. Mehr Informationen: http://www."
-"i18nguy.com/unicode/language-identifiers.html"
 
 #: src/fellchensammlung/models.py:280
-msgid "Language code"
+msgid "Sprachcode"
 msgstr ""
 
 #: src/fellchensammlung/models.py:287
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:11
-msgid "Language"
-msgstr "Sprache"
+msgid "Sprache"
+msgstr ""
 
 #: src/fellchensammlung/models.py:288
-msgid "Languages"
-msgstr "Sprachen"
+msgid "Sprachen"
+msgstr ""
 
-#: src/fellchensammlung/models.py:323
-msgid "User"
-msgstr "Nutzer*in"
+#: src/fellchensammlung/models.py:323 src/fellchensammlung/models.py:329
+msgid "Nutzer*in"
+msgstr ""
 
 #: src/fellchensammlung/models.py:325
-msgid "Preferred language"
-msgstr "Bevorzugte Sprache"
-
-#: src/fellchensammlung/models.py:329
-msgid "Member"
-msgstr "Mitglied"
+msgid "Bevorzugte Sprache"
+msgstr ""
 
 #: src/fellchensammlung/models.py:330
-msgid "Members"
-msgstr "Mitglieder"
+msgid "Nutzer*innen"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/about.html:5
 msgid "Regeln"
 msgstr ""
 
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:10
+msgid "Alter"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:11
+msgid "Geschlecht"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:20
+msgid "Bilder"
+msgstr ""
+
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:7
 msgid "Username"
-msgstr "Username"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:8
 msgid "E-Mail"
-msgstr "E-Mail"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:13
-msgid "No preferred language set."
-msgstr "Keine bevorzugte Sprache hinterlegt."
+msgid "Keine bevorzugte Sprache gesetzt."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:7
+msgid ""
+"\n"
+"            Wenn du sehen willst welche Moderationsentscheidungen getroffen "
+"werden, schau zu einem späteren Zeitpunkt\n"
+"            wieder auf dieser Seite vorbei.\n"
+"            Wenn du unzufrieden mit der Entscheidung bist, kannst du per "
+"Mail an\n"
+"            <a href=\"mailto:info@notfellchen.org\">info@notfellchen.org</a> "
+"Einspruch einlegen.\n"
+"        "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:15
+msgid "Moderationsverlauf"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:19
+msgid "Bisher wurden keine Maßnahmen vorgenommen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:12
+msgid "Ort"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:13
+msgid "Suchen seit"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:19
+msgid "Kein Ort angegeben"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:29
+msgid "Keine Beschreibung angegeben"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:5
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:10
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:6
+msgid "Melden"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_adoption.html:5
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:5
+msgid "Vermitteln"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_adoption.html:6
+msgid ""
+"\n"
+"    Bitte mach dich zunächst mit unseren Regeln vertraut. Dann trage hier "
+"die ersten Informationen ein.\n"
+"    Du bekommst in einem weiteren Schritt die Möglichkeit einzelne Tiere zu "
+"deiner Vermittlung hinzuzufügen und Fotos hochzuladen.\n"
+"    "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_adoption.html:13
+msgid "Weiter"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:6
+msgid ""
+"\n"
+"        Hier kannst du jetzt einzelne Tiere zu deiner Vermittlung "
+"hinzufügen. Lad auch gerne Fotos hoch. Gruppenfotos\n"
+"        kannst\n"
+"        du im nächsten Schritt hochladen.\n"
+"    "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:17
+msgid "Bild hinzufügen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:21
+msgid "Speichern und nächstes Tier hinzufügen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:22
+msgid "Speichern und weiter"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:22
 msgid "Ausloggen"
@@ -179,7 +272,7 @@ msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:44
 msgid "change"
-msgstr "ändern"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/index.html:5
 msgid "Notfellchen - Vermittlungen finden"
@@ -203,6 +296,39 @@ msgstr ""
 msgid ""
 "Erlaube oder blockiere Vermittlungsanzeigen die bisher noch zurückgehaltemn "
 "werden "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:8
+msgid "Notfellchen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:15
+msgid "Keine Ort angegeben"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:22
+msgid "Keine Beschreibung"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:32
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:11
+msgid "Keine Foto"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:3
+#, python-format
+msgid ""
+"\n"
+"            Meldung von %(report.adoption_notice.name)s\n"
+"        "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:8
+msgid "Regeln gegen die Verstoßen wurde"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:15
+msgid "Kommentar zur Meldung"
 msgstr ""
 
 #: src/templates/django_registration/activate.html:6
@@ -272,7 +398,6 @@ msgstr ""
 #: src/templates/registration/login.html:13
 msgid "Please login to see this page."
 msgstr ""
-"Bitte logg dich ein oder erstelle einen Account um diese Seite zu sehen."
 
 #: src/templates/registration/login.html:30
 msgid "login"

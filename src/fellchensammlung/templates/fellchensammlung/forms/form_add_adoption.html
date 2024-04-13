@@ -2,12 +2,14 @@
 {% load i18n %}
 
 {% block content %}
-  <h1>Vermitteln</h1>
+  <h1>{% translate "Vermitteln" %}</h1>
+    {% blocktranslate %}
     Bitte mach dich zunächst mit unseren Regeln vertraut. Dann trage hier die ersten Informationen ein.
     Du bekommst in einem weiteren Schritt die Möglichkeit einzelne Tiere zu deiner Vermittlung hinzuzufügen und Fotos hochzuladen.
+    {% endblocktranslate %}
     <form method = "post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Weiter</button>
+        <button type="submit">{% translate "Weiter" %}</button>
     </form>
 {% endblock %}

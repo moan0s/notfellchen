@@ -23,7 +23,7 @@ class Image(models.Model):
 
 class Species(models.Model):
     """Model representing a species of animal."""
-    name = models.CharField(max_length=200, help_text=_('Enter a animal species'),
+    name = models.CharField(max_length=200, help_text=_('Name der Tierart'),
                             verbose_name=_('Name'))
 
     def __str__(self):
@@ -31,8 +31,8 @@ class Species(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = _('Species')
-        verbose_name_plural = _('Species')
+        verbose_name = _('Tierart')
+        verbose_name_plural = _('Tierarten')
 
 
 class Location(models.Model):
@@ -51,7 +51,7 @@ class Location(models.Model):
     name = models.CharField(max_length=200)
     postcode = models.CharField(max_length=200)
     country = models.CharField(max_length=20, choices=COUNTRIES_CHOICES)
-    description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
 
 
 class RescueOrganization(models.Model):
@@ -59,11 +59,11 @@ class RescueOrganization(models.Model):
         return f"{self.name}"
 
     name = models.CharField(max_length=200)
-    trusted = models.BooleanField(default=False, verbose_name=_('Trusted'))
+    trusted = models.BooleanField(default=False, verbose_name=_('Vertrauenswürdig'))
     location = models.ForeignKey(Location, on_delete=models.PROTECT)
-    instagram = models.URLField(null=True, blank=True, verbose_name=_('Instagram profile'))
-    facebook = models.URLField(null=True, blank=True, verbose_name=_('Facebook profile'))
-    fediverse_profile = models.URLField(null=True, blank=True, verbose_name=_('Fediverse profile'))
+    instagram = models.URLField(null=True, blank=True, verbose_name=_('Instagram Profil'))
+    facebook = models.URLField(null=True, blank=True, verbose_name=_('Facebook Profil'))
+    fediverse_profile = models.URLField(null=True, blank=True, verbose_name=_('Fediverse Profil'))
     website = models.URLField(null=True, blank=True, verbose_name=_('Website'))
 
 
@@ -76,14 +76,14 @@ class AdoptionNotice(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-    created_at = models.DateField(verbose_name=_('Created at'), default=datetime.now)
-    searching_since = models.DateField(verbose_name=_('Searching for a home since'))
+    created_at = models.DateField(verbose_name=_('Erstellt am'), default=datetime.now)
+    searching_since = models.DateField(verbose_name=_('Sucht nach einem Zuhause seit'))
     name = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
     organization = models.ForeignKey(RescueOrganization, blank=True, null=True, on_delete=models.SET_NULL,
-                                     verbose_name=_('Organization'))
-    further_information = models.URLField(null=True, blank=True, verbose_name=_('Link to further information'))
-    group_only = models.BooleanField(default=False, verbose_name=_('Only group adoption'))
+                                     verbose_name=_('Organisation'))
+    further_information = models.URLField(null=True, blank=True, verbose_name=_('Link zu mehr Informationen'))
+    group_only = models.BooleanField(default=False, verbose_name=_('Ausschließlich Gruppenadoption'))
     photos = models.ManyToManyField(Image, blank=True)
 
     @property
@@ -141,9 +141,9 @@ class Animal(models.Model):
         FEMALE: "female",
     }
 
-    date_of_birth = models.DateField(verbose_name=_('Date of birth'))
+    date_of_birth = models.DateField(verbose_name=_('Geburtsdatum'))
     name = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
     photos = models.ManyToManyField(Image, blank=True)
     sex = models.CharField(max_length=20, choices=SEX_CHOICES, )
@@ -270,22 +270,22 @@ class ModerationAction(models.Model):
 class Language(models.Model):
     """Model representing a Language (e.g. English, French, Japanese, etc.)"""
     name = models.CharField(max_length=200,
-                            help_text=_("Enter a natural languages name (e.g. English, French, Japanese etc.)."),
+                            help_text=_("Der Name einer natürliche Sprache wie Deutsch, Englisch oder Arabisch."),
                             unique=True)
 
     languagecode = models.CharField(max_length=10,
                                     # Translators: This helptext includes an URL
                                     help_text=_(
-                                        "Enter the language code for this language. For further information see  http://www.i18nguy.com/unicode/language-identifiers.html"),
-                                    verbose_name=_('Language code'))
+                                        "Der standartisierte Sprachcode. Mehr Informationen: http://www.i18nguy.com/unicode/language-identifiers.html"),
+                                    verbose_name=_('Sprachcode'))
 
     def __str__(self):
         """String for representing the Model object (in Admin site etc.)"""
         return self.name
 
     class Meta:
-        verbose_name = _('Language')
-        verbose_name_plural = _('Languages')
+        verbose_name = _('Sprache')
+        verbose_name_plural = _('Sprachen')
 
 
 """
@@ -320,14 +320,14 @@ class Member(models.Model):
         MEMBER: "Mitglied",
     }
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_('User'))
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
-                                           verbose_name=_('Preferred language'))
+                                           verbose_name=_('Bevorzugte Sprache'))
     trust_level = models.CharField(choices=TRUES_LEVEL, max_length=100, default=MEMBER)
 
     class Meta:
-        verbose_name = _('Member')
-        verbose_name_plural = _('Members')
+        verbose_name = _('Nutzer*in')
+        verbose_name_plural = _('Nutzer*innen')
 
     @receiver(post_save, sender=User)
     def add_member(sender, instance, created, raw, using, **kwargs):

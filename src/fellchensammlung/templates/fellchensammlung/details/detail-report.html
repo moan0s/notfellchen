@@ -3,17 +3,19 @@
 
 {% block content %}
     {% if form_complete %}
-        <h1>Erfolgreich gemeldet</h1>
-        Wenn du sehen willst welche Moderationsentscheidungen getroffen werden, schau zu einem späteren Zeitpunkt wieder
-        auf dieser Seite vorbei.
-        Wenn du unzufrieden mit der Entscheidung bist, kannst du per Mail an
-        <a href="mailto:info@notfellchen.org">info@notfellchen.org</a> Einspruch einlegen.
+        <h1>{% Erfolgreich gemeldet %}</h1>
+        {% blocktranslate %}
+            Wenn du sehen willst welche Moderationsentscheidungen getroffen werden, schau zu einem späteren Zeitpunkt
+            wieder auf dieser Seite vorbei.
+            Wenn du unzufrieden mit der Entscheidung bist, kannst du per Mail an
+            <a href="mailto:info@notfellchen.org">info@notfellchen.org</a> Einspruch einlegen.
+        {% endblocktranslate %}
     {% endif %}
     {% include "fellchensammlung/partials/partial-report.html" %}
-    <h2>Moderationsverlauf</h2>
+    <h2>{% translate "Moderationsverlauf" %}</h2>
     {% if report.get_moderation_actions %}
         {% include "fellchensammlung/lists/list-moderation-action.html" %}
     {% else %}
-        Bisher wurden keine Maßnahmen vorgenommen
+        {% translate "Bisher wurden keine Maßnahmen vorgenommen" %}
     {% endif %}
 {% endblock %}

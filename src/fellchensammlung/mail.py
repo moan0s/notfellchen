@@ -10,7 +10,7 @@ from notfellchen.settings import host
 
 
 def mail_admins_new_report(report):
-    subject = _("New report")
+    subject = _("Neue Meldung")
     for moderator in Member.objects.filter(Q(trust_level=Member.MODERATOR) | Q(trust_level=Member.ADMIN)):
         greeting = _("Moin,") + "\r\n"
         new_report_text = _("es wurde eine Vermittlung gemeldet.") + "\r\n"

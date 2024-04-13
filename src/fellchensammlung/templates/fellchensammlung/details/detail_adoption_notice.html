@@ -9,14 +9,14 @@
     <div class="table-adoption-notice-info">
         <table>
             <tr>
-                <th>Ort</th>
-                <th>Suchen seit</th>
+                <th>{% translate "Ort" %}</th>
+                <th>{% translate "Suchen seit" %}</th>
             </tr>
             <tr>
                 {% if adoption_notice.location %}
                     <td>{{ adoption_notice.location.name }}, {{ adoption_notice.location.postcode }}</td>
                 {% else %}
-                    <td>Kein Ort angegeben</td>
+                    <td>{% translate "Kein Ort angegeben" %}</td>
                 {% endif %}
                 <td>{{ adoption_notice.searching_since }}</td>
             </tr>
@@ -26,7 +26,7 @@
         {% if adoption_notice.description %}
             {{ adoption_notice.description }}
         {% else %}
-            Keine Beschreibung angegeben
+            {% translate "Keine Beschreibung angegeben" %}
         {% endif %}
     </p>
 

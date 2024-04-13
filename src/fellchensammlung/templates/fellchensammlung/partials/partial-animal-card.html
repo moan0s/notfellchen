@@ -1,3 +1,4 @@
+{% load i18n %}
 <div class="card-animal">
     <div class="detail-animal-header">
         <h1>{{ animal.name }}</h1>
@@ -8,6 +9,6 @@
         <img src="/media/{{ animal.get_photo.image }}" alt="{{ animal.get_photo.alt_text }}">
         </div>
     {% else %}
-        No photos
+        {% translate "Keine Foto" %}
     {% endif %}
 </div>
