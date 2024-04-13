@@ -3,13 +3,19 @@ def _get_perms(permission_name_list):
     permissions = []
     for permission_name in permission_name_list:
         print(f"{permission_name}")
-        permission = Permission.objects.get(codename=permission_name)
-        permissions.append(permission)
+        try:
+            permission = Permission.objects.get(codename=permission_name)
+            permissions.append(permission)
+        except Permission.DoesNotExist:
+            print("aaaaaa")
     return permissions
 
 
 def ensure_groups(sender, **kwargs):
     from django.contrib.auth.models import Group
+    from django.contrib.auth.models import Permission
+    print([permission.name for permission in Permission.objects.all()])
+
 
     member_permissions = []
     coordinator_permissions = ["create_active_adoption_notice"]
