@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-13 11:09+0000\n"
-"PO-Revision-Date: 2024-04-13 13:36+0200\n"
+"POT-Creation-Date: 2024-04-13 11:50+0000\n"
+"PO-Revision-Date: 2024-04-13 13:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -221,7 +221,7 @@ msgstr "No description given"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:5
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:10
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:6
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:8
 msgid "Melden"
 msgstr "Report"
 
@@ -262,7 +262,7 @@ msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:17
 msgid "Bild hinzufügen"
-msgstr ""
+msgstr "Add picture"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:21
 msgid "Speichern und nächstes Tier hinzufügen"
@@ -273,14 +273,17 @@ msgid "Speichern und weiter"
 msgstr "Save and continue"
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:22
+#: src/templates/registration/logged_out.html:5
 msgid "Ausloggen"
 msgstr "Log out"
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:26
+#: src/templates/django_registration/registration_form.html:10
 msgid "Registrieren"
 msgstr "Register now"
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:27
+#: src/templates/registration/login.html:30
 msgid "Einloggen"
 msgstr "Login"
 
@@ -314,24 +317,24 @@ msgid ""
 "werden "
 msgstr "Allow or block adtoption notices that are currently filtered out"
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:8
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:10
 msgid "Notfellchen"
 msgstr "Notfellchen"
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:15
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:17
 msgid "Keine Ort angegeben"
 msgstr "No location given"
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:22
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:24
 msgid "Keine Beschreibung"
 msgstr "No description"
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:32
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:11
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:34
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:12
 msgid "Keine Foto"
 msgstr "No picture"
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:3
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:4
 #, python-format
 msgid ""
 "\n"
@@ -339,138 +342,140 @@ msgid ""
 "        "
 msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:8
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:9
 msgid "Regeln gegen die Verstoßen wurde"
 msgstr "Rules that were broken"
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:15
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:16
 msgid "Kommentar zur Meldung"
 msgstr "Comment"
 
 #: src/templates/django_registration/activate.html:6
-msgid "Account activation failed"
-msgstr ""
+msgid "Account aktivierung fehlgeschlagen"
+msgstr "Account activiation failed"
 
 #: src/templates/django_registration/activation_complete.html:5
-msgid "You are now activated. Have fun."
-msgstr ""
+msgid "Dein Account ist nun aktiviert. Viel Spaß!"
+msgstr "The account is now activated. Have fun!"
 
 #: src/templates/django_registration/activation_email_body.txt:2
-msgid "Activate account at"
-msgstr ""
+#: src/templates/django_registration/activation_email_subject.txt:1
+msgid "Account aktivieren"
+msgstr "Activate account"
 
 #: src/templates/django_registration/activation_email_body.txt:4
 msgid "Activate by clicking this link"
-msgstr ""
+msgstr "Aktiviere den Account indem du auf den Link klickst"
 
 #: src/templates/django_registration/activation_email_body.txt:5
-msgid "or open the following link in your browser"
-msgstr ""
+msgid "oder öffne den folgenden link im Browser"
+msgstr "or open the following link in your browser"
 
 #: src/templates/django_registration/activation_email_body.txt:8
 #, python-format
-msgid "Link is valid for %(expiration_days)s days."
-msgstr ""
-
-#: src/templates/django_registration/activation_email_subject.txt:1
-msgid "Account activation on"
-msgstr ""
+msgid "Der link ist gültig für %(expiration_days)s tage."
+msgstr "The link is valid for %(expiration_days)s days."
 
 #: src/templates/django_registration/activation_failed.html:5
 msgid ""
-"Activation failed. Please send an e-mail to info@notfellchen.org to get an "
-"account."
+"Aktivierung fehlgeschlagen. Sende eine E-Mail an info@notfellchen.org für "
+"einen Account."
 msgstr ""
+"Activation failed. Send a e-mail to info@notfellchen.org to get an account."
 
 #: src/templates/django_registration/registration_closed.html:5
-msgid "Registration is currently closed."
-msgstr ""
+msgid "Registrierung ist fehlgeschlagen."
+msgstr "Account activiation failed."
 
 #: src/templates/django_registration/registration_complete.html:5
-msgid "You are now registered. Activation email sent."
+msgid ""
+"Du bist nun registriert. Du hast eine E-Mail mit einem Link zur aktivierung "
+"bekommen."
 msgstr ""
-
-#: src/templates/django_registration/registration_form.html:10
-msgid "Submit"
-msgstr ""
+"You are now registered. We sent you an e-mail with a link to activate your "
+"account."
 
 #: src/templates/django_registration/registration_form.html:13
 #: src/templates/registration/login.html:11
-msgid "You're already logged in."
-msgstr ""
-
-#: src/templates/registration/logged_out.html:5
-msgid "Logged out"
-msgstr ""
+msgid "Du bist bereits eingeloggt."
+msgstr "You're already logged in."
 
 #: src/templates/registration/logged_out.html:6
-msgid "Click here to login again."
-msgstr ""
+msgid "Hier klicken um die wieder einzuloggen."
+msgstr "Click here to log in again."
 
 #: src/templates/registration/login.html:7
-msgid "Your username and password didn't match. Please try again."
-msgstr ""
+msgid "Dein Username oder Passwort ist falsch."
+msgstr "Your username or password is wrong."
 
 #: src/templates/registration/login.html:13
-msgid "Please login to see this page."
-msgstr ""
-
-#: src/templates/registration/login.html:30
-msgid "login"
-msgstr ""
+msgid "Bitte log dich ein um diese Seite sehen zu können."
+msgstr "Please log in to see this site."
 
 #: src/templates/registration/login.html:34
-msgid "Lost password?"
-msgstr ""
+msgid "Passwort vergessen?"
+msgstr "Reset password?"
 
 #: src/templates/registration/password_reset_complete.html:5
-msgid "The password has been changed!"
-msgstr ""
+msgid "Dein Passwort wurde erfolgreich geändert!"
+msgstr "Your password was successfully changed!"
+
+#: src/templates/registration/password_reset_complete.html:6
+msgid "Wieder einloggen?"
+msgstr "Login again?"
 
 #: src/templates/registration/password_reset_confirmation.html:6
-msgid "Please enter (and confirm) your new password."
-msgstr ""
+msgid "Bitte änder und bestätige dein neues Passwort."
+msgstr "Please Change"
 
 #: src/templates/registration/password_reset_confirmation.html:12
-msgid "New password"
+msgid "Neues Passwort"
 msgstr ""
 
 #: src/templates/registration/password_reset_confirmation.html:17
-msgid "Confirm password"
-msgstr ""
+msgid "Passwort bestätigen"
+msgstr "Confirm password"
 
 #: src/templates/registration/password_reset_confirmation.html:22
-msgid "Change my password"
-msgstr ""
+msgid "Passwort ändern"
+msgstr "Change password"
 
 #: src/templates/registration/password_reset_confirmation.html:27
-msgid "Password reset failed"
-msgstr ""
+msgid "Zurücksetzen vom Passwort fehlgeschlagen"
+msgstr "Reset of you password failed"
 
 #: src/templates/registration/password_reset_confirmation.html:28
 msgid ""
-"The password reset link was invalid, possibly because it has already been "
-"used. Please request a new password reset."
+"Der Link zum Zurücksetzen vom Passwort ist ungültig, vielleicht weil er "
+"bereits benutzt wurde. Bitte beantrage die Zurücksetzung erneut."
 msgstr ""
+"The link to reset you password is invalid, maybe because it was already "
+"used. Please request a new reset link."
 
 #: src/templates/registration/password_reset_done.html:5
 msgid ""
-"We've emailed you instructions for setting your password. If they haven't "
-"arrived in a few minutes, check your spam folder."
+"Wir haben dir eine E-Mail mit Informationen zum Zurücksetzen deines "
+"Passworts zugesendet. Wenn du die E-Mail nicht in wenigen Minuten bekommst "
+"schau bitte in deinem Spam-Ordner."
 msgstr ""
+"We seint you an e-mail with information regarding your password reset. If "
+"the e-mail does not arrive you in the next few minutes please check your "
+"spam folder."
 
 #: src/templates/registration/password_reset_email.html:2
-msgid "Someone asked for password reset for your email. Follow the link below:"
+msgid ""
+"Jemand hat um versucht dein Passwort zurückzusetzen. Wenn du das warst "
+"kannst du das unter folgendem Link tun:"
 msgstr ""
 
 #: src/templates/registration/password_reset_form.html:10
-msgid "Password reset"
-msgstr ""
+msgid "Passwort zurücksetzen"
+msgstr "Reset password"
 
 #: src/templates/registration/password_reset_form.html:11
-msgid "Provide the e-mail address that is connected with your account"
-msgstr ""
+msgid "Bitte gib die E-Mail ein die mit deinem Account verknüpft ist."
+msgstr "Please provide the e-mail address that is linked to your account."
 
 #: src/templates/registration/password_reset_form.html:13
-msgid "Reset"
-msgstr ""
+msgid "Zurücksetzen"
+msgstr "Reset"

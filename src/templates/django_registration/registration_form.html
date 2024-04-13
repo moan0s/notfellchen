@@ -7,9 +7,9 @@
     {% csrf_token %}
     {{ form.as_p }}
 
-    <input type="submit" value="{% translate 'Submit' %}" />
+    <input type="submit" value="{% translate 'Registrieren' %}" />
   </form>
 {% else %}
-  <p>{% translate "You're already logged in." %}</p>
+  <p>{% translate "Du bist bereits eingeloggt." %}</p>
 {% endif %}
 {% endblock %}

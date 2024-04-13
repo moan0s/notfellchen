@@ -4,13 +4,13 @@
 {% block content %}
 
   {% if form.errors %}
-    <p>{% translate "Your username and password didn't match. Please try again." %}</p>
+    <p>{% translate "Dein Username oder Passwort ist falsch." %}</p>
   {% endif %}
 
 {% if user.is_authenticated %}
-  <p>{% translate "You're already logged in." %}</p>
+  <p>{% translate "Du bist bereits eingeloggt." %}</p>
   {% else %} {% if next %}
-    <p>{% translate "Please login to see this page." %}</p>
+    <p>{% translate "Bitte log dich ein um diese Seite sehen zu können." %}</p>
   {% endif %}
 {% endif %}
 
@@ -27,10 +27,10 @@
         <td>{{ form.password }}</td>
       </tr>
     </table>
-    <input type="submit" value={% translate "login" %} />
+    <input type="submit" value={% translate "Einloggen" %} />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
-  <p><a href="{% url 'password_reset' %}">{% translate "Lost password?" %}</a></p>
+  <p><a href="{% url 'password_reset' %}">{% translate "Passwort vergessen?" %}</a></p>
 {% endif %}
 {% endblock %}
