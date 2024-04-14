@@ -1,6 +1,6 @@
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib import admin
-from .models import User, Language
+from .models import User, Language, Text
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Report, Member
@@ -32,3 +32,4 @@ admin.site.register(Image)
 admin.site.register(Report)
 admin.site.register(ModerationAction)
 admin.site.register(Language)
+admin.site.register(Text)
