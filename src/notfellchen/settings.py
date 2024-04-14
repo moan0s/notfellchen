@@ -26,10 +26,39 @@ else:
                 encoding='utf-8')
 CONFIG_FILE = config
 
+DJANGO_LOG_LEVEL = config.get('logging', 'django_log_level', fallback="WARNING")
+APP_LOG_LEVEL = config.get('logging', 'app_log_level', fallback="WARNING")
+
 """LOGGING"""
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': DJANGO_LOG_LEVEL,
+        },
+        'fellchensammlung': {
+            'handlers': ['console'],
+            'level': APP_LOG_LEVEL,
+        },
+        'notfellchen': {
+            'handlers': ['console'],
+            'level': APP_LOG_LEVEL,
+        },
+    },
 }
 
 """ DJANGO """
@@ -62,7 +91,7 @@ else:
 
 """USER MANAGEMENT"""
 AUTH_USER_MODEL = "fellchensammlung.User"
-ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
+ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
 REGISTRATION_OPEN = True
 REGISTRATION_SALT = "notfellchen"
 
@@ -81,7 +110,7 @@ SEC_POLICY = config.get("security", "Policy",
 """ LOCATIONS """
 STATIC_ROOT = config.get("locations", "static", fallback="/notfellchen/static")
 MEDIA_ROOT = config.get("locations", "media", fallback="/notfellchen/static")
-MEDIA_URL = '/media/'
+MEDIA_URL = config.get("urls", "media", fallback="/media/")
 
 host = config.get("notfellchen", "host", fallback='*')
 
@@ -218,11 +247,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
-
