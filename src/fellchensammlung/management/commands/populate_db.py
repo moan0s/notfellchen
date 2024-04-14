@@ -1,3 +1,5 @@
+import logging
+
 from django.core.management.base import BaseCommand, CommandError
 from django.core.files import File
 
@@ -12,6 +14,15 @@ class Command(BaseCommand):
 
     @staticmethod
     def populate_db():
+
+        # Check if there already is and AdoptionNotice named Vermittung1TestSalt9227. If it is, the database
+        # is already populated and no data will be added again
+        try:
+            AdoptionNotice.objects.get(name="Vermittung1TestSalt9227")
+        except AdoptionNotice.DoesNotExist:
+            print("Database already populated. No additional data will be created")
+            return
+
         rescue1 = baker.make_recipe(
             'fellchensammlung.rescue_org'
         )
@@ -19,7 +30,7 @@ class Command(BaseCommand):
             'fellchensammlung.rescue_org'
         )
 
-        adoption1 = baker.make(AdoptionNotice, name="Vermittung1", organization=rescue1)
+        adoption1 = baker.make(AdoptionNotice, name="Vermittung1TestSalt9227", organization=rescue1)
 
         adoption2 = baker.make(AdoptionNotice, name="Vermittung2", organization=rescue2)
 
