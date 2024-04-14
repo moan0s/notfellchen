@@ -8,7 +8,7 @@
 
     {% if privacy_statement %}
         <h1>{{ privacy_statement.title }}</h1>
-        {{ privacy.content | render_markdown }}
+        {{ privacy_statement.content | render_markdown }}
     {% endif %}
 
     {% if terms_of_service %}
