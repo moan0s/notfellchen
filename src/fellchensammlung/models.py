@@ -332,12 +332,13 @@ class Text(models.Model):
     Base class to store markdown content
     """
     title = models.CharField(max_length=100)
-    content = models.TextField()
-    language = models.OneToOneField(Language, on_delete=models.PROTECT)
-    text_code = models.CharField(max_length=24, verbose_name="text_code", blank=True)
+    content = models.TextField(verbose_name="Inhalt")
+    language = models.OneToOneField(Language, verbose_name="Sprache", on_delete=models.PROTECT)
+    text_code = models.CharField(max_length=24, verbose_name="Text code", blank=True)
 
     class Meta:
-        verbose_name_plural = "Markdown content"
+        verbose_name = "Text"
+        verbose_name_plural = "Texte"
 
     def __str__(self):
         return self.title
