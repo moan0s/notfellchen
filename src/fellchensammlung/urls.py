@@ -2,11 +2,13 @@ from django.urls import path, include
 from django_registration.backends.activation.views import RegistrationView
 
 from .forms import CustomRegistrationForm
+from .feeds import LatestAdoptionNoticesFeed
 
 from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("rss/", LatestAdoptionNoticesFeed(), name="rss"),
     # ex: /animal/5/
     path("<int:animal_id>/", views.animal_detail, name="animal-detail"),
     # ex: /adoption_notice/7/
