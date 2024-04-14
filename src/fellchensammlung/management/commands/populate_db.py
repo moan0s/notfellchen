@@ -19,9 +19,11 @@ class Command(BaseCommand):
         # is already populated and no data will be added again
         try:
             AdoptionNotice.objects.get(name="Vermittung1TestSalt9227")
-        except AdoptionNotice.DoesNotExist:
             print("Database already populated. No additional data will be created")
             return
+        except AdoptionNotice.DoesNotExist:
+            pass
+
 
         rescue1 = baker.make_recipe(
             'fellchensammlung.rescue_org'
