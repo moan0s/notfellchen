@@ -99,27 +99,23 @@ def add_animal_to_adoption(request, adoption_notice_id):
 
 def about(request):
     rules = Rule.objects.all()
+
     if request.user.is_authenticated:
         lang = request.user.member.preferred_language
+        if lang is None:
+            lang = Language.objects.get(languagecode="de")
     else:
         lang = Language.objects.get(languagecode="de")
-    try:
-        terms_of_service = Text.objects.get(text_code="terms_of_service", language=lang)
-    except Text.DoesNotExist:
-        terms_of_service = None
-    try:
-        imprint = Text.objects.get(text_code="imprint", language=lang)
-    except Text.DoesNotExist:
-        imprint = None
-    try:
-        privacy_statement = Text.objects.get(text_code="privacy_statement", language=lang)
-    except Text.DoesNotExist:
-        privacy_statement = None
 
-    context = {"rules": rules,
-               "terms_of_service": terms_of_service,
-               "imprint": imprint,
-               "privacy_statement": privacy_statement}
+    legal = {}
+    for text_code in ["terms_of_service", "privacy_statement", "imprint"]:
+        try:
+            legal[text_code] = Text.objects.get(text_code=text_code, language=lang,)
+        except Text.DoesNotExist:
+            legal[text_code] = None
+
+    context = {"rules": rules,}
+    context.update(legal)
     return render(
         request,
         "fellchensammlung/about.html",
