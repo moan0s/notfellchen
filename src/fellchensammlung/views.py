@@ -103,9 +103,16 @@ def about(request):
         lang = request.user.member.preferred_language
     else:
         lang = Language.objects.get(languagecode="de")
-    terms_of_service = Text.objects.get(text_code="terms_of_service", language=lang)
-    imprint = Text.objects.get(text_code="imprint", language=lang)
-    context = {"rules": rules}
+    try:
+        terms_of_service = Text.objects.get(text_code="terms_of_service", language=lang)
+    except Text.DoesNotExist:
+        terms_of_service = None
+    try:
+        imprint = Text.objects.get(text_code="imprint", language=lang)
+    except Text.DoesNotExist:
+        imprint = None
+
+    context = {"rules": rules, "terms_of_service": terms_of_service, "imprint": imprint}
     return render(
         request,
         "fellchensammlung/about.html",
