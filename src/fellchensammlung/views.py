@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import get_language
 from .mail import mail_admins_new_report
 from notfellchen import settings
 
@@ -100,12 +101,8 @@ def add_animal_to_adoption(request, adoption_notice_id):
 def about(request):
     rules = Rule.objects.all()
 
-    if request.user.is_authenticated:
-        lang = request.user.member.preferred_language
-        if lang is None:
-            lang = Language.objects.get(languagecode="de")
-    else:
-        lang = Language.objects.get(languagecode="de")
+    language_code = get_language()
+    lang = Language.objects.get(languagecode=language_code)
 
     legal = {}
     for text_code in ["terms_of_service", "privacy_statement", "imprint"]:
