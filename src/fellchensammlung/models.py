@@ -12,6 +12,27 @@ from django.contrib.auth.models import AbstractUser
 from fellchensammlung.tools import misc
 
 
+class Language(models.Model):
+    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
+    name = models.CharField(max_length=200,
+                            help_text=_("Der Name einer natürliche Sprache wie Deutsch, Englisch oder Arabisch."),
+                            unique=True)
+
+    languagecode = models.CharField(max_length=10,
+                                    # Translators: This helptext includes an URL
+                                    help_text=_(
+                                        "Der standartisierte Sprachcode. Mehr Informationen: http://www.i18nguy.com/unicode/language-identifiers.html"),
+                                    verbose_name=_('Sprachcode'))
+
+    def __str__(self):
+        """String for representing the Model object (in Admin site etc.)"""
+        return self.name
+
+    class Meta:
+        verbose_name = _('Sprache')
+        verbose_name_plural = _('Sprachen')
+
+
 class Image(models.Model):
     title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images')
@@ -188,6 +209,9 @@ class Rule(models.Model):
 
     # Markdown is allowed in rule text
     rule_text = models.TextField()
+    language = models.ForeignKey(Language, on_delete=models.PROTECT)
+    # Rule identifier allows to translate rules with the same identifier
+    rule_identifier = models.CharField(max_length=24)
 
     def __str__(self):
         return self.title
@@ -251,27 +275,6 @@ class ModerationAction(models.Model):
 
     def __str__(self):
         return f"[{self.action}]: {self.public_comment}"
-
-
-class Language(models.Model):
-    """Model representing a Language (e.g. English, French, Japanese, etc.)"""
-    name = models.CharField(max_length=200,
-                            help_text=_("Der Name einer natürliche Sprache wie Deutsch, Englisch oder Arabisch."),
-                            unique=True)
-
-    languagecode = models.CharField(max_length=10,
-                                    # Translators: This helptext includes an URL
-                                    help_text=_(
-                                        "Der standartisierte Sprachcode. Mehr Informationen: http://www.i18nguy.com/unicode/language-identifiers.html"),
-                                    verbose_name=_('Sprachcode'))
-
-    def __str__(self):
-        """String for representing the Model object (in Admin site etc.)"""
-        return self.name
-
-    class Meta:
-        verbose_name = _('Sprache')
-        verbose_name_plural = _('Sprachen')
 
 
 """
