@@ -1,9 +1,10 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.core.files import File
 
-from fellchensammlung.models import *
 from fellchensammlung import baker_recipes
 from model_bakery import baker
+
+from fellchensammlung.models import AdoptionNotice, Species, Animal, Image, ModerationAction, User, Member, Rule, Report
 
 
 class Command(BaseCommand):
@@ -39,7 +40,6 @@ class Command(BaseCommand):
 
             animal.photos.add(image_object)
 
-
         rule1 = baker.make(Rule, title="Be excellent ot each other", rule_text="This is **markdown**")
         rule2 = baker.make(Rule,
                            title="Keep al least the minimum number of animals for species",
@@ -48,12 +48,15 @@ class Command(BaseCommand):
                            title="Rule three",
                            rule_text="Everything needs at least three rules")
 
-        report1 = baker.make(Report, reported_broken_rules=[rule1, rule2], comment="This seems sketchy")
+        report1 = baker.make(Report, adoption_notice=adoption1, reported_broken_rules=[rule1, rule2],
+                             comment="This seems sketchy")
 
         moderation_action1 = baker.make(ModerationAction,
+                                        report=report1,
                                         action=ModerationAction.COMMENT,
                                         public_comment="This has been seen by a moderator")
         moderation_action1 = baker.make(ModerationAction,
+                                        report=report1,
                                         action=ModerationAction.DELETE,
                                         public_comment="A moderator has deleted the reported content")
 
