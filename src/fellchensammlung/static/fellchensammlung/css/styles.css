@@ -246,7 +246,7 @@ h1 {
     border: black 1px solid;
     border-radius: 0.3rem;
     padding: 2px;
-    margin: 2px;
+    margin: 4px;
 }
 
 .sex {
@@ -381,4 +381,9 @@ h1 {
 
 .heading-card-adoption-notice {
     word-wrap: anywhere;
+}
+
+.tags {
+    margin-left: auto;
+    padding: 5px;
 }

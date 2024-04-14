@@ -2,9 +2,15 @@
 <div class="card-animal">
     <div class="detail-animal-header">
         <h1>{{ animal.name }}</h1>
-        <div class="tag species">{{ animal.species }}</div>
-        <div class="tag sex">{{ animal.get_sex_display }}</div>
+        <div class="tags">
+            <div class="tag species">{{ animal.species }}</div>
+            <div class="tag sex">{{ animal.get_sex_display }}</div>
+        </div>
     </div>
+
+    {% if animal.description %}
+        <p>{{ animal.description }}</p>
+    {% endif %}
     {% if animal.get_photo %}
         <img src="{{ MEDIA_URL }}/{{ animal.get_photo.image }}" alt="{{ animal.get_photo.alt_text }}">
         </div>
