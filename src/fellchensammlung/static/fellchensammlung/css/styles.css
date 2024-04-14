@@ -32,6 +32,7 @@ th {
 
 h1 {
     padding-top: 10px;
+    word-wrap: break-word;
 }
 
 * {
@@ -359,6 +360,7 @@ h1 {
     .card-animal {
         flex: 1 100%;
     }
+
     .card-adoption-notice {
         flex: 1 100%;
     }
