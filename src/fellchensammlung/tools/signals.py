@@ -1,20 +1,21 @@
+import logging
+
+
 def _get_perms(permission_name_list):
     from django.contrib.auth.models import Permission
     permissions = []
     for permission_name in permission_name_list:
-        print(f"{permission_name}")
         try:
             permission = Permission.objects.get(codename=permission_name)
             permissions.append(permission)
         except Permission.DoesNotExist:
-            print("aaaaaa")
+            logging.warning("Permissions not correctly migrated, please run the migration again")
     return permissions
 
 
 def ensure_groups(sender, **kwargs):
     from django.contrib.auth.models import Group
     from django.contrib.auth.models import Permission
-    print([permission.name for permission in Permission.objects.all()])
 
 
     member_permissions = []
@@ -33,3 +34,8 @@ def ensure_groups(sender, **kwargs):
 
     members, created = Group.objects.get_or_create(name="Members")
     members.permissions.set(_get_perms(member_permissions))
+
+def ensure_languages(sender, **kwargs):
+    from fellchensammlung.models import Language
+    Language.objects.get_or_create(name="Deutsch", languagecode="de")
+    Language.objects.get_or_create(name="English", languagecode="en")

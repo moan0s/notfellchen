@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from .tools.signals import ensure_groups
+from .tools.signals import ensure_groups, ensure_languages
 from django.db.models.signals import post_migrate
 
 
@@ -14,3 +14,4 @@ class FellchensammlungConfig(AppConfig):
             post_migrate.connect(ensure_groups, sender=self)
         except Permission.DoesNotExist:
             pass
+        post_migrate.connect(ensure_languages, sender=self)
