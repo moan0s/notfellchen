@@ -27,7 +27,7 @@
         {% if adoption_notice.get_photo %}
             <div class="adoption-notice-img">
                 <img title="{{ adoption_notice.get_photo.title }}"
-                     src="/media/{{ adoption_notice.get_photo.image }}"
+                     src="{{ MEDIA_URL }}/{{ adoption_notice.get_photo.image }}"
                      alt="{{ adoption_notice.get_photo.alt_text }}">
             </div>
         {% else %}

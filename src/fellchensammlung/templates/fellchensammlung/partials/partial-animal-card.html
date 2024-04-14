@@ -6,7 +6,7 @@
         <div class="tag sex">{{ animal.get_sex_display }}</div>
     </div>
     {% if animal.get_photo %}
-        <img src="/media/{{ animal.get_photo.image }}" alt="{{ animal.get_photo.alt_text }}">
+        <img src="{{ MEDIA_URL }}/{{ animal.get_photo.image }}" alt="{{ animal.get_photo.alt_text }}">
         </div>
     {% else %}
         {% translate "Keine Foto" %}
