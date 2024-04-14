@@ -111,8 +111,15 @@ def about(request):
         imprint = Text.objects.get(text_code="imprint", language=lang)
     except Text.DoesNotExist:
         imprint = None
+    try:
+        privacy_statement = Text.objects.get(text_code="privacy_statement", language=lang)
+    except Text.DoesNotExist:
+        privacy_statement = None
 
-    context = {"rules": rules, "terms_of_service": terms_of_service, "imprint": imprint}
+    context = {"rules": rules,
+               "terms_of_service": terms_of_service,
+               "imprint": imprint,
+               "privacy_statement": privacy_statement}
     return render(
         request,
         "fellchensammlung/about.html",

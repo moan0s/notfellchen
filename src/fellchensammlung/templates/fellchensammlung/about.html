@@ -1,7 +1,22 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
+{% load custom_tags %}
 
 {% block content %}
     <h1>{% translate "Regeln" %}</h1>
     {% include "fellchensammlung/lists/list-rules.html" %}
+    {% if privacy_statement %}
+    <h1>{{ privacy_statement.title }}</h1>
+    <p>{{ privacy.content | render_markdown }}</p>
+    {% endif %}
+
+    {% if terms_of_service %}
+    <h1>{{ terms_of_service.title }}</h1>
+    <p>{{ terms_of_service.content | render_markdown }}</p>
+    {% endif %}
+
+    {% if imprint %}
+    <h1>{{ imprint.title }}</h1>
+    <p>{{ imprint.content | render_markdown }}</p>
+    {% endif %}
 {% endblock %}
