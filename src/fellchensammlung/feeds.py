@@ -5,7 +5,7 @@ from .models import AdoptionNotice
 
 
 class LatestAdoptionNoticesFeed(Feed):
-    title = "Nptfellchen"
+    title = "Notfellchen"
     link = "/rss/"
     description = "Updates zu neuen Vermittlungen."
 
