@@ -314,7 +314,7 @@ h1 {
 .adoption-notices {
     display: flex;
     flex-wrap: wrap;
-    list-style-type:none;
+    list-style-type: none;
 }
 
 .card-adoption-notice {
@@ -344,7 +344,7 @@ h1 {
 .animals {
     display: flex;
     flex-wrap: wrap;
-    list-style-type:none;
+    list-style-type: none;
 }
 
 .card-animal {
@@ -359,12 +359,24 @@ h1 {
     .card-animal {
         flex: 1 100%;
     }
+    .card-adoption-notice {
+        flex: 1 100%;
+    }
 }
 
-.card-animal img {
+.adoption-notice-img img, .card-animal img {
     max-width: 100%;
     border-radius: 10%;
     margin: 5px;
     max-height: 250px;
 }
 
+.adoption-card-report-link {
+    margin-left: auto;
+    font-size: 2rem;
+    padding: 10px;
+}
+
+.heading-card-adoption-notice {
+    word-wrap: anywhere;
+}
