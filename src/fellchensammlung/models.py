@@ -180,20 +180,6 @@ class Animal(models.Model):
         return reverse('animal-detail', args=[str(self.id)])
 
 
-class MarkdownContent(models.Model):
-    """
-    Base class to store markdown content
-    """
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-
-    class Meta:
-        verbose_name_plural = "Markdown content"
-
-    def __str__(self):
-        return self.title
-
-
 class Rule(models.Model):
     """
     Class to store rules
@@ -339,3 +325,19 @@ class Member(models.Model):
 
     def get_absolute_url(self):
         return reverse("member-detail", args=[str(self.user.id)])
+
+
+class Text(models.Model):
+    """
+    Base class to store markdown content
+    """
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    language = models.OneToOneField(Language, on_delete=models.PROTECT)
+    text_code = models.CharField(max_length=24, verbose_name="text_code", blank=True)
+
+    class Meta:
+        verbose_name_plural = "Markdown content"
+
+    def __str__(self):
+        return self.title

@@ -5,9 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .mail import mail_admins_new_report
 from notfellchen import settings
 
-from fellchensammlung.models import AdoptionNotice, MarkdownContent, Animal, Rule, Image, Report, ModerationAction, \
+from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     Member
 from .forms import AdoptionNoticeForm, AnimalForm, ImageForm, ReportForm
+from .models import Language
 
 
 def index(request):
@@ -98,6 +99,12 @@ def add_animal_to_adoption(request, adoption_notice_id):
 
 def about(request):
     rules = Rule.objects.all()
+    if request.user.is_authenticated:
+        lang = request.user.member.preferred_language
+    else:
+        lang = Language.objects.get(languagecode="de")
+    terms_of_service = Text.objects.get(text_code="terms_of_service", language=lang)
+    imprint = Text.objects.get(text_code="imprint", language=lang)
     context = {"rules": rules}
     return render(
         request,
