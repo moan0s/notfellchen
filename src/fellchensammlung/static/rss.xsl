@@ -12,7 +12,7 @@
         <meta charset="utf-8"/>
         <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="stylesheet" href="/css/rss-styles.css"/>
+        <link rel="stylesheet" href="css/rss-styles.css"/>
       </head>
       <body>
         <main>
@@ -185,7 +185,7 @@
                   id="path29-5" />
               </svg>
             </h1>
-            <h2><xsl:value-of select="/atom:feed/atom:title"/></h2>
+            <h2><xsl:value-of select="/rss/channel/title"/></h2>
             <p>
               <xsl:value-of select="/atom:feed/atom:subtitle"/>
             </p>
@@ -196,21 +196,20 @@
               Visit Website &#x2192;
             </a>
 
-            <h2>Recent blog posts</h2>
-            <xsl:for-each select="/atom:feed/atom:entry">
+            <h2>Adoption Notices</h2>
+            <xsl:for-each select="/rss/channel/item">
               <div class="post-summary">
                 <h1>
                   <a>
                     <xsl:attribute name="href">
                       <xsl:value-of select="atom:link/@href"/>
                     </xsl:attribute>
-                    <xsl:value-of select="atom:title"/>
+                    <xsl:value-of select="title"/>
                   </a>
                 </h1>
 
                 <div class="text-2 text-offset">
-                  Published on
-                  <xsl:value-of select="substring(atom:updated, 0, 17)" />
+                  <xsl:value-of select="description"/>
                 </div>
               </div>
             </xsl:for-each>
