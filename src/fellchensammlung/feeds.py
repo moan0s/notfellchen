@@ -1,5 +1,6 @@
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
+from django.templatetags.static import static
 
 from django.urls import reverse
 from django.utils.xmlutils import SimplerXMLGenerator
@@ -15,7 +16,7 @@ class FormattedFeed(Rss201rev2Feed):
     def write(self, outfile, encoding):
         handler = SimplerXMLGenerator(outfile, encoding, short_empty_elements=True)
         handler.startDocument()
-        handler._write('<?xml-stylesheet href="/static/rss.xsl" type="text/xsl"?>')
+        handler._write(f'<?xml-stylesheet href="{static("rss.xsl")}" type="text/xsl"?>')
         handler.startElement("rss", self.rss_attributes())
         handler.startElement("channel", self.root_attributes())
         self.add_root_elements(handler)
