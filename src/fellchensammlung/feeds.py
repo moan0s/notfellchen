@@ -1,8 +1,6 @@
 from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Rss201rev2Feed
 from django.templatetags.static import static
-
-from django.urls import reverse
 from django.utils.xmlutils import SimplerXMLGenerator
 
 from .models import AdoptionNotice
