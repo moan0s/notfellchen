@@ -1,10 +1,19 @@
 :root {
-    --background-one: #5daa68;
-    --background-two: #203f24;
-    --background-three: #faf1cf;
-    --highlight-one: #5daa68;
-    --text-one: #faf1cf;
-    --text-three: var(--background-two);
+    --primary-light-one: #5daa68;
+    --primary-light-two: #4a9455;
+    --primary-dark-one: #203f24;
+    --secondary-light-one: #faf1cf;
+    --background-one: var(--primary-light-one);
+    --background-two: var(--primary-light-two);
+    --background-three: var(--secondary-light-one);
+    --background-four: var(--primary-dark-one);
+    --highlight-one: var(--primary-dark-one);
+    --highlight-one-text: var(--secondary-light-one);
+    --text-one: var(--secondary-light-one);
+    --shadow-one: var(--primary-dark-one);
+    --text-two: var(--primary-dark-one);
+    --text-three: var(--primary-light-one);
+    --shadow-three: var(--primary-dark-one);
 }
 
 html, body {
@@ -14,7 +23,9 @@ html, body {
 
 body {
     background: var(--background-one);
+    color: var(--text-two);
 }
+
 
 .content-box {
     margin: 20px;
@@ -50,6 +61,8 @@ th {
 h1 {
     padding-top: 10px;
     word-wrap: break-word;
+    color: var(--text-one);
+    text-shadow: 2px 2px var(--shadow-one);
 }
 
 * {
@@ -59,9 +72,11 @@ h1 {
 .header {
     overflow: hidden;
     background-color: var(--background-two);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
-.header a, .sidebar-nav a {
+.header a {
     color: var(--text-one);
     text-align: center;
     text-decoration: none;
@@ -76,7 +91,7 @@ h1 {
 
 .header a:hover {
     background-color: var(--highlight-one);
-    color: black;
+    color: var(--highlight-one-text);
 }
 
 .header a.active {
@@ -90,7 +105,7 @@ h1 {
     border: none;
     border-radius: 4px;
     opacity: 1;
-    background-color: #4ba3cd;
+    background-color: var(--secondary-light-one);
 }
 
 .header-right select.option {
@@ -340,7 +355,12 @@ h1 {
     border-radius: 3%;
     padding: 5px;
     background: var(--background-three);
+    color: var(--text-two);
+}
+
+.card-adoption-notice h1 {
     color: var(--text-three);
+    text-shadow: 2px 2px var(--shadow-three);
 }
 
 .card-adoption-notice img {
