@@ -37,10 +37,6 @@ a {
     color: inherit;
 }
 
-.col-sm-2 {
-    padding-left: 0px;
-}
-
 table {
     border: none;
     border-collapse: collapse;
@@ -290,45 +286,13 @@ h1 {
     background: #F8ECD7;
 }
 
-.container-list-rules {
+
+
+.container-cards {
     display: flex;
     flex-wrap: wrap;
 }
 
-
-.card-rule {
-    width: 25%;
-    margin: 10px;
-    margin-bottom: 20px;
-
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 2%;
-    box-sizing: border-box;
-}
-
-.container-list-moderation-actions {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-
-.card-moderation-action {
-    width: 25%;
-    margin: 10px;
-    margin-bottom: 20px;
-
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 2%;
-    box-sizing: border-box;
-}
-
-@media (max-width: 920px) {
-    .card-rule {
-        width: 100%;
-    }
-}
 
 .photos {
     display: flex;
@@ -345,16 +309,10 @@ h1 {
     border-radius: 10%;
 }
 
-.adoption-notices {
-    display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
-}
-
 .card {
     flex: 1 16%;
     margin: 10px;
-    border-radius: 3%;
+    border-radius: 8px;
     padding: 5px;
     background: var(--background-three);
     color: var(--text-two);
@@ -379,12 +337,6 @@ h1 {
 
 .table-adoption-notice-info {
     margin-top: 10px;
-}
-
-.animals {
-    display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
 }
 
 
