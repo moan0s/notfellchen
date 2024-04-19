@@ -1,6 +1,19 @@
+:root {
+    --background-one: #5daa68;
+    --background-two: #203f24;
+    --background-three: #faf1cf;
+    --highlight-one: #5daa68;
+    --text-one: #faf1cf;
+    --text-three: var(--background-two);
+}
+
 html, body {
     margin: 0;
     height: 100%;
+}
+
+body {
+    background: var(--background-one);
 }
 
 .content-box {
@@ -9,6 +22,7 @@ html, body {
 
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 .col-sm-2 {
@@ -44,11 +58,11 @@ h1 {
 
 .header {
     overflow: hidden;
-    background-color: #addade;
+    background-color: var(--background-two);
 }
 
 .header a, .sidebar-nav a {
-    color: black;
+    color: var(--text-one);
     text-align: center;
     text-decoration: none;
     border-radius: 4px;
@@ -61,7 +75,7 @@ h1 {
 }
 
 .header a:hover {
-    background-color: #4090b6;
+    background-color: var(--highlight-one);
     color: black;
 }
 
@@ -81,7 +95,7 @@ h1 {
 
 .header-right select.option {
     color: #000;
-    background-color: #4ba3cd;
+    background-color: var(--highlight-one);
     padding: 0 10px;
     border: 1px;
 }
@@ -239,7 +253,6 @@ h1 {
 }
 
 .detail-animal-header {
-    border: 2px lavender solid;
     border-radius: 5px;
     display: flex;
     align-items: center;
@@ -325,8 +338,9 @@ h1 {
     flex: 1 16%;
     margin: 10px;
     border-radius: 3%;
-    border: 4px grey solid;
     padding: 5px;
+    background: var(--background-three);
+    color: var(--text-three);
 }
 
 .card-adoption-notice img {
