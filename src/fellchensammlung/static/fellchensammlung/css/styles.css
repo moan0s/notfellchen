@@ -1,8 +1,9 @@
 :root {
     --primary-light-one: #5daa68;
     --primary-light-two: #4a9455;
-    --primary-dark-one: #203f24;
+    --primary-dark-one: #17311b;
     --secondary-light-one: #faf1cf;
+    --secondary-light-two: #e1d7b5;
     --background-one: var(--primary-light-one);
     --background-two: var(--primary-light-two);
     --background-three: var(--secondary-light-one);
@@ -43,6 +44,7 @@ a {
 table {
     border: none;
     border-collapse: collapse;
+    background-color: var(--secondary-light-one);
 }
 
 td {
@@ -55,7 +57,7 @@ th {
     border: 3px solid black;
     border-collapse: collapse;
     padding: 8px;
-    background-color: #ECECEC;
+    background-color: var(--secondary-light-two);
 }
 
 h1 {
@@ -349,7 +351,7 @@ h1 {
     list-style-type: none;
 }
 
-.card-adoption-notice {
+.card {
     flex: 1 16%;
     margin: 10px;
     border-radius: 3%;
@@ -358,12 +360,12 @@ h1 {
     color: var(--text-two);
 }
 
-.card-adoption-notice h1 {
+.card h1 {
     color: var(--text-three);
     text-shadow: 2px 2px var(--shadow-three);
 }
 
-.card-adoption-notice img {
+.card img {
     max-width: 100%;
     border-radius: 10%;
 }
@@ -385,25 +387,14 @@ h1 {
     list-style-type: none;
 }
 
-.card-animal {
-    flex: 1 16%;
-    margin: 10px 10px 10px 0px;
-    border-radius: 3%;
-    border: 4px grey solid;
-    padding: 5px;
-}
 
 @media (max-width: 920px) {
-    .card-animal {
-        flex: 1 100%;
-    }
-
-    .card-adoption-notice {
+    .card {
         flex: 1 100%;
     }
 }
 
-.adoption-notice-img img, .card-animal img {
+.adoption-notice-img img, img {
     max-width: 100%;
     border-radius: 10%;
     margin: 5px;
