@@ -1,13 +1,24 @@
 from django import forms
 from .models import AdoptionNotice, Animal, Image, Report, ModerationAction, User
 from django_registration.forms import RegistrationForm
-
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+from django.utils.translation import gettext_lazy as _
 
 class DateInput(forms.DateInput):
     input_type = 'date'
 
 
 class AdoptionNoticeForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'id-exampleForm'
+        self.helper.form_class = 'card'
+        self.helper.form_method = 'post'
+
+        self.helper.add_input(Submit('submit', _('Submit')))
+
     class Meta:
         model = AdoptionNotice
         fields = ['name', "group_only", "further_information", "description", "searching_since"]

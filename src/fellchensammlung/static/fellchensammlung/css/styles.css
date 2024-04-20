@@ -135,8 +135,12 @@ h1 {
 
 
 .btn {
-    border: 2px solid #4090b6;
-    background-color: #4ba3cd;
+    background-color: var(--primary-light-one);
+    color: var(--secondary-light-one);
+    padding: 16px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
 }
 
 .form-button, .link-button a:link, .link-button a:visited {

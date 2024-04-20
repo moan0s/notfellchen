@@ -11,9 +11,5 @@
             Fotos hochzuladen.
             </p>
         {% endblocktranslate %}
-    <form method="post" class="card" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form | crispy}}
-        <button type="submit">{% translate "Weiter" %}</button>
-    </form>
+    {% crispy form %}
 {% endblock %}
