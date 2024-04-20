@@ -1,15 +1,19 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-  <h1>{% translate "Vermitteln" %}</h1>
-    {% blocktranslate %}
-    Bitte mach dich zunächst mit unseren Regeln vertraut. Dann trage hier die ersten Informationen ein.
-    Du bekommst in einem weiteren Schritt die Möglichkeit einzelne Tiere zu deiner Vermittlung hinzuzufügen und Fotos hochzuladen.
-    {% endblocktranslate %}
-    <form method = "post" enctype="multipart/form-data">
+    <h1>{% translate "Vermitteln" %}</h1>
+    <p>
+        {% blocktranslate %}
+            Bitte mach dich zunächst mit unseren Regeln vertraut. Dann trage hier die ersten Informationen ein.
+            Du bekommst in einem weiteren Schritt die Möglichkeit einzelne Tiere zu deiner Vermittlung hinzuzufügen und
+            Fotos hochzuladen.
+            </p>
+        {% endblocktranslate %}
+    <form method="post" class="card" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form | crispy}}
         <button type="submit">{% translate "Weiter" %}</button>
     </form>
 {% endblock %}

@@ -367,3 +367,11 @@ h1 {
     margin-left: auto;
     padding: 5px;
 }
+
+form {
+    padding: 20px;
+}
+
+.form-group {
+    margin: 30px;
+}
