@@ -18,7 +18,17 @@ class AdoptionNoticeForm(forms.ModelForm):
         self.helper.form_class = 'card'
         self.helper.form_method = 'post'
 
-        self.helper.add_input(Submit('submit', _('Submit')))
+        self.helper.layout = Layout(
+            Fieldset(
+                _('Vermittlungsdetails'),
+                'name',
+                'group_only',
+                'searching_since',
+                'description',
+                'further_information',
+            ),
+            Submit('submit', _('Submit'))
+        )
 
     class Meta:
         model = AdoptionNotice
