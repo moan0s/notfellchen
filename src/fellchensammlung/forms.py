@@ -13,7 +13,8 @@ class AdoptionNoticeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_id = 'id-exampleForm'
+
+        self.helper.form_id = 'form-adoption-notice'
         self.helper.form_class = 'card'
         self.helper.form_method = 'post'
 
