@@ -35,7 +35,9 @@ dependencies = [
     "markdown",
     "Pillow",
     "django-registration",
-    "psycopg2-binary"
+    "psycopg2-binary",
+    "django-crispy-forms",
+    "crispy-bootstrap4",
 ]
 dynamic = ["version", "readme"]
 
