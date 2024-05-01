@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <div class="detail-animal"></div>
 <div class="detail-animal-header">
     <h1>{{ animal.name }}</h1>
@@ -19,7 +20,7 @@
 <p>{{ animal.description }}</p>
 <h2>{% translate "Bilder" %}</h2>
 <div class="photos">
-    {% for image in animal.photos_list %}
+    {% for image in animal.get_photos %}
         <div class="card-photo">
             <img src="/media/{{ image.image }}" alt="{{ image.alt_text }}">
         </div>
