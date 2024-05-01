@@ -107,11 +107,11 @@ def about(request):
     legal = {}
     for text_code in ["terms_of_service", "privacy_statement", "imprint"]:
         try:
-            legal[text_code] = Text.objects.get(text_code=text_code, language=lang,)
+            legal[text_code] = Text.objects.get(text_code=text_code, language=lang, )
         except Text.DoesNotExist:
             legal[text_code] = None
 
-    context = {"rules": rules,}
+    context = {"rules": rules, }
     context.update(legal)
     return render(
         request,
