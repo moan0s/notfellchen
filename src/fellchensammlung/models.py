@@ -10,6 +10,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 
 from fellchensammlung.tools import misc
+from notfellchen.settings import MEDIA_URL
 
 
 class Language(models.Model):
@@ -40,6 +41,10 @@ class Image(models.Model):
 
     def __str__(self):
         return self.title
+
+    @property
+    def as_html(self):
+        return f'<img src="{ MEDIA_URL }/{ self.image }" alt="{ self.alt_text }">'
 
 
 class Species(models.Model):

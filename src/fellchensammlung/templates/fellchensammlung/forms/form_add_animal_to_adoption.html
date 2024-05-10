@@ -1,5 +1,6 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block content %}
     <h1>{% translate "Vermitteln" %}</h1>
@@ -8,17 +9,5 @@
         kannst
         du im nächsten Schritt hochladen.
     {% endblocktranslate %}
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="form-animal">
-            {{ form.as_p }}
-        </div>
-        <div class="form-image">
-            <h2>{% translate "Bild hinzufügen" %}</h2>
-            {{ image_form.as_p }}
-        </div>
-        <button name="button_add_another_animal"
-                type="submit">{% translate "Speichern und nächstes Tier hinzufügen" %}</button>
-        <button name="button_save_and_continue" type="submit">{% translate "Speichern und weiter" %}</button>
-    </form>
+    {% crispy form %}
 {% endblock %}

@@ -13,7 +13,7 @@ authors = [
 maintainers = [
   {name = "moanos", email = "julian-samuel@gebuehr.net"},
 ]
-keywords = ["matrix", "registration", "bot", "user", "registration", "API"  ]
+keywords = ["animal", "adoption", "django", "rescue", ]
 license = {text = "AGPL-3.0-or-later"}
 classifiers = [
     "Environment :: Web",
