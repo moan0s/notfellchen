@@ -22,6 +22,12 @@ body {
     flex-direction: column;
     background-color: var(--background-one);
     color: var(--text-one);
+    margin: 0;
+    height: 100%;
+}
+
+.content {
+    margin: 10px;
 }
 
 
@@ -70,4 +76,15 @@ a {
 .inline-icon {
     height: 1.5rem;
     width: 1.5rem;
+}
+
+.navigation-sticky {
+    background-color: var(--secondary-light-one);
+    color: var(--primary-light-one);
+    padding: 16px;
+    margin: 0;
+    border-bottom-right-radius: 8px;
+    border: none;
+    font-weight: bold;
+    width: 20%;
 }
