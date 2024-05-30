@@ -6,15 +6,13 @@ from model_bakery import baker
 
 from fellchensammlung.models import Animal, Species, AdoptionNotice, User
 
-class AnimalTest(TestCase):
+class AnimalAndAdoptionTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         test_user0 = User.objects.create_user(username='testuser0',
                                               first_name="Admin",
                                               last_name="BOFH",
                                               password='12345')
-        permission_view_user = Permission.objects.get(codename='view_member')
-        test_user0.user_permissions.add(permission_view_user)
 
         test_user1 = User.objects.create_user(username='testuser1',
                                               first_name="Max",
@@ -31,11 +29,21 @@ class AnimalTest(TestCase):
                           species=rat,
                           description="Eine unglaublich süße Ratte")
 
-    def test_detail(self):
+    def test_detail_animal(self):
         self.client.login(username='testuser0', password='12345')
 
         response = self.client.post(reverse('animal-detail', args="1"))
         self.assertEqual(response.status_code, 200)
         # Check our user is logged in
         self.assertEqual(str(response.context['user']), 'testuser0')
+        self.assertContains(response, "Rat1")
+
+    def test_detail_animal_notice(self):
+        self.client.login(username='testuser0', password='12345')
+
+        response = self.client.post(reverse('adoption-notice-detail', args="1"))
+        self.assertEqual(response.status_code, 200)
+        # Check our user is logged in
+        self.assertEqual(str(response.context['user']), 'testuser0')
+        self.assertContains(response, "TestAdoption1")
         self.assertContains(response, "Rat1")
