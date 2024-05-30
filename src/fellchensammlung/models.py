@@ -241,13 +241,12 @@ class Report(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text=_('ID dieses reports'),
                           verbose_name=_('ID'))
     status = models.CharField(max_length=30, choices=STATES)
-    reported_broken_rules = models.ManyToManyField(Rule, blank=True)
-    adoption_notice = models.ForeignKey("AdoptionNotice", on_delete=models.CASCADE)
-    comment = models.TextField(blank=True)
+    reported_broken_rules = models.ManyToManyField(Rule)
+    user_comment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"[{self.status}]: {self.adoption_notice.name}"
+        return f"[{self.status}]: {self.user_comment:.20}"
 
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the report."""
@@ -258,6 +257,22 @@ class Report(models.Model):
 
     def get_moderation_actions(self):
         return ModerationAction.objects.filter(report=self)
+
+
+class ReportAdoptionNotice(Report):
+    adoption_notice = models.ForeignKey("AdoptionNotice", on_delete=models.CASCADE)
+
+    @property
+    def reported_content(self):
+        return self.adoption_notice
+
+
+class ReportComment(Report):
+    reported_comment = models.ForeignKey("Comment", on_delete=models.CASCADE)
+
+    @property
+    def reported_content(self):
+        return self.reported_comment
 
 
 class ModerationAction(models.Model):
@@ -368,3 +383,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user} at {self.created_at.strftime('%H:%M %d.%m.%y')}: {self.text:.10}"
+
+    def get_report_url(self):
+        return reverse('report-comment', args=[str(self.id)])
+
+    @property
+    def get_absolute_url(self):
+        return self.adoption_notice.get_absolute_url()

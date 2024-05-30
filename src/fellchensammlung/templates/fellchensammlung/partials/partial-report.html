@@ -2,7 +2,7 @@
 <div class="report">
     <h2>
         {% blocktranslate %}
-            Meldung von {{ report.adoption_notice.name }}
+            Meldung von {{ report.reported_content }}
         {% endblocktranslate %}
     </h2>
     {% if report.reported_broken_rules %}
@@ -14,6 +14,6 @@
         </ul>
     {% endif %}
     <p><b>{% translate "Kommentar zur Meldung" %}:</b>
-        {{ report.comment }}
+        {{ report.user_comment }}
     </p>
 </div>

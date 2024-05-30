@@ -13,7 +13,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     Member
-from .forms import AdoptionNoticeForm, ImageForm, ReportForm, CommentForm
+from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm
 from .models import Language
 
 
@@ -223,17 +223,38 @@ def report_adoption(request, adoption_notice_id):
     Form to report adoption notices
     """
     if request.method == 'POST':
-        form = ReportForm(request.POST)
+        form = ReportAdoptionNoticeForm(request.POST)
 
         if form.is_valid():
             report_instance = form.save(commit=False)
             report_instance.adoption_notice_id = adoption_notice_id
             report_instance.status = Report.WAITING
             report_instance.save()
+            form.save_m2m()
             mail_admins_new_report(report_instance)
             return redirect(reverse("report-detail-success", args=[report_instance.pk], ))
     else:
-        form = ReportForm()
+        form = ReportAdoptionNoticeForm()
+    return render(request, 'fellchensammlung/forms/form-report.html', {'form': form})
+
+
+def report_comment(request, comment_id):
+    """
+    Form to report comments
+    """
+    if request.method == 'POST':
+        form = ReportCommentForm(request.POST)
+
+        if form.is_valid():
+            report_instance = form.save(commit=False)
+            report_instance.reported_comment_id = comment_id
+            report_instance.status = Report.WAITING
+            report_instance.save()
+            form.save_m2m()
+            mail_admins_new_report(report_instance)
+            return redirect(reverse("report-detail-success", args=[report_instance.pk], ))
+    else:
+        form = ReportCommentForm()
     return render(request, 'fellchensammlung/forms/form-report.html', {'form': form})
 
 

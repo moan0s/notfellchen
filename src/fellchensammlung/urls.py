@@ -28,7 +28,9 @@ urlpatterns = [
     #############
     ## Reports ##
     #############
-    path("melden/<int:adoption_notice_id>/", views.report_adoption, name="report-adoption-notice"),
+    path("vermittlung/<int:adoption_notice_id>/report", views.report_adoption, name="report-adoption-notice"),
+
+    path("kommentar/<int:comment_id>/report", views.report_comment, name="report-comment"),
     path("meldung/<uuid:report_id>/", views.report_detail, name="report-detail"),
     path("meldung/<uuid:report_id>/sucess", views.report_detail_success, name="report-detail-success"),
     path("modqueue/", views.modqueue, name="modqueue"),

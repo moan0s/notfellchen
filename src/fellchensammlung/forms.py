@@ -2,7 +2,8 @@ import datetime
 
 from django import forms
 
-from .models import AdoptionNotice, Animal, Image, Report, ModerationAction, User, Species, Comment
+from .models import AdoptionNotice, Animal, Image, ReportAdoptionNotice, ReportComment, ModerationAction, User, Species, \
+    Comment
 from django_registration.forms import RegistrationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field
@@ -53,10 +54,16 @@ class ImageForm(forms.ModelForm):
         fields = ('title', 'image', 'alt_text')
 
 
-class ReportForm(forms.ModelForm):
+class ReportAdoptionNoticeForm(forms.ModelForm):
     class Meta:
-        model = Report
-        fields = ('reported_broken_rules', 'comment')
+        model = ReportAdoptionNotice
+        fields = ('reported_broken_rules', 'user_comment')
+
+
+class ReportCommentForm(forms.ModelForm):
+    class Meta:
+        model = ReportComment
+        fields = ('reported_broken_rules', 'user_comment')
 
 
 class CommentForm(forms.ModelForm):
