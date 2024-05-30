@@ -430,6 +430,10 @@ h1, h2 {
 .container-comment-form {
     width: 80%;
     color: var(--text-one);
+
+    b {
+        text-shadow: 2px 2px var(--shadow-one);
+    }
 }
 
 textarea {
