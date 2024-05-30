@@ -12,4 +12,10 @@
         </div>
     {% endif %}
 
+    {% if user.is_authenticated %}
+        {% include "fellchensammlung/forms/form-comment.html" %}
+    {% else %}
+        {% translate 'Du musst dich einloggen um Kommentare zu hinterlassen' %}
+    {% endif %}
+
 </div>

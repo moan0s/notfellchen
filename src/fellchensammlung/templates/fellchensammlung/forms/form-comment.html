@@ -1,0 +1,7 @@
+{% load i18n %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button class="button-report" type="submit">{% translate "Kommentieren" %}</button>
+</form>

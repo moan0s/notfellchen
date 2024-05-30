@@ -2,7 +2,7 @@ import datetime
 
 from django import forms
 
-from .models import AdoptionNotice, Animal, Image, Report, ModerationAction, User, Species
+from .models import AdoptionNotice, Animal, Image, Report, ModerationAction, User, Species, Comment
 from django_registration.forms import RegistrationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field
@@ -59,6 +59,10 @@ class ReportForm(forms.ModelForm):
         model = Report
         fields = ('reported_broken_rules', 'comment')
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('text',)
 
 class ModerationActionForm(forms.ModelForm):
     class Meta:

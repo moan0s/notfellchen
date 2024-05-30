@@ -4,15 +4,16 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-
 from django.utils import translation
+from django.core.exceptions import PermissionDenied
+
 from .mail import mail_admins_new_report
 from notfellchen import settings
 
 from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     Member
-from .forms import AdoptionNoticeForm, ImageForm, ReportForm
+from .forms import AdoptionNoticeForm, ImageForm, ReportForm, CommentForm
 from .models import Language
 
 
@@ -43,7 +44,20 @@ def change_language(request):
 
 def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
-    context = {"adoption_notice": adoption_notice}
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            comment_form = CommentForm(request.POST)
+
+            if comment_form.is_valid():
+                comment_instance = comment_form.save(commit=False)
+                comment_instance.adoption_notice_id = adoption_notice_id
+                comment_instance.user = request.user.member
+                comment_instance.save()
+        else:
+            raise PermissionDenied
+    else:
+        comment_form = CommentForm(instance=adoption_notice)
+    context = {"adoption_notice": adoption_notice, "comment_form": comment_form}
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 
