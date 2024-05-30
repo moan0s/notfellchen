@@ -33,7 +33,6 @@
                         </alert-box>
                         <div class="rss-summary">
                             <h1 class="flex items-start">
-                                RSS Feed Preview - <xsl:value-of select="/rss/channel/title"/>
                                 <svg
                                         class="inline-icon"
                                         version="1.1"
@@ -193,6 +192,7 @@
                                             fill="#ffffff"
                                             id="path29-5"/>
                                 </svg>
+                                RSS Feed Preview - <xsl:value-of select="/rss/channel/title"/>
                             </h1>
                             <p>
                                 <xsl:value-of select="/atom:feed/atom:subtitle"/>
