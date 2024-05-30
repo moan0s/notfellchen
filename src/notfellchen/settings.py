@@ -24,6 +24,7 @@ if 'DOCKER_BUILD' in os.environ and os.environ.get('DOCKER_BUILD'):
 else:
     config.read(['/etc/notfellchen/notfellchen.cfg', os.path.expanduser('~/.notfellchen.cfg'), 'notfellchen.cfg'],
                 encoding='utf-8')
+
 CONFIG_FILE = config
 
 DJANGO_LOG_LEVEL = config.get('logging', 'django_log_level', fallback="WARNING")
@@ -62,7 +63,10 @@ LOGGING = {
 }
 
 """ DJANGO """
-SECRET_KEY = config.get('django', 'secret')
+try:
+    SECRET_KEY = config.get('django', 'secret')
+except configparser.NoSectionError:
+    raise BaseException("No config found or no Django Secret is configured!")
 DEBUG = config.getboolean('django', 'debug', fallback=False)
 
 """ DATABASE """
