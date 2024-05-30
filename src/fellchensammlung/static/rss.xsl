@@ -7,7 +7,7 @@
             <head>
                 <title>
                     RSS Feed |
-                    <xsl:value-of select="/atom:feed/atom:title"/>
+                    <xsl:value-of select="/rss/channel/title"/>
                 </title>
                 <meta charset="utf-8"/>
                 <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
