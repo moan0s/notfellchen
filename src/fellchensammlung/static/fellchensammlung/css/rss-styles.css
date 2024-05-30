@@ -1,56 +1,73 @@
 :root {
-  --background-color: #727272;
-  --background-color-dark: #2a2a2a;
-  --text-color: #000000;
-  --link-color: rgb(10, 10, 42);
-  --text-background: #aaaaaa;
-}
-body {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--background-color-dark);
-  color: var(--text-color);
+    --primary-light-one: #5daa68;
+    --primary-light-two: #4a9455;
+    --primary-dark-one: #17311b;
+    --secondary-light-one: #faf1cf;
+    --secondary-light-two: #e1d7b5;
+    --background-one: var(--primary-light-one);
+    --background-two: var(--primary-light-two);
+    --background-three: var(--secondary-light-one);
+    --background-four: var(--primary-dark-one);
+    --highlight-one: var(--primary-dark-one);
+    --highlight-one-text: var(--secondary-light-one);
+    --text-one: var(--secondary-light-one);
+    --shadow-one: var(--primary-dark-one);
+    --text-two: var(--primary-dark-one);
+    --text-three: var(--primary-light-one);
+    --shadow-three: var(--primary-dark-one);
 }
 
-alert-box[type="info"] {
-  --alert-border: var(--background-color);
-  --alert-background: var(--text-background);
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-one);
+    color: var(--text-one);
 }
+
 
 alert-box {
-  display: block;
-  margin: 3rem 0;
-  padding: 2rem 3rem;
-  border: 1px solid var(--alert-border);
-  border-left-width: .5rem;
-  border-radius: .4rem;
-  background-color: var(--alert-background);
+    color: var(--highlight-one);
+    display: block;
+    margin: 3rem 0;
+    padding: 2rem 3rem;
+    border: 1px solid var(--highlight-one);
+    border-left-width: .5rem;
+    border-radius: .4rem;
+    background-color: var(--background-three);
+
+    a {
+        color: var(--text-three);
+        text-decoration: none;
+    }
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
+}
+
+
+.rss-summary {
+    color: var(--highlight-one);
+    padding: 15px;
+    border-radius: .4rem;
+    background-color: var(--background-three);
 }
 
 .post-summary {
-  margin: 1rem;
-  padding: 5px;
-  border-radius: .4rem;
-  background-color: var(--text-background);
-}
-
-.rss-summary {
-  padding: 15px;
-  border-radius: .4rem;
-  background-color: var(--background-color);
+    color: var(--text-two);
+    margin: 1rem;
+    padding: 5px;
+    border-radius: .4rem;
+    background-color: var(--background-one);
 }
 
 .post-summary h1 {
-  color: var(--link-color);
-  font-size: large;
+    color: var(--text-one);
+    font-size: large;
 }
 
 .inline-icon {
-  height: 1.5rem;
-  width: 1.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
 }

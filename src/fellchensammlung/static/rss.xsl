@@ -208,7 +208,7 @@
                   </a>
                 </h1>
 
-                <div class="text-2 text-offset">
+                <div class="post-description">
                   <xsl:value-of select="description"/>
                 </div>
               </div>
