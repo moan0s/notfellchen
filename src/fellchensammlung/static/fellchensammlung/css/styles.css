@@ -32,6 +32,10 @@ body {
     margin: 20px;
 }
 
+table {
+    width: 100%;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -57,7 +61,6 @@ th {
 }
 
 h1 {
-    padding-top: 10px;
     word-wrap: break-word;
     color: var(--text-one);
     text-shadow: 2px 2px var(--shadow-one);
@@ -139,6 +142,15 @@ h1 {
     color: var(--secondary-light-one);
     padding: 16px;
     border-radius: 8px;
+    border: none;
+    font-weight: bold;
+}
+
+.btn2 {
+    background-color: var(--secondary-light-one);
+    color: var(--primary-dark-one);
+    padding: 8px;
+    border-radius: 4px;
     border: none;
     font-weight: bold;
 }
@@ -378,4 +390,14 @@ form {
 
 .form-group {
     margin: 30px;
+}
+
+.detail-adoption-notice-header h1 {
+    width: 50%;
+    display: inline-block;
+}
+
+.detail-adoption-notice-header a {
+    display: inline-block;
+    float: right;
 }
