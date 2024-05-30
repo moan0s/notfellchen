@@ -112,7 +112,7 @@ def adoption_notice_add_animal(request, adoption_notice_id):
             instance.save()
             form.save_m2m()
             if True:
-                return redirect(reverse("adoption-notice-detail", args=[instance.pk]))
+                return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
             else:
                 return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html')
     else:
