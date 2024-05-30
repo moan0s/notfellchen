@@ -67,7 +67,7 @@ def adoption_notice_edit(request, adoption_notice_id):
     """
     adoption_notice = AdoptionNotice.objects.get(pk=adoption_notice_id)
     if request.method == 'POST':
-        form = AdoptionNoticeForm(request.POST)
+        form = AdoptionNoticeForm(request.POST, instance=adoption_notice)
 
         if form.is_valid():
             adoption_notice_instance = form.save()
