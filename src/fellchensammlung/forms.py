@@ -38,9 +38,7 @@ class AdoptionNoticeForm(forms.ModelForm):
     class Meta:
         model = AdoptionNotice
         fields = ['name', "group_only", "further_information", "description", "searching_since"]
-        widgets = {
-            'searching_since': DateInput(),
-        }
+
 
 
 class ImageForm(forms.ModelForm):
