@@ -116,7 +116,7 @@ def adoption_notice_add_animal(request, adoption_notice_id):
             else:
                 return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html')
     else:
-        form = AnimalForm()
+        form = AnimalForm(adding_to_adoption_notice=True)
     return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
 
 @login_required
@@ -124,45 +124,17 @@ def animal_edit(request, animal_id):
     """
     View implements the following methods
     * Updating an Animal
-    * Adding photos to an animal
     """
-
-    def delete_photo():
-        print("Photo deleted")
-
-    def save_photo():
-        print("Photo save")
-
-    def add_photo():
-        print("Photo added")
-
-    def save_animal():
-        print("Animal saved")
-
+    animal = Animal.objects.get(pk=animal_id)
     if request.method == 'POST':
-        form = AnimalForm(request.POST, animal_id=animal_id, )
-        for key in request.POST:
-            if key.startswith("delete_photo_"):
-                action = delete_photo
-            if key.startswith("save_photo_"):
-                action = save_photo
-            if key.startswith("add_photo"):
-                action = add_photo
-            if key.startswith("save_animal"):
-                action = save_animal
+        form = AnimalForm(request.POST, instance=animal)
 
-            pk = key.split("_")[-1]
-
-            action(animal_id, pk, form_data=request.POST)
-
-        return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html',
-                      {'form': form})
-
+        if form.is_valid():
+            animal = form.save()
+            return redirect(reverse("animal-detail", args=[animal.pk], ))
     else:
-        form = AnimalForm(animal_id)
-        image_form = ImageForm(request.POST, request.FILES, prefix="image_")
-    return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html',
-                  {'form': form})
+        form = AnimalForm(instance=animal)
+    return render(request, 'fellchensammlung/forms/form-adoption-notice.html', context={"form": form})
 
 
 def about(request):

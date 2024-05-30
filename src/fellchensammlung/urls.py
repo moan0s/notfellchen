@@ -12,7 +12,7 @@ urlpatterns = [
     # ex: /animal/5/
     path("tier/<int:animal_id>/", views.animal_detail, name="animal-detail"),
     # ex: /animal/5/edit
-    path("tier<int:animal_id>/edit", views.animal_edit, name="animal-edit"),
+    path("tier/<int:animal_id>/edit", views.animal_edit, name="animal-edit"),
     # ex: /adoption_notice/7/
     path("vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail, name="adoption-notice-detail"),
     # ex: /adoption_notice/7/edit

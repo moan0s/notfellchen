@@ -43,11 +43,19 @@ class AdoptionNoticeForm(forms.ModelForm):
 
 class AnimalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        if 'adding_to_adoption_notice' in kwargs:
+            adding = kwargs.pop('adding_to_adoption_notice')
+        else:
+            adding = False
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-animal'
-        self.helper.add_input(Submit('save-and-add-another-animal', _('Speichern und weiteres Tier hinzufügen')))
-        self.helper.add_input(Submit('save-and-finish', _('Speichern und beenden')))
+        if adding:
+            self.helper.add_input(Submit('save-and-add-another-animal', _('Speichern und weiteres Tier hinzufügen')))
+            self.helper.add_input(Submit('save-and-finish', _('Speichern und beenden')))
+        else:
+            self.helper.add_input(Submit('submit', _('Speichern')))
+
 
     class Meta:
         model = Animal
