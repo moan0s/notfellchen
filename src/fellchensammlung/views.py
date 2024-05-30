@@ -47,7 +47,18 @@ def adoption_notice_detail(request, adoption_notice_id):
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 def adoption_notice_edit(request, adoption_notice_id):
-    form = AdoptionNoticeForm()
+    """
+    Form to update adoption notices
+    """
+    adoption_notice = AdoptionNotice.objects.get(pk=adoption_notice_id)
+    if request.method == 'POST':
+        form = AdoptionNoticeForm(request.POST)
+
+        if form.is_valid():
+            adoption_notice_instance = form.save()
+            return redirect(reverse("adoption-notice-detail", args=[adoption_notice_instance.pk], ))
+    else:
+        form = AdoptionNoticeForm(instance=adoption_notice)
     return render(request, 'fellchensammlung/forms/form-adoption-notice.html', context={"form": form})
 
 def animal_detail(request, animal_id):
