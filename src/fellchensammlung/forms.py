@@ -40,7 +40,6 @@ class AdoptionNoticeForm(forms.ModelForm):
         fields = ['name', "group_only", "further_information", "description", "searching_since"]
 
 
-
 class ImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -59,10 +58,18 @@ class ReportForm(forms.ModelForm):
         model = Report
         fields = ('reported_broken_rules', 'comment')
 
+
 class CommentForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-comments'
+        self.helper.add_input(Submit('submit', _('Kommentieren')))
+
     class Meta:
         model = Comment
         fields = ('text',)
+
 
 class ModerationActionForm(forms.ModelForm):
     class Meta:

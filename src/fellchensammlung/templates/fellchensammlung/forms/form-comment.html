@@ -1,7 +1,13 @@
 {% load i18n %}
+{% load crispy_forms_tags %}
+<div class="container-comment-form">
+    <p>
+        <b>
+            {% blocktrans %}
+                Als {{ user }} kommentieren
+            {% endblocktrans %}
+        </b>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ comment_form.as_p }}
-    <button class="button-report" type="submit">{% translate "Kommentieren" %}</button>
-</form>
+        {% crispy comment_form %}
+    </p>
+</div>

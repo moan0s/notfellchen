@@ -57,7 +57,7 @@ def adoption_notice_detail(request, adoption_notice_id):
             raise PermissionDenied
     else:
         comment_form = CommentForm(instance=adoption_notice)
-    context = {"adoption_notice": adoption_notice, "comment_form": comment_form}
+    context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user}
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 

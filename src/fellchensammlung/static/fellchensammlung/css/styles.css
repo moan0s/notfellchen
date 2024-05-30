@@ -84,7 +84,7 @@ h1, h2 {
     border-radius: 4px;
 }
 
-.header a, form {
+.header a, .header form {
     float: left;
     padding: 5px 12px 5px 12px;
     line-height: 25px;
@@ -383,12 +383,10 @@ h1, h2 {
     padding: 5px;
 }
 
-form {
-    padding: 20px;
-}
-
-.form-group {
-    margin: 30px;
+#form-adoption-notice {
+    .form-group {
+        margin: 30px;
+    }
 }
 
 .detail-adoption-notice-header h1 {
@@ -427,4 +425,21 @@ form {
     padding: 5px;
     background: var(--background-three);
     color: var(--text-two);
+}
+
+.container-comment-form {
+    width: 80%;
+    color: var(--text-one);
+}
+
+textarea {
+    border-radius: 10px;
+    width: 100%;
+    margin: 5px;
+}
+
+.form-comments {
+    .btn {
+        margin: 5px;
+    }
 }
