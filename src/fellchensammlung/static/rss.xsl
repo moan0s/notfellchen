@@ -191,7 +191,7 @@
             </p>
             <a>
               <xsl:attribute name="href">
-                <xsl:value-of select="/atom:feed/atom:link/@href"/>
+                /
               </xsl:attribute>
               Visit Website &#x2192;
             </a>
