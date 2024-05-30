@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load custom_tags %}
+<div class="comment">
+    <div class="comment-header">
+        <b>{{ comment.user }}</b>
+        {{ comment.created_at }}
+    </div>
+<p>
+    {{ comment.text | render_markdown }}
+</p>
+
+
+</div>

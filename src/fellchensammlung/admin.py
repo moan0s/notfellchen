@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import User, Language, Text
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
-    Report, Member
+    Report, Member, Comment
 
 
 # Define an inline admin descriptor for Employee model
@@ -33,3 +33,4 @@ admin.site.register(Report)
 admin.site.register(ModerationAction)
 admin.site.register(Language)
 admin.site.register(Text)
+admin.site.register(Comment)

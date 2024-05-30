@@ -6,7 +6,8 @@ from django.core.files import File
 from fellchensammlung import baker_recipes
 from model_bakery import baker
 
-from fellchensammlung.models import AdoptionNotice, Species, Animal, Image, ModerationAction, User, Member, Rule, Report
+from fellchensammlung.models import AdoptionNotice, Species, Animal, Image, ModerationAction, User, Member, Rule, \
+    Report, Comment
 
 
 class Command(BaseCommand):
@@ -23,7 +24,6 @@ class Command(BaseCommand):
             return
         except AdoptionNotice.DoesNotExist:
             pass
-
 
         rescue1 = baker.make_recipe(
             'fellchensammlung.rescue_org'
@@ -87,6 +87,13 @@ class Command(BaseCommand):
         mod1 = Member.objects.get(user=u_mod1)
         mod1.trust_level = Member.MODERATOR
         mod1.save()
+
+        comment1 = baker.make(Comment, user=admin1, text="This is a comment", adoption_notice=adoption1)
+        comment2 = baker.make(Comment,
+                              user=mod1,
+                              text="This is a reply",
+                              adoption_notice=adoption1,
+                              reply_to=comment1)
 
     def handle(self, *args, **options):
         self.populate_db()

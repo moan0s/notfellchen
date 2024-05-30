@@ -60,7 +60,7 @@ th {
     background-color: var(--secondary-light-two);
 }
 
-h1 {
+h1, h2 {
     word-wrap: break-word;
     color: var(--text-one);
     text-shadow: 2px 2px var(--shadow-one);
@@ -410,4 +410,21 @@ form {
         display: inline-block;
         float: none;
     }
+}
+
+.container-comments {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--background-two);
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.comment {
+    flex: 1 100%;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 5px;
+    background: var(--background-three);
+    color: var(--text-two);
 }

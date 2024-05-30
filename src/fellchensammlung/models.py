@@ -44,7 +44,7 @@ class Image(models.Model):
 
     @property
     def as_html(self):
-        return f'<img src="{ MEDIA_URL }/{ self.image }" alt="{ self.alt_text }">'
+        return f'<img src="{MEDIA_URL}/{self.image}" alt="{self.alt_text}">'
 
 
 class Species(models.Model):
@@ -115,6 +115,10 @@ class AdoptionNotice(models.Model):
     @property
     def animals(self):
         return Animal.objects.filter(adoption_notice=self)
+
+    @property
+    def comments(self):
+        return Comment.objects.filter(adoption_notice=self)
 
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the animal."""
@@ -350,3 +354,17 @@ class Text(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.language})"
+
+
+class Comment(models.Model):
+    """
+    Class to store comments in markdown content
+    """
+    user = models.ForeignKey(Member, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
+    created_at = models.DateTimeField(auto_now_add=True)
+    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
+    text = models.TextField(verbose_name="Inhalt")
+    reply_to = models.ForeignKey("self", verbose_name="Antwort auf", blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} at {self.created_at.strftime('%H:%M %d.%m.%y')}: {self.text:.10}"

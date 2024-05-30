@@ -1,0 +1,13 @@
+{% load i18n %}
+
+<div class="container-comments">
+    <h2>{% translate 'Comments' %}</h2>
+    {% if adoption_notice.comments %}
+        {% for comment in adoption_notice.comments %}
+            {% include "fellchensammlung/partials/partial-comment.html" %}
+        {% endfor %}
+    {% else %}
+        {% translate 'Noch keine Kommentare' %}
+    {% endif %}
+
+</div>
