@@ -46,6 +46,7 @@ def adoption_notice_detail(request, adoption_notice_id):
     context = {"adoption_notice": adoption_notice}
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
+
 def adoption_notice_edit(request, adoption_notice_id):
     """
     Form to update adoption notices
@@ -60,6 +61,7 @@ def adoption_notice_edit(request, adoption_notice_id):
     else:
         form = AdoptionNoticeForm(instance=adoption_notice)
     return render(request, 'fellchensammlung/forms/form-adoption-notice.html', context={"form": form})
+
 
 def animal_detail(request, animal_id):
     animal = Animal.objects.get(id=animal_id)
