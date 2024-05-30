@@ -6,7 +6,7 @@
     <div class="detail-adoption-notice-header">
         <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}</h1>
         <a class="btn2 detail-adoption-notice-header"
-           href="{% url 'adoption-notice-edit' 1 %}/{{ adoption_notice.pk }}">{% translate 'Bearbeiten' %}</a>
+           href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">{% translate 'Bearbeiten' %}</a>
     </div>
     <div class="table-adoption-notice-info">
         <table>
