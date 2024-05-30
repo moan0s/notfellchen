@@ -7,14 +7,30 @@ from fellchensammlung import baker_recipes
 from model_bakery import baker
 
 from fellchensammlung.models import AdoptionNotice, Species, Animal, Image, ModerationAction, User, Member, Rule, \
-    Report, Comment
+    Report, Comment, ReportAdoptionNotice
 
 
 class Command(BaseCommand):
     help = "Populates the database with test data"
 
+    def add_arguments(self, parser):
+        # Named (optional) arguments
+        parser.add_argument(
+            "--clear",
+            action="store_true",
+            help="Delete existing data",
+        )
+
     @staticmethod
-    def populate_db():
+    def populate_db(clear=False):
+        if clear:
+            ModerationAction.objects.all().delete()
+            Report.objects.all().delete()
+            Rule.objects.all().delete()
+            Comment.objects.all().delete()
+            AdoptionNotice.objects.all().delete()
+            Animal.objects.all().delete()
+            User.objects.all().delete()
 
         # Check if there already is and AdoptionNotice named Vermittung1TestSalt9227. If it is, the database
         # is already populated and no data will be added again
@@ -65,8 +81,8 @@ class Command(BaseCommand):
                            title="Rule three",
                            rule_text="Everything needs at least three rules")
 
-        report1 = baker.make(Report, adoption_notice=adoption1, reported_broken_rules=[rule1, rule2],
-                             comment="This seems sketchy")
+        report1 = baker.make(ReportAdoptionNotice, adoption_notice=adoption1, reported_broken_rules=[rule1, rule2],
+                             user_comment="This seems sketchy")
 
         moderation_action1 = baker.make(ModerationAction,
                                         report=report1,
@@ -96,4 +112,4 @@ class Command(BaseCommand):
                               reply_to=comment1)
 
     def handle(self, *args, **options):
-        self.populate_db()
+        self.populate_db(options["clear"])
