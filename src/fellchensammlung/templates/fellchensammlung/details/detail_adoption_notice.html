@@ -12,6 +12,7 @@
             <tr>
                 <th>{% translate "Ort" %}</th>
                 <th>{% translate "Suchen seit" %}</th>
+                <th>{% translate "Weitere Informationen" %}</th>
             </tr>
             <tr>
                 {% if adoption_notice.location %}
@@ -20,6 +21,11 @@
                     <td>{% translate "Kein Ort angegeben" %}</td>
                 {% endif %}
                 <td>{{ adoption_notice.searching_since }}</td>
+                {% if adoption_notice.further_information %}
+                    <td>{{ adoption_notice.further_information }}</td>
+                {% else %}
+                    <td>-</td>
+                {% endif %}
             </tr>
         </table>
     </div>
