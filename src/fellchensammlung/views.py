@@ -46,6 +46,9 @@ def adoption_notice_detail(request, adoption_notice_id):
     context = {"adoption_notice": adoption_notice}
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
+def adoption_notice_edit(request, adoption_notice_id):
+    form = AdoptionNoticeForm()
+    return render(request, 'fellchensammlung/forms/form-adoption-notice.html', context={"form": form})
 
 def animal_detail(request, animal_id):
     animal = Animal.objects.get(id=animal_id)
@@ -121,7 +124,7 @@ def edit_adoption_notice(request, animal_id):
 
 
 @login_required
-def change_animal(request, animal_id):
+def animal_edit(request, animal_id):
     """
     View implements the following methods
     * Updating an Animal
