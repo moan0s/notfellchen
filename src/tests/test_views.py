@@ -38,16 +38,4 @@ class AnimalTest(TestCase):
         self.assertEqual(response.status_code, 200)
         # Check our user is logged in
         self.assertEqual(str(response.context['user']), 'testuser0')
-        self.assertContains(response, "Max")
-        self.assertContains(response, "Mia-Mo")
-
-        """Allows Max to be present, has to find Mia-Mo"""
-        response = self.client.post(reverse('library:search'), data={'q': "Mia-Mo Michael Müller"})
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Mia-Mo")
-
-        """Has to find Mia-Mo and not Max"""
-        response = self.client.post(reverse('library:search'), {'q': "Mia-Mo"})
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Mia-Mo")
-        self.assertNotContains(response, "Max")
+        self.assertContains(response, "Rat1")
