@@ -13,7 +13,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     Member
-from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm
+from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm, AnimalForm
 from .models import Language
 
 
@@ -101,6 +101,23 @@ def add_adoption(request):
         form = AdoptionNoticeForm()
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
 
+@login_required
+def adoption_notice_add_animal(request, adoption_notice_id):
+    if request.method == 'POST':
+        form = AnimalForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.adoption_notice_id = adoption_notice_id
+            instance.save()
+            form.save_m2m()
+            if True:
+                return redirect(reverse("adoption-notice-detail", args=[instance.pk]))
+            else:
+                return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html')
+    else:
+        form = AnimalForm()
+    return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
 
 @login_required
 def edit_adoption_notice(request, animal_id):

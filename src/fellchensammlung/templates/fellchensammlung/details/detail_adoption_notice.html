@@ -5,7 +5,8 @@
 {% block content %}
     <div class="detail-adoption-notice-header">
         <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}</h1>
-        <a class="btn2 detail-adoption-notice-header" href="{% url 'adoption-notice-edit' 1 %}/{{ adoption_notice.pk }}">{% translate 'Bearbeiten' %}</a>
+        <a class="btn2 detail-adoption-notice-header"
+           href="{% url 'adoption-notice-edit' 1 %}/{{ adoption_notice.pk }}">{% translate 'Bearbeiten' %}</a>
     </div>
     <div class="table-adoption-notice-info">
         <table>
@@ -36,6 +37,13 @@
             {% translate "Keine Beschreibung angegeben" %}
         {% endif %}
     </p>
+
+    <div>
+        {% for animal in adoption_notice.animals %}
+            {% include "fellchensammlung/partials/partial-animal-card.html" %}
+
+        {% endfor %}
+    </div>
 
     {% include "fellchensammlung/partials/partial-comment-section.html" %}
 

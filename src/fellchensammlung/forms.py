@@ -41,6 +41,19 @@ class AdoptionNoticeForm(forms.ModelForm):
         fields = ['name', "group_only", "further_information", "description", "searching_since"]
 
 
+class AnimalForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-animal'
+        self.helper.add_input(Submit('save-and-add-another-animal', _('Speichern und weiteres Tier hinzufügen')))
+        self.helper.add_input(Submit('save-and-finish', _('Speichern und beenden')))
+
+    class Meta:
+        model = Animal
+        fields = ["name", "date_of_birth", "species", "sex", "description"]
+
+
 class ImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
