@@ -120,54 +120,6 @@ def adoption_notice_add_animal(request, adoption_notice_id):
     return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
 
 @login_required
-def edit_adoption_notice(request, animal_id):
-    """
-    View implements the following methods
-    * Updating an AdoptionNotice
-    * Adding animals to an AN
-    """
-
-    def delete_photo():
-        print("Photo deleted")
-
-    def save_photo():
-        print("Photo save")
-
-    def add_photo():
-        print("Photo added")
-
-    def save_animal():
-        print("Animal saved")
-
-    if request.method == 'POST':
-        form = AnimalForm(request.POST, animal_id=animal_id, )
-        for key in request.POST:
-            if key.startswith("delete_photo_"):
-                action = delete_photo
-            if key.startswith("save_photo_"):
-                action = save_photo
-            if key.startswith("add_photo"):
-                action = add_photo
-            if key.startswith("save_animal"):
-                action = save_animal
-
-            pk = key.split("_")[-1]
-
-            action(animal_id, pk, form_data=request.POST)
-
-        if form.is_valid():
-            animal = form.save()
-        return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html',
-                      {'form': form})
-
-    else:
-        form = AnimalForm(animal_id)
-        image_form = ImageForm(request.POST, request.FILES, prefix="image_")
-    return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html',
-                  {'form': form})
-
-
-@login_required
 def animal_edit(request, animal_id):
     """
     View implements the following methods
