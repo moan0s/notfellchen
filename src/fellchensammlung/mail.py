@@ -15,11 +15,12 @@ def mail_admins_new_report(report):
         greeting = _("Moin,") + "\r\n"
         new_report_text = _("es wurde eine Vermittlung gemeldet.") + "\r\n"
         if len(report.reported_broken_rules.all()) > 0:
-            reported_rules_text = f"Ein Verstoß gegen die folgenden Regeln wurde gemeldet [{', '.join(report.reported_broken_rules.all())}]\r\n"
+            reported_rules_text = (f"Ein Verstoß gegen die folgenden Regeln wurde gemeldet:\r\n"
+                                   f"- {'\r\n - '.join([str(r) for r in report.reported_broken_rules.all()])}\r\n")
         else:
             reported_rules_text = f"Es wurden keine Regeln angegeben gegen die Verstoßen wurde.\r\n"
-        if report.comment:
-            comment_text = f'Kommentar zum Report: "{report.comment}"\r\n'
+        if report.user_comment:
+            comment_text = f'Kommentar zum Report: "{report.user_comment}"\r\n'
         else:
             comment_text = f"Es wurde kein Kommentar hinzugefügt.\r\n"
 
