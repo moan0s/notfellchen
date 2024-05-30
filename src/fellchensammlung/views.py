@@ -1,3 +1,5 @@
+import logging
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -7,6 +9,7 @@ from django.utils import translation
 from .mail import mail_admins_new_report
 from notfellchen import settings
 
+from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     Member
 from .forms import AdoptionNoticeForm, AnimalForm, ImageForm, ReportForm
