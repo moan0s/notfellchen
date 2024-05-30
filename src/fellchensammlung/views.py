@@ -12,7 +12,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     Member
-from .forms import AdoptionNoticeForm, AnimalForm, ImageForm, ReportForm
+from .forms import AdoptionNoticeForm, ImageForm, ReportForm
 from .models import Language
 
 
