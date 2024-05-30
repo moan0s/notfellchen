@@ -52,7 +52,7 @@ class Command(BaseCommand):
             image_object = Image()
             image_object.alt_text = f"Picture of {animal}"
             image_object.title = f"Picture of {animal}"
-            image_object.image.save(f"{filename}", File(open(f"./src/fellchensammlung/tests/assets/{filename}", 'rb')))
+            image_object.image.save(f"{filename}", File(open(f"./src/tests/assets/{filename}", 'rb')))
             image_object.save()
 
             animal.photos.add(image_object)
