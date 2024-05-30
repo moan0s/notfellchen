@@ -1,0 +1,8 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>{% translate "Vermittlungsanzeige" %}</h1>
+    {% crispy form %}
+{% endblock %}
