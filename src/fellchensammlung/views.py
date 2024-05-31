@@ -12,7 +12,7 @@ from notfellchen import settings
 
 from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    Member
+    Member, Location
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm, AnimalForm
 from .models import Language, Announcement
 from .tools.geo import GeoAPI
@@ -88,9 +88,21 @@ def animal_detail(request, animal_id):
 
 
 def search(request):
-    latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
-    context = {"adoption_notices": latest_adoption_list}
-    return render(request, 'fellchensammlung/search.html', context=context)
+    if request.method == 'POST':
+        max_distance = int(request.POST.get('max_distance'))
+        if max_distance == "":
+            max_distance = None
+        geo_api = GeoAPI()
+        search_position = geo_api.get_coordinates_from_query(request.POST['postcode'])
+
+        latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
+        adoption_notices_in_distance = [a for a in latest_adoption_list if a.in_distance(search_position, max_distance)]
+        context = {"adoption_notices": adoption_notices_in_distance}
+        return render(request, 'fellchensammlung/search.html', context=context)
+    else:
+        latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
+        context = {"adoption_notices": latest_adoption_list}
+        return render(request, 'fellchensammlung/search.html', context=context)
 
 
 @login_required
@@ -103,7 +115,7 @@ def add_adoption_notice(request):
 
             """Search the location given in the location string and add it to the adoption notice"""
             geo_api = GeoAPI()
-            location = geo_api.get_location_from_string(instance.location_string)
+            location = Location.get_location_from_string(instance.location_string)
             instance.location = location
             instance.save()
 
