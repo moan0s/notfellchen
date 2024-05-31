@@ -56,4 +56,4 @@ ToDos
 nf makemessages -a
 ```
 
-Use a program like `gtranslator` or `poedit` to start translations 
+Use a program like `gtranslator` or `poedit` to start translations
