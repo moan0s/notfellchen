@@ -178,6 +178,20 @@ class AdoptionNotice(models.Model):
             if len(photos) > 0:
                 return photos[0]
 
+    def in_distance(self, position, max_distance, unknown_true=True):
+        """
+        Returns a boolean indicating if the Location of the adoption notice is within a given distance to the position
+
+        If the location is none, we by default return that the location is within the given distance
+        """
+        if unknown_true and self.position is None:
+            return True
+
+        distance = geo.calculate_distance_between_coordinates(self.position, position)
+        return distance < max_distance
+
+
+
 
 class Animal(models.Model):
     MALE_NEUTERED = "M_N"
