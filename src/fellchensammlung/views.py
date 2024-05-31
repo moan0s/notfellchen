@@ -67,6 +67,7 @@ def adoption_notice_detail(request, adoption_notice_id):
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 
+@login_required()
 def adoption_notice_edit(request, adoption_notice_id):
     """
     Form to update adoption notices
