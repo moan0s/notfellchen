@@ -3,6 +3,7 @@ import markdown
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
+from notfellchen import settings
 
 register = template.Library()
 
@@ -30,6 +31,7 @@ def join_link(value, arg):
 def get_type(value):
     return type(value)
 
+
 @register.filter
 @stringfilter
 def render_markdown(value):
@@ -37,3 +39,11 @@ def render_markdown(value):
     html = md.convert(value)
 
     return mark_safe(html)
+
+
+@register.simple_tag
+def get_oxitraffic_script_if_enabled():
+    if settings.OXITRAFFIC_ENABLED:
+        return mark_safe(f'<script type="module" src="https://{settings.OXITRAFFIC_BASE_URL}/count.js"></script>')
+    else:
+        return ""

@@ -82,6 +82,10 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 """ GEOCODING """
 GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://nominatim.hyteck.de/search")
 
+""" OxiTraffic"""
+OXITRAFFIC_ENABLED = config.get("tracking", "oxitraffic_enabled", fallback=False)
+OXITRAFFIC_BASE_URL = config.get("tracking", "oxitraffic_base_url", fallback="")
+
 """ E-MAIL  """
 console_only = config.getboolean("mail", "console_only", fallback="true")
 EMAIL_SUBJECT_PREFIX = config.get("mail", "prefix", fallback="[notfellchen]]")
