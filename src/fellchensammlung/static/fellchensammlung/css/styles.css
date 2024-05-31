@@ -1,6 +1,7 @@
 :root {
     --primary-light-one: #5daa68;
     --primary-light-two: #4a9455;
+    --primary-semidark-one: #356c3c;
     --primary-dark-one: #17311b;
     --secondary-light-one: #faf1cf;
     --secondary-light-two: #e1d7b5;
@@ -10,6 +11,7 @@
     --background-four: var(--primary-dark-one);
     --highlight-one: var(--primary-dark-one);
     --highlight-one-text: var(--secondary-light-one);
+    --highlight-two: var(--primary-semidark-one);
     --text-one: var(--secondary-light-one);
     --shadow-one: var(--primary-dark-one);
     --text-two: var(--primary-dark-one);
@@ -102,7 +104,7 @@ h1, h2 {
 
 .header-right select {
     width: 100%;
-    padding: 8px 10px;
+    padding: 10px;
     border: none;
     border-radius: 4px;
     opacity: 1;
@@ -112,12 +114,33 @@ h1, h2 {
 .header-right select.option {
     color: #000;
     background-color: var(--highlight-one);
-    padding: 0 10px;
     border: 1px;
 }
 
 .header-right {
     float: right;
+    display: flex;
+    border-radius: 0px 0px 15px 15px;
+    background-color: var(--highlight-two);
+    color: var(--highlight-one-text);
+    padding: 5px 5px 0px 5px;
+    height: 67px;
+}
+
+.profile-card {
+    display: flex;
+    border-radius: 0px 0px 8px 8px;
+    background-color: var(--highlight-two);
+    color: var(--highlight-one-text);
+
+    button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    opacity: 1;
+    background-color: var(--secondary-light-one);
+    }
 }
 
 @media screen and (max-width: 500px) {
