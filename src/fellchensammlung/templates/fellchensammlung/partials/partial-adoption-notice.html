@@ -4,8 +4,10 @@
 <div class="card">
     <div>
         <div class="header-card-adoption-notice">
-            <h1><a class="heading-card-adoption-notice" href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a></h1>
-            <a class="adoption-card-report-link" href="{{ adoption_notice.get_report_url }}"><i class="fa-solid fa-flag"></i></a>
+            <h1><a class="heading-card-adoption-notice"
+                   href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a></h1>
+            <a class="adoption-card-report-link" href="{{ adoption_notice.get_report_url }}"><i
+                    class="fa-solid fa-flag"></i></a>
         </div>
         <p><b>{% translate "Notfellchen" %}:</b> {{ adoption_notice.animals.all|join_link:", " | safe }}
         </p>
@@ -14,7 +16,7 @@
             {% if adoption_notice.location %}
                 {{ adoption_notice.location }}
             {% else %}
-                {% translate "Keine Ort angegeben" %}
+                {{ adoption_notice.location_string }}
             {% endif %}
         </p>
         <p>

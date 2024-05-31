@@ -16,11 +16,14 @@
                 <th>{% translate "Weitere Informationen" %}</th>
             </tr>
             <tr>
-                {% if adoption_notice.location %}
-                    <td>{{ adoption_notice.location.name }}, {{ adoption_notice.location.postcode }}</td>
-                {% else %}
-                    <td>{% translate "Kein Ort angegeben" %}</td>
-                {% endif %}
+                <td>
+                    {% if adoption_notice.location %}
+                        {{ adoption_notice.location }}
+                    {% else %}
+                        {{ adoption_notice.location_string }}
+                    {% endif %}
+                </td>
+
                 <td>{{ adoption_notice.searching_since }}</td>
                 {% if adoption_notice.further_information %}
                     <td>{{ adoption_notice.further_information }}</td>
