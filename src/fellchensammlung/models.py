@@ -10,7 +10,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 
-from fellchensammlung.tools import misc
+from fellchensammlung.tools import misc, geo
 from notfellchen.settings import MEDIA_URL
 
 
@@ -70,6 +70,26 @@ class Location(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     name = models.CharField(max_length=2000)
+
+    def __str__(self):
+        return f"{self.name} ({self.latitude:.5}, {self.longitude:.5})"
+
+    @staticmethod
+    def get_location_from_string(location_string):
+        geo_api = geo.GeoAPI()
+        get_geojson = geo_api.get_geojson_for_query(location_string)
+        result = get_geojson[0]
+        if "name" in result:
+            name = result["name"]
+        else:
+            name = result["display_name"]
+        location = Location.objects.create(
+            place_id=result["place_id"],
+            latitude=result["lat"],
+            longitude=result["lon"],
+            name=name,
+        )
+        return location
 
 
 class RescueOrganization(models.Model):

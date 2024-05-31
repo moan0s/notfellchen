@@ -3,7 +3,6 @@ import logging
 import requests
 import json
 from notfellchen import __version__ as nf_version
-from fellchensammlung.models import Location
 from notfellchen import settings
 
 from math import radians, sqrt, sin, cos, atan2
@@ -69,7 +68,7 @@ class GeoAPI:
         result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers)
         return result.content
 
-    def get_location_from_string(self, location_string):
+    def get_geojson_for_query(self, location_string):
         try:
             result = self.requests.get(self.api_url,
                                    {"q": location_string,
@@ -81,19 +80,7 @@ class GeoAPI:
         if len(result) == 0:
             logging.warning(f"Couldn't find a result for {location_string} when querying Nominatim")
             return None
-
-        result = result[0]
-        if "name" in result:
-            name = result["name"]
-        else:
-            name = result["display_name"]
-        location = Location.objects.create(
-            place_id=result["place_id"],
-            latitude=result["lat"],
-            longitude=result["lon"],
-            name=name,
-        )
-        return location
+        return result
 
 
 if __name__ == "__main__":
