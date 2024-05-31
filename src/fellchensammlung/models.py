@@ -35,64 +35,6 @@ class Language(models.Model):
         verbose_name_plural = _('Sprachen')
 
 
-class Status(models.Model):
-    """
-    The major status indicates a general state of an adoption notice
-    whereas the minor status is used for reporting
-    """
-
-    ACTIVE = "active"
-    IN_REVIEW = "in_review"
-    CLOSED = "closed"
-    DISABLED = "disabled"
-    MAJOR_STATUS_CHOICES = {
-        ACTIVE: "active",
-        IN_REVIEW: "in review",
-        CLOSED: "closed",
-        DISABLED: "disabled",
-    }
-
-    MINOR_STATUS_CHOICES = {
-        ACTIVE: {
-            "searching": "searching",
-            "interested": "interested",
-        },
-        IN_REVIEW: {
-            "waiting_for_review": "waiting_for_review",
-        },
-        CLOSED: {
-            "successful_with_notfellchen": "successful_with_notfellchen",
-            "successful_without_notfellchen": "successful_without_notfellchen",
-            "animal_died": "animal_died",
-            "closed_for_other_adoption_notice": "closed_for_other_adoption_notice",
-            "not_open_for_adoption_anymore": "not_open_for_adoption_anymore",
-            "other": "other"
-        },
-        DISABLED: {
-            "against_the_rules": "against_the_rules",
-            "missing_information": "missing_information",
-            "other": "other"
-        }
-    }
-
-    major_status = models.CharField(choices=MAJOR_STATUS_CHOICES, max_length=200)
-    minor_choices = {}
-    for key in MINOR_STATUS_CHOICES:
-        minor_choices.update(MINOR_STATUS_CHOICES[key])
-    minor_status = models.CharField(choices=minor_choices, max_length=200)
-
-    def __str__(self):
-        return f"{self.major_status}: {self.minor_status}"
-
-    @property
-    def is_active(self):
-        return self.major_status == self.ACTIVE
-
-    @staticmethod
-    def get_minor_choices(major_status):
-        return Status.MINOR_STATUS_CHOICES[major_status]
-
-
 class Image(models.Model):
     image = models.ImageField(upload_to='images')
     alt_text = models.TextField(max_length=2000)
@@ -182,7 +124,6 @@ class AdoptionNotice(models.Model):
     photos = models.ManyToManyField(Image, blank=True)
     location_string = models.CharField(max_length=200, verbose_name=_("Ortsangabe"))
     location = models.ForeignKey(Location, blank=True, null=True, on_delete=models.SET_NULL, )
-    status = models.ForeignKey(Status, on_delete=models.PROTECT)
 
     @property
     def animals(self):
@@ -258,7 +199,69 @@ class AdoptionNotice(models.Model):
 
     @property
     def is_active(self):
-        return self.status.is_active
+        if not hasattr(self, 'adoptionnoticestatus'):
+            return False
+        return self.adoptionnoticestatus.is_active
+
+
+class AdoptionNoticeStatus(models.Model):
+    """
+    The major status indicates a general state of an adoption notice
+    whereas the minor status is used for reporting
+    """
+
+    ACTIVE = "active"
+    IN_REVIEW = "in_review"
+    CLOSED = "closed"
+    DISABLED = "disabled"
+    MAJOR_STATUS_CHOICES = {
+        ACTIVE: "active",
+        IN_REVIEW: "in review",
+        CLOSED: "closed",
+        DISABLED: "disabled",
+    }
+
+    MINOR_STATUS_CHOICES = {
+        ACTIVE: {
+            "searching": "searching",
+            "interested": "interested",
+        },
+        IN_REVIEW: {
+            "waiting_for_review": "waiting_for_review",
+        },
+        CLOSED: {
+            "successful_with_notfellchen": "successful_with_notfellchen",
+            "successful_without_notfellchen": "successful_without_notfellchen",
+            "animal_died": "animal_died",
+            "closed_for_other_adoption_notice": "closed_for_other_adoption_notice",
+            "not_open_for_adoption_anymore": "not_open_for_adoption_anymore",
+            "other": "other"
+        },
+        DISABLED: {
+            "against_the_rules": "against_the_rules",
+            "missing_information": "missing_information",
+            "technical_error": "technical_error",
+            "other": "other"
+        }
+    }
+
+    major_status = models.CharField(choices=MAJOR_STATUS_CHOICES, max_length=200)
+    minor_choices = {}
+    for key in MINOR_STATUS_CHOICES:
+        minor_choices.update(MINOR_STATUS_CHOICES[key])
+    minor_status = models.CharField(choices=minor_choices, max_length=200)
+    adoption_notice = models.OneToOneField(AdoptionNotice, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.adoption_notice}: {self.major_status}, {self.minor_status}"
+
+    @property
+    def is_active(self):
+        return self.major_status == self.ACTIVE
+
+    @staticmethod
+    def get_minor_choices(major_status):
+        return AdoptionNoticeStatus.MINOR_STATUS_CHOICES[major_status]
 
 
 class Animal(models.Model):

@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
-    Member, Comment, Report, Announcement
+    Member, Comment, Report, Announcement, AdoptionNoticeStatus
 
 
 # Define an inline admin descriptor for Employee model
@@ -19,6 +19,17 @@ class MemberInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = [MemberInline]
+
+
+class StatusInline(admin.StackedInline):
+    model = AdoptionNoticeStatus
+
+
+@admin.register(AdoptionNotice)
+class AdoptionNoticeAdmin(admin.ModelAdmin):
+    inlines = [
+        StatusInline,
+    ]
 
 
 # Re-register UserAdmin
@@ -56,10 +67,10 @@ admin.site.register(Animal)
 admin.site.register(Species)
 admin.site.register(RescueOrganization)
 admin.site.register(Location)
-admin.site.register(AdoptionNotice)
 admin.site.register(Rule)
 admin.site.register(Image)
 admin.site.register(ModerationAction)
 admin.site.register(Language)
 admin.site.register(Text)
 admin.site.register(Announcement)
+admin.site.register(AdoptionNoticeStatus)

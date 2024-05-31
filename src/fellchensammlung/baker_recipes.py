@@ -4,9 +4,10 @@ from fellchensammlung.models import *
 
 location = Recipe(
     Location,
-    name=seq('Ort_'),
-    description=seq('Detaillierte Beschreibung_'),
-    postcode=seq("7322"),
+    place_id=seq(''),
+    name=seq('Location_'),
+    longitude=seq(""),
+    latitude=seq(""),
 )
 
 rescue_org = Recipe(

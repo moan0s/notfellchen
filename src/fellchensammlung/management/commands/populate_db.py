@@ -35,7 +35,7 @@ class Command(BaseCommand):
         # Check if there already is and AdoptionNotice named Vermittung1TestSalt9227. If it is, the database
         # is already populated and no data will be added again
         try:
-            AdoptionNotice.objects.get(name="Vermittung1TestSalt9227")
+            AdoptionNotice.objects.get(name="Vermittlung1TestSalt9227")
             print("Database already populated. No additional data will be created")
             return
         except AdoptionNotice.DoesNotExist:
@@ -48,7 +48,7 @@ class Command(BaseCommand):
             'fellchensammlung.rescue_org'
         )
 
-        adoption1 = baker.make(AdoptionNotice, name="Vermittung1TestSalt9227", organization=rescue1)
+        adoption1 = baker.make(AdoptionNotice, name="Vermittlung1TestSalt9227", organization=rescue1)
 
         adoption2 = baker.make(AdoptionNotice, name="Vermittung2", organization=rescue2)
 
