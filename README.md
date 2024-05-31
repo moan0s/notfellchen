@@ -49,3 +49,11 @@ geocoding is only supported for Germany right now.
 ToDos
 * [ ] Implement a report that shows the number of location strings that could not be converted into a location
 * [ ] Add a management command to re-query location strings to fill location
+
+## Translation
+
+```zsh
+nf makemessages -a
+```
+
+Use a program like `gtranslator` or `poedit` to start translations 
