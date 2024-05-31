@@ -14,13 +14,16 @@ from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     Member
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm, AnimalForm
-from .models import Language
+from .models import Language, Announcement
 
 
 def index(request):
     """View function for home page of site."""
     latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")[:5]
-    context = {"adoption_notices": latest_adoption_list}
+    language_code = translation.get_language()
+    lang = Language.objects.get(languagecode=language_code)
+    active_announcements = Announcement.get_active_announcements(lang)
+    context = {"adoption_notices": latest_adoption_list, "announcements": active_announcements}
 
     return render(request, 'fellchensammlung/index.html', context=context)
 

@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
-    Member, Comment, Report
+    Member, Comment, Report, Announcement
 
 
 # Define an inline admin descriptor for Employee model
@@ -62,3 +62,4 @@ admin.site.register(Image)
 admin.site.register(ModerationAction)
 admin.site.register(Language)
 admin.site.register(Text)
+admin.site.register(Announcement)

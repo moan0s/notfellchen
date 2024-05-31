@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load custom_tags %}
+<div class="announcement {{ announcement.type }}">
+    <div class="announcement-header">
+        <h1 class="announcement">{{ announcement.title }}</h1>
+    </div>
+    <p>
+        {{ announcement.content | render_markdown }}
+    </p>
+</div>

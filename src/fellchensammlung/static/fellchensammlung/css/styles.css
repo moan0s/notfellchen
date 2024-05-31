@@ -447,3 +447,32 @@ textarea {
         margin: 5px;
     }
 }
+
+.announcement {
+    flex: 1 100%;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 5px;
+    background: var(--background-three);
+    color: var(--text-two);
+
+    h1 {
+        font-size: 1.2rem;
+        margin: 0px;
+        padding: 0px;
+        color: var(--text-two);
+        text-shadow: none;
+    }
+}
+
+.important {
+    border: #e01137 4px solid;
+}
+
+.warning {
+    border: #e09e11 4px solid;
+}
+
+.info {
+    border: rgba(17, 58, 224, 0.51) 4px solid;
+}

@@ -2,6 +2,9 @@
 {% load i18n %}
 
 {% block content %}
+    {% for announcement in announcements %}
+        {% include "fellchensammlung/partials/partial-announcement.html" %}
+    {% endfor %}
     <h1>{% translate "Notfellchen - Vermittlungen finden" %}</h1>
     <p>{% translate "Alle Tiere brauchen ein liebendes Zuhause. Damit keins vergessen wird gibt es diese Seite. Entwickelt und betreut von " %}<em><a
             href="https://hyteck.de">moanos</a></em>!</p>

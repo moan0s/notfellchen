@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime
+from django.utils import timezone
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import Group
@@ -369,6 +370,55 @@ class Text(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.language})"
+
+
+class Announcement(Text):
+    """
+    Class to store announcements that should be displayed for all users
+    """
+    logged_in_only = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    publish_start_time = models.DateTimeField(verbose_name="Veröffentlichungszeitpunk")
+    publish_end_time = models.DateTimeField(verbose_name="Veröffentlichungsende")
+    IMPORTANT = "important"
+    WARNING = "warning"
+    INFO = "info"
+    TYPES = {
+        IMPORTANT: "important",
+        WARNING: "warning",
+        INFO: "info",
+    }
+    type = models.CharField(choices=TYPES, max_length=100, default=INFO)
+
+    @property
+    def is_active(self):
+        return self.publish_start_time < timezone.now() < self.publish_end_time
+
+    def __str__(self):
+        return f"[{'🟢' if self.is_active else '🔴'}]{self.title} ({self.language})"
+
+    @staticmethod
+    def get_active_announcements(logged_in=False, language=None):
+        if logged_in:
+            all_active_announcements = [a for a in Announcement.objects.all() if a.is_active]
+        else:
+            all_active_announcements = [a for a in Announcement.objects.filter(logged_in_only=False) if a.is_active]
+        if language is None:
+            return all_active_announcements
+        else:
+            if logged_in:
+                announcements_in_language = Announcement.objects.filter(language=language)
+            else:
+                announcements_in_language = Announcement.objects.filter(language=language, logged_in_only=False)
+            active_announcements_in_language = [a for a in announcements_in_language if a.is_active]
+
+            untranslated_announcements = []
+            text_codes = [announcement.text_code for announcement in active_announcements_in_language]
+            for announcement in all_active_announcements:
+                if announcement.language != language and announcement.text_code not in text_codes:
+                    untranslated_announcements.append(announcement)
+            return active_announcements_in_language + untranslated_announcements
+
 
 
 class Comment(models.Model):
