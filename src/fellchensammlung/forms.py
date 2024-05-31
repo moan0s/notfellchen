@@ -90,7 +90,7 @@ class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Image
-        fields = ('title', 'image', 'alt_text')
+        fields = ('image', 'alt_text')
 
 
 class ReportAdoptionNoticeForm(forms.ModelForm):

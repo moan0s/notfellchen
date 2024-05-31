@@ -36,12 +36,11 @@ class Language(models.Model):
 
 
 class Image(models.Model):
-    title = models.CharField(max_length=200)
     image = models.ImageField(upload_to='images')
     alt_text = models.TextField(max_length=2000)
 
     def __str__(self):
-        return self.title
+        return self.alt_text
 
     @property
     def as_html(self):
@@ -75,8 +74,10 @@ class Location(models.Model):
     @staticmethod
     def get_location_from_string(location_string):
         geo_api = geo.GeoAPI()
-        get_geojson = geo_api.get_geojson_for_query(location_string)
-        result = get_geojson[0]
+        geojson = geo_api.get_geojson_for_query(location_string)
+        if geojson is None:
+            return None
+        result = geojson[0]
         if "name" in result:
             name = result["name"]
         else:
