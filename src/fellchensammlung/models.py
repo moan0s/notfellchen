@@ -66,19 +66,11 @@ class Location(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-    GERMANY = "DE"
-    AUSTRIA = "AT"
-    SWITZERLAND = "CH"
-    COUNTRIES_CHOICES = {
-        GERMANY: "Germany",
-        AUSTRIA: "Austria",
-        SWITZERLAND: "Switzerland"
-    }
-
-    name = models.CharField(max_length=200)
-    postcode = models.CharField(max_length=200)
-    country = models.CharField(max_length=20, choices=COUNTRIES_CHOICES)
-    description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
+    place_id = models.IntegerField()
+    osm_id = models.IntegerField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    name = models.CharField(max_length=2000)
 
 
 class RescueOrganization(models.Model):
@@ -87,6 +79,7 @@ class RescueOrganization(models.Model):
 
     name = models.CharField(max_length=200)
     trusted = models.BooleanField(default=False, verbose_name=_('Vertrauenswürdig'))
+    location_string = models.CharField(max_length=200, verbose_name=_("Ort der Organisation"))
     location = models.ForeignKey(Location, on_delete=models.PROTECT)
     instagram = models.URLField(null=True, blank=True, verbose_name=_('Instagram Profil'))
     facebook = models.URLField(null=True, blank=True, verbose_name=_('Facebook Profil'))
@@ -112,6 +105,8 @@ class AdoptionNotice(models.Model):
     further_information = models.URLField(null=True, blank=True, verbose_name=_('Link zu mehr Informationen'))
     group_only = models.BooleanField(default=False, verbose_name=_('Ausschließlich Gruppenadoption'))
     photos = models.ManyToManyField(Image, blank=True)
+    location_string = models.CharField(max_length=200, verbose_name=_("Ortsangabe"))
+    location = models.ForeignKey(Location, blank=True, null=True, on_delete=models.SET_NULL,)
 
     @property
     def animals(self):

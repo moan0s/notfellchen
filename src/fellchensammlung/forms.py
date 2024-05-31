@@ -40,6 +40,7 @@ class AdoptionNoticeForm(forms.ModelForm):
                 'name',
                 'group_only',
                 'searching_since',
+                'location_string',
                 'description',
                 'further_information',
             ),
@@ -47,7 +48,7 @@ class AdoptionNoticeForm(forms.ModelForm):
 
     class Meta:
         model = AdoptionNotice
-        fields = ['name', "group_only", "further_information", "description", "searching_since"]
+        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string"]
 
 
 class AnimalForm(forms.ModelForm):

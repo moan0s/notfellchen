@@ -15,6 +15,7 @@ from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, R
     Member
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm, AnimalForm
 from .models import Language, Announcement
+from .tools.geo import GeoAPI
 
 
 def index(request):
@@ -93,12 +94,19 @@ def search(request):
 
 
 @login_required
-def add_adoption(request):
+def add_adoption_notice(request):
     if request.method == 'POST':
         form = AdoptionNoticeForm(request.POST, request.FILES, in_adoption_notice_creation_flow=True)
 
         if form.is_valid():
             instance = form.save()
+
+            """Search the location given in the location string and add it to the adoption notice"""
+            geo_api = GeoAPI(debug=True)
+            location = geo_api.get_location_from_string(instance.location_string)
+            instance.location = location
+            instance.save()
+
             return redirect(reverse("adoption-notice-add-animal", args=[instance.pk]))
     else:
         form = AdoptionNoticeForm(in_adoption_notice_creation_flow=True)
