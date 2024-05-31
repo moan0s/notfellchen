@@ -63,8 +63,6 @@ class Species(models.Model):
 
 
 class Location(models.Model):
-    def __str__(self):
-        return f"{self.name} ({self.latitude:.5}, {self.longitude:.5})"
 
     place_id = models.IntegerField()
     latitude = models.FloatField()
