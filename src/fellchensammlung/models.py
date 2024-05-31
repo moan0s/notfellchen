@@ -256,6 +256,10 @@ class AdoptionNotice(models.Model):
         domain = urlparse(self.further_information).netloc
         return f"<a href='{self.further_information}'>{domain}</a>"
 
+    @property
+    def is_active(self):
+        return self.status.is_active
+
 
 class Animal(models.Model):
     MALE_NEUTERED = "M_N"

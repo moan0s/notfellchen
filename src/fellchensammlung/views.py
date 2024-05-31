@@ -22,10 +22,11 @@ from .tools.geo import GeoAPI
 def index(request):
     """View function for home page of site."""
     latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")[:5]
+    active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
     language_code = translation.get_language()
     lang = Language.objects.get(languagecode=language_code)
     active_announcements = Announcement.get_active_announcements(lang)
-    context = {"adoption_notices": latest_adoption_list, "announcements": active_announcements}
+    context = {"adoption_notices": active_adoptions, "announcements": active_announcements}
 
     return render(request, 'fellchensammlung/index.html', context=context)
 
@@ -98,12 +99,14 @@ def search(request):
         search_position = geo_api.get_coordinates_from_query(request.POST['postcode'])
 
         latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
-        adoption_notices_in_distance = [a for a in latest_adoption_list if a.in_distance(search_position, max_distance)]
+        active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
+        adoption_notices_in_distance = [a for a in active_adoptions if a.in_distance(search_position, max_distance)]
         context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form}
     else:
         latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
+        active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
         search_form = AdoptionNoticeSearchForm()
-        context = {"adoption_notices": latest_adoption_list, "search_form": search_form}
+        context = {"adoption_notices": active_adoptions, "search_form": search_form}
     return render(request, 'fellchensammlung/search.html', context=context)
 
 
