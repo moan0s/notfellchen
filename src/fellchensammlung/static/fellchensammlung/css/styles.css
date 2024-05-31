@@ -47,6 +47,12 @@ table {
     border: none;
     border-collapse: collapse;
     background-color: var(--secondary-light-one);
+    word-break: break-word;
+}
+@media screen and (max-width: 500px) {
+    table {
+        font-size: small;
+    }
 }
 
 td {
