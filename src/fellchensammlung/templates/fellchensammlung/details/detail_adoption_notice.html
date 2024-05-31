@@ -27,7 +27,7 @@
 
                 <td>{{ adoption_notice.searching_since }}</td>
                 {% if adoption_notice.further_information %}
-                    <td>{{ adoption_notice.further_information }}</td>
+                    <td>{{ adoption_notice.link_to_more_information | safe }}</td>
                 {% else %}
                     <td>-</td>
                 {% endif %}

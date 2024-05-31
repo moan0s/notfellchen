@@ -191,6 +191,13 @@ class AdoptionNotice(models.Model):
         distance = geo.calculate_distance_between_coordinates(self.position, position)
         return distance < max_distance
 
+    @property
+    def link_to_more_information(self):
+        from urllib.parse import urlparse
+
+        domain = urlparse(self.further_information).netloc
+        return f"<a href='{self.further_information}'>{domain}</a>"
+
 
 
 
