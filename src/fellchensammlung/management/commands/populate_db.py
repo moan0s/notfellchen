@@ -48,9 +48,15 @@ class Command(BaseCommand):
             'fellchensammlung.rescue_org'
         )
 
-        adoption1 = baker.make(AdoptionNotice, name="Vermittlung1TestSalt9227", organization=rescue1)
+        adoption1 = baker.make(AdoptionNotice,
+                               name="Vermittlung1TestSalt9227",
+                               organization=rescue1,
+                               location=baker.make_recipe("fellchensammlung.location"))
 
-        adoption2 = baker.make(AdoptionNotice, name="Vermittung2", organization=rescue2)
+        adoption2 = baker.make(AdoptionNotice,
+                               name="Vermittung2",
+                               organization=rescue2,
+                               location=baker.make_recipe("fellchensammlung.location"))
 
         cat = baker.make(Species, name="Katze")
         rat = baker.make(Species, name="Farbratte")
