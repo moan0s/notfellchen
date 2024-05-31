@@ -138,7 +138,7 @@ class AdoptionNotice(models.Model):
         if self.location is None:
             return None
         else:
-            return (self.location.longitude, self.location.latitude)
+            return self.location.latitude, self.location.longitude
 
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the animal."""
