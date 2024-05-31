@@ -38,3 +38,10 @@ docker build . -t moanos/notfellchen:latest
 ```
 docker run -p8000:7345 moanos/notfellchen:latest
 ```
+
+## Geocoding
+
+Geocoding services (search map data by name, address or postcode) are provided via the
+[Nominatim](https://nominatim.org/) API, powered by [OpenStreetMap](https://openstreetmap.org) data. Notfellchen uses
+a selfhosted Nominatim instance to avoid overburdening the publicly hosted instance. Due to ressource constraints
+geocoding is only supported for Germany right now. 
