@@ -1,20 +1,24 @@
 {% load i18n %}
 <div class="card">
     <div class="detail-animal-header">
-        <h1>{{ animal.name }}</h1>
+        <h1><a href="{% url 'animal-detail' animal_id=animal.pk %}">{{ animal.name }}</a></h1>
+
+
         <div class="tags">
             <div class="tag species">{{ animal.species }}</div>
             <div class="tag sex">{{ animal.get_sex_display }}</div>
+        </div>
+
+        <div class="container-edit-buttons">
+            <a class="btn" href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
+            <a class="btn" href="{% url 'animal-add-photo' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
         </div>
     </div>
 
     {% if animal.description %}
         <p>{{ animal.description }}</p>
     {% endif %}
-    {% if animal.get_photo %}
-        <img src="{{ MEDIA_URL }}/{{ animal.get_photo.image }}" alt="{{ animal.get_photo.alt_text }}">
-        </div>
-    {% else %}
-        {% translate "Keine Foto" %}
-    {% endif %}
+    {% for photo in  animal.get_photos %}
+        <img src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{{ photo.alt_text }}">
+    {% endfor %}
 </div>

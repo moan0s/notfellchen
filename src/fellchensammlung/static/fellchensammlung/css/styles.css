@@ -190,6 +190,14 @@ h1, h2 {
     border: none;
 }
 
+.container-edit-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    .btn {
+        margin: 5px;
+    }
+}
+
 .form-button:hover, .link-button a:hover, .link-button a:active {
     background-color: #4090b6;
 }
@@ -308,6 +316,7 @@ h1, h2 {
     border-radius: 5px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .tag {
@@ -348,7 +357,7 @@ h1, h2 {
 }
 
 .card {
-    flex: 1 16%;
+    flex: 1 25%;
     margin: 10px;
     border-radius: 8px;
     padding: 5px;
@@ -369,7 +378,9 @@ h1, h2 {
 
 .header-card-adoption-notice {
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
+    flex-wrap: wrap;
 
 }
 
@@ -402,7 +413,7 @@ h1, h2 {
 }
 
 .tags {
-    margin-left: auto;
+    margin-right: auto;
     padding: 5px;
 }
 
