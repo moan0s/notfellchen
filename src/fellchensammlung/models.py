@@ -133,6 +133,13 @@ class AdoptionNotice(models.Model):
     def comments(self):
         return Comment.objects.filter(adoption_notice=self)
 
+    @property
+    def position(self):
+        if self.location is None:
+            return None
+        else:
+            return (self.location.longitude, self.location.latitude)
+
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the animal."""
         return reverse('adoption-notice-detail', args=[str(self.id)])
