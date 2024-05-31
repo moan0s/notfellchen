@@ -126,3 +126,12 @@ class ModerationActionForm(forms.ModelForm):
 class CustomRegistrationForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):
         model = User
+
+
+def _get_distances():
+    return {i: i for i in [10, 20, 50, 100, 200, 500]}
+
+
+class AdoptionNoticeSearchForm(forms.Form):
+    postcode = forms.CharField(max_length=20, label=_("Postleitzahl"))
+    max_distance = forms.ChoiceField(choices=_get_distances, label=_("Max. Distanz"))

@@ -6,17 +6,7 @@
         {% csrf_token %}
         <input type="hidden" name="longitude" maxlength="200" id="longitude">
         <input type="hidden" name="latitude" maxlength="200" id="latitude">
-        <label for="postcode">{% translate "Postleitzahl" %}
-        </label>
-        <input type="text" name="postcode" maxlength="200" class="textinput form-control" required="" id="postcode">
-        <select name="max_distance" class="select custom-select" required="" id="id_max_distance">
-            <option value="" selected="">---------</option>
-            <option value="25">20km</option>
-            <option value="50">50km</option>
-            <option value="100">100km</option>
-            <option value="200">200km</option>
-            <option value="500">500km</option>
-        </select>
+        {{ search_form.as_p }}
         <input type="submit" value="Search" name="search">
     </form>
     {% include "fellchensammlung/lists/list-adoption-notices.html" %}

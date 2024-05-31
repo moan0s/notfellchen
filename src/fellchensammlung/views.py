@@ -13,7 +13,8 @@ from notfellchen import settings
 from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     Member, Location
-from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm, AnimalForm
+from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm, AnimalForm, \
+    AdoptionNoticeSearchForm
 from .models import Language, Announcement
 from .tools.geo import GeoAPI
 
@@ -89,6 +90,7 @@ def animal_detail(request, animal_id):
 
 def search(request):
     if request.method == 'POST':
+        search_form = AdoptionNoticeSearchForm(request.POST)
         max_distance = int(request.POST.get('max_distance'))
         if max_distance == "":
             max_distance = None
@@ -97,12 +99,12 @@ def search(request):
 
         latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
         adoption_notices_in_distance = [a for a in latest_adoption_list if a.in_distance(search_position, max_distance)]
-        context = {"adoption_notices": adoption_notices_in_distance}
-        return render(request, 'fellchensammlung/search.html', context=context)
+        context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form}
     else:
         latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
-        context = {"adoption_notices": latest_adoption_list}
-        return render(request, 'fellchensammlung/search.html', context=context)
+        search_form = AdoptionNoticeSearchForm()
+        context = {"adoption_notices": latest_adoption_list, "search_form": search_form}
+    return render(request, 'fellchensammlung/search.html', context=context)
 
 
 @login_required
