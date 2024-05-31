@@ -126,6 +126,44 @@ def adoption_notice_add_animal(request, adoption_notice_id):
 
 
 @login_required
+def add_photo_to_animal(request, animal_id):
+    animal = Animal.objects.get(id=animal_id)
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            instance = form.save()
+            animal.photos.add(instance)
+            if "save-and-add-another" in request.POST:
+                form = ImageForm(in_flow=True)
+                return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
+            else:
+                return redirect(reverse("animal-detail", args=[animal_id]))
+    else:
+        form = ImageForm(in_flow=True)
+        return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
+
+
+@login_required
+def add_photo_to_adoption_notice(request, adoption_notice_id):
+    adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            instance = form.save()
+            adoption_notice.photos.add(instance)
+            if "save-and-add-another" in request.POST:
+                form = ImageForm(in_flow=True)
+                return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
+            else:
+                return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
+    else:
+        form = ImageForm(in_flow=True)
+        return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
+
+
+@login_required
 def animal_edit(request, animal_id):
     """
     View implements the following methods

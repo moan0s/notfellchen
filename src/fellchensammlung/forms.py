@@ -72,11 +72,20 @@ class AnimalForm(forms.ModelForm):
 
 class ImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        if 'in_flow' in kwargs:
+            in_flow = kwargs.pop('in_flow')
+        else:
+            in_flow = False
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'form-animal-photo'
         self.helper.form_class = 'card'
         self.helper.form_method = 'post'
+        if in_flow:
+            self.helper.add_input(Submit('save-and-add-another', _('Speichern und weiteres Foto hinzufügen')))
+            self.helper.add_input(Submit('submit', _('Speichern')))
+        else:
+            self.helper.add_input(Submit('submit', _('Submit')))
 
     class Meta:
         model = Image
