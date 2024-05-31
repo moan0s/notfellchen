@@ -104,6 +104,7 @@ def add_adoption(request):
         form = AdoptionNoticeForm(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
 
+
 @login_required
 def adoption_notice_add_animal(request, adoption_notice_id):
     if request.method == 'POST':
@@ -114,13 +115,15 @@ def adoption_notice_add_animal(request, adoption_notice_id):
             instance.adoption_notice_id = adoption_notice_id
             instance.save()
             form.save_m2m()
-            if True:
-                return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
+            if "save-and-add-another-animal" in request.POST:
+                form = AnimalForm(in_adoption_notice_creation_flow=True)
+                return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
             else:
-                return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html')
+                return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
     else:
         form = AnimalForm(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
+
 
 @login_required
 def animal_edit(request, animal_id):
