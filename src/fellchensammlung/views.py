@@ -95,13 +95,13 @@ def search(request):
 @login_required
 def add_adoption(request):
     if request.method == 'POST':
-        form = AdoptionNoticeForm(request.POST, request.FILES)
+        form = AdoptionNoticeForm(request.POST, request.FILES, in_adoption_notice_creation_flow=True)
 
         if form.is_valid():
             instance = form.save()
-            return redirect(reverse("adoption-notice-edit", args=[instance.pk]))
+            return redirect(reverse("adoption-notice-add-animal", args=[instance.pk]))
     else:
-        form = AdoptionNoticeForm()
+        form = AdoptionNoticeForm(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
 
 @login_required
@@ -119,7 +119,7 @@ def adoption_notice_add_animal(request, adoption_notice_id):
             else:
                 return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html')
     else:
-        form = AnimalForm(adding_to_adoption_notice=True)
+        form = AnimalForm(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
 
 @login_required

@@ -17,12 +17,22 @@ class DateInput(forms.DateInput):
 
 class AdoptionNoticeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        if 'in_adoption_notice_creation_flow' in kwargs:
+            in_flow = kwargs.pop('in_adoption_notice_creation_flow')
+        else:
+            in_flow = False
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
 
         self.helper.form_id = 'form-adoption-notice'
         self.helper.form_class = 'card'
         self.helper.form_method = 'post'
+
+        if in_flow:
+            submit = Submit('save-and-add-another-animal', _('Speichern und Tiere hinzufügen'))
+
+        else:
+            submit = Submit('submit', _('Submit'))
 
         self.helper.layout = Layout(
             Fieldset(
@@ -33,8 +43,7 @@ class AdoptionNoticeForm(forms.ModelForm):
                 'description',
                 'further_information',
             ),
-            Submit('submit', _('Submit'))
-        )
+            submit)
 
     class Meta:
         model = AdoptionNotice
@@ -43,8 +52,8 @@ class AdoptionNoticeForm(forms.ModelForm):
 
 class AnimalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        if 'adding_to_adoption_notice' in kwargs:
-            adding = kwargs.pop('adding_to_adoption_notice')
+        if 'in_adoption_notice_creation_flow' in kwargs:
+            adding = kwargs.pop('in_adoption_notice_creation_flow')
         else:
             adding = False
         super().__init__(*args, **kwargs)
@@ -55,7 +64,6 @@ class AnimalForm(forms.ModelForm):
             self.helper.add_input(Submit('save-and-finish', _('Speichern und beenden')))
         else:
             self.helper.add_input(Submit('submit', _('Speichern')))
-
 
     class Meta:
         model = Animal
