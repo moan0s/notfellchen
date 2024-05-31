@@ -55,7 +55,7 @@ class GeoAPI:
         'From': 'info@notfellchen.org'  # This is another valid field
     }
 
-    def __init__(self, debug=True):
+    def __init__(self, debug=False):
         if debug:
             self.requests = RequestMock
         else:
