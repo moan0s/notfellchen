@@ -79,6 +79,9 @@ DB_HOST = config.get("database", "host", fallback='')
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
+""" GEOCODING """
+GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://nominatim.hyteck.de/search")
+
 """ E-MAIL  """
 console_only = config.getboolean("mail", "console_only", fallback="true")
 EMAIL_SUBJECT_PREFIX = config.get("mail", "prefix", fallback="[notfellchen]]")

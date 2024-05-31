@@ -1,7 +1,10 @@
+import logging
+
 import requests
 import json
 from notfellchen import __version__ as nf_version
 from fellchensammlung.models import Location
+from notfellchen import settings
 
 from math import radians, sqrt, sin, cos, atan2
 
@@ -46,7 +49,7 @@ class RequestMock:
 
 
 class GeoAPI:
-    api_url = "https://nominatim.openstreetmap.org/search"
+    api_url = settings.GEOCODING_API_URL
     headers = {
         'User-Agent': f"Notfellchen {nf_version}",
         'From': 'info@notfellchen.org'  # This is another valid field
@@ -58,23 +61,42 @@ class GeoAPI:
         else:
             self.requests = requests
 
-    def get_coordinates_from_postcode(self, postcode):
-        result = self.requests.get(self.api_url, {"q": postcode, "format": "jsonv2"}, headers=self.headers).json()[0]
+    def get_coordinates_from_query(self, location_string):
+        result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers).json()[0]
         return result["lat"], result["lon"]
 
+    def _get_raw_response(self, location_string):
+        result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers)
+        return result.content
+
     def get_location_from_string(self, location_string):
-        result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers).json()[0]
+        try:
+            result = self.requests.get(self.api_url,
+                                   {"q": location_string,
+                                    "format": "jsonv2"},
+                                   headers=self.headers).json()
+        except Exception as e:
+            logging.warning(f"Exception {e} when querying Nominatim")
+            return None
+        if len(result) == 0:
+            logging.warning(f"Couldn't find a result for {location_string} when querying Nominatim")
+            return None
+
+        result = result[0]
+        if "name" in result:
+            name = result["name"]
+        else:
+            name = result["display_name"]
         location = Location.objects.create(
             place_id=result["place_id"],
-            osm_id=result["osm_id"],
             latitude=result["lat"],
             longitude=result["lon"],
-            name=result["name"],
+            name=name,
         )
         return location
 
 
 if __name__ == "__main__":
-    geo = GeoAPI(debug=True)
-    print(geo.get_coordinates_from_postcode("72072"))
+    geo = GeoAPI(debug=False)
+    print(geo.get_coordinates_from_query("12101"))
     print(calculate_distance_between_coordinates(('48.4949904', '9.040330235970146'), ("48.648333", "9.451111")))
