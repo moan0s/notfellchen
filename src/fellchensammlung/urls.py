@@ -9,6 +9,7 @@ from . import views
 urlpatterns = [
     path("", views.index, name="index"),
     path("rss/", LatestAdoptionNoticesFeed(), name="rss"),
+    path("metrics/", views.metrics, name="metrics"),
     # ex: /animal/5/
     path("tier/<int:animal_id>/", views.animal_detail, name="animal-detail"),
     # ex: /animal/5/edit

@@ -1,6 +1,6 @@
 import logging
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -17,6 +17,7 @@ from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, Comm
     AdoptionNoticeSearchForm
 from .models import Language, Announcement
 from .tools.geo import GeoAPI
+from .tools.metrics import gather_metrics_data
 
 
 def index(request):
@@ -298,3 +299,8 @@ def modqueue(request):
     open_reports = Report.objects.filter(status=Report.WAITING)
     context = {"reports": open_reports}
     return render(request, 'fellchensammlung/modqueue.html', context=context)
+
+
+def metrics(request):
+    data = gather_metrics_data()
+    return JsonResponse(data)
