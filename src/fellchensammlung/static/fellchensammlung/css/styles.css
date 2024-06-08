@@ -85,7 +85,9 @@ h1, h2 {
     border-bottom-right-radius: 15px;
 }
 
-.header a {
+
+
+.nav-link {
     color: var(--text-one);
     text-align: center;
     text-decoration: none;
