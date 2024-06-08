@@ -51,6 +51,15 @@ class AdoptionNoticeForm(forms.ModelForm):
         fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string"]
 
 
+class AdoptionNoticeFormWithDateWidget(AdoptionNoticeForm):
+    class Meta:
+        model = AdoptionNotice
+        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string"]
+        widgets = {
+            'searching_since': DateInput(),
+        }
+
+
 class AnimalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'in_adoption_notice_creation_flow' in kwargs:
@@ -69,6 +78,15 @@ class AnimalForm(forms.ModelForm):
     class Meta:
         model = Animal
         fields = ["name", "date_of_birth", "species", "sex", "description"]
+
+
+class AnimalFormWithDateWidget(AnimalForm):
+    class Meta:
+        model = Animal
+        fields = ["name", "date_of_birth", "species", "sex", "description"]
+        widgets = {
+            'date_of_birth': DateInput(),
+        }
 
 
 class ImageForm(forms.ModelForm):

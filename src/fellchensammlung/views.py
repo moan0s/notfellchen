@@ -11,10 +11,11 @@ from .mail import mail_admins_new_report
 from notfellchen import settings
 
 from fellchensammlung import logger
-from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    User, Location
-from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm, AnimalForm, \
-    AdoptionNoticeSearchForm
+from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
+    User, Location, AdoptionNoticeStatus
+from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
+    CommentForm, ReportCommentForm, AnimalForm, \
+    AdoptionNoticeSearchForm, AnimalFormWithDateWidget
 from .models import Language, Announcement
 from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
@@ -127,14 +128,14 @@ def add_adoption_notice(request):
 
             return redirect(reverse("adoption-notice-add-animal", args=[instance.pk]))
     else:
-        form = AdoptionNoticeForm(in_adoption_notice_creation_flow=True)
+        form = AdoptionNoticeFormWithDateWidget(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
 
 
 @login_required
 def adoption_notice_add_animal(request, adoption_notice_id):
     if request.method == 'POST':
-        form = AnimalForm(request.POST, request.FILES)
+        form = AnimalFormWithDateWidget(request.POST, request.FILES)
 
         if form.is_valid():
             instance = form.save(commit=False)
@@ -142,12 +143,12 @@ def adoption_notice_add_animal(request, adoption_notice_id):
             instance.save()
             form.save_m2m()
             if "save-and-add-another-animal" in request.POST:
-                form = AnimalForm(in_adoption_notice_creation_flow=True)
+                form = AnimalFormWithDateWidget(in_adoption_notice_creation_flow=True)
                 return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
             else:
                 return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
     else:
-        form = AnimalForm(in_adoption_notice_creation_flow=True)
+        form = AnimalFormWithDateWidget(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
 
 
