@@ -116,7 +116,7 @@ def search(request):
 @login_required
 def add_adoption_notice(request):
     if request.method == 'POST':
-        form = AdoptionNoticeForm(request.POST, request.FILES, in_adoption_notice_creation_flow=True)
+        form = AdoptionNoticeFormWithDateWidget(request.POST, request.FILES, in_adoption_notice_creation_flow=True)
 
         if form.is_valid():
             instance = form.save(commit=False)
@@ -125,6 +125,19 @@ def add_adoption_notice(request):
             location = Location.get_location_from_string(instance.location_string)
             instance.location = location
             instance.save()
+
+            # Set correct status
+            if request.user.trust_level >= User.TRUST_LEVEL[User.COORDINATOR]:
+                status = AdoptionNoticeStatus.objects.create(major_status=AdoptionNoticeStatus.ACTIVE,
+                                                             minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.ACTIVE]["searching"],
+                                                             adoption_notice=instance)
+                status.save()
+            else:
+                status = AdoptionNoticeStatus.objects.create(major_status=AdoptionNoticeStatus.AWAITING_ACTION,
+                                                             minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.AWAITING_ACTION][
+                                                                 "waiting_for_review"],
+                                                             adoption_notice=instance)
+                status.save()
 
             return redirect(reverse("adoption-notice-add-animal", args=[instance.pk]))
     else:

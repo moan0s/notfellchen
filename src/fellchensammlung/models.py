@@ -50,16 +50,16 @@ class User(AbstractUser):
     MODERATOR = "Moderator"
     COORDINATOR = "Koordinator*in"
     MEMBER = "Mitglied"
-    TRUES_LEVEL = {
-        ADMIN: "Administrator*in",
-        MODERATOR: "Moderator*in",
-        COORDINATOR: "Koordinator*in",
-        MEMBER: "Mitglied",
+    TRUST_LEVEL = {
+        ADMIN: 4,
+        MODERATOR: 3,
+        COORDINATOR: 2,
+        MEMBER: 1,
     }
 
     preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
                                            verbose_name=_('Bevorzugte Sprache'))
-    trust_level = models.CharField(choices=TRUES_LEVEL, max_length=100, default=MEMBER)
+    trust_level = models.IntegerField(choices=TRUST_LEVEL, default=TRUST_LEVEL[MEMBER])
 
     class Meta:
         verbose_name = _('Nutzer*in')
@@ -246,12 +246,12 @@ class AdoptionNoticeStatus(models.Model):
     """
 
     ACTIVE = "active"
-    IN_REVIEW = "in_review"
+    AWAITING_ACTION = "awaiting_action"
     CLOSED = "closed"
     DISABLED = "disabled"
     MAJOR_STATUS_CHOICES = {
         ACTIVE: "active",
-        IN_REVIEW: "in review",
+        AWAITING_ACTION: "in review",
         CLOSED: "closed",
         DISABLED: "disabled",
     }
@@ -261,8 +261,9 @@ class AdoptionNoticeStatus(models.Model):
             "searching": "searching",
             "interested": "interested",
         },
-        IN_REVIEW: {
+        AWAITING_ACTION: {
             "waiting_for_review": "waiting_for_review",
+            "needs_additional_info": "needs_additional_info",
         },
         CLOSED: {
             "successful_with_notfellchen": "successful_with_notfellchen",

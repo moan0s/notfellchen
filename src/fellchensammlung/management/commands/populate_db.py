@@ -101,10 +101,10 @@ class Command(BaseCommand):
 
         User.objects.create_user('test', password='foobar')
         admin1 = User.objects.create_superuser(username="admin", password="admin", email="admin1@example.org",
-                                               trust_level=User.ADMIN)
+                                               trust_level=User.TRUST_LEVEL[User.ADMIN])
 
         mod1 = User.objects.create_user(username="mod1", password="mod", email="mod1@example.org",
-                                        trust_level=User.MODERATOR)
+                                        trust_level=User.TRUST_LEVEL[User.MODERATOR])
 
         comment1 = baker.make(Comment, user=admin1, text="This is a comment", adoption_notice=adoption1)
         comment2 = baker.make(Comment,
