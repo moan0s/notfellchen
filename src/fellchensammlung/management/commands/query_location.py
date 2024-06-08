@@ -1,5 +1,5 @@
 from django.core.management import BaseCommand
-from fellchensammlung.tools.geo import GeoAPI
+from fellchensammlung.models import Location
 
 
 class Command(BaseCommand):
@@ -13,5 +13,4 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        geo_api = GeoAPI(debug=False)
-        print(geo_api.get_location_from_string(options["query"]))
+        print(Location.get_location_from_string(options["query"]))
