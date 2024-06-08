@@ -118,10 +118,9 @@ def add_adoption_notice(request):
         form = AdoptionNoticeForm(request.POST, request.FILES, in_adoption_notice_creation_flow=True)
 
         if form.is_valid():
-            instance = form.save()
-
+            instance = form.save(commit=False)
+            instance.created_by = request.user
             """Search the location given in the location string and add it to the adoption notice"""
-            geo_api = GeoAPI()
             location = Location.get_location_from_string(instance.location_string)
             instance.location = location
             instance.save()
