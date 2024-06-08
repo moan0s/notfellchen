@@ -303,9 +303,9 @@ def report_detail_success(request, report_id):
 
 
 def user_detail(request, user_id):
-    member = Member.objects.get(id=user_id)
-    context = {"member": member}
-    return render(request, 'fellchensammlung/details/detail-member.html', context=context)
+    user = User.objects.get(id=user_id)
+    context = {"user": user, "adoption_notices": AdoptionNotice.objects.filter(created_by=user)}
+    return render(request, 'fellchensammlung/details/detail-user.html', context=context)
 
 
 def modqueue(request):

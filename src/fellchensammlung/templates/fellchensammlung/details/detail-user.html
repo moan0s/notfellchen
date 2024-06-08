@@ -1,0 +1,20 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{{ user.get_full_name }}</h1>
+
+    <p><strong>{% translate "Username" %}:</strong> {{ user.username }}</p>
+    <p><strong>{% translate "E-Mail" %}:</strong> {{ user.email }}</p>
+
+    {% if user.preferred_language %}
+        <p><strong>{% translate "Sprache" %}:</strong> {{ user.preferred_language }}</p>
+    {% else %}
+        <p>{% translate "Keine bevorzugte Sprache gesetzt." %}</p>
+    {% endif %}
+
+    {% if user.id is request.user.id %}
+        <h2>{% translate 'Meine Vermittlungen' %}</h2>
+        {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+    {% endif %}
+{% endblock %}

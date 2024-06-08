@@ -16,7 +16,7 @@
     <div class="header-right">
         {% if user.is_authenticated %}
             <div class="profile-card">
-                <p>{{ user.username }}</p>
+                <p><a href="{{ user.get_absolute_url }}">{{ user.username }}</a></p>
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button type="submit">{% translate "Ausloggen" %}</button>
