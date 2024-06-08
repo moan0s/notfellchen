@@ -6,7 +6,7 @@ from django.core.files import File
 from fellchensammlung import baker_recipes
 from model_bakery import baker
 
-from fellchensammlung.models import AdoptionNotice, Species, Animal, Image, ModerationAction, User, Member, Rule, \
+from fellchensammlung.models import AdoptionNotice, Species, Animal, Image, ModerationAction, User, Rule, \
     Report, Comment, ReportAdoptionNotice
 
 
@@ -100,15 +100,11 @@ class Command(BaseCommand):
                                         public_comment="A moderator has deleted the reported content")
 
         User.objects.create_user('test', password='foobar')
-        u_admin1 = User.objects.create_superuser(username="admin", password="admin", email="admin1@example.org")
-        admin1 = Member.objects.get(user=u_admin1)
-        admin1.trust_level = Member.ADMIN
-        admin1.save()
+        admin1 = User.objects.create_superuser(username="admin", password="admin", email="admin1@example.org",
+                                               trust_level=User.ADMIN)
 
-        u_mod1 = User.objects.create_user(username="mod1", password="mod", email="mod1@example.org")
-        mod1 = Member.objects.get(user=u_mod1)
-        mod1.trust_level = Member.MODERATOR
-        mod1.save()
+        mod1 = User.objects.create_user(username="mod1", password="mod", email="mod1@example.org",
+                                        trust_level=User.MODERATOR)
 
         comment1 = baker.make(Comment, user=admin1, text="This is a comment", adoption_notice=adoption1)
         comment2 = baker.make(Comment,

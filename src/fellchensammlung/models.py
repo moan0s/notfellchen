@@ -35,6 +35,40 @@ class Language(models.Model):
         verbose_name_plural = _('Sprachen')
 
 
+class User(AbstractUser):
+    """
+    Model that holds a user's profile, including the django user model
+
+    The trust levels act as permission system and can be displayed as a badge for the user
+    """
+
+    # Admins can perform all actions and have the highest trust associated with them
+    # Moderators can make moderation decisions regarding the deletion of content
+    # Coordinators can create adoption notices without them being checked
+    # Members can create adoption notices that must be activated
+    ADMIN = "admin"
+    MODERATOR = "Moderator"
+    COORDINATOR = "Koordinator*in"
+    MEMBER = "Mitglied"
+    TRUES_LEVEL = {
+        ADMIN: "Administrator*in",
+        MODERATOR: "Moderator*in",
+        COORDINATOR: "Koordinator*in",
+        MEMBER: "Mitglied",
+    }
+
+    preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
+                                           verbose_name=_('Bevorzugte Sprache'))
+    trust_level = models.CharField(choices=TRUES_LEVEL, max_length=100, default=MEMBER)
+
+    class Meta:
+        verbose_name = _('Nutzer*in')
+        verbose_name_plural = _('Nutzer*innen')
+
+    def get_absolute_url(self):
+        return reverse("user-detail", args=[str(self.pk)])
+
+
 class Image(models.Model):
     image = models.ImageField(upload_to='images')
     alt_text = models.TextField(max_length=2000)
@@ -124,6 +158,7 @@ class AdoptionNotice(models.Model):
     photos = models.ManyToManyField(Image, blank=True)
     location_string = models.CharField(max_length=200, verbose_name=_("Ortsangabe"))
     location = models.ForeignKey(Location, blank=True, null=True, on_delete=models.SET_NULL, )
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Creator'))
 
     @property
     def animals(self):
@@ -411,54 +446,6 @@ Membership
 """
 
 
-class User(AbstractUser):
-    pass
-
-
-class Member(models.Model):
-    """
-    Model that holds a user's profile, including the django user model
-
-    It is created upon creation of a new django user (see add_member)
-    The trust levels act as permission system and can be displayed as a badge for the user
-    """
-
-    # Admins can perform all actions and have the highest trust associated with them
-    # Moderators can make moderation decisions regarding the deletion of content
-    # Coordinators can create adoption notices without them being checked
-    # Members can create adoption notices that must be activated
-    ADMIN = "admin"
-    MODERATOR = "Moderator"
-    COORDINATOR = "Koordinator*in"
-    MEMBER = "Mitglied"
-    TRUES_LEVEL = {
-        ADMIN: "Administrator*in",
-        MODERATOR: "Moderator*in",
-        COORDINATOR: "Koordinator*in",
-        MEMBER: "Mitglied",
-    }
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
-    preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
-                                           verbose_name=_('Bevorzugte Sprache'))
-    trust_level = models.CharField(choices=TRUES_LEVEL, max_length=100, default=MEMBER)
-
-    class Meta:
-        verbose_name = _('Nutzer*in')
-        verbose_name_plural = _('Nutzer*innen')
-
-    @receiver(post_save, sender=User)
-    def add_member(sender, instance, created, raw, using, **kwargs):
-        if len(Member.objects.filter(user=instance)) != 1:
-            Member.objects.create(user=instance)
-
-    def __str__(self):
-        return str(self.user)
-
-    def get_absolute_url(self):
-        return reverse("member-detail", args=[str(self.user.id)])
-
-
 class Text(models.Model):
     """
     Base class to store markdown content
@@ -528,7 +515,7 @@ class Comment(models.Model):
     """
     Class to store comments in markdown content
     """
-    user = models.ForeignKey(Member, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     created_at = models.DateTimeField(auto_now_add=True)
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
     text = models.TextField(verbose_name="Inhalt")

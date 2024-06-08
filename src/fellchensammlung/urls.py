@@ -46,7 +46,7 @@ urlpatterns = [
     ## USERS ##
     ###########
     # ex: user/1
-    path("user/<int:user_id>/", views.member_detail, name="user-detail"),
+    path("user/<int:user_id>/", views.user_detail, name="user-detail"),
 
     path('accounts/register/',
          RegistrationView.as_view(

@@ -5,15 +5,15 @@ from django.utils.translation import gettext
 from django.conf import settings
 from django.core import mail
 from django.db.models import Q
-from fellchensammlung.models import Member
+from fellchensammlung.models import User
 from notfellchen.settings import host
 
 
 def mail_admins_new_report(report):
     subject = _("Neue Meldung")
-    for moderator in Member.objects.filter(Q(trust_level=Member.MODERATOR) | Q(trust_level=Member.ADMIN)):
+    for moderator in User.objects.filter(Q(trust_level=User.MODERATOR) | Q(trust_level=User.ADMIN)):
         greeting = _("Moin,") + "\r\n"
-        new_report_text = _("es wurde eine Vermittlung gemeldet.") + "\r\n"
+        new_report_text = _("es wurde ein Regelverstoß gemeldet.") + "\r\n"
         if len(report.reported_broken_rules.all()) > 0:
             reported_rules_text = (f"Ein Verstoß gegen die folgenden Regeln wurde gemeldet:\r\n"
                                    f"- {'\r\n - '.join([str(r) for r in report.reported_broken_rules.all()])}\r\n")

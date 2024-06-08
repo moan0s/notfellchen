@@ -12,7 +12,7 @@ from notfellchen import settings
 
 from fellchensammlung import logger
 from fellchensammlung.models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    Member, Location
+    User, Location
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm
 from .models import Language, Announcement
@@ -289,7 +289,7 @@ def report_detail_success(request, report_id):
     return report_detail(request, report_id, form_complete=True)
 
 
-def member_detail(request, user_id):
+def user_detail(request, user_id):
     member = Member.objects.get(id=user_id)
     context = {"member": member}
     return render(request, 'fellchensammlung/details/detail-member.html', context=context)

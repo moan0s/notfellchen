@@ -5,20 +5,7 @@ from django.utils.html import format_html
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
-    Member, Comment, Report, Announcement, AdoptionNoticeStatus
-
-
-# Define an inline admin descriptor for Employee model
-# which acts a bit like a singleton
-class MemberInline(admin.StackedInline):
-    model = Member
-    can_delete = False
-    verbose_name_plural = "member"
-
-
-# Define a new User admin
-class UserAdmin(BaseUserAdmin):
-    inlines = [MemberInline]
+    Comment, Report, Announcement, AdoptionNoticeStatus, User
 
 
 class StatusInline(admin.StackedInline):
@@ -33,7 +20,7 @@ class AdoptionNoticeAdmin(admin.ModelAdmin):
 
 
 # Re-register UserAdmin
-admin.site.register(User, UserAdmin)
+admin.site.register(User)
 
 
 def _reported_content_link(obj):
