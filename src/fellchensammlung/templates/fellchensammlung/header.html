@@ -8,7 +8,8 @@
     <a href="{% url "index" %}" class="logo"><img src={% static 'fellchensammlung/img/logo_transparent.png' %}></a>
     <nav id="nav" class="nav justify-content-center">
         <a class="nav-link " href="{% url "search" %}"><i class="fas fa-search"></i> {% translate 'Suchen' %}</a>
-        <a class="nav-link " href="{% url "add-adoption" %}"><i class="fas fa-feather"></i> {% translate 'Vermittlung hinzufügen' %}</a>
+        <a class="nav-link " href="{% url "add-adoption" %}"><i
+                class="fas fa-feather"></i> {% translate 'Vermittlung hinzufügen' %}</a>
         <a class="nav-link " href="{% url "about" %}"><i class="fas fa-info"></i> {% translate 'Über uns' %}</a>
         <a class="nav-link " href="{% url "rss" %}"><i class="fa-solid fa-rss"></i> {% translate 'RSS' %}</a>
 
@@ -17,7 +18,16 @@
         {% include "fellchensammlung/forms/change_language.html" %}
         {% if user.is_authenticated %}
             <div class="profile-card">
-                <p><a href="{{ user.get_absolute_url }}">{{ user.username }}</a></p>
+                <div class="container-dropdown">
+                    <button class="dropbtn">
+                        {{ user.username }} drop
+                    </button>
+                    <select class="dropdown-content">
+                    <option><a href="{{ user.get_absolute_url }}">Profile</a></option>
+
+                    <option><a href="{{ user.get_absolute_url }}">Log out</a></option>
+                    </select>
+                </div>
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button type="submit">{% translate "Ausloggen" %}</button>
