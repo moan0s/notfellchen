@@ -12,7 +12,7 @@ from notfellchen import settings
 
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification
+    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget
@@ -316,7 +316,9 @@ def report_detail_success(request, report_id):
 
 def user_detail(request, user_id):
     user = User.objects.get(id=user_id)
-    context = {"user": user, "adoption_notices": AdoptionNotice.objects.filter(created_by=user)}
+    context = {"user": user,
+               "adoption_notices": AdoptionNotice.objects.filter(created_by=user),
+               "notifications": BaseNotification.objects.filter(user=user, read=False)}
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
 
 

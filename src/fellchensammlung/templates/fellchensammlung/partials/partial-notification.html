@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load custom_tags %}
+<div class="notification">
+    <div class="notification-header">
+        <b>{{ notification.title }}</b>
+        {{ notification.created_at }}
+        <a class="adoption-card-report-link" href=""><i class="fa-solid fa-check"></i></a>
+    </div>
+    <p>
+        {{ notification.text | render_markdown }}
+    </p>
+</div>

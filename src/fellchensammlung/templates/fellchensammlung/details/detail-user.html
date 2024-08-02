@@ -14,7 +14,11 @@
     {% endif %}
 
     {% if user.id is request.user.id %}
+
+        <h2>{% translate 'Benachrichtigungen' %}</h2>
+        {% include "fellchensammlung/lists/list-notifications.html" %}
         <h2>{% translate 'Meine Vermittlungen' %}</h2>
         {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+
     {% endif %}
 {% endblock %}

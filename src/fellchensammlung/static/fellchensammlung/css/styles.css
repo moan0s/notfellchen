@@ -457,7 +457,7 @@ select, button {
     }
 }
 
-.container-comments {
+.container-comments, .container-cards {
     display: flex;
     flex-wrap: wrap;
     background: var(--background-two);
@@ -465,7 +465,7 @@ select, button {
     padding: 5px;
 }
 
-.comment {
+.comment, .notification {
     flex: 1 100%;
     margin: 10px;
     border-radius: 8px;
