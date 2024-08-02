@@ -18,16 +18,16 @@
         <div class="profile-card">
             {% include "fellchensammlung/forms/change_language.html" %}
             {% if user.is_authenticated %}
-                <a class="btn2" href="{{ user.get_absolute_url }}">Profile</a>
+                <a class="btn2" href="{{ user.get_absolute_url }}"><i aria-hidden="true" class="fas fa-user"></i></a>
                 <form class="btn2 button_darken" action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit">{% translate "Ausloggen" %}</button>
+                    <button type="submit"><i aria-hidden="true" class="fas fa-sign-out"></i></button>
                 </form>
-                </div>
             {% else %}
                 <a class="btn2" href="{% url "django_registration_register" %}">{% translate "Registrieren" %}</a>
-                <a class="btn2" href="{% url "login" %}">{% translate "Einloggen" %}</a>
+                <a class="btn2" href="{% url "login" %}"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
             {% endif %}
 
+        </div>
     </div>
 </div>
