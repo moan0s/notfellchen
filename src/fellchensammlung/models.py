@@ -68,6 +68,9 @@ class User(AbstractUser):
     def get_absolute_url(self):
         return reverse("user-detail", args=[str(self.pk)])
 
+    def get_notifications_url(self):
+        return self.get_absolute_url()
+
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images')
@@ -531,3 +534,21 @@ class Comment(models.Model):
     @property
     def get_absolute_url(self):
         return self.adoption_notice.get_absolute_url()
+
+
+class BaseNotification(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100)
+    text = models.TextField(verbose_name="Inhalt")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
+    read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"[{self.user}] {self.title} ({self.created_at})"
+
+    def get_absolute_url(self):
+        self.user.get_notifications_url()
+
+
+class CommentNotification(BaseNotification):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name=_('Antwort'))
