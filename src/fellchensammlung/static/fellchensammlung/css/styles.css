@@ -110,9 +110,8 @@ h1, h2 {
     color: white;
 }
 
-.header-right select {
+select, button {
     width: 100%;
-    padding: 10px;
     border: none;
     border-radius: 4px;
     opacity: 1;
@@ -141,13 +140,18 @@ h1, h2 {
     background-color: var(--highlight-two);
     color: var(--highlight-one-text);
 
+    .btn2 {
+        height: 40px;
+        margin: 5px;
+    }
+
+    a:hover, .button_darken:hover {
+        background-color: var(--highlight-one);
+        color: var(--highlight-one-text);
+    }
     button {
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        opacity: 1;
-        background-color: var(--secondary-light-one);
+        background: inherit;
+        color: inherit;
     }
 }
 
@@ -518,31 +522,4 @@ textarea {
 
 .info {
     border: rgba(17, 58, 224, 0.51) 4px solid;
-}
-
-.container-dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    z-index: 1;
-}
-
-.container-dropdown:hover .dropdown-content {
-    display: block;
-}
-
-
-.dropbtn {
-    background-color: #f1f1f1;
-    color: black;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
 }
