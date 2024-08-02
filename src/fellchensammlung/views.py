@@ -12,7 +12,7 @@ from notfellchen import settings
 
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    User, Location, AdoptionNoticeStatus, Subscriptions
+    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget
@@ -59,12 +59,20 @@ def adoption_notice_detail(request, adoption_notice_id):
             if comment_form.is_valid():
                 comment_instance = comment_form.save(commit=False)
                 comment_instance.adoption_notice_id = adoption_notice_id
-                comment_instance.user = request.user.member
+                comment_instance.user = request.user
                 comment_instance.save()
 
                 # Auto-subscribe user to adoption notice
-                subscription = Subscriptions(adoption_notice=adoption_notice, user=request.user)
+                subscription, created = Subscriptions.objects.get_or_create(adoption_notice=adoption_notice, user=request.user)
                 subscription.save()
+
+                # Notify users that a comment was added
+                for subscription in adoption_notice.get_subscriptions():
+                    notification = CommentNotification(user=subscription.user,
+                                                       title=f"{adoption_notice.name} - Neuer Kommentar",
+                                                       text=f"{request.user}: {comment_instance.text}",
+                                                       comment=comment_instance)
+                    notification.save()
         else:
             raise PermissionDenied
     else:

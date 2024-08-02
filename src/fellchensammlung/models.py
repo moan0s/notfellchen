@@ -185,6 +185,9 @@ class AdoptionNotice(models.Model):
     def get_report_url(self):
         return reverse('report-adoption-notice', args=[str(self.id)])
 
+    def get_subscriptions(self):
+        return Subscriptions.objects.filter(adoption_notice=self)
+
     def get_photos(self):
         """
         First trys to get group photos that are attached to the adoption notice if there is none it trys to fetch
