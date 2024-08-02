@@ -552,3 +552,9 @@ class BaseNotification(models.Model):
 
 class CommentNotification(BaseNotification):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name=_('Antwort'))
+
+
+class Subscriptions(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
+    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
+    created_at = models.DateTimeField(auto_now_add=True)
