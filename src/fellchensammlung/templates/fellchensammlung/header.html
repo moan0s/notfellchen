@@ -23,7 +23,7 @@
                     <a href="{{ user.get_notifications_url }}">
                         <i class="fa fa-bell" aria-hidden="true"></i>
                     </a>
-                    <span class="button__badge">4</span>
+                    <span class="button__badge">{{ user.get_num_unread_notifications }}</span>
 
                 </div>
 

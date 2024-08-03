@@ -71,6 +71,9 @@ class User(AbstractUser):
     def get_notifications_url(self):
         return self.get_absolute_url()
 
+    def get_num_unread_notifications(self):
+        return BaseNotification.objects.filter(user=self,read=False).count()
+
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images')
