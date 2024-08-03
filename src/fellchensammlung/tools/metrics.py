@@ -14,8 +14,8 @@ def gather_metrics_data():
         adoptionnoticestatus__major_status=AdoptionNoticeStatus.CLOSED).count()
     num_adoption_notices_disabled = AdoptionNotice.objects.filter(
         adoptionnoticestatus__major_status=AdoptionNoticeStatus.DISABLED).count()
-    num_adoption_notices_in_review = AdoptionNotice.objects.filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.IN_REVIEW).count()
+    num_adoption_notices_awaiting_action = AdoptionNotice.objects.filter(
+        adoptionnoticestatus__major_status=AdoptionNoticeStatus.AWAITING_ACTION).count()
 
     adoption_notices_without_location = AdoptionNotice.objects.filter(location__isnull=True).count()
     data = {
@@ -27,7 +27,7 @@ def gather_metrics_data():
             'active': num_adoption_notices_active,
             'closed': num_adoption_notices_closed,
             'disabled': num_adoption_notices_disabled,
-            'in_review': num_adoption_notices_in_review,
+            'awaiting_action': num_adoption_notices_awaiting_action,
         },
         'adoption_notices_without_location': adoption_notices_without_location
     }
