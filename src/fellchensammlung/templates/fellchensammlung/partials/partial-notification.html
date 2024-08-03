@@ -4,11 +4,11 @@
     <div class="notification-header">
         <b>{{ notification.title }}</b>
         {{ notification.created_at }}
-        <form method="POST">
+        <form class="notification-card-mark-read" method="POST">
             {% csrf_token %}
             <input type="hidden" name="action" value="notification_mark_read">
             <input type="hidden" name="notification_id" value="{{ notification.pk }}">
-            <button type="submit" id="submit"><i class="fa-solid fa-check"></i></button>
+            <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-check"></i></button>
         </form>
     </div>
     <p>

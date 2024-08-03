@@ -110,7 +110,7 @@ h1, h2 {
     color: white;
 }
 
-select, button {
+select, .button {
     width: 100%;
     border: none;
     border-radius: 4px;
@@ -415,10 +415,14 @@ select, button {
     max-height: 250px;
 }
 
-.adoption-card-report-link {
+.adoption-card-report-link, .notification-card-mark-read {
     margin-left: auto;
     font-size: 2rem;
     padding: 10px;
+}
+
+.notification-card-mark-read {
+    display: inline;
 }
 
 .heading-card-adoption-notice {
@@ -457,7 +461,7 @@ select, button {
     }
 }
 
-.container-comments, .container-cards {
+.container-comment-headers, .container-cards {
     display: flex;
     flex-wrap: wrap;
     background: var(--background-two);

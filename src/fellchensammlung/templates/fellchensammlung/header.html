@@ -22,7 +22,7 @@
                 <a class="btn2" href="{{ user.get_absolute_url }}"><i aria-hidden="true" class="fas fa-user"></i></a>
                 <form class="btn2 button_darken" action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit"><i aria-hidden="true" class="fas fa-sign-out"></i></button>
+                    <button class="button" type="submit"><i aria-hidden="true" class="fas fa-sign-out"></i></button>
                 </form>
             {% else %}
                 <a class="btn2" href="{% url "django_registration_register" %}">{% translate "Registrieren" %}</a>
