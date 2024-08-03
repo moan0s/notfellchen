@@ -144,7 +144,7 @@ select, .button {
         height: 40px;
     }
 
-    a:hover, .button_darken:hover {
+    .button_darken:hover {
         background-color: var(--highlight-one);
         color: var(--highlight-one-text);
     }
@@ -413,6 +413,25 @@ select, .button {
     border-radius: 10%;
     margin: 5px;
     max-height: 250px;
+}
+
+.btn-notification {
+    display: inline-block;
+    position: relative;
+    padding: 0;
+}
+/* Make the badge float in the top right corner of the button */
+.button__badge {
+  background-color: #fa3e3e;
+  border-radius: 2px;
+  color: white;
+
+  padding: 1px 3px;
+  font-size: 10px;
+
+  position: absolute; /* Position the badge within the relatively positioned button */
+  top: 0;
+  right: 0;
 }
 
 .adoption-card-report-link, .notification-card-mark-read {
