@@ -453,7 +453,7 @@ select, .button {
     padding: 5px;
 }
 
-#form-adoption-notice {
+#form-adoption-notice, #form-registration {
     .form-group {
         margin: 30px;
     }

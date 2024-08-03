@@ -145,6 +145,14 @@ class CustomRegistrationForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):
         model = User
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_id = 'form-registration'
+        self.helper.form_class = 'card'
+
+        self.helper.add_input(Submit('submit', _('Registrieren'), css_class="btn"))
+
 
 def _get_distances():
     return {i: i for i in [10, 20, 50, 100, 200, 500]}

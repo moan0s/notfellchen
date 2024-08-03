@@ -1,15 +1,11 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-{% if not user.is_authenticated %}
-  <form method="post" action=".">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <input type="submit" value="{% translate 'Registrieren' %}" />
-  </form>
-{% else %}
-  <p>{% translate "Du bist bereits eingeloggt." %}</p>
-{% endif %}
+    {% if not user.is_authenticated %}
+        {% crispy form %}
+    {% else %}
+        <p>{% translate "Du bist bereits eingeloggt." %}</p>
+    {% endif %}
 {% endblock %}
