@@ -559,6 +559,11 @@ class BaseNotification(models.Model):
 class CommentNotification(BaseNotification):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name=_('Antwort'))
 
+    @property
+    def url(self):
+        print(f"URL: self.comment.get_absolute_url()")
+        return self.comment.get_absolute_url
+
 
 class Subscriptions(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))

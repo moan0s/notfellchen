@@ -322,11 +322,11 @@ def user_detail(request, user_id):
         if action == "notification_mark_read":
             notification_id = request.POST.get("notification_id")
             print(notification_id)
-            notification = BaseNotification.objects.get(pk=notification_id)
+            notification = CommentNotification.objects.get(pk=notification_id)
             notification.read = True
             notification.save()
         elif action == "notification_mark_all_read":
-            notifications = BaseNotification.objects.filter(user=request.user, mark_read=False)
+            notifications = CommentNotification.objects.filter(user=request.user, mark_read=False)
             for notification in notifications:
                 notification.read = True
                 notification.save()
@@ -334,7 +334,7 @@ def user_detail(request, user_id):
     user = User.objects.get(id=user_id)
     context = {"user": user,
                "adoption_notices": AdoptionNotice.objects.filter(created_by=user),
-               "notifications": BaseNotification.objects.filter(user=user, read=False)}
+               "notifications": CommentNotification.objects.filter(user=user, read=False)}
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
 
 

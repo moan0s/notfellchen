@@ -2,7 +2,7 @@
 {% load custom_tags %}
 <div class="notification">
     <div class="notification-header">
-        <b>{{ notification.title }}</b>
+        <a href="{{ notification.url }}" ><b>{{ notification.title }}</b></a>
         {{ notification.created_at }}
         <form class="notification-card-mark-read" method="POST">
             {% csrf_token %}
