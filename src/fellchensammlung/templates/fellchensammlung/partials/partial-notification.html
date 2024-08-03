@@ -3,7 +3,7 @@
 <div class="notification">
     <div class="notification-header">
         <a href="{{ notification.url }}" ><b>{{ notification.title }}</b></a>
-        {{ notification.created_at }}
+        <i class="card-timestamp">{{ notification.created_at }}</i>
         <form class="notification-card-mark-read" method="POST">
             {% csrf_token %}
             <input type="hidden" name="action" value="notification_mark_read">

@@ -3,7 +3,7 @@
 <div class="comment">
     <div class="comment-header">
         <b>{{ comment.user }}</b>
-        {{ comment.created_at }}
+        <i class="card-timestamp">{{ comment.created_at }}</i>
         <a class="adoption-card-report-link" href="{{ comment.get_report_url }}"><i class="fa-solid fa-flag"></i></a>
     </div>
     <p>
