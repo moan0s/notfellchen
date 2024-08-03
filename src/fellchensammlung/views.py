@@ -68,11 +68,13 @@ def adoption_notice_detail(request, adoption_notice_id):
 
                 # Notify users that a comment was added
                 for subscription in adoption_notice.get_subscriptions():
-                    notification = CommentNotification(user=subscription.user,
-                                                       title=f"{adoption_notice.name} - Neuer Kommentar",
-                                                       text=f"{request.user}: {comment_instance.text}",
-                                                       comment=comment_instance)
-                    notification.save()
+                    # Create a notification but only if the user is not the one that posted the comment
+                    if subscription.user != request.user:
+                        notification = CommentNotification(user=subscription.user,
+                                                           title=f"{adoption_notice.name} - Neuer Kommentar",
+                                                           text=f"{request.user}: {comment_instance.text}",
+                                                           comment=comment_instance)
+                        notification.save()
         else:
             raise PermissionDenied
     else:
