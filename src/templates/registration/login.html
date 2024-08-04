@@ -27,10 +27,10 @@
         <td>{{ form.password }}</td>
       </tr>
     </table>
-    <input type="submit" value={% translate "Einloggen" %} />
+    <input class="btn2" type="submit" value={% translate "Einloggen" %} />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
-  <p><a href="{% url 'password_reset' %}">{% translate "Passwort vergessen?" %}</a></p>
+  <p><a class="btn2" href="{% url 'password_reset' %}">{% translate "Passwort vergessen?" %}</a></p>
 {% endif %}
 {% endblock %}
