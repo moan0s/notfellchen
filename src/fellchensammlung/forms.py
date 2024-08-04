@@ -128,7 +128,7 @@ class CommentForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-comments'
-        self.helper.add_input(Submit('submit', _('Kommentieren')))
+        self.helper.add_input(Submit('submit', _('Kommentieren'), css_class="btn2"))
 
     class Meta:
         model = Comment
