@@ -68,12 +68,12 @@ class AnimalForm(forms.ModelForm):
             adding = False
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_class = 'form-animal'
+        self.helper.form_class = 'form-animal card'
         if adding:
             self.helper.add_input(Submit('save-and-add-another-animal', _('Speichern und weiteres Tier hinzufügen')))
             self.helper.add_input(Submit('save-and-finish', _('Speichern und beenden')))
         else:
-            self.helper.add_input(Submit('submit', _('Speichern')))
+            self.helper.add_input(Submit('submit', _('Speichern'), css_class="btn"))
 
     class Meta:
         model = Animal
