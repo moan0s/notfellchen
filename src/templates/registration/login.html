@@ -15,19 +15,10 @@
 {% endif %}
 
 {% if not user.is_authenticated %}
-  <form method="post" action="{% url 'login' %}">
+  <form class="card" method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input class="btn2" type="submit" value={% translate "Einloggen" %} />
+      {{ form.as_p }}
+    <input class="btn" type="submit" value={% translate "Einloggen" %} />
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
