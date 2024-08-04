@@ -21,7 +21,7 @@
         </p>
         <p>
             {% if adoption_notice.description %}
-                {{ adoption_notice.description }}
+                {{ adoption_notice.description | render_markdown }}
             {% else %}
                 {% translate "Keine Beschreibung" %}
             {% endif %}

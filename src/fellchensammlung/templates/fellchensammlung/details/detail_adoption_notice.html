@@ -5,7 +5,8 @@
 {% block content %}
     <div class="detail-adoption-notice-header">
         <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}</h1>
-        <a class="btn2" href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">{% translate 'Foto hinzufügen' %}</a>
+        <a class="btn2"
+           href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">{% translate 'Foto hinzufügen' %}</a>
         <a class="btn2 detail-adoption-notice-header"
            href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">{% translate 'Bearbeiten' %}</a>
     </div>
@@ -34,13 +35,15 @@
             </tr>
         </table>
     </div>
-    <p>
-        {% if adoption_notice.description %}
-            {{ adoption_notice.description }}
+    <div class="card">
+        <h1>{% translate "Beschreibung" %}</h1>
+        <p>{% if adoption_notice.description %}
+            {{ adoption_notice.description | render_markdown }}
         {% else %}
             {% translate "Keine Beschreibung angegeben" %}
         {% endif %}
-    </p>
+        </p>
+    </div>
 
     <div>
         {% for animal in adoption_notice.animals %}
