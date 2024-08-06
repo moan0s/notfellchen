@@ -76,3 +76,12 @@ nf makemessages -a
 ```
 
 Use a program like `gtranslator` or `poedit` to start translations
+
+## Permissions
+
+| Action                              | Allowed for                         |
+|-------------------------------------|-------------------------------------|
+| Create adoption notice              | logged-in                           |
+| Edit adoption notice                | User that created, Moderator, Admin |
+| Edit animal                         | User that created, Moderator, Admin |
+| Add animal/photo to adoption notice | User that created, Moderator, Admin |
