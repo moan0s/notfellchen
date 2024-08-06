@@ -378,9 +378,14 @@ select, .button {
     color: var(--text-two);
 }
 
-.card h1 {
+.card h1  {
     color: var(--text-three);
-    text-shadow: 2px 2px var(--shadow-three);
+    text-shadow: 1px 1px var(--shadow-three);
+}
+
+.card h2 {
+    color: var(--text-three);
+    text-shadow: 1px 1px var(--shadow-three);
 }
 
 .card img {
