@@ -21,6 +21,25 @@ in keinem Fall unterstützen und empfehlen hier den Weg über eine Rattenhilfe.
 Auch seriöse Züchter\*innen können hier nicht vermitteln, das Angebot ist für Ratten, die sonst kein artgerechtes
 Zuhause finden können.
 
+# Commands
+
+Clean up empty locations by re-querying them
+
+```shell
+nf clean_locations
+```
+
+Populate the database with test data **DO NOT USE IN PRODUCTION**
+```shell
+nf populate_db
+```
+
+Query location data to debug
+```shell
+nf query_location <query>
+```
+
+
 # Developer Notes
 
 Because of a wired bug the initial migrations must run two times as the first time the permissions
