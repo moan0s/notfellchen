@@ -115,6 +115,8 @@ select, .button {
     border: none;
     border-radius: 4px;
     opacity: 1;
+    background-color: var(--secondary-light-one);
+
 }
 
 .header-right select.option {
