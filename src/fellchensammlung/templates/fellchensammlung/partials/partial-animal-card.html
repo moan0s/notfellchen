@@ -8,11 +8,14 @@
             <div class="tag species">{{ animal.species }}</div>
             <div class="tag sex">{{ animal.get_sex_display }}</div>
         </div>
-
-        <div class="container-edit-buttons">
-            <a class="btn" href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
-            <a class="btn" href="{% url 'animal-add-photo' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
-        </div>
+        <!--- Assume a user does not have edit permissions on animal if they have no other edit permission   --->
+        {% if has_edit_permission %}
+            <div class="container-edit-buttons">
+                <a class="btn" href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
+                <a class="btn"
+                   href="{% url 'animal-add-photo' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
+            </div>
+        {% endif %}
     </div>
 
     {% if animal.description %}
