@@ -74,10 +74,15 @@ class User(AbstractUser):
     def get_num_unread_notifications(self):
         return BaseNotification.objects.filter(user=self,read=False).count()
 
+    @property
+    def owner(self):
+        return self
+
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images')
     alt_text = models.TextField(max_length=2000)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.alt_text
@@ -164,7 +169,7 @@ class AdoptionNotice(models.Model):
     photos = models.ManyToManyField(Image, blank=True)
     location_string = models.CharField(max_length=200, verbose_name=_("Ortsangabe"))
     location = models.ForeignKey(Location, blank=True, null=True, on_delete=models.SET_NULL, )
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Creator'))
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Creator'))
 
     @property
     def animals(self):
@@ -328,6 +333,7 @@ class Animal(models.Model):
     photos = models.ManyToManyField(Image, blank=True)
     sex = models.CharField(max_length=20, choices=SEX_CHOICES, )
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.name}"
@@ -566,6 +572,6 @@ class CommentNotification(BaseNotification):
 
 
 class Subscriptions(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
     created_at = models.DateTimeField(auto_now_add=True)

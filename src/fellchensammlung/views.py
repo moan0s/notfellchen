@@ -22,8 +22,18 @@ from .tools.metrics import gather_metrics_data
 from django.contrib.auth.decorators import user_passes_test
 
 
-def user_is_mod_or_above(user):
-    return user.is_authenticated and user.trust_level > User.TRUST_LEVEL[User.MODERATOR]
+def user_is_trust_level_or_above(user, trust_level=User.MODERATOR):
+    return user.is_authenticated and user.trust_level >= User.TRUST_LEVEL[trust_level]
+
+
+def user_is_owner_or_trust_level(user, django_object, trust_level=User.MODERATOR):
+    return user.is_authenticated and (
+                user.trust_level == User.TRUST_LEVEL[trust_level] or django_object.owner == user)
+
+
+def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=User.MODERATOR):
+    if not user_is_owner_or_trust_level(user, django_object, trust_level):
+        raise PermissionDenied
 
 
 def index(request):
@@ -68,7 +78,8 @@ def adoption_notice_detail(request, adoption_notice_id):
                 comment_instance.save()
 
                 # Auto-subscribe user to adoption notice
-                subscription, created = Subscriptions.objects.get_or_create(adoption_notice=adoption_notice, user=request.user)
+                subscription, created = Subscriptions.objects.get_or_create(adoption_notice=adoption_notice,
+                                                                            user=request.user)
                 subscription.save()
 
                 # Notify users that a comment was added
@@ -94,6 +105,7 @@ def adoption_notice_edit(request, adoption_notice_id):
     Form to update adoption notices
     """
     adoption_notice = AdoptionNotice.objects.get(pk=adoption_notice_id)
+    fail_if_user_not_owner_or_trust_level(request.user, adoption_notice)
     if request.method == 'POST':
         form = AdoptionNoticeForm(request.POST, instance=adoption_notice)
 
@@ -148,12 +160,14 @@ def add_adoption_notice(request):
             # Set correct status
             if request.user.trust_level >= User.TRUST_LEVEL[User.COORDINATOR]:
                 status = AdoptionNoticeStatus.objects.create(major_status=AdoptionNoticeStatus.ACTIVE,
-                                                             minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.ACTIVE]["searching"],
+                                                             minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[
+                                                                 AdoptionNoticeStatus.ACTIVE]["searching"],
                                                              adoption_notice=instance)
                 status.save()
             else:
                 status = AdoptionNoticeStatus.objects.create(major_status=AdoptionNoticeStatus.AWAITING_ACTION,
-                                                             minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.AWAITING_ACTION][
+                                                             minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[
+                                                                 AdoptionNoticeStatus.AWAITING_ACTION][
                                                                  "waiting_for_review"],
                                                              adoption_notice=instance)
                 status.save()
@@ -166,6 +180,9 @@ def add_adoption_notice(request):
 
 @login_required
 def adoption_notice_add_animal(request, adoption_notice_id):
+    # Only users that are mods or owners of the adoption notice are allowed to add to it
+    adoption_notice = AdoptionNotice.objects.get(pk=adoption_notice_id)
+    fail_if_user_not_owner_or_trust_level(request.user, adoption_notice)
     if request.method == 'POST':
         form = AnimalFormWithDateWidget(request.POST, request.FILES)
 
@@ -187,6 +204,8 @@ def adoption_notice_add_animal(request, adoption_notice_id):
 @login_required
 def add_photo_to_animal(request, animal_id):
     animal = Animal.objects.get(id=animal_id)
+    # Only users that are mods or owners of the animal are allowed to add to it
+    fail_if_user_not_owner_or_trust_level(request.user, animal)
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
 
@@ -206,6 +225,8 @@ def add_photo_to_animal(request, animal_id):
 @login_required
 def add_photo_to_adoption_notice(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
+    # Only users that are mods or owners of the adoption notice are allowed to add to it
+    fail_if_user_not_owner_or_trust_level(request.user, adoption_notice)
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
 
@@ -229,6 +250,8 @@ def animal_edit(request, animal_id):
     * Updating an Animal
     """
     animal = Animal.objects.get(pk=animal_id)
+    # Only users that are mods or owners of the animal are allowed to edit it
+    fail_if_user_not_owner_or_trust_level(request.user, animal)
     if request.method == 'POST':
         form = AnimalForm(request.POST, instance=animal)
 
@@ -323,11 +346,13 @@ def report_detail_success(request, report_id):
 
 @login_required
 def user_detail(request, user_id):
+    user = User.objects.get(id=user_id)
+    # Only users that are mods or owners of the user are allowed to view
+    fail_if_user_not_owner_or_trust_level(request.user, user)
     if request.method == "POST":
         action = request.POST.get("action")
         if action == "notification_mark_read":
             notification_id = request.POST.get("notification_id")
-            print(notification_id)
             notification = CommentNotification.objects.get(pk=notification_id)
             notification.read = True
             notification.save()
@@ -337,14 +362,13 @@ def user_detail(request, user_id):
                 notification.read = True
                 notification.save()
 
-    user = User.objects.get(id=user_id)
     context = {"user": user,
-               "adoption_notices": AdoptionNotice.objects.filter(created_by=user),
+               "adoption_notices": AdoptionNotice.objects.filter(owner=user),
                "notifications": CommentNotification.objects.filter(user=user, read=False)}
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
 
 
-@user_passes_test(user_is_mod_or_above)
+@user_passes_test(user_is_trust_level_or_above)
 def modqueue(request):
     open_reports = Report.objects.filter(status=Report.WAITING)
     context = {"reports": open_reports}
