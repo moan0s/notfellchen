@@ -19,6 +19,11 @@ from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageFo
 from .models import Language, Announcement
 from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
+from django.contrib.auth.decorators import user_passes_test
+
+
+def user_is_mod_or_above(user):
+    return user.is_authenticated and user.trust_level > User.TRUST_LEVEL[User.MODERATOR]
 
 
 def index(request):
@@ -316,6 +321,7 @@ def report_detail_success(request, report_id):
     return report_detail(request, report_id, form_complete=True)
 
 
+@login_required
 def user_detail(request, user_id):
     if request.method == "POST":
         action = request.POST.get("action")
@@ -338,6 +344,7 @@ def user_detail(request, user_id):
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
 
 
+@user_passes_test(user_is_mod_or_above)
 def modqueue(request):
     open_reports = Report.objects.filter(status=Report.WAITING)
     context = {"reports": open_reports}
