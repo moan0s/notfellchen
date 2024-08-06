@@ -115,7 +115,6 @@ select, .button {
     border: none;
     border-radius: 4px;
     opacity: 1;
-    background-color: var(--secondary-light-one);
 }
 
 .header-right select.option {
@@ -550,4 +549,14 @@ textarea {
 
 .info {
     border: rgba(17, 58, 224, 0.51) 4px solid;
+}
+
+.form-search {
+    select, input {
+        background-color: var(--primary-light-one);
+        color: var(--text-one);
+        border-radius: 3px;
+        border: none;
+    }
+
 }
