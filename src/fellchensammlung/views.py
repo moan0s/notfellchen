@@ -67,6 +67,7 @@ def change_language(request):
 
 def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
+    has_edit_permission = user_is_owner_or_trust_level(request.user, adoption_notice)
     if request.method == 'POST':
         if request.user.is_authenticated:
             comment_form = CommentForm(request.POST)
@@ -95,7 +96,7 @@ def adoption_notice_detail(request, adoption_notice_id):
             raise PermissionDenied
     else:
         comment_form = CommentForm(instance=adoption_notice)
-    context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user}
+    context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user, "has_edit_permission": has_edit_permission}
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 
