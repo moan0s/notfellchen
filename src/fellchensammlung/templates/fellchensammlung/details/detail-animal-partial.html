@@ -20,10 +20,13 @@
 <p>{{ animal.description }}</p>
 <h2>{% translate "Bilder" %}</h2>
 <div class="photos">
-        {% for image in animal.get_photos %}
-            <div class="card-photo">
+    {% for image in animal.get_photos %}
+        <div class="card-photo">
             <img src="/media/{{ image.image }}" alt="{{ image.alt_text }}">
         </div>
     {% endfor %}
+    {% if not animal.get_photos %}
+        {% translate "Keine Bilder" %}
+    {% endif %}
 </div>
 </div>
