@@ -38,6 +38,12 @@
         </table>
     </div>
     <div class="card">
+        <h1>{% translate "Bilder" %}</h1>
+        {% for photo in  adoption_notice.get_photos %}
+            <img src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{{ photo.alt_text }}">
+        {% endfor %}
+    </div>
+    <div class="card">
         <h1>{% translate "Beschreibung" %}</h1>
         <p>{% if adoption_notice.description %}
             {{ adoption_notice.description | render_markdown }}
