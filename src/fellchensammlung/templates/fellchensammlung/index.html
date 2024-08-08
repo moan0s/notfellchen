@@ -1,15 +1,23 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
+{% load custom_tags %}
 
 {% block content %}
     {% for announcement in announcements %}
         {% include "fellchensammlung/partials/partial-announcement.html" %}
     {% endfor %}
-    <h1>{% translate "Notfellchen - Vermittlungen finden" %}</h1>
-    <p>{% translate "Alle Tiere brauchen ein liebendes Zuhause. Damit keins vergessen wird gibt es diese Seite. Entwickelt und betreut von " %}<em><a
-            href="https://hyteck.de">moanos</a></em>!</p>
+    {% if introduction %}
+        <h1>{{ introduction.title }}</h1>
+        {{ introduction.content | render_markdown }}
+    {% endif %}
+    
     <h2>{% translate "Aktuelle Vermittlungen" %}</h2>
 
     {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+
+    {% if how_to %}
+        <h1>{{ how_to.title }}</h1>
+        {{ how_to.content | render_markdown }}
+    {% endif %}
 
 {% endblock %}

@@ -28,7 +28,7 @@ def user_is_trust_level_or_above(user, trust_level=User.MODERATOR):
 
 def user_is_owner_or_trust_level(user, django_object, trust_level=User.MODERATOR):
     return user.is_authenticated and (
-                user.trust_level == User.TRUST_LEVEL[trust_level] or django_object.owner == user)
+            user.trust_level == User.TRUST_LEVEL[trust_level] or django_object.owner == user)
 
 
 def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=User.MODERATOR):
@@ -43,7 +43,13 @@ def index(request):
     language_code = translation.get_language()
     lang = Language.objects.get(languagecode=language_code)
     active_announcements = Announcement.get_active_announcements(lang)
+
     context = {"adoption_notices": active_adoptions, "announcements": active_announcements}
+    for text_code in ["how_to", "introduction"]:
+        try:
+            context[text_code] = Text.objects.get(text_code=text_code, language=lang, )
+        except Text.DoesNotExist:
+            context[text_code] = None
 
     return render(request, 'fellchensammlung/index.html', context=context)
 
@@ -96,7 +102,8 @@ def adoption_notice_detail(request, adoption_notice_id):
             raise PermissionDenied
     else:
         comment_form = CommentForm(instance=adoption_notice)
-    context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user, "has_edit_permission": has_edit_permission}
+    context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
+               "has_edit_permission": has_edit_permission}
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 
