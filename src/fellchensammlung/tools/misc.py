@@ -15,7 +15,7 @@ def age_as_hr_string(age: datetime.timedelta) -> str:
     months = age.days/30
     years = age.days/365
     if years >= 1:
-        return f'{years:.0f} Jahr{pluralize(years)} und {months:.0} Monat{pluralize(months)}'
+        return f'{years:.0f} Jahr{pluralize(years)} und {months:.0f} Monat{pluralize(months)}'
     elif months >= 3:
         return f'{months:.0f} Monat{pluralize(months)}'
     elif weeks >= 3:
