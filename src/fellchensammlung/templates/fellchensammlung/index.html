@@ -18,8 +18,10 @@
         <a class="btn2" href="{% url 'search' %}">{% translate "Mehr Vermittlungen" %}</a>
     </div>
     {% if how_to %}
-        <h1>{{ how_to.title }}</h1>
-        {{ how_to.content | render_markdown }}
+        <div class="card">
+            <h1>{{ how_to.title }}</h1>
+            {{ how_to.content | render_markdown }}
+        </div>
     {% endif %}
 
 {% endblock %}
