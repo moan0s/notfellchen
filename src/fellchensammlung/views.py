@@ -119,6 +119,10 @@ def adoption_notice_edit(request, adoption_notice_id):
 
         if form.is_valid():
             adoption_notice_instance = form.save()
+            """Search the location given in the location string and add it to the adoption notice"""
+            location = Location.get_location_from_string(adoption_notice_instance.location_string)
+            adoption_notice_instance.location = location
+            adoption_notice_instance.save()
             return redirect(reverse("adoption-notice-detail", args=[adoption_notice_instance.pk], ))
     else:
         form = AdoptionNoticeForm(instance=adoption_notice)
