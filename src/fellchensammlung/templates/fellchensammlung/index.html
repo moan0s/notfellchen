@@ -10,11 +10,13 @@
         <h1>{{ introduction.title }}</h1>
         {{ introduction.content | render_markdown }}
     {% endif %}
-    
+
     <h2>{% translate "Aktuelle Vermittlungen" %}</h2>
 
-    {% include "fellchensammlung/lists/list-adoption-notices.html" %}
-
+    <div class="container-cards">
+        {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+        <a class="btn2" href="{% url 'search' %}">{% translate "Mehr Vermittlungen" %}</a>
+    </div>
     {% if how_to %}
         <h1>{{ how_to.title }}</h1>
         {{ how_to.content | render_markdown }}
