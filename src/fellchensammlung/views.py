@@ -223,7 +223,10 @@ def add_photo_to_animal(request, animal_id):
         form = ImageForm(request.POST, request.FILES)
 
         if form.is_valid():
-            instance = form.save()
+            instance = form.save(commit=False)
+            instance.owner = request.user
+            instance.save()
+
             animal.photos.add(instance)
             if "save-and-add-another" in request.POST:
                 form = ImageForm(in_flow=True)
@@ -244,13 +247,17 @@ def add_photo_to_adoption_notice(request, adoption_notice_id):
         form = ImageForm(request.POST, request.FILES)
 
         if form.is_valid():
-            instance = form.save()
+            instance = form.save(commit=False)
+            instance.owner = request.user
+            instance.save()
             adoption_notice.photos.add(instance)
             if "save-and-add-another" in request.POST:
                 form = ImageForm(in_flow=True)
                 return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
             else:
                 return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
+        else:
+            return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
     else:
         form = ImageForm(in_flow=True)
         return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
