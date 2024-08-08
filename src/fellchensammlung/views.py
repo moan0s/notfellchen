@@ -163,7 +163,7 @@ def add_adoption_notice(request):
 
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.created_by = request.user
+            instance.owner = request.user
             """Search the location given in the location string and add it to the adoption notice"""
             location = Location.get_location_from_string(instance.location_string)
             instance.location = location
@@ -201,6 +201,7 @@ def adoption_notice_add_animal(request, adoption_notice_id):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.adoption_notice_id = adoption_notice_id
+            instance.owner = request.user
             instance.save()
             form.save_m2m()
             if "save-and-add-another-animal" in request.POST:
