@@ -333,6 +333,12 @@ select, .button {
     justify-content: space-between;
 }
 
+@media screen and (max-width: 800px) {
+    .detail-animal-header {
+        display: block;
+    }
+}
+
 .tag {
     border: black 1px solid;
     border-radius: 0.3rem;
@@ -379,7 +385,7 @@ select, .button {
     color: var(--text-two);
 }
 
-.card h1  {
+.card h1 {
     color: var(--text-three);
     text-shadow: 1px 1px var(--shadow-three);
 }
@@ -426,18 +432,19 @@ select, .button {
     position: relative;
     padding: 0;
 }
+
 /* Make the badge float in the top right corner of the button */
 .button__badge {
-  background-color: #fa3e3e;
-  border-radius: 2px;
-  color: white;
+    background-color: #fa3e3e;
+    border-radius: 2px;
+    color: white;
 
-  padding: 1px 3px;
-  font-size: 10px;
+    padding: 1px 3px;
+    font-size: 10px;
 
-  position: absolute; /* Position the badge within the relatively positioned button */
-  top: 0;
-  right: 0;
+    position: absolute; /* Position the badge within the relatively positioned button */
+    top: 0;
+    right: 0;
 }
 
 .adoption-card-report-link, .notification-card-mark-read {
