@@ -1,0 +1,29 @@
+{% load static %}
+<div id="map"></div>
+
+<script src="{% static 'fellchensammlung/leaflet.js' %}"></script>
+<script>
+    // Initialize the map and set its view to the desired geographical coordinates and zoom level
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    // Add the OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Example coordinates for markers
+    var markers = [
+        {coords: [51.5, -0.09], popup: "Marker 1"},
+        {coords: [51.515, -0.1], popup: "Marker 2"},
+        {coords: [51.52, -0.12], popup: "Marker 3"}
+    ];
+
+    // Loop through the marker coordinates and add them to the map
+    markers.forEach(function (marker) {
+        L.marker(marker.coords).addTo(map)
+            .bindPopup(marker.popup)
+            .openPopup();
+    });
+</script>
+

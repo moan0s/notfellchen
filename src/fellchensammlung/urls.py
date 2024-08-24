@@ -27,6 +27,8 @@ urlpatterns = [
 
     # ex: /search/
     path("suchen/", views.search, name="search"),
+    # ex: /map/
+    path("map/", views.map, name="map"),
     # ex: /vermitteln/
     path("vermitteln/", views.add_adoption_notice, name="add-adoption"),
 

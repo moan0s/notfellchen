@@ -38,7 +38,8 @@ def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=User.
 
 def index(request):
     """View function for home page of site."""
-    latest_adoption_list = AdoptionNotice.objects.filter(adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE).order_by("-created_at")[:5]
+    latest_adoption_list = AdoptionNotice.objects.filter(
+        adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE).order_by("-created_at")[:5]
     active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
     language_code = translation.get_language()
     lang = Language.objects.get(languagecode=language_code)
@@ -393,6 +394,10 @@ def modqueue(request):
     open_reports = Report.objects.filter(status=Report.WAITING)
     context = {"reports": open_reports}
     return render(request, 'fellchensammlung/modqueue.html', context=context)
+
+
+def map(request):
+    return render(request, 'fellchensammlung/map.html')
 
 
 def metrics(request):
