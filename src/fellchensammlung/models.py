@@ -188,6 +188,8 @@ class AdoptionNotice(models.Model):
 
     @property
     def description_short(self):
+        if self.description is None:
+            return ""
         if len(self.description) > 200:
             return self.description[:200] + f" ... [weiterlesen]({self.get_absolute_url()})"
 
