@@ -3,8 +3,8 @@
 {% load i18n %}
 
 <!-- add MapLibre JavaScript and CSS -->
-<script src="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.js"></script>
-<link href="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.css" rel="stylesheet"/>
+<script src="{% settings_value "MAP_TILE_SERVER" %}/assets/maplibre-gl/maplibre-gl.js"></script>
+<link href="{% settings_value "MAP_TILE_SERVER" %}/assets/maplibre-gl/maplibre-gl.css" rel="stylesheet"/>
 
 <!-- add container for the map -->
 <div id="map" style="width:100%;aspect-ratio:16/9"></div>
@@ -13,7 +13,7 @@
 <script>
     let map = new maplibregl.Map({
         container: 'map',
-        style: 'https://tiles.versatiles.org/assets/styles/colorful.json',
+        style: '{% settings_value "MAP_TILE_SERVER" %}/assets/styles/colorful.json',
         center: [10.49, 50.68],
         zoom: 5
     }).addControl(new maplibregl.NavigationControl());

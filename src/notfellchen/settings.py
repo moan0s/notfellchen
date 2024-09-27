@@ -81,6 +81,9 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 """ GEOCODING """
 GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://nominatim.hyteck.de/search")
+""" Tile Server """
+MAP_TILE_SERVER = config.get("map", "tile_server", fallback="https://tiles.hyteck.de")
+
 
 """ OxiTraffic"""
 OXITRAFFIC_ENABLED = config.get("tracking", "oxitraffic_enabled", fallback=False)

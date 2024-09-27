@@ -55,3 +55,7 @@ def pointdecimal(value):
         return f"{float(value):.9f}"
     except ValueError:
         return value
+
+@register.simple_tag
+def settings_value(name):
+    return getattr(settings, name)
