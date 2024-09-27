@@ -10,7 +10,9 @@
 <script>
     let map = new maplibregl.Map({
         container: 'map',
-        style: 'https://tiles.versatiles.org/assets/styles/colorful.json'
+        style: 'https://tiles.versatiles.org/assets/styles/colorful.json',
+        center: [10.49, 50.68],
+        zoom: 5
     }).addControl(new maplibregl.NavigationControl());
 
     map.on('load', async () => {
