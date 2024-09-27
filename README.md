@@ -84,7 +84,11 @@ geocoding is only supported for Germany right now.
 
 ToDos
 * [ ] Implement a report that shows the number of location strings that could not be converted into a location
-* [ ] Add a management command to re-query location strings to fill location
+* [x] Add a management command to re-query location strings to fill location
+
+## Maps
+
+The map on the main homepage is powered by [Versatiles](https://versatiles.org), and rendered using [Maplibre](https://maplibre.org/).
 
 ## Translation
 
