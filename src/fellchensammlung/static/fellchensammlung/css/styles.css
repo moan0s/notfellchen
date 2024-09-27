@@ -579,7 +579,7 @@ textarea {
 }
 
 .maplibregl-popup {
-    max-width: 200px;
+    max-width: 600px !important;
 }
 
 .maplibregl-popup-content {
