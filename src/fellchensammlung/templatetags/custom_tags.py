@@ -51,4 +51,7 @@ def get_oxitraffic_script_if_enabled():
 @register.filter
 @stringfilter
 def pointdecimal(value):
-    return f"{float(value):.9f}"
+    try:
+        return f"{float(value):.9f}"
+    except ValueError:
+        return value

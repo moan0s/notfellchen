@@ -19,6 +19,7 @@
     }).addControl(new maplibregl.NavigationControl());
 
     {% for adoption_notice in adoption_notices %}
+        {% if adoption_notice.location %}
         // create the popup
         const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}`);
 
@@ -33,5 +34,6 @@
             .setLngLat(location_popup_{{ forloop.counter }})
             .setPopup(popup_{{ forloop.counter }}) // sets a popup on this marker
             .addTo(map);
+        {% endif %}
     {% endfor %}
 </script>
