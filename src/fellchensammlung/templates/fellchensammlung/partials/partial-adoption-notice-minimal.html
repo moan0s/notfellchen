@@ -1,0 +1,33 @@
+{% load custom_tags %}
+{% load i18n %}
+
+<div class="card">
+    <div>
+        <div class="header-card-adoption-notice">
+            <h1><a class="heading-card-adoption-notice"
+                   href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a></h1>
+            <a class="adoption-card-report-link" href="{{ adoption_notice.get_report_url }}"><i
+                    class="fa-solid fa-flag"></i></a>
+        </div>
+        <p>
+            <b>Ort</b>
+            {% if adoption_notice.location %}
+                {{ adoption_notice.location }}
+            {% else %}
+                {{ adoption_notice.location_string }}
+            {% endif %}
+        </p>
+        <p>
+            {% if adoption_notice.description_short %}
+                {{ adoption_notice.description_short | render_markdown }}
+            {% endif %}
+        </p>
+        {% if adoption_notice.get_photo %}
+            <div class="adoption-notice-img img-small">
+                <img title="{{ adoption_notice.get_photo.title }}"
+                     src="{{ MEDIA_URL }}/{{ adoption_notice.get_photo.image }}"
+                     alt="{{ adoption_notice.get_photo.alt_text }}">
+            </div>
+        {% endif %}
+    </div>
+</div>

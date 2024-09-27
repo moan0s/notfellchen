@@ -20,7 +20,7 @@
 
     {% for adoption_notice in adoption_notices %}
         // create the popup
-        const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-adoption-notice.html" %}`);
+        const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}`);
 
         // create DOM element for the marker
         const el_{{ forloop.counter }} = document.createElement('div');

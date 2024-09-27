@@ -186,6 +186,11 @@ class AdoptionNotice(models.Model):
         else:
             return self.location.latitude, self.location.longitude
 
+    @property
+    def description_short(self):
+        if len(self.description) > 200:
+            return self.description[:200] + f" ... [weiterlesen]({self.get_absolute_url()})"
+
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the animal."""
         return reverse('adoption-notice-detail', args=[str(self.id)])

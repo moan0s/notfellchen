@@ -427,6 +427,10 @@ select, .button {
     max-height: 250px;
 }
 
+.img-small img {
+    height: 100px;
+}
+
 .btn-notification {
     display: inline-block;
     position: relative;
