@@ -1,29 +1,18 @@
 {% load static %}
-<div id="map"></div>
+<!-- add MapLibre JavaScript and CSS -->
+<script src="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.js"></script>
+<link href="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.css" rel="stylesheet" />
 
-<script src="{% static 'fellchensammlung/leaflet.js' %}"></script>
+<!-- add container for the map -->
+<div id="map" style="width:100%;aspect-ratio:16/9"></div>
+
+<!-- start map -->
 <script>
-    // Initialize the map and set its view to the desired geographical coordinates and zoom level
-    var map = L.map('map').setView([51.505, -0.09], 13);
-
-    // Add the OpenStreetMap tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    // Example coordinates for markers
-    var markers = [
-        {coords: [51.5, -0.09], popup: "Marker 1"},
-        {coords: [51.515, -0.1], popup: "Marker 2"},
-        {coords: [51.52, -0.12], popup: "Marker 3"}
-    ];
-
-    // Loop through the marker coordinates and add them to the map
-    markers.forEach(function (marker) {
-        L.marker(marker.coords).addTo(map)
-            .bindPopup(marker.popup)
-            .openPopup();
-    });
+  let map = new maplibregl.Map({
+    container: 'map',
+    style: 'https://tiles.versatiles.org/assets/styles/colorful.json'
+  }).addControl(new maplibregl.NavigationControl());
+  const marker = new maplibregl.Marker()
+        .setLngLat([9.545, 48.105835])
+        .addTo(map);
 </script>
-
