@@ -581,3 +581,8 @@ textarea {
 .maplibregl-popup {
     max-width: 200px;
 }
+
+.maplibregl-popup-content {
+    background-color: var(--background-three) !important;
+    border-radius: 8px !important;
+}
