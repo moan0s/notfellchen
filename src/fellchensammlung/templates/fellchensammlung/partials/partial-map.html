@@ -1,18 +1,61 @@
 {% load static %}
 <!-- add MapLibre JavaScript and CSS -->
 <script src="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.js"></script>
-<link href="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.css" rel="stylesheet" />
+<link href="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.css" rel="stylesheet"/>
 
 <!-- add container for the map -->
 <div id="map" style="width:100%;aspect-ratio:16/9"></div>
 
 <!-- start map -->
 <script>
-  let map = new maplibregl.Map({
-    container: 'map',
-    style: 'https://tiles.versatiles.org/assets/styles/colorful.json'
-  }).addControl(new maplibregl.NavigationControl());
-  const marker = new maplibregl.Marker()
-        .setLngLat([9.545, 48.105835])
-        .addTo(map);
+    let map = new maplibregl.Map({
+        container: 'map',
+        style: 'https://tiles.versatiles.org/assets/styles/colorful.json'
+    }).addControl(new maplibregl.NavigationControl());
+
+    map.on('load', async () => {
+        image = await map.loadImage("{% static "fellchensammlung/img/logo_transparent.png" %}");
+        map.addImage('rat', image.data);
+        map.addSource('point', {
+            'type': 'geojson',
+            'data': {
+                'type': 'FeatureCollection',
+                'features': [
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [9.545, 48.105835]
+                        }
+                    }
+                ]
+            }
+        });
+        map.addLayer({
+            'id': 'points',
+            'type': 'symbol',
+            'source': 'point',
+            'layout': {
+                'icon-image': 'rat',
+                'icon-size': 0.1
+            }
+        });
+        // Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
+        map.on('click', 'points', (e) => {
+            map.flyTo({
+                center: e.features[0].geometry.coordinates
+            });
+        });
+
+        // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
+        map.on('mouseenter', 'symbols', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'symbols', () => {
+            map.getCanvas().style.cursor = '';
+        });
+
+    });
 </script>
