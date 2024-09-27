@@ -15,49 +15,19 @@
         zoom: 5
     }).addControl(new maplibregl.NavigationControl());
 
-    map.on('load', async () => {
-        image = await map.loadImage("{% static "fellchensammlung/img/logo_transparent.png" %}");
-        map.addImage('rat', image.data);
-        map.addSource('point', {
-            'type': 'geojson',
-            'data': {
-                'type': 'FeatureCollection',
-                'features': [
-                    {
-                        'type': 'Feature',
-                        'geometry': {
-                            'type': 'Point',
-                            'coordinates': [9.545, 48.105835]
-                        }
-                    }
-                ]
-            }
-        });
-        map.addLayer({
-            'id': 'points',
-            'type': 'symbol',
-            'source': 'point',
-            'layout': {
-                'icon-image': 'rat',
-                'icon-size': 0.1
-            }
-        });
-        // Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
-        map.on('click', 'points', (e) => {
-            map.flyTo({
-                center: e.features[0].geometry.coordinates
-            });
-        });
+    // create the popup
+    const popup = new maplibregl.Popup({offset: 25}).setText(
+        'A sweet rat waiting for adoption.'
+    );
 
-        // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
-        map.on('mouseenter', 'symbols', () => {
-            map.getCanvas().style.cursor = 'pointer';
-        });
+    // create DOM element for the marker
+    const el = document.createElement('div');
+    el.id = 'marker';
 
-        // Change it back to a pointer when it leaves.
-        map.on('mouseleave', 'symbols', () => {
-            map.getCanvas().style.cursor = '';
-        });
-
-    });
+    const monument = [10.7, 50.68];
+    // create the marker
+    new maplibregl.Marker({element: el})
+        .setLngLat(monument)
+        .setPopup(popup) // sets a popup on this marker
+        .addTo(map);
 </script>

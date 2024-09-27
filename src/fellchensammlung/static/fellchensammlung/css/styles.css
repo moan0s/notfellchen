@@ -569,3 +569,15 @@ textarea {
     }
 
 }
+
+#marker {
+    background-image: url('../img/logo_transparent.png');
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.maplibregl-popup {
+    max-width: 200px;
+}
