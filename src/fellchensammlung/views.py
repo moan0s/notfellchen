@@ -397,7 +397,9 @@ def modqueue(request):
 
 
 def map(request):
-    return render(request, 'fellchensammlung/map.html')
+    adoption_notices = AdoptionNotice.objects.all() #TODO: Filter to active
+    context = {"adoption_notices": adoption_notices}
+    return render(request, 'fellchensammlung/map.html', context=context)
 
 
 def metrics(request):

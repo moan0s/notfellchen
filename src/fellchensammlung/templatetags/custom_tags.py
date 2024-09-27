@@ -47,3 +47,8 @@ def get_oxitraffic_script_if_enabled():
         return mark_safe(f'<script type="module" src="https://{settings.OXITRAFFIC_BASE_URL}/count.js"></script>')
     else:
         return ""
+
+@register.filter
+@stringfilter
+def pointdecimal(value):
+    return f"{float(value):.9f}"

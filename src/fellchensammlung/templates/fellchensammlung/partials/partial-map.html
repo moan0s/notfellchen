@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_tags %}
+
 <!-- add MapLibre JavaScript and CSS -->
 <script src="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.js"></script>
 <link href="https://tiles.versatiles.org/assets/maplibre-gl/maplibre-gl.css" rel="stylesheet"/>
@@ -15,19 +17,22 @@
         zoom: 5
     }).addControl(new maplibregl.NavigationControl());
 
-    // create the popup
-    const popup = new maplibregl.Popup({offset: 25}).setText(
-        'A sweet rat waiting for adoption.'
-    );
+    {% for an in adoption_notices %}
+        // create the popup
+        const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setText(
+            '{{ an.name }}'
+        );
 
-    // create DOM element for the marker
-    const el = document.createElement('div');
-    el.id = 'marker';
+        // create DOM element for the marker
+        const el_{{ forloop.counter }} = document.createElement('div');
+        el_{{ forloop.counter }}.id = 'marker_{{ forloop.counter }}';
+        el_{{ forloop.counter }}.classList.add('marker');
 
-    const monument = [10.7, 50.68];
-    // create the marker
-    new maplibregl.Marker({element: el})
-        .setLngLat(monument)
-        .setPopup(popup) // sets a popup on this marker
-        .addTo(map);
+        const location_popup_{{ forloop.counter }} = [{{ an.location.longitude | pointdecimal }}, {{ an.location.latitude | pointdecimal }}];
+        // create the marker
+        new maplibregl.Marker({element: el_{{ forloop.counter }}})
+            .setLngLat(location_popup_{{ forloop.counter }})
+            .setPopup(popup_{{ forloop.counter }}) // sets a popup on this marker
+            .addTo(map);
+    {% endfor %}
 </script>

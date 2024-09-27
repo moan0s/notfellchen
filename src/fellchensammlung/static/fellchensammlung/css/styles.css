@@ -570,7 +570,7 @@ textarea {
 
 }
 
-#marker {
+.marker {
     background-image: url('../img/logo_transparent.png');
     background-size: cover;
     width: 50px;
