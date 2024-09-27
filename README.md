@@ -68,6 +68,10 @@ docker build . -t moanos/notfellchen:latest
 ```
 
 ```
+docker push moanos/notfellchen:latest
+```
+
+```
 docker run -p8000:7345 moanos/notfellchen:latest
 ```
 
