@@ -49,19 +49,25 @@ class RequestMock:
 
 class GeoAPI:
     api_url = settings.GEOCODING_API_URL
+    # Set User-Agent headers as required by most usage policies (and it's the nice thing to do)
     headers = {
         'User-Agent': f"Notfellchen {nf_version}",
         'From': 'info@notfellchen.org'  # This is another valid field
     }
 
     def __init__(self, debug=False):
+        # If debug mode is on, we replace the actual goecoding server with a cheap local mock
+        # In order to do this without changing how we normally do things, we replace the requests library with our mock
         if debug:
             self.requests = RequestMock
         else:
             self.requests = requests
 
     def get_coordinates_from_query(self, location_string):
-        result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers).json()[0]
+        try:
+            result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers).json()[0]
+        except IndexError:
+            return None
         return result["lat"], result["lon"]
 
     def _get_raw_response(self, location_string):
