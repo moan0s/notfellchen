@@ -11,9 +11,10 @@
 
 <!-- start map -->
 <script>
+
     let map = new maplibregl.Map({
         container: 'map',
-        style: '{% settings_value "MAP_TILE_SERVER" %}/assets/styles/colorful.json',
+        style: '{% static "/fellchensammlung/map/styles/colorful.json" %}',
         center: [10.49, 50.68],
         zoom: 5
     }).addControl(new maplibregl.NavigationControl());
