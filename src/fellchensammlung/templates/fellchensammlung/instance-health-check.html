@@ -1,0 +1,15 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="card">
+        <h1>{% translate "Instanz-Check" %}</h1>
+        <p>{% translate "Nicht-lokalisierte Vermittlungen" %}: {{ number_not_geocoded_adoption_notices }}/{{ number_of_adoption_notices }}</p>
+        <p>{% translate "Nicht-lokalisierte Tierschutzorganisationen" %}: {{ number_not_geocoded_rescue_orgs }}/{{ number_of_rescue_orgs }}</p>
+    </div>
+    <form class="notification-card-mark-read" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="clean_locations">
+        <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-broom"></i> {% translate "Erneut lokalisieren" %}</button>
+    </form>
+{% endblock %}

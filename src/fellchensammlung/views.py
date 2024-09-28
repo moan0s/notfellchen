@@ -6,20 +6,21 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils import translation
 from django.core.exceptions import PermissionDenied
+from django.contrib.auth.decorators import user_passes_test
 
 from .mail import mail_admins_new_report
 from notfellchen import settings
 
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification
+    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget
 from .models import Language, Announcement
 from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
-from django.contrib.auth.decorators import user_passes_test
+from .tools.admin import clean_locations
 
 
 def user_is_trust_level_or_above(user, trust_level=User.MODERATOR):
@@ -411,3 +412,28 @@ def map(request):
 def metrics(request):
     data = gather_metrics_data()
     return JsonResponse(data)
+
+@login_required
+def instance_health_check(request):
+    """
+    Allows an administrator to check common problems of an instance
+    """
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "clean_locations":
+            clean_locations(quiet=False)
+
+    number_of_adoption_notices = AdoptionNotice.objects.all().count()
+    number_not_geocoded_adoption_notices = AdoptionNotice.objects.filter(location__isnull=True).count()
+
+    number_of_rescue_orgs = RescueOrganization.objects.all().count()
+    number_not_geocoded_rescue_orgs = RescueOrganization.objects.filter(location__isnull=True).count()
+    context = {
+        "number_of_adoption_notices": number_of_adoption_notices,
+        "number_not_geocoded_adoption_notices": number_not_geocoded_adoption_notices,
+        "number_of_rescue_orgs": number_of_rescue_orgs,
+        "number_not_geocoded_rescue_orgs": number_not_geocoded_rescue_orgs
+    }
+    return render(request, 'fellchensammlung/instance-health-check.html', context=context)
+
+

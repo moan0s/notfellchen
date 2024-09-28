@@ -59,6 +59,11 @@ urlpatterns = [
     path('accounts/', include('django_registration.backends.activation.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 
-    path('change-language', views.change_language, name="change-language")
+    path('change-language', views.change_language, name="change-language"),
+
+    ###########
+    ## ADMIN ##
+    ###########
+    path('instance-health-check', views.instance_health_check, name="instance-health-check")
 
 ]

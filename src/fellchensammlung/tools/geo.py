@@ -1,11 +1,11 @@
 import logging
-
 import requests
 import json
+from math import radians, sqrt, sin, cos, atan2
+
 from notfellchen import __version__ as nf_version
 from notfellchen import settings
 
-from math import radians, sqrt, sin, cos, atan2
 
 
 def calculate_distance_between_coordinates(position1, position2):
