@@ -1,6 +1,5 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
-
 {% block content %}
     <form class="form-search card" method="post">
         {% csrf_token %}
@@ -10,7 +9,7 @@
         <input class="btn" type="submit" value="Search" name="search">
     </form>
     {% if not place_found %}
-    <p class="error">{% translate "Ort nicht gefunden" %}</p>
+        <p class="error">{% translate "Ort nicht gefunden" %}</p>
     {% endif %}
     {% include "fellchensammlung/lists/list-adoption-notices.html" %}
 {% endblock %}
