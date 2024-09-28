@@ -139,10 +139,25 @@ class RescueOrganization(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    USE_MATERIALS_ALLOWED = "allowed"
+    USE_MATERIALS_REQUESTED = "requested"
+    USE_MATERIALS_DENIED = "denied"
+    USE_MATERIALS_OTHER = "other"
+    USE_MATERIALS_NOT_ASKED = "not_asked"
+
+    ALLOW_USE_MATERIALS_CHOICE = {
+        USE_MATERIALS_ALLOWED: "Usage allowed",
+        USE_MATERIALS_REQUESTED: "Usage requested",
+        USE_MATERIALS_DENIED: "Usage denied",
+        USE_MATERIALS_OTHER: "It's complicated",
+        USE_MATERIALS_NOT_ASKED: "Not asked"
+    }
+
     name = models.CharField(max_length=200)
     trusted = models.BooleanField(default=False, verbose_name=_('Vertrauenswürdig'))
+    allows_using_materials = models.CharField(max_length=200,default=ALLOW_USE_MATERIALS_CHOICE[USE_MATERIALS_NOT_ASKED], choices=ALLOW_USE_MATERIALS_CHOICE, verbose_name=_('Erlaubt Nutzung von Inhalten'))
     location_string = models.CharField(max_length=200, verbose_name=_("Ort der Organisation"))
-    location = models.ForeignKey(Location, on_delete=models.PROTECT)
+    location = models.ForeignKey(Location, on_delete=models.PROTECT, blank=True, null=True)
     instagram = models.URLField(null=True, blank=True, verbose_name=_('Instagram Profil'))
     facebook = models.URLField(null=True, blank=True, verbose_name=_('Facebook Profil'))
     fediverse_profile = models.URLField(null=True, blank=True, verbose_name=_('Fediverse Profil'))
