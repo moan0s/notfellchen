@@ -39,13 +39,13 @@ def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=User.
 def index(request):
     """View function for home page of site."""
     latest_adoption_list = AdoptionNotice.objects.filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE).order_by("-created_at")[:5]
+        adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE).order_by("-created_at")
     active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
     language_code = translation.get_language()
     lang = Language.objects.get(languagecode=language_code)
     active_announcements = Announcement.get_active_announcements(lang)
 
-    context = {"adoption_notices": active_adoptions, "announcements": active_announcements}
+    context = {"adoption_notices": active_adoptions[:5], "adoption_notices_map": active_adoptions, "announcements": active_announcements}
     for text_code in ["how_to", "introduction"]:
         try:
             context[text_code] = Text.objects.get(text_code=text_code, language=lang, )
@@ -398,7 +398,7 @@ def modqueue(request):
 
 def map(request):
     adoption_notices = AdoptionNotice.objects.all() #TODO: Filter to active
-    context = {"adoption_notices": adoption_notices}
+    context = {"adoption_notices_map": adoption_notices}
     return render(request, 'fellchensammlung/map.html', context=context)
 
 
