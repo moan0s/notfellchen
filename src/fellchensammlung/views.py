@@ -428,12 +428,28 @@ def instance_health_check(request):
 
     number_of_rescue_orgs = RescueOrganization.objects.all().count()
     number_not_geocoded_rescue_orgs = RescueOrganization.objects.filter(location__isnull=True).count()
+
+    # CHECK FOR MISSING TEXTS
+    languages = Language.objects.all()
+    texts = Text.objects.all()
+    text_codes = set([text.text_code for text in texts])
+    missing_texts = []
+    for language in languages:
+        for text_code in text_codes:
+            try:
+                Text.objects.get(text_code=text_code, language=language)
+            except Text.DoesNotExist:
+                missing_texts.append((text_code, language))
+
     context = {
         "number_of_adoption_notices": number_of_adoption_notices,
         "number_not_geocoded_adoption_notices": number_not_geocoded_adoption_notices,
         "number_of_rescue_orgs": number_of_rescue_orgs,
-        "number_not_geocoded_rescue_orgs": number_not_geocoded_rescue_orgs
+        "number_not_geocoded_rescue_orgs": number_not_geocoded_rescue_orgs,
+        "missing_texts": missing_texts
     }
+
+
     return render(request, 'fellchensammlung/instance-health-check.html', context=context)
 
 
