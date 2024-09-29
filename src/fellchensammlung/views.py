@@ -429,10 +429,13 @@ def instance_health_check(request):
             clean_locations(quiet=False)
 
     number_of_adoption_notices = AdoptionNotice.objects.all().count()
-    number_not_geocoded_adoption_notices = AdoptionNotice.objects.filter(location__isnull=True).count()
+    none_geocoded_adoption_notices = AdoptionNotice.objects.filter(location__isnull=True)
+    number_not_geocoded_adoption_notices = len(none_geocoded_adoption_notices)
+
 
     number_of_rescue_orgs = RescueOrganization.objects.all().count()
-    number_not_geocoded_rescue_orgs = RescueOrganization.objects.filter(location__isnull=True).count()
+    none_geocoded_rescue_orgs = RescueOrganization.objects.filter(location__isnull=True)
+    number_not_geocoded_rescue_orgs = len(none_geocoded_rescue_orgs)
 
     # CHECK FOR MISSING TEXTS
     languages = Language.objects.all()
@@ -449,8 +452,10 @@ def instance_health_check(request):
     context = {
         "number_of_adoption_notices": number_of_adoption_notices,
         "number_not_geocoded_adoption_notices": number_not_geocoded_adoption_notices,
+        "none_geocoded_adoption_notices": none_geocoded_adoption_notices,
         "number_of_rescue_orgs": number_of_rescue_orgs,
         "number_not_geocoded_rescue_orgs": number_not_geocoded_rescue_orgs,
+        "none_geocoded_rescue_orgs": none_geocoded_rescue_orgs,
         "missing_texts": missing_texts
     }
 
