@@ -138,6 +138,7 @@ def animal_detail(request, animal_id):
 
 
 def search(request):
+    place_not_found = None
     if request.method == 'POST':
         latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
         active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
@@ -149,13 +150,12 @@ def search(request):
         geo_api = GeoAPI()
         search_position = geo_api.get_coordinates_from_query(request.POST['postcode'])
         if search_position is None:
-            place_found = False
+            place_not_found = True
             adoption_notices_in_distance = active_adoptions
         else:
-            place_found = True
             adoption_notices_in_distance = [a for a in active_adoptions if a.in_distance(search_position, max_distance)]
             
-        context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form, "place_found": place_found}
+        context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form, "place_not_found": place_not_found}
     else:
         latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
         active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]

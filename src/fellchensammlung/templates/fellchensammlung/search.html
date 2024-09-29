@@ -8,7 +8,7 @@
         {{ search_form.as_p }}
         <input class="btn" type="submit" value="Search" name="search">
     </form>
-    {% if not place_found %}
+    {% if place_not_found %}
         <p class="error">{% translate "Ort nicht gefunden" %}</p>
     {% endif %}
     {% include "fellchensammlung/lists/list-adoption-notices.html" %}

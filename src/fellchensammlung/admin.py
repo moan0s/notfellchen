@@ -5,7 +5,7 @@ from django.utils.html import format_html
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
-    Comment, Report, Announcement, AdoptionNoticeStatus, User
+    Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions
 
 
 class StatusInline(admin.StackedInline):
@@ -61,3 +61,4 @@ admin.site.register(Language)
 admin.site.register(Text)
 admin.site.register(Announcement)
 admin.site.register(AdoptionNoticeStatus)
+admin.site.register(Subscriptions)
