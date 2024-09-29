@@ -88,14 +88,14 @@ def adoption_notice_detail(request, adoption_notice_id):
 
                 # Auto-subscribe user to adoption notice
                 subscription, created = Subscriptions.objects.get_or_create(adoption_notice=adoption_notice,
-                                                                            user=request.user)
+                                                                            owner=request.user)
                 subscription.save()
 
                 # Notify users that a comment was added
                 for subscription in adoption_notice.get_subscriptions():
                     # Create a notification but only if the user is not the one that posted the comment
-                    if subscription.user != request.user:
-                        notification = CommentNotification(user=subscription.user,
+                    if subscription.owner != request.user:
+                        notification = CommentNotification(user=subscription.owner,
                                                            title=f"{adoption_notice.name} - Neuer Kommentar",
                                                            text=f"{request.user}: {comment_instance.text}",
                                                            comment=comment_instance)
