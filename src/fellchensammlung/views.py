@@ -13,10 +13,10 @@ from notfellchen import settings
 
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization
+    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, Species
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
-    AdoptionNoticeSearchForm, AnimalFormWithDateWidget
+    AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
 from .models import Language, Announcement
 from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
@@ -167,7 +167,7 @@ def search(request):
 @login_required
 def add_adoption_notice(request):
     if request.method == 'POST':
-        form = AdoptionNoticeFormWithDateWidget(request.POST, request.FILES, in_adoption_notice_creation_flow=True)
+        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(request.POST, request.FILES, in_adoption_notice_creation_flow=True)
 
         if form.is_valid():
             instance = form.save(commit=False)
@@ -179,22 +179,27 @@ def add_adoption_notice(request):
 
             # Set correct status
             if request.user.trust_level >= User.TRUST_LEVEL[User.COORDINATOR]:
-                status = AdoptionNoticeStatus.objects.create(major_status=AdoptionNoticeStatus.ACTIVE,
-                                                             minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[
-                                                                 AdoptionNoticeStatus.ACTIVE]["searching"],
-                                                             adoption_notice=instance)
-                status.save()
+                major_status = AdoptionNoticeStatus.ACTIVE
+                minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.ACTIVE]["searching"]
             else:
-                status = AdoptionNoticeStatus.objects.create(major_status=AdoptionNoticeStatus.AWAITING_ACTION,
-                                                             minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[
-                                                                 AdoptionNoticeStatus.AWAITING_ACTION][
-                                                                 "waiting_for_review"],
-                                                             adoption_notice=instance)
-                status.save()
+                major_status=AdoptionNoticeStatus.AWAITING_ACTION
+                minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.AWAITING_ACTION]["waiting_for_review"]
+            status = AdoptionNoticeStatus.objects.create(major_status=major_status,
+                                                             minor_status=minor_status,
+                                                             adoption_notice=instance)    
+            status.save()
 
-            return redirect(reverse("adoption-notice-add-animal", args=[instance.pk]))
+                # Get the species and number of animals from the form
+            species = form.cleaned_data["species"]
+            sex = form.cleaned_data["sex"]
+            num_animals = form.cleaned_data["num_animals"]
+            date_of_birth = form.cleaned_data["date_of_birth"]
+            for i in range(0, num_animals):
+                Animal.objects.create(owner=request.user,
+                name=f"{species} {i+1}", adoption_notice=instance, species=species, sex=sex, date_of_birth=date_of_birth)
+            return redirect(reverse("adoption-notice-detail", args=[instance.pk]))
     else:
-        form = AdoptionNoticeFormWithDateWidget(in_adoption_notice_creation_flow=True)
+        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
 
 

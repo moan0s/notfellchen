@@ -29,15 +29,19 @@ class AdoptionNoticeForm(forms.ModelForm):
         self.helper.form_method = 'post'
 
         if in_flow:
-            submit = Submit('save-and-add-another-animal', _('Speichern und Tiere hinzufügen'))
+            submit = Submit('save-and-add-another-animal', _('Speichern'))
 
         else:
-            submit = Submit('submit', _('Submit'))
+            submit = Submit('submit', _('Sepichern'))
 
         self.helper.layout = Layout(
             Fieldset(
                 _('Vermittlungsdetails'),
                 'name',
+                'species',
+                'num_animals',
+                'date_of_birth',
+                'sex',
                 'group_only',
                 'searching_since',
                 'location_string',
@@ -58,6 +62,7 @@ class AdoptionNoticeFormWithDateWidget(AdoptionNoticeForm):
         widgets = {
             'searching_since': DateInput(),
         }
+
 
 
 class AnimalForm(forms.ModelForm):
@@ -87,6 +92,16 @@ class AnimalFormWithDateWidget(AnimalForm):
         widgets = {
             'date_of_birth': DateInput(),
         }
+
+class AdoptionNoticeFormWithDateWidgetAutoAnimal(AdoptionNoticeFormWithDateWidget):
+    def __init__(self, *args, **kwargs):
+        super(AdoptionNoticeFormWithDateWidgetAutoAnimal, self).__init__(*args, **kwargs)
+        self.fields["num_animals"] = forms.fields.IntegerField(min_value=1, max_value=30, label=_("Zahl der Tiere"))
+        animal_form = AnimalForm()
+        self.fields["species"] = animal_form.fields["species"]
+        self.fields["sex"] = animal_form.fields["sex"]
+        self.fields["date_of_birth"] = animal_form.fields["date_of_birth"]
+        self.fields["date_of_birth"].widget = DateInput()
 
 
 class ImageForm(forms.ModelForm):
