@@ -75,37 +75,53 @@ def change_language(request):
 
 def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
+    if request.user.is_authenticated:
+        try: 
+            subscription = Subscriptions.objects.get(owner=request.user, adoption_notice=adoption_notice)
+            is_subscribed = True
+        except Subscriptions.DoesNotExist:
+            is_subscribed = False
     has_edit_permission = user_is_owner_or_trust_level(request.user, adoption_notice)
     if request.method == 'POST':
+        action = request.POST.get("action")
         if request.user.is_authenticated:
-            comment_form = CommentForm(request.POST)
+            if action == "comment":
+                comment_form = CommentForm(request.POST)
 
-            if comment_form.is_valid():
-                comment_instance = comment_form.save(commit=False)
-                comment_instance.adoption_notice_id = adoption_notice_id
-                comment_instance.user = request.user
-                comment_instance.save()
+                if comment_form.is_valid():
+                    comment_instance = comment_form.save(commit=False)
+                    comment_instance.adoption_notice_id = adoption_notice_id
+                    comment_instance.user = request.user
+                    comment_instance.save()
 
-                # Auto-subscribe user to adoption notice
-                subscription, created = Subscriptions.objects.get_or_create(adoption_notice=adoption_notice,
-                                                                            owner=request.user)
-                subscription.save()
+                    # Auto-subscribe user to adoption notice
+                    subscription, created = Subscriptions.objects.get_or_create(adoption_notice=adoption_notice,
+                                                                                owner=request.user)
+                    subscription.save()
 
-                # Notify users that a comment was added
-                for subscription in adoption_notice.get_subscriptions():
-                    # Create a notification but only if the user is not the one that posted the comment
-                    if subscription.owner != request.user:
-                        notification = CommentNotification(user=subscription.owner,
-                                                           title=f"{adoption_notice.name} - Neuer Kommentar",
-                                                           text=f"{request.user}: {comment_instance.text}",
-                                                           comment=comment_instance)
-                        notification.save()
+                    # Notify users that a comment was added
+                    for subscription in adoption_notice.get_subscriptions():
+                        # Create a notification but only if the user is not the one that posted the comment
+                        if subscription.owner != request.user:
+                            notification = CommentNotification(user=subscription.owner,
+                                                            title=f"{adoption_notice.name} - Neuer Kommentar",
+                                                            text=f"{request.user}: {comment_instance.text}",
+                                                            comment=comment_instance)
+                            notification.save()
+            else:
+                comment_form = CommentForm(instance=adoption_notice)
+            if action == "subscribe":
+                Subscriptions.objects.create(owner=request.user, adoption_notice=adoption_notice)
+                is_subscribed = True
+            if action == "unsubscribe":
+                    subscription.delete()
+                    is_subscribed = False
         else:
             raise PermissionDenied
     else:
         comment_form = CommentForm(instance=adoption_notice)
-    context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
-               "has_edit_permission": has_edit_permission}
+    context = {"adoption_notice": adoption_notice,"comment_form": comment_form, "user": request.user,
+               "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed}
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 
