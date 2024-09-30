@@ -210,13 +210,15 @@ class AdoptionNotice(models.Model):
             return self.description[:200] + f" ... [weiterlesen]({self.get_absolute_url()})"
 
     def get_absolute_url(self):
-        """Returns the url to access a detailed page for the animal."""
+        """Returns the url to access a detailed page for the adoption notice."""
         return reverse('adoption-notice-detail', args=[str(self.id)])
 
     def get_report_url(self):
+        """Returns the url to report an adoption notice."""
         return reverse('report-adoption-notice', args=[str(self.id)])
 
     def get_subscriptions(self):
+        # returns all subscriptions to that adoption notice
         return Subscriptions.objects.filter(adoption_notice=self)
 
     def get_photos(self):
