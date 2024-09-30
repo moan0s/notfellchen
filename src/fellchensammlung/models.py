@@ -174,6 +174,7 @@ class AdoptionNotice(models.Model):
         return f"{self.name}"
 
     created_at = models.DateField(verbose_name=_('Erstellt am'), default=datetime.now)
+    last_checked = models.DateTimeField(verbose_name=_('Zuletzt überprüft am'), default=datetime.now)
     searching_since = models.DateField(verbose_name=_('Sucht nach einem Zuhause seit'))
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
@@ -273,6 +274,14 @@ class AdoptionNotice(models.Model):
         if not hasattr(self, 'adoptionnoticestatus'):
             return False
         return self.adoptionnoticestatus.is_active
+    
+    def set_checked(self):
+        self.last_checked = datetime.now()
+        self.save()
+    
+    def set_closed(self):
+        self.last_checked = datetime.now()
+        self.adoptionnoticestatus.set_closed()
 
 
 class AdoptionNoticeStatus(models.Model):
@@ -334,6 +343,11 @@ class AdoptionNoticeStatus(models.Model):
     @staticmethod
     def get_minor_choices(major_status):
         return AdoptionNoticeStatus.MINOR_STATUS_CHOICES[major_status]
+
+    def set_closed(self):
+        self.major_status = self.MAJOR_STATUS_CHOICES[self.CLOSED]
+        self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED]["other"]
+        self.save()
 
 
 class Animal(models.Model):

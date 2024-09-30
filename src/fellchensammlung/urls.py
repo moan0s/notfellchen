@@ -34,15 +34,17 @@ urlpatterns = [
 
     path("ueber-uns/", views.about, name="about"),
 
-    #############
-    ## Reports ##
-    #############
+    ################
+    ## Moderation ##
+    ################
     path("vermittlung/<int:adoption_notice_id>/report", views.report_adoption, name="report-adoption-notice"),
 
     path("kommentar/<int:comment_id>/report", views.report_comment, name="report-comment"),
     path("meldung/<uuid:report_id>/", views.report_detail, name="report-detail"),
     path("meldung/<uuid:report_id>/sucess", views.report_detail_success, name="report-detail-success"),
     path("modqueue/", views.modqueue, name="modqueue"),
+    
+    path("updatequeue/", views.updatequeue, name="updatequeue"),
 
     ###########
     ## USERS ##

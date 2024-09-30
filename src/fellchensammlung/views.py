@@ -423,6 +423,28 @@ def modqueue(request):
     context = {"reports": open_reports}
     return render(request, 'fellchensammlung/modqueue.html', context=context)
 
+@login_required
+def updatequeue(request):
+    if request.method == "POST":
+        print(request.POST.get("adoption_notice_id"))
+        adoption_notice = AdoptionNotice.objects.get(id=request.POST.get("adoption_notice_id"))
+        action = request.POST.get("action")
+        print(f"Action: {action}")
+        if action == "checked_inactive":
+            adoption_notice.set_closed()
+        elif action == "checked_active":
+            print("set checked")
+            adoption_notice.set_checked()
+
+    if user_is_trust_level_or_above(request.user, User.MODERATOR):
+        last_checked_adoption_list = AdoptionNotice.objects.order_by("last_checked")
+    else:
+        last_checked_adoption_list = AdoptionNotice.objects.filter(owner=request.user).order_by("last_checked")
+    adoption_notices = [adoption for adoption in last_checked_adoption_list if adoption.is_active]
+
+    context = {"adoption_notices": adoption_notices}
+    return render(request, 'fellchensammlung/updatequeue.html', context=context)
+
 
 def map(request):
     adoption_notices = AdoptionNotice.objects.all() #TODO: Filter to active

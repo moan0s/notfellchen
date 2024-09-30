@@ -32,7 +32,7 @@ class AdoptionNoticeForm(forms.ModelForm):
             submit = Submit('save-and-add-another-animal', _('Speichern'))
 
         else:
-            submit = Submit('submit', _('Sepichern'))
+            submit = Submit('submit', _('Speichern'))
 
         self.helper.layout = Layout(
             Fieldset(
