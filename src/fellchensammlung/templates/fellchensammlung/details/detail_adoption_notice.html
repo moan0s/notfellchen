@@ -33,6 +33,7 @@
             <tr>
                 <th>{% translate "Ort" %}</th>
                 <th>{% translate "Suchen seit" %}</th>
+                <th>{% translate "Zuletzt aktualisiert" %}</th>
                 <th>{% translate "Weitere Informationen" %}</th>
             </tr>
             <tr>
@@ -45,6 +46,7 @@
                 </td>
 
                 <td>{{ adoption_notice.searching_since }}</td>
+                <td>{{ adoption_notice.last_checked | date:'d. F Y' }}</td>
                 {% if adoption_notice.further_information %}
                     <td>{{ adoption_notice.link_to_more_information | safe }}</td>
                 {% else %}
