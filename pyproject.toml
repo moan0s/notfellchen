@@ -43,8 +43,8 @@ dependencies = [
 dynamic = ["version", "readme"]
 
 [project.urls]
-homepage = "https://hyteck.de"
-repository = "https://github.com/moan0s/notfellchen/"
+homepage = "https://notfellchen.org"
+repository = "https://codeberg.org/moanos/notfellchen/"
 
 [tool.setuptools.packages.find]
 where = ["src"]
