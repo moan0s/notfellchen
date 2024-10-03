@@ -66,6 +66,18 @@ urlpatterns = [
     ###########
     ## ADMIN ##
     ###########
-    path('instance-health-check', views.instance_health_check, name="instance-health-check")
+    path('instance-health-check', views.instance_health_check, name="instance-health-check"),
+
+    #############
+    ## Metrics ##
+    #############
+    # ex: /metrics
+    path('metrics/', views.metrics, name="metrics"),
+
+    #########
+    ## API ##
+    #########
+    path('api/', include('fellchensammlung.api.urls')),
+
 
 ]

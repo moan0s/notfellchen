@@ -38,6 +38,7 @@ dependencies = [
     "psycopg2-binary",
     "django-crispy-forms",
     "crispy-bootstrap4",
+    "djangorestframework"
 ]
 dynamic = ["version", "readme"]
 

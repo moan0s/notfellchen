@@ -160,6 +160,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'crispy_forms',
     "crispy_bootstrap4",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
