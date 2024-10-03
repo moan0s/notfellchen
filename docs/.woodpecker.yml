@@ -1,0 +1,32 @@
+---
+
+steps:
+  create_docker_image:
+    image: woodpeckerci/plugin-docker-buildx
+    secrets: [ docker_username, docker_password ]
+    settings:
+      repo: moanos/sphinx-qzt
+      dockerfile: Dockerfile
+      tag: latest
+
+  build:
+    image: moanos/sphinx-qzt
+    commands:
+      - cd docs && make html
+
+  deploy:
+    image: appleboy/drone-scp
+    settings:
+      strip_components: 3
+      host:
+        from_secret: host
+      username:
+        from_secret: ssh_user
+      target:
+        from_secret: path
+      source: docs/_build/html/
+      key:
+        from_secret: ssh_key
+
+
+
