@@ -1,5 +1,5 @@
 FROM sphinxdoc/sphinx
 
-WORKDIR /docs
-ADD requirements.txt /docs
+WORKDIR .
+ADD requirements.txt ./
 RUN pip3 install -r requirements.txt
