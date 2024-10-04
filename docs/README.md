@@ -86,4 +86,14 @@ docker run --rm -v ./docs:/docs sphinx-rtd make html
 
 # CI
 
-Woodpecker can be used to deploy the documentation to a server
+Woodpecker can be used to deploy the documentation to a server. Fo that purpose it builds a docker container that contains
+sphinx and the read-the-docs theme, builds the documentation with that and pushes it to a server which will serve the static files.
+
+| Key               | Example                                                     | Description                                                 |
+|-------------------|-------------------------------------------------------------|-------------------------------------------------------------|
+| `host`            | `dokumentation.notfellchen.org`                             | Hostename of the server where you want to deploy            |
+| `ssh_user`        | `username`                                                  | User on the server                                          |
+| `ssh_key`         | `-----BEGIN OPENSSH PRIVATE KEY-----`                       | The private SSH key of the user                             |
+| `path`            | `/static_sites/static-hyteck/dokumentation.notfellchen.org` | Path where to deploy the static files.                      |
+| `docker_username` | `moanos`                                                    | Username authenticate to dockerhub to push the docker image |
+| `docker_password` | `SUPERSECRET`                                               | Password authenticate to dockerhub to push the docker image |
