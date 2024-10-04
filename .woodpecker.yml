@@ -5,12 +5,12 @@ steps:
     image: woodpeckerci/plugin-docker-buildx
     secrets: [ docker_username, docker_password ]
     settings:
-      repo: moanos/sphinx-qzt
-      dockerfile: Dockerfile
+      repo: moanos/sphinx-rtd
+      dockerfile: docs/Dockerfile
       tag: latest
 
   build:
-    image: moanos/sphinx-qzt
+    image: moanos/sphinx-rtd
     commands:
       - cd docs && make html
 
