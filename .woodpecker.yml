@@ -1,17 +1,6 @@
 ---
 
 steps:
-  create_docker_image:
-    image: woodpeckerci/plugin-docker-buildx
-    settings:
-      repo: moanos/sphinx-rtd
-      dockerfile: docs/Dockerfile
-      tag: latest
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
-
   build:
     image: moanos/sphinx-rtd
     commands:
