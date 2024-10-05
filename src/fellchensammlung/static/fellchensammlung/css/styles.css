@@ -1,3 +1,7 @@
+/***************/
+/* MAIN COLORS */
+/***************/
+
 :root {
     --primary-light-one: #5daa68;
     --primary-light-two: #4a9455;
@@ -18,7 +22,9 @@
     --text-three: var(--primary-light-one);
     --shadow-three: var(--primary-dark-one);
 }
-
+/**************************/
+/* TAG SETTINGS (GENERAL) */
+/**************************/
 html, body {
     margin: 0;
     height: 100%;
@@ -29,10 +35,6 @@ body {
     color: var(--text-two);
 }
 
-
-.content-box {
-    margin: 20px;
-}
 
 table {
     width: 100%;
@@ -79,6 +81,127 @@ h1, h2 {
     box-sizing: border-box;
 }
 
+textarea {
+    border-radius: 10px;
+    width: 100%;
+    margin: 5px;
+}
+
+
+/**************/
+/* CONTAINERS */
+/**************/
+
+.container-cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1 25%;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 5px;
+    background: var(--background-three);
+    color: var(--text-two);
+}
+
+.container-edit-buttons {
+    display: flex;
+    flex-wrap: wrap;
+
+    .btn {
+        margin: 5px;
+    }
+}
+
+/*******************************/
+/* PARTIAL SPECIFIC CONTAINERS */
+/*******************************/
+
+
+.detail-animal-header {
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 800px) {
+    .detail-animal-header {
+        display: block;
+    }
+}
+
+.profile-card {
+    display: flex;
+    border-radius: 0px 0px 8px 8px;
+    background-color: var(--highlight-two);
+    color: var(--highlight-one-text);
+
+    .btn2 {
+        height: 40px;
+    }
+
+    .button_darken:hover {
+        background-color: var(--highlight-one);
+        color: var(--highlight-one-text);
+    }
+
+    button {
+        background: inherit;
+        color: inherit;
+    }
+}
+
+.container-comment-form {
+    width: 80%;
+    color: var(--text-one);
+
+    b {
+        text-shadow: 2px 2px var(--shadow-one);
+    }
+}
+
+/***********/
+/* BUTTONS */
+/***********/
+
+select, .button {
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    opacity: 1;
+    background-color: var(--secondary-light-one);
+
+}
+
+.btn {
+    background-color: var(--primary-light-one);
+    color: var(--secondary-light-one);
+    padding: 16px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+}
+
+.btn2 {
+    background-color: var(--secondary-light-one);
+    color: var(--primary-dark-one);
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+    margin: 5px;
+}
+
+/*********************/
+/* UNIQUE COMPONENTS */
+/*********************/
+
+.content-box {
+    margin: 20px;
+}
+
 .header {
     overflow: hidden;
     background-color: var(--background-two);
@@ -110,14 +233,7 @@ h1, h2 {
     color: white;
 }
 
-select, .button {
-    width: 100%;
-    border: none;
-    border-radius: 4px;
-    opacity: 1;
-    background-color: var(--secondary-light-one);
 
-}
 
 .header-right select.option {
     color: #000;
@@ -135,26 +251,6 @@ select, .button {
     height: 67px;
 }
 
-.profile-card {
-    display: flex;
-    border-radius: 0px 0px 8px 8px;
-    background-color: var(--highlight-two);
-    color: var(--highlight-one-text);
-
-    .btn2 {
-        height: 40px;
-    }
-
-    .button_darken:hover {
-        background-color: var(--highlight-one);
-        color: var(--highlight-one-text);
-    }
-
-    button {
-        background: inherit;
-        color: inherit;
-    }
-}
 
 @media screen and (max-width: 500px) {
     .header a {
@@ -172,25 +268,6 @@ select, .button {
     height: 40px;
 }
 
-
-.btn {
-    background-color: var(--primary-light-one);
-    color: var(--secondary-light-one);
-    padding: 16px;
-    border-radius: 8px;
-    border: none;
-    font-weight: bold;
-}
-
-.btn2 {
-    background-color: var(--secondary-light-one);
-    color: var(--primary-dark-one);
-    padding: 8px;
-    border-radius: 4px;
-    border: none;
-    margin: 5px;
-}
-
 .form-button, .link-button a:link, .link-button a:visited {
     background-color: #4ba3cd;
     color: white;
@@ -203,14 +280,6 @@ select, .button {
     border: none;
 }
 
-.container-edit-buttons {
-    display: flex;
-    flex-wrap: wrap;
-
-    .btn {
-        margin: 5px;
-    }
-}
 
 .form-button:hover, .link-button a:hover, .link-button a:active {
     background-color: #4090b6;
@@ -326,18 +395,6 @@ select, .button {
     }
 }
 
-.detail-animal-header {
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-@media screen and (max-width: 800px) {
-    .detail-animal-header {
-        display: block;
-    }
-}
 
 .tag {
     border: black 1px solid;
@@ -355,10 +412,7 @@ select, .button {
 }
 
 
-.container-cards {
-    display: flex;
-    flex-wrap: wrap;
-}
+
 
 
 .photos {
@@ -376,14 +430,6 @@ select, .button {
     border-radius: 10%;
 }
 
-.card {
-    flex: 1 25%;
-    margin: 10px;
-    border-radius: 8px;
-    padding: 5px;
-    background: var(--background-three);
-    color: var(--text-two);
-}
 
 .card h1 {
     color: var(--text-three);
@@ -514,20 +560,7 @@ select, .button {
     color: var(--text-two);
 }
 
-.container-comment-form {
-    width: 80%;
-    color: var(--text-one);
 
-    b {
-        text-shadow: 2px 2px var(--shadow-one);
-    }
-}
-
-textarea {
-    border-radius: 10px;
-    width: 100%;
-    margin: 5px;
-}
 
 .form-comments {
     .btn {
@@ -552,6 +585,21 @@ textarea {
     }
 }
 
+
+.form-search {
+    select, input {
+        background-color: var(--primary-light-one);
+        color: var(--text-one);
+        border-radius: 3px;
+        border: none;
+    }
+
+}
+
+/************************/
+/* GENERAL HIGHLIGHTING */
+/************************/
+
 .important {
     border: #e01137 4px solid;
 }
@@ -564,15 +612,10 @@ textarea {
     border: rgba(17, 58, 224, 0.51) 4px solid;
 }
 
-.form-search {
-    select, input {
-        background-color: var(--primary-light-one);
-        color: var(--text-one);
-        border-radius: 3px;
-        border: none;
-    }
 
-}
+/*******/
+/* MAP */
+/*******/
 
 .marker {
     background-image: url('../img/logo_transparent.png');
