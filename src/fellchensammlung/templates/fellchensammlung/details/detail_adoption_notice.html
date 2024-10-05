@@ -6,19 +6,19 @@
     <div class="detail-adoption-notice-header">
         <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}
             {% if not is_subscribed %}
-            <form class="notification-card-mark-read" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="subscribe">
-                <input type="hidden" name="adoption_notice_id" value="{{ adoption_notice.pk }}">
-                <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-bell"></i></button>
-            </form>
+                <form class="notification-card-mark-read" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="subscribe">
+                    <input type="hidden" name="adoption_notice_id" value="{{ adoption_notice.pk }}">
+                    <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-bell"></i></button>
+                </form>
             {% else %}
-            <form class="notification-card-mark-read" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="unsubscribe">
-                <input type="hidden" name="adoption_notice_id" value="{{ adoption_notice.pk }}">
-                <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-bell-slash"></i></button>
-            </form>
+                <form class="notification-card-mark-read" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="unsubscribe">
+                    <input type="hidden" name="adoption_notice_id" value="{{ adoption_notice.pk }}">
+                    <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-bell-slash"></i></button>
+                </form>
             {% endif %}
         </h1>
         {% if has_edit_permission %}
