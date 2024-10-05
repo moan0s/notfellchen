@@ -4,6 +4,7 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from notfellchen import settings
+from urllib.parse import urlparse
 
 register = template.Library()
 
@@ -55,6 +56,17 @@ def pointdecimal(value):
         return f"{float(value):.9f}"
     except ValueError:
         return value
+
+@register.filter
+@stringfilter
+def domain(url):
+    try:
+        domain = urlparse(url).netloc
+        if domain.startswith("www."):
+            return domain[4:]
+        return domain
+    except ValueError:
+        return url
 
 @register.simple_tag
 def settings_value(name):

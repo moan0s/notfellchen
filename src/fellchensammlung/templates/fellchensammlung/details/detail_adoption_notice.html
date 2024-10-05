@@ -48,7 +48,14 @@
                 <td>{{ adoption_notice.searching_since }}</td>
                 <td>{{ adoption_notice.last_checked | date:'d. F Y' }}</td>
                 {% if adoption_notice.further_information %}
-                    <td>{{ adoption_notice.link_to_more_information | safe }}</td>
+                    <td>
+                        <form method="get" action="{% url 'external-site' %}">
+                            <input type="hidden" name="url" value="adoption_notice.further_information">
+                            <button class="btn" type="submit" id="submit">
+                                 {{ adoption_notice.further_information | domain }} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </button>
+                        </form>
+                    </td>
                 {% else %}
                     <td>-</td>
                 {% endif %}
