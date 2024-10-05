@@ -13,7 +13,8 @@ from notfellchen import settings
 
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, Species
+    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
+    Species
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
@@ -73,7 +74,7 @@ def change_language(request):
 def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
     if request.user.is_authenticated:
-        try: 
+        try:
             subscription = Subscriptions.objects.get(owner=request.user, adoption_notice=adoption_notice)
             is_subscribed = True
         except Subscriptions.DoesNotExist:
@@ -101,9 +102,9 @@ def adoption_notice_detail(request, adoption_notice_id):
                         # Create a notification but only if the user is not the one that posted the comment
                         if subscription.owner != request.user:
                             notification = CommentNotification(user=subscription.owner,
-                                                            title=f"{adoption_notice.name} - Neuer Kommentar",
-                                                            text=f"{request.user}: {comment_instance.text}",
-                                                            comment=comment_instance)
+                                                               title=f"{adoption_notice.name} - Neuer Kommentar",
+                                                               text=f"{request.user}: {comment_instance.text}",
+                                                               comment=comment_instance)
                             notification.save()
             else:
                 comment_form = CommentForm(instance=adoption_notice)
@@ -111,13 +112,13 @@ def adoption_notice_detail(request, adoption_notice_id):
                 Subscriptions.objects.create(owner=request.user, adoption_notice=adoption_notice)
                 is_subscribed = True
             if action == "unsubscribe":
-                    subscription.delete()
-                    is_subscribed = False
+                subscription.delete()
+                is_subscribed = False
         else:
             raise PermissionDenied
     else:
         comment_form = CommentForm(instance=adoption_notice)
-    context = {"adoption_notice": adoption_notice,"comment_form": comment_form, "user": request.user,
+    context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
                "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed}
     return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
@@ -167,8 +168,9 @@ def search(request):
             adoption_notices_in_distance = active_adoptions
         else:
             adoption_notices_in_distance = [a for a in active_adoptions if a.in_distance(search_position, max_distance)]
-            
-        context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form, "place_not_found": place_not_found}
+
+        context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form,
+                   "place_not_found": place_not_found}
     else:
         latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
         active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
@@ -180,7 +182,8 @@ def search(request):
 @login_required
 def add_adoption_notice(request):
     if request.method == 'POST':
-        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(request.POST, request.FILES, in_adoption_notice_creation_flow=True)
+        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(request.POST, request.FILES,
+                                                          in_adoption_notice_creation_flow=True)
 
         if form.is_valid():
             instance = form.save(commit=False)
@@ -195,21 +198,23 @@ def add_adoption_notice(request):
                 major_status = AdoptionNoticeStatus.ACTIVE
                 minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.ACTIVE]["searching"]
             else:
-                major_status=AdoptionNoticeStatus.AWAITING_ACTION
-                minor_status=AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.AWAITING_ACTION]["waiting_for_review"]
+                major_status = AdoptionNoticeStatus.AWAITING_ACTION
+                minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.AWAITING_ACTION][
+                    "waiting_for_review"]
             status = AdoptionNoticeStatus.objects.create(major_status=major_status,
-                                                             minor_status=minor_status,
-                                                             adoption_notice=instance)    
+                                                         minor_status=minor_status,
+                                                         adoption_notice=instance)
             status.save()
 
-                # Get the species and number of animals from the form
+            # Get the species and number of animals from the form
             species = form.cleaned_data["species"]
             sex = form.cleaned_data["sex"]
             num_animals = form.cleaned_data["num_animals"]
             date_of_birth = form.cleaned_data["date_of_birth"]
             for i in range(0, num_animals):
                 Animal.objects.create(owner=request.user,
-                name=f"{species} {i+1}", adoption_notice=instance, species=species, sex=sex, date_of_birth=date_of_birth)
+                                      name=f"{species} {i + 1}", adoption_notice=instance, species=species, sex=sex,
+                                      date_of_birth=date_of_birth)
             return redirect(reverse("adoption-notice-detail", args=[instance.pk]))
     else:
         form = AdoptionNoticeFormWithDateWidgetAutoAnimal(in_adoption_notice_creation_flow=True)
@@ -420,6 +425,7 @@ def modqueue(request):
     context = {"reports": open_reports}
     return render(request, 'fellchensammlung/modqueue.html', context=context)
 
+
 @login_required
 def updatequeue(request):
     if request.method == "POST":
@@ -444,7 +450,7 @@ def updatequeue(request):
 
 
 def map(request):
-    adoption_notices = AdoptionNotice.objects.all() #TODO: Filter to active
+    adoption_notices = AdoptionNotice.objects.all()  #TODO: Filter to active
     context = {"adoption_notices_map": adoption_notices}
     return render(request, 'fellchensammlung/map.html', context=context)
 
@@ -452,6 +458,7 @@ def map(request):
 def metrics(request):
     data = gather_metrics_data()
     return JsonResponse(data)
+
 
 @login_required
 def instance_health_check(request):
@@ -466,7 +473,6 @@ def instance_health_check(request):
     number_of_adoption_notices = AdoptionNotice.objects.all().count()
     none_geocoded_adoption_notices = AdoptionNotice.objects.filter(location__isnull=True)
     number_not_geocoded_adoption_notices = len(none_geocoded_adoption_notices)
-
 
     number_of_rescue_orgs = RescueOrganization.objects.all().count()
     none_geocoded_rescue_orgs = RescueOrganization.objects.filter(location__isnull=True)
@@ -494,7 +500,14 @@ def instance_health_check(request):
         "missing_texts": missing_texts
     }
 
-
     return render(request, 'fellchensammlung/instance-health-check.html', context=context)
 
 
+def external_site_warning(request):
+    url = request.GET.get("url")
+    context = {"url": url}
+    language_code = translation.get_language()
+    lang = Language.objects.get(languagecode=language_code)
+    Text.get_texts(["external_site_warning", "good_adoption_practices"], language=lang)
+
+    return render(request, 'fellchensammlung/external_site_warning.html', context=context)

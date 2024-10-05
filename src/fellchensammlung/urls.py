@@ -79,5 +79,9 @@ urlpatterns = [
     #########
     path('api/', include('fellchensammlung.api.urls')),
 
+    ###################
+    ## External Site ##
+    ###################
+    path('external-site/', views.external_site_warning, name="external-site"),
 
 ]
