@@ -46,12 +46,9 @@ def index(request):
     lang = Language.objects.get(languagecode=language_code)
     active_announcements = Announcement.get_active_announcements(lang)
 
-    context = {"adoption_notices": active_adoptions[:5], "adoption_notices_map": active_adoptions, "announcements": active_announcements}
-    for text_code in ["how_to", "introduction"]:
-        try:
-            context[text_code] = Text.objects.get(text_code=text_code, language=lang, )
-        except Text.DoesNotExist:
-            context[text_code] = None
+    context = {"adoption_notices": active_adoptions[:5], "adoption_notices_map": active_adoptions,
+               "announcements": active_announcements}
+    Text.get_texts(["how_to", "introduction"], lang, context)
 
     return render(request, 'fellchensammlung/index.html', context=context)
 

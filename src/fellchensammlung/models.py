@@ -516,6 +516,18 @@ class Text(models.Model):
     def __str__(self):
         return f"{self.title} ({self.language})"
 
+    @staticmethod
+    def get_texts(text_codes, language, expandable_dict=None):
+        if expandable_dict is None:
+            expandable_dict = {}
+        for text_code in text_codes:
+            try:
+                expandable_dict[text_code] = Text.objects.get(text_code=text_code, language=language, )
+            except Text.DoesNotExist:
+                expandable_dict[text_code] = None
+        return expandable_dict
+
+
 
 class Announcement(Text):
     """
