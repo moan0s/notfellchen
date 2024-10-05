@@ -535,7 +535,7 @@ class Announcement(Text):
     """
     logged_in_only = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    publish_start_time = models.DateTimeField(verbose_name="Veröffentlichungszeitpunk")
+    publish_start_time = models.DateTimeField(verbose_name="Veröffentlichungszeitpunkt")
     publish_end_time = models.DateTimeField(verbose_name="Veröffentlichungsende")
     IMPORTANT = "important"
     WARNING = "warning"
