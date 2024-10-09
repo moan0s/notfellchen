@@ -106,3 +106,20 @@ Use a program like `gtranslator` or `poedit` to start translations
 | Edit adoption notice                | User that created, Moderator, Admin |
 | Edit animal                         | User that created, Moderator, Admin |
 | Add animal/photo to adoption notice | User that created, Moderator, Admin |
+
+# Celery and KeyDB
+
+Start KeyDB docker container
+```zsh
+docker run -d --name keydb -p 6379:6379 eqalpha/keydb
+```
+
+Start worker
+```zsh
+ celery -A notfellchen.celery worker
+```
+
+Start beat
+```zsh
+ celery -A notfellchen.celery beat
+```

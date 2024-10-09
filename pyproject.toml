@@ -38,7 +38,8 @@ dependencies = [
     "psycopg2-binary",
     "django-crispy-forms",
     "crispy-bootstrap4",
-    "djangorestframework"
+    "djangorestframework",
+    "celery[redis]"
 ]
 dynamic = ["version", "readme"]
 

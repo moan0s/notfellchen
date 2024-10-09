@@ -7,7 +7,7 @@ def clean_locations(quiet=True):
     num_without_location = adoption_notices_without_location.count()
     if not quiet:
         print(f"From {num_of_all} there are {num_without_location} adoption notices without location "
-            f"({num_without_location/num_of_all*100:.2f}%)")
+              f"({num_without_location / num_of_all * 100:.2f}%)")
     for adoption_notice in adoption_notices_without_location:
         if not quiet:
             print(f"Searching {adoption_notice.location_string} in Nominatim")
@@ -28,7 +28,7 @@ def clean_locations(quiet=True):
     num_without_location = rescue_orgs_without_location.count()
     if not quiet:
         print(f"From {num_of_all} there are {num_without_location} adoption notices without location "
-            f"({num_without_location/num_of_all*100:.2f}%)")
+              f"({num_without_location / num_of_all * 100:.2f}%)")
     for rescue_org in rescue_orgs_without_location:
         if not quiet:
             print(f"Searching {rescue_org.location_string} in Nominatim")

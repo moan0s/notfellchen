@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import configparser
 from django.utils.translation import gettext_lazy as _
+from celery import Celery
 
 """CONFIG PARSER """
 config = configparser.RawConfigParser()
@@ -78,6 +79,11 @@ DB_HOST = config.get("database", "host", fallback='')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+
+""" CELERY + KEYDB """
+CELERY_BROKER_URL = config.get("celery", "broker", fallback="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND = config.get("celery", "backend", fallback="redis://localhost:6379/0")
+
 
 """ GEOCODING """
 GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://nominatim.hyteck.de/search")
