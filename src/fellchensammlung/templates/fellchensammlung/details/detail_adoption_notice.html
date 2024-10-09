@@ -2,6 +2,8 @@
 {% load custom_tags %}
 {% load i18n %}
 
+{% block title %}<title>{{adoption_notice.name }}</title> %}
+
 {% block content %}
     <div class="detail-adoption-notice-header">
         <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}

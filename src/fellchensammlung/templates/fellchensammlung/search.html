@@ -1,5 +1,8 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
+
+{% block title %}<title>{% translate "Suche" %}</title> %}
+
 {% block content %}
     <form class="form-search card" method="post">
         {% csrf_token %}

@@ -2,6 +2,8 @@
 {% load i18n %}
 {% load custom_tags %}
 
+{% block title %}<title>{% translate "Notfellchen - Farbratten aus dem Tierschutz adoptieren" %}</title>{% endblock %}
+
 {% block content %}
     {% for announcement in announcements %}
         {% include "fellchensammlung/partials/partial-announcement.html" %}

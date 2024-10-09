@@ -2,6 +2,8 @@
 {% load custom_tags %}
 {% load i18n %}
 
+{% block title %}<title>{{ animal.name }}</title> %}
+
 {% block content %}
     {% include "fellchensammlung/details/detail-animal-partial.html" %}
 {% endblock %}
