@@ -1,5 +1,5 @@
 from notfellchen.celery import app as celery_app
-from .tools.admin import clean_locations
+from .tools.admin import clean_locations, deactivate_unchecked_adoption_notices
 from .models import Location, AdoptionNotice
 
 
@@ -8,8 +8,12 @@ def task_clean_locations():
     clean_locations()
 
 
+@celery_app.task(name="admin.deactivate_unchecked")
+def task_deactivate_unchecked():
+    deactivate_unchecked_adoption_notices()
+
+
 @celery_app.task(name="commit.add_location")
 def add_adoption_notice_location(pk):
     instance = AdoptionNotice.objects.get(pk=pk)
     Location.add_location_to_object(instance)
-
