@@ -1,10 +1,12 @@
-FROM python:3-slim
+FROM python:3.11-slim
+# Use 3.11 to avoid django.core.exceptions.ImproperlyConfigured: Error loading psycopg2 or psycopg module
 MAINTAINER Julian-Samuel Gebühr
 
 ENV DOCKER_BUILD=true
 
 RUN apt update
 RUN apt install gettext -y
+RUN apt install libpq-dev gcc -y
 COPY . /app
 WORKDIR /app
 RUN mkdir /app/data

@@ -35,7 +35,7 @@ dependencies = [
     "markdown",
     "Pillow",
     "django-registration",
-    "psycopg2-binary",
+    "psycopg2",
     "django-crispy-forms",
     "crispy-bootstrap4",
     "djangorestframework",
