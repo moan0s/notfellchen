@@ -22,7 +22,7 @@ app.conf.beat_schedule = {
     },
 }
 
-if settings.HEALTHCHECK_URL is not None and settings.HEALTHCHECK_URL != "":
+if settings.HEALTHCHECKS_URL is not None and settings.HEALTHCHECKS_URL != "":
     # If a healthcheck is configured, this will send an hourly ping to the healthchecks server
     app.conf.beat_schedule['hourly-healthcheck'] = {'task': 'tools.healthcheck',
                                                     'schedule': crontab(minute=32),
