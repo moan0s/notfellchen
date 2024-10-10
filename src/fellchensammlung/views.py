@@ -22,6 +22,7 @@ from .models import Language, Announcement
 from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
 from .tools.admin import clean_locations
+from .tasks import add_adoption_notice_location
 
 
 def user_is_trust_level_or_above(user, trust_level=User.MODERATOR):
@@ -188,10 +189,10 @@ def add_adoption_notice(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.owner = request.user
-            """Search the location given in the location string and add it to the adoption notice"""
-            location = Location.get_location_from_string(instance.location_string)
-            instance.location = location
             instance.save()
+
+            """Spin up a task that adds the location"""
+            add_adoption_notice_location.delay_on_commit(instance.pk)
 
             # Set correct status
             if request.user.trust_level >= User.TRUST_LEVEL[User.COORDINATOR]:

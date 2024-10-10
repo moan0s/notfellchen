@@ -134,6 +134,12 @@ class Location(models.Model):
         )
         return location
 
+    @staticmethod
+    def add_location_to_object(instance):
+        """Search the location given in the location string and add it to the object"""
+        location = Location.get_location_from_string(instance.location_string)
+        instance.location = location
+        instance.save()
 
 class RescueOrganization(models.Model):
     def __str__(self):

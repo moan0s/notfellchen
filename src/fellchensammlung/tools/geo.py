@@ -7,7 +7,6 @@ from notfellchen import __version__ as nf_version
 from notfellchen import settings
 
 
-
 def calculate_distance_between_coordinates(position1, position2):
     """
     Calculate the distance between two points identified by coordinates
@@ -65,7 +64,8 @@ class GeoAPI:
 
     def get_coordinates_from_query(self, location_string):
         try:
-            result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers).json()[0]
+            result = \
+            self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers).json()[0]
         except IndexError:
             return None
         return result["lat"], result["lon"]
@@ -77,9 +77,9 @@ class GeoAPI:
     def get_geojson_for_query(self, location_string):
         try:
             result = self.requests.get(self.api_url,
-                                   {"q": location_string,
-                                    "format": "jsonv2"},
-                                   headers=self.headers).json()
+                                       {"q": location_string,
+                                        "format": "jsonv2"},
+                                       headers=self.headers).json()
         except Exception as e:
             logging.warning(f"Exception {e} when querying Nominatim")
             return None
