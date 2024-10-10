@@ -6,7 +6,7 @@ from .models import AdoptionNotice, Animal, Image, ReportAdoptionNotice, ReportC
     Comment
 from django_registration.forms import RegistrationForm
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field
+from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field, Hidden
 from django.utils.translation import gettext_lazy as _
 from notfellchen.settings import MEDIA_URL
 
@@ -142,8 +142,8 @@ class CommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.helper.form_action = "comment"
         self.helper.form_class = 'form-comments'
+        self.helper.add_input(Hidden('action', 'comment'))
         self.helper.add_input(Submit('submit', _('Kommentieren'), css_class="btn2"))
 
     class Meta:
