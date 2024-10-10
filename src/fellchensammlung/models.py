@@ -330,6 +330,7 @@ class AdoptionNoticeStatus(models.Model):
             "against_the_rules": "against_the_rules",
             "missing_information": "missing_information",
             "technical_error": "technical_error",
+            "unchecked": "unchecked",
             "other": "other"
         }
     }
@@ -355,6 +356,11 @@ class AdoptionNoticeStatus(models.Model):
     def set_closed(self):
         self.major_status = self.MAJOR_STATUS_CHOICES[self.CLOSED]
         self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED]["other"]
+        self.save()
+
+    def deactivate_unchecked(self):
+        self.major_status = self.MAJOR_STATUS_CHOICES[self.DISABLED]
+        self.minor_status = self.MINOR_STATUS_CHOICES[self.DISABLED]["unchecked"]
         self.save()
 
 
