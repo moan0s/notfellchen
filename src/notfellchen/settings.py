@@ -84,6 +84,8 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 CELERY_BROKER_URL = config.get("celery", "broker", fallback="redis://localhost:6379/0")
 CELERY_RESULT_BACKEND = config.get("celery", "backend", fallback="redis://localhost:6379/0")
 
+""" MONITORING """
+HEALTHCHECKS_URL = config.get("monitoring", "healthchecks_url", fallback=None)
 
 """ GEOCODING """
 GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://nominatim.hyteck.de/search")

@@ -1,8 +1,7 @@
-# <your_project>/celery.py
-
 import os
 from celery import Celery
 from celery.schedules import crontab
+from notfellchen import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'notfellchen.settings')
 
@@ -19,7 +18,12 @@ app.conf.beat_schedule = {
     },
     'daily-deactivation': {
         'task': 'admin.deactivate_unchecked',
-        'schedule': 30,
-    }
+        'schedule': crontab(hour=1),
+    },
 }
 
+if settings.HEALTHCHECK_URL is not None:
+    # If a healthcheck is configured, this will send a daily ping to the healthchecks server
+    app.conf.beat_schedule['daily-healthcheck'] = {'task': 'tools.healthcheck',
+                                                   'schedule': crontab(hour=2),
+                                                   }
