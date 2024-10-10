@@ -60,3 +60,12 @@ Now we can simply use the InfluxDB as data source in Grafana and configure until
 beautiful plots!
 
 .. image:: monitoring_grafana.png
+
+Healthchecks
+------------
+
+You can configure notfellchen to give a hourly ping to a healthchecks server. If this ping is not received, you will get notified and cna check why the celery jobs are no running.
+Add the following to your `notfellchen.cfg` and adjust the URL to match your check.
+.. code::
+  [monitoring]
+  healthchecks_url=https://health.example.org/ping/5fa7c9b2-753a-4cb3-bcc9-f982f5bc68e8
