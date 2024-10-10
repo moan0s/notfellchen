@@ -14,7 +14,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
-    Species
+    Species, Log
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
@@ -93,6 +93,10 @@ def adoption_notice_detail(request, adoption_notice_id):
                     comment_instance.user = request.user
                     comment_instance.save()
 
+                    """Log"""
+                    Log.objects.create(user=request.user, action="comment",
+                                       text=f"{request.user} hat Kommentar {comment_instance.pk} zur Vermittlung {adoption_notice_id} hinzugefügt")
+
                     # Auto-subscribe user to adoption notice
                     subscription, created = Subscriptions.objects.get_or_create(adoption_notice=adoption_notice,
                                                                                 owner=request.user)
@@ -140,6 +144,9 @@ def adoption_notice_edit(request, adoption_notice_id):
             location = Location.get_location_from_string(adoption_notice_instance.location_string)
             adoption_notice_instance.location = location
             adoption_notice_instance.save()
+
+            """Log"""
+            Log.objects.create(user=request.user, action="adoption_notice_edit", text=f"{request.user} hat Vermittlung {adoption_notice.pk} geändert")
             return redirect(reverse("adoption-notice-detail", args=[adoption_notice_instance.pk], ))
     else:
         form = AdoptionNoticeForm(instance=adoption_notice)
@@ -216,6 +223,10 @@ def add_adoption_notice(request):
                 Animal.objects.create(owner=request.user,
                                       name=f"{species} {i + 1}", adoption_notice=instance, species=species, sex=sex,
                                       date_of_birth=date_of_birth)
+
+            """Log"""
+            Log.objects.create(user=request.user, action="add_adoption_notice",
+                               text=f"{request.user} hat Vermittlung {instance.pk} hinzugefügt")
             return redirect(reverse("adoption-notice-detail", args=[instance.pk]))
     else:
         form = AdoptionNoticeFormWithDateWidgetAutoAnimal(in_adoption_notice_creation_flow=True)
@@ -260,6 +271,11 @@ def add_photo_to_animal(request, animal_id):
             instance.save()
 
             animal.photos.add(instance)
+
+            """Log"""
+            Log.objects.create(user=request.user, action="add_photo_to_animal",
+                               text=f"{request.user} hat Foto {instance.pk} zum Tier {animal.pk} hinzugefügt")
+
             if "save-and-add-another" in request.POST:
                 form = ImageForm(in_flow=True)
                 return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
@@ -283,6 +299,9 @@ def add_photo_to_adoption_notice(request, adoption_notice_id):
             instance.owner = request.user
             instance.save()
             adoption_notice.photos.add(instance)
+            """Log"""
+            Log.objects.create(user=request.user, action="add_photo_to_animal",
+                               text=f"{request.user} hat Foto {instance.pk} zur Vermittlung {adoption_notice.pk} hinzugefügt")
             if "save-and-add-another" in request.POST:
                 form = ImageForm(in_flow=True)
                 return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
@@ -309,6 +328,10 @@ def animal_edit(request, animal_id):
 
         if form.is_valid():
             animal = form.save()
+
+            """Log"""
+            Log.objects.create(user=request.user, action="add_photo_to_animal",
+                               text=f"{request.user} hat Tier {animal.pk} zum Tier geändert")
             return redirect(reverse("animal-detail", args=[animal.pk], ))
     else:
         form = AnimalForm(instance=animal)
@@ -429,6 +452,7 @@ def modqueue(request):
 
 @login_required
 def updatequeue(request):
+    #TODO: Make sure update can only be done for instances with permission
     if request.method == "POST":
         print(request.POST.get("adoption_notice_id"))
         adoption_notice = AdoptionNotice.objects.get(id=request.POST.get("adoption_notice_id"))

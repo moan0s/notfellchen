@@ -72,7 +72,7 @@ class User(AbstractUser):
         return self.get_absolute_url()
 
     def get_num_unread_notifications(self):
-        return BaseNotification.objects.filter(user=self,read=False).count()
+        return BaseNotification.objects.filter(user=self, read=False).count()
 
     @property
     def owner(self):
@@ -141,6 +141,7 @@ class Location(models.Model):
         instance.location = location
         instance.save()
 
+
 class RescueOrganization(models.Model):
     def __str__(self):
         return f"{self.name}"
@@ -161,7 +162,10 @@ class RescueOrganization(models.Model):
 
     name = models.CharField(max_length=200)
     trusted = models.BooleanField(default=False, verbose_name=_('Vertrauenswürdig'))
-    allows_using_materials = models.CharField(max_length=200,default=ALLOW_USE_MATERIALS_CHOICE[USE_MATERIALS_NOT_ASKED], choices=ALLOW_USE_MATERIALS_CHOICE, verbose_name=_('Erlaubt Nutzung von Inhalten'))
+    allows_using_materials = models.CharField(max_length=200,
+                                              default=ALLOW_USE_MATERIALS_CHOICE[USE_MATERIALS_NOT_ASKED],
+                                              choices=ALLOW_USE_MATERIALS_CHOICE,
+                                              verbose_name=_('Erlaubt Nutzung von Inhalten'))
     location_string = models.CharField(max_length=200, verbose_name=_("Ort der Organisation"))
     location = models.ForeignKey(Location, on_delete=models.PROTECT, blank=True, null=True)
     instagram = models.URLField(null=True, blank=True, verbose_name=_('Instagram Profil'))
@@ -282,11 +286,11 @@ class AdoptionNotice(models.Model):
         if not hasattr(self, 'adoptionnoticestatus'):
             return False
         return self.adoptionnoticestatus.is_active
-    
+
     def set_checked(self):
         self.last_checked = datetime.now()
         self.save()
-    
+
     def set_closed(self):
         self.last_checked = datetime.now()
         self.adoptionnoticestatus.set_closed()
@@ -540,7 +544,6 @@ class Text(models.Model):
         return expandable_dict
 
 
-
 class Announcement(Text):
     """
     Class to store announcements that should be displayed for all users
@@ -639,4 +642,17 @@ class Subscriptions(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.owner} - { self.adoption_notice }"
+        return f"{self.owner} - {self.adoption_notice}"
+
+
+class Log(models.Model):
+    """
+    Basic class that allows logging random entries for later inspection
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("Nutzer*in"))
+    action = models.CharField(max_length=255, verbose_name=_("Aktion"))
+    text = models.CharField(max_length=1000, verbose_name=_("Log text"))
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"[{self.action}] - {self.user} - {self.created_at.strftime('%H:%M:%S %d-%m-%Y ')}"

@@ -2,7 +2,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import User, Language, Text, ReportComment, ReportAdoptionNotice
+from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions
@@ -62,3 +62,4 @@ admin.site.register(Text)
 admin.site.register(Announcement)
 admin.site.register(AdoptionNoticeStatus)
 admin.site.register(Subscriptions)
+admin.site.register(Log)
