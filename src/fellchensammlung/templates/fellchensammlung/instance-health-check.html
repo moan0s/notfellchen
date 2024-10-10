@@ -1,24 +1,24 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
-{% block title %}<title>{% translate "Instanz-Check" %}</title> %}
+{% block title %}<title>{% translate "Instanz-Check" %}</title> {% endblock %}
 {% block content %}
     <div class="card">
         <h1>{% translate "Instanz-Check" %}</h1>
         {% if missing_texts|length > 0 %}
             <h2>{% trans "Fehlende Texte" %}</h2>
             <p>
-                <table>
+            <table>
+                <tr>
+                    <th>{% translate "Text Code" %}</th>
+                    <th>{% translate "Sprache" %}</th>
+                </tr>
+                {% for missing_text in missing_texts %}
                     <tr>
-                        <th>{% translate "Text Code" %}</th>
-                        <th>{% translate "Sprache" %}</th>
+                        <td>{{ missing_text.0 }}</td>
+                        <td>{{ missing_text.1 }}</td>
                     </tr>
-                    {% for missing_text in missing_texts %}
-                        <tr>
-                            <td>{{ missing_text.0 }}</td>
-                            <td>{{ missing_text.1 }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
+                {% endfor %}
+            </table>
             </p>
         {% else %}
             <p>{% translate "Texte scheinen vollständig" %}</p>
@@ -56,11 +56,35 @@
             <p>{{ number_not_geocoded_rescue_orgs }}/{{ number_of_rescue_orgs }}</p>
         {% endif %}
 
+        <h2>{% translate "Nicht-geprüfte Vermittlungen" %}</h2>
+        {% if number_unchecked_ans > 0 %}
+            <details>
+                <summary>{{ number_unchecked_ans }}</summary>
+                <ul>
+                    {% for unchecked_an in unchecked_ans %}
+                        <li>
+                            <a href="{{ unchecked_an.get_absolute_url }}">{{ unchecked_an.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </details>
+        {% else %}
+            <p>{{ number_unchecked_ans }}</p>
+        {% endif %}
+
         <form class="notification-card-mark-read" method="post">
             {% csrf_token %}
             <input type="hidden" name="action" value="clean_locations">
             <button class="btn" type="submit" id="submit">
                 <i class="fa-solid fa-broom"></i> {% translate "Erneut lokalisieren" %}
+            </button>
+        </form>
+
+        <form class="notification-card-mark-read" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="deactivate_unchecked_adoption_notices">
+            <button class="btn" type="submit" id="submit">
+                <i class="fa-solid fa-broom"></i> {% translate "Deaktivire ungeprüfte Vermittlungen" %}
             </button>
         </form>
     </div>

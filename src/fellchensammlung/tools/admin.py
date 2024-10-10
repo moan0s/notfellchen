@@ -1,4 +1,8 @@
-from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization
+from django.utils import timezone
+from datetime import timedelta
+
+from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus
+
 
 def clean_locations(quiet=True):
     # ADOPTION NOTICES
@@ -42,3 +46,20 @@ def clean_locations(quiet=True):
     num_new = num_without_location - num_without_location_new
     if not quiet:
         print(f"Added {num_new} new locations")
+
+
+def get_unchecked_adoption_notices(weeks=3):
+    now = timezone.now()
+    three_weeks_ago = now - timedelta(weeks=weeks)
+
+    # Query for active adoption notices that were checked in the last three weeks
+    unchecked_adoptions = AdoptionNotice.objects.filter(
+        last_checked__gte=three_weeks_ago
+    )
+    active_unchecked_adoptions = [adoption for adoption in unchecked_adoptions if adoption.is_active]
+    return active_unchecked_adoptions
+
+
+def deactivate_unchecked_adoption_notices():
+    for adoption_notice in get_unchecked_adoption_notices(weeks=3):
+        AdoptionNoticeStatus.objects.get(adoption_notice=adoption_notice).deactivate_unchecked()
