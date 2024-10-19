@@ -31,6 +31,6 @@ def age_as_hr_string(age: datetime.timedelta) -> str:
 
 def healthcheck_ok():
     try:
-        requests.get(settings.HEALTHCHECK_URL, timeout=10)
+        requests.get(settings.HEALTHCHECKS_URL, timeout=10)
     except requests.RequestException as e:
         logging.error("Ping to healthcheck-server failed: %s" % e)
