@@ -656,3 +656,15 @@ class Log(models.Model):
 
     def __str__(self):
         return f"[{self.action}] - {self.user} - {self.created_at.strftime('%H:%M:%S %d-%m-%Y ')}"
+
+
+class Timestamp(models.Model):
+    """
+    Class to store timestamps based on keys
+    """
+    key = models.CharField(max_length=255, verbose_name=_("Schlüssel"), primary_key=True)
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name=_("Zeitstempel"))
+    data = models.CharField(max_length=2000, blank=True, null=True)
+
+    def ___str__(self):
+        return f"[{self.key}] - {self.timestamp.strftime('%H:%M:%S %d-%m-%Y ')} - {self.data}"
