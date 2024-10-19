@@ -80,6 +80,8 @@ def adoption_notice_detail(request, adoption_notice_id):
             is_subscribed = True
         except Subscriptions.DoesNotExist:
             is_subscribed = False
+    else:
+        is_subscribed = False
     has_edit_permission = user_is_owner_or_trust_level(request.user, adoption_notice)
     if request.method == 'POST':
         action = request.POST.get("action")
