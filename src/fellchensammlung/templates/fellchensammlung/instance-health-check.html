@@ -24,6 +24,28 @@
             <p>{% translate "Texte scheinen vollständig" %}</p>
         {% endif %}
 
+        <h2>{% trans "Zeitstempel" %}</h2>
+        {% if timestamps|length > 0 %}
+            <p>
+            <table>
+                <tr>
+                    <th>{% translate "Key" %}</th>
+                    <th>{% translate "Zeitstempel" %}</th>
+                    <th>{% translate "Daten" %}</th>
+                </tr>
+                {% for timestamp in timestamps %}
+                    <tr>
+                        <td>{{ timestamp.key }}</td>
+                        <td>{{ timestamp.timestamp }}</td>
+                        <td>{{ timestamp.data }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </p>
+        {% else %}
+            <p>{% translate "Keine Zeitstempel geloggt." %}</p>
+        {% endif %}
+
         <h2>{% translate "Nicht-lokalisierte Vermittlungen" %}</h2>
         {% if number_not_geocoded_adoption_notices > 0 %}
             <details>

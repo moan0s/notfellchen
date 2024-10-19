@@ -14,7 +14,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
-    Species, Log
+    Species, Log, Timestamp
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
@@ -522,6 +522,9 @@ def instance_health_check(request):
             except Text.DoesNotExist:
                 missing_texts.append((text_code, language))
 
+    # Timestamps
+    timestamps = Timestamp.objects.all()
+
     context = {
         "number_of_adoption_notices": number_of_adoption_notices,
         "number_not_geocoded_adoption_notices": number_not_geocoded_adoption_notices,
@@ -531,7 +534,8 @@ def instance_health_check(request):
         "none_geocoded_rescue_orgs": none_geocoded_rescue_orgs,
         "missing_texts": missing_texts,
         "number_unchecked_ans": number_unchecked_ans,
-        "unchecked_ans": unchecked_ans
+        "unchecked_ans": unchecked_ans,
+        "timestamps": timestamps
     }
 
     return render(request, 'fellchensammlung/instance-health-check.html', context=context)
