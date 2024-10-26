@@ -287,6 +287,12 @@ class AdoptionNotice(models.Model):
             return False
         return self.adoptionnoticestatus.is_active
 
+    @property
+    def is_to_be_checked(self, include_active=False):
+        if not hasattr(self, 'adoptionnoticestatus'):
+            return False
+        return self.adoptionnoticestatus.is_to_be_checked or (include_active and self.adoptionnoticestatus.is_active)
+
     def set_checked(self):
         self.last_checked = datetime.now()
         self.save()
@@ -352,6 +358,10 @@ class AdoptionNoticeStatus(models.Model):
     @property
     def is_active(self):
         return self.major_status == self.ACTIVE
+
+    @property
+    def is_to_be_checked(self):
+        return self.major_status == self.DISABLED and self.minor_status == "unchecked"
 
     @staticmethod
     def get_minor_choices(major_status):

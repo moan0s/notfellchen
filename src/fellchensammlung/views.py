@@ -470,7 +470,7 @@ def updatequeue(request):
         last_checked_adoption_list = AdoptionNotice.objects.order_by("last_checked")
     else:
         last_checked_adoption_list = AdoptionNotice.objects.filter(owner=request.user).order_by("last_checked")
-    adoption_notices = [adoption for adoption in last_checked_adoption_list if adoption.is_active]
+    adoption_notices = [adoption for adoption in last_checked_adoption_list if adoption.is_active or adoption.is_to_be_checked]
 
     context = {"adoption_notices": adoption_notices}
     return render(request, 'fellchensammlung/updatequeue.html', context=context)
