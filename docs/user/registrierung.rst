@@ -1,5 +1,10 @@
-Registration
+Registrierung
 ================================
 
-To register you have to visit the library. An librarian will then set up an account for you.
-You will need to provide an valid E-Mail Address and a password.
+Du kannst dich jederzeit selbst registrieren. Das geht unter https://notfellchen.org/accounts/register/
+
+Ein Account ermöglicht es dir
+
+* Kommentare zu hinterlassen
+* Vermittlungen hinzuzufügen
+* Vermittlungen zu abonnieren
