@@ -6,5 +6,6 @@ Users guide
    :caption: Contents:
    
    registrierung.rst
-   benachrichtigungen.rst
    vermittlungen.rst
+   moderationskonzept.rt
+   benachrichtigungen.rst
