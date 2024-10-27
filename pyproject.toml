@@ -41,7 +41,13 @@ dependencies = [
     "djangorestframework",
     "celery[redis]"
 ]
+
 dynamic = ["version", "readme"]
+
+[project.optional-dependencies]
+develop = [
+  "pytest",
+]
 
 [project.urls]
 homepage = "https://notfellchen.org"
