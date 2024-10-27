@@ -1,7 +1,7 @@
 Monitoring
 ==========
 
-ILMO should, like every other software, be easy to monitor. Therefore a basic metrics are exposed to `https://notfellchen.org/metrics`.
+Notfellchen should, like every other software, be easy to monitor. Therefore a basic metrics are exposed to `https://notfellchen.org/metrics`.
 The data is encoded in JSON format and is therefore suitable to bea read by humans and it is easy to use it as data source for further processing.
 
 

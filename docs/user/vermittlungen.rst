@@ -9,10 +9,9 @@ Nach 3 Wochen ohne Prüfung werden Anzeigen automatisch von der Seite entfernt u
 
 Darüber hinaus werden einmal täglich die verlinkten Seiten automatisiert geprüft. Wenn eine Vermittlungs-Seite bei einem Tierheim oder einer Pflegestelle entfernt wurde, wird die Anzeige ebenfalls deaktiviert.
 
-Vermittlungen können von allen Menschen, auch ohne Account gemeldet werden. Grund dafür kann sein, dass Informationen veraltet sind oder Verdacht von Tierwohlgefärdung. Gemeldete Vermittlungen werden vom Moderationsteam geprüft und ggf. entfernt.
+Vermittlungen können von allen Menschen, auch ohne Account gemeldet werden. Grund dafür kann sein, dass Informationen veraltet sind oder ein Verdacht von Tierwohlgefärdung. Gemeldete Vermittlungen werden vom Moderationsteam geprüft und ggf. entfernt.
 
 Die Kommentarfunktion von Vermittlungen ermöglicht es angemeldeten Nutzer*innen zusätzliche Informationen hinzuzufügen oder Fragen zu stellen.
 Ersteller*innen von Vermittlungen werden über neue Kommentare per Mail benachrichtigt, ebenso alle die die Vermittlung abonniert haben.
 
 Kommentare können, wie Vermittlungen, gemeldet werden.
-

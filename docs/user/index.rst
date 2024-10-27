@@ -7,5 +7,4 @@ Users guide
    
    registrierung.rst
    benachrichtigungen.rst
-   login.rst
-   email.rst
+   vermittlungen.rst

@@ -4,16 +4,16 @@
 Deployment
 **********
 
-There are different ways to deploy ILMO. We support an ansible+docker based deployment and manual installation.
+There are different ways to deploy Notfellchen. We support an ansible+docker based deployment and manual installation.
 
 Ansible deployment
 ==================
 
-ILMO can be deployed with the `ilmo-ansible-role <https://github.com/moan0s/ansible-role-ilmo>`_ that is based on the
-official ILMO docker image. This role will only install ilmo itself. If you want a complete setup that includes a
+Notfellchen can be deployed with the `notfellchen-ansible-role <https://github.com/moan0s/ansible-role-notfellchen>`_ that is based on the
+official Notfellchen docker image. This role will only install notfellchen itself. If you want a complete setup that includes a
 database and a webserver with minimal configuration you can use the
 `mash-playbook <https://github.com/mother-of-all-self-hosting/mash-playbook>`_ by following `it's documentation
-on ILMO <https://github.com/mother-of-all-self-hosting/mash-playbook/blob/main/docs/services/ilmo.md>`_.
+on Notfellchen <https://github.com/mother-of-all-self-hosting/mash-playbook/blob/main/docs/services/notfellchen.md>`_.
 
 
 
@@ -21,10 +21,10 @@ Manual Deployment
 =================
 
 
-This guide describes the installation of a installation of ILMO from source. It is inspired by this great guide from
+This guide describes the installation of a installation of Notfellchen from source. It is inspired by this great guide from
 pretix_.
 
-.. warning:: Even though this guide tries to make it as straightforward to run ILMO, it still requires some Linux experience to
+.. warning:: Even though this guide tries to make it as straightforward to run Notfellchen, it still requires some Linux experience to
              get it right. If you're not feeling comfortable managing a Linux server, check out a managed service_.
 
 This guide is tested on **Ubuntu20.04** but it should work very similar on other modern systemd based distributions.
@@ -39,18 +39,18 @@ installation guides):
 * A HTTP reverse proxy, e.g. `nginx`_ or Traefik to allow HTTPS connections
 * A `PostgreSQL`_ database server
 
-Also recommended is, that you use a firewall, although this is not a ILMO-specific recommendation. If you're new to
+Also recommended is, that you use a firewall, although this is not a Notfellchen-specific recommendation. If you're new to
 Linux and firewalls, it is recommended that you start with `ufw`_.
 
-.. note:: Please, do not run ILMO without HTTPS encryption. You'll handle user data and thanks to `Let's Encrypt`_
+.. note:: Please, do not run Notfellchen without HTTPS encryption. You'll handle user data and thanks to `Let's Encrypt`_
           SSL certificates can be obtained for free these days.
 
 Unix user
 ---------
 
-As we do not want to run ilmo as root, we first create a new unprivileged user::
+As we do not want to run notfellchen as root, we first create a new unprivileged user::
 
-    # adduser ilmo --disabled-password --home /var/ilmo
+    # adduser notfellchen --disabled-password --home /var/notfellchen
 
 In this guide, all code lines prepended with a ``#`` symbol are commands that you need to execute on your server as
 ``root`` user (e.g. using ``sudo``); all lines prepended with a ``$`` symbol should be run by the unprivileged user.
@@ -66,16 +66,16 @@ best compatibility. You can check this with the following command::
 
 For PostgreSQL database creation, we would do::
 
-    # sudo -u postgres createuser ilmo
-    # sudo -u postgres createdb -O ilmo ilmo
-    # su ilmo
+    # sudo -u postgres createuser notfellchen
+    # sudo -u postgres createdb -O notfellchen notfellchen
+    # su notfellchen
     $ psql
-    > ALTER USER ilmo PASSWORD 'strong_password';
+    > ALTER USER notfellchen PASSWORD 'strong_password';
 
 Package dependencies
 --------------------
 
-To build and run ilmo, you will need the following debian packages::
+To build and run notfellchen, you will need the following debian packages::
 
     # apt-get install git build-essential python-dev python3-venv python3 python3-pip \
                       python3-dev
@@ -83,32 +83,32 @@ To build and run ilmo, you will need the following debian packages::
 Config file
 -----------
 
-We now create a config directory and config file for ilmo::
+We now create a config directory and config file for notfellchen::
 
-    # mkdir /etc/ilmo
-    # touch /etc/ilmo/ilmo.cfg
-    # chown -R ilmo:ilmo /etc/ilmo/
-    # chmod 0600 /etc/ilmo/ilmo.cfg
+    # mkdir /etc/notfellchen
+    # touch /etc/notfellchen/notfellchen.cfg
+    # chown -R notfellchen:notfellchen /etc/notfellchen/
+    # chmod 0600 /etc/notfellchen/notfellchen.cfg
 
-Fill the configuration file ``/etc/ilmo/ilmo.cfg`` with the following content (adjusted to your environment)::
+Fill the configuration file ``/etc/notfellchen/notfellchen.cfg`` with the following content (adjusted to your environment)::
 
-    [ilmo]
+    [notfellchen]
     instance_name=My library
-    url=https://ilmo.example.com
+    url=https://notfellchen.example.com
 
     [database]
     backend=postgresql
-    name=ilmo
-    user=ilmo
+    name=notfellchen
+    user=notfellchen
 
     [locations]
-    static=/var/ilmo/static
+    static=/var/notfellchen/static
 
     [mail]
     ; See config file documentation for more options
-    ; from=ilmo@example.com
+    ; from=notfellchen@example.com
     ; host=127.0.0.1
-    ; user=ilmo
+    ; user=notfellchen
     ; password=foobar
     ; port=587
 
@@ -121,21 +121,21 @@ Fill the configuration file ``/etc/ilmo/ilmo.cfg`` with the following content (a
     ;Scope=
     ;Policy=
 
-Install ilmo as package
+Install notfellchen as package
 ------------------------
 
-Now we will install ilmo itself. The following steps are to be executed as the ``ilmo`` user. Before we
-actually install ilmo, we will create a virtual environment to isolate the python packages from your global
+Now we will install notfellchen itself. The following steps are to be executed as the ``notfellchen`` user. Before we
+actually install notfellchen, we will create a virtual environment to isolate the python packages from your global
 python installation::
 
-    $ python3 -m venv /var/ilmo/venv
-    $ source /var/ilmo/venv/bin/activate
+    $ python3 -m venv /var/notfellchen/venv
+    $ source /var/notfellchen/venv/bin/activate
     (venv)$ pip3 install -U pip setuptools wheel
 
-We now clone and install ilmo, its direct dependencies and gunicorn::
+We now clone and install notfellchen, its direct dependencies and gunicorn::
 
-    (venv)$ git clone https://github.com/moan0s/ILMO2
-    (venv)$ cd ILMO2/src/
+    (venv)$ git clone https://github.com/moan0s/Notfellchen2
+    (venv)$ cd Notfellchen2/src/
     (venv)$ pip3 install -r requirements.txt
     (venv)$ pip3 install -e .
 
@@ -148,26 +148,26 @@ Finally, we compile static files and create the database structure::
     (venv)$ django-admin compilemessages --ignore venv
 
 
-Start ilmo as a service
+Start notfellchen as a service
 -------------------------
 
-You should start ilmo using systemd to automatically start it after a reboot. Create a file
-named ``/etc/systemd/system/ilmo-web.service`` with the following content::
+You should start notfellchen using systemd to automatically start it after a reboot. Create a file
+named ``/etc/systemd/system/notfellchen-web.service`` with the following content::
 
     [Unit]
-    Description=ilmo web service
+    Description=notfellchen web service
     After=network.target
 
     [Service]
-    User=ilmo
-    Group=ilmo
-    Environment="VIRTUAL_ENV=/var/ilmo/venv"
-    Environment="PATH=/var/ilmo/venv/bin:/usr/local/bin:/usr/bin:/bin"
-    ExecStart=/var/ilmo/venv/bin/gunicorn ilmo.wsgi \
-                          --name ilmo --workers 5 \
+    User=notfellchen
+    Group=notfellchen
+    Environment="VIRTUAL_ENV=/var/notfellchen/venv"
+    Environment="PATH=/var/notfellchen/venv/bin:/usr/local/bin:/usr/bin:/bin"
+    ExecStart=/var/notfellchen/venv/bin/gunicorn notfellchen.wsgi \
+                          --name notfellchen --workers 5 \
                           --max-requests 1200  --max-requests-jitter 50 \
                           --log-level=info --bind=127.0.0.1:8345
-    WorkingDirectory=/var/ilmo
+    WorkingDirectory=/var/notfellchen
     Restart=on-failure
 
     [Install]
@@ -176,14 +176,14 @@ named ``/etc/systemd/system/ilmo-web.service`` with the following content::
 You can now run the following commands to enable and start the services::
 
     # systemctl daemon-reload
-    # systemctl enable ilmo-web
-    # systemctl start ilmo-web
+    # systemctl enable notfellchen-web
+    # systemctl start notfellchen-web
 
 
 SSL
 ---
 
-The following snippet is an example on how to configure a nginx proxy for ilmo::
+The following snippet is an example on how to configure a nginx proxy for notfellchen::
 
         server {
                 listen 80;
@@ -196,8 +196,8 @@ The following snippet is an example on how to configure a nginx proxy for ilmo::
                 #
                 listen 443 ssl;
                 listen [::]:443 ssl;
-                ssl_certificate     /etc/letsencrypt/live/ilmo.example.com/cert.pem;
-                ssl_certificate_key /etc/letsencrypt/live/ilmo.example.com/privkey.pem;
+                ssl_certificate     /etc/letsencrypt/live/notfellchen.example.com/cert.pem;
+                ssl_certificate_key /etc/letsencrypt/live/notfellchen.example.com/privkey.pem;
                 ssl_protocols       TLSv1.2 TLSv1.3;
                 ssl_ciphers         HIGH:!aNULL:!MD5;
 
@@ -208,7 +208,7 @@ The following snippet is an example on how to configure a nginx proxy for ilmo::
             add_header Referrer-Policy same-origin;
             add_header X-Content-Type-Options nosniff;
 
-                server_name ilmo.example.com;
+                server_name notfellchen.example.com;
             location / {
                 proxy_pass http://localhost:8345;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -217,7 +217,7 @@ The following snippet is an example on how to configure a nginx proxy for ilmo::
             }
 
             location /static/ {
-                alias /var/ilmo/static/;
+                alias /var/notfellchen/static/;
                 access_log off;
                 expires 365d;
                 add_header Cache-Control "public";
@@ -230,22 +230,22 @@ We recommend reading about setting `strong encryption settings`_ for your web se
 Next steps
 ----------
 
-Yay, you are done! You should now be able to reach ilmo at https://ilmo.example.com/
+Yay, you are done! You should now be able to reach notfellchen at https://notfellchen.example.com/
 
 Updates
 -------
 
 .. warning:: While we try hard not to break things, **please perform a backup before every upgrade**.
 
-To upgrade to a new ilmo release, pull the latest code changes and run the following commands::
+To upgrade to a new notfellchen release, pull the latest code changes and run the following commands::
 
-    $ source /var/ilmo/venv/bin/activate
+    $ source /var/notfellchen/venv/bin/activate
     (venv)$ git pull
-    (venv)$ pg_dump ilmo > ilmo.psql
+    (venv)$ pg_dump notfellchen > notfellchen.psql
     (venv)$ python manage.py migrate
     (venv)$ django-admin compilemessages --ignore venv
 
-    # systemctl restart ilmo-web
+    # systemctl restart notfellchen-web
 
 
 .. _Postfix: https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-as-a-send-only-smtp-server-on-ubuntu-16-04
