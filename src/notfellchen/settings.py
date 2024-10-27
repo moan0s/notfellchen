@@ -76,6 +76,7 @@ DB_NAME = config.get("database", "name", fallback="notfellchen.sqlite3")
 DB_USER = config.get("database", "user", fallback='')
 DB_PASSWORD = config.get("database", "password", fallback='')
 DB_HOST = config.get("database", "host", fallback='')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
@@ -91,7 +92,6 @@ HEALTHCHECKS_URL = config.get("monitoring", "healthchecks_url", fallback=None)
 GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://nominatim.hyteck.de/search")
 """ Tile Server """
 MAP_TILE_SERVER = config.get("map", "tile_server", fallback="https://tiles.hyteck.de")
-
 
 """ OxiTraffic"""
 OXITRAFFIC_ENABLED = config.get("tracking", "oxitraffic_enabled", fallback=False)
@@ -186,6 +186,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'notfellchen.urls'
+
+SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
 TEMPLATES = [
     {
