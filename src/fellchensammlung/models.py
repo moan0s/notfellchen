@@ -3,7 +3,6 @@ import uuid
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from datetime import datetime
 from django.utils import timezone
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -183,8 +182,8 @@ class AdoptionNotice(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-    created_at = models.DateField(verbose_name=_('Erstellt am'), default=datetime.now)
-    last_checked = models.DateTimeField(verbose_name=_('Zuletzt überprüft am'), default=datetime.now)
+    created_at = models.DateField(verbose_name=_('Erstellt am'), default=timezone.now)
+    last_checked = models.DateTimeField(verbose_name=_('Zuletzt überprüft am'), default=timezone.now)
     searching_since = models.DateField(verbose_name=_('Sucht nach einem Zuhause seit'))
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
@@ -294,21 +293,21 @@ class AdoptionNotice(models.Model):
         return self.adoptionnoticestatus.is_to_be_checked or (include_active and self.adoptionnoticestatus.is_active)
 
     def set_checked(self):
-        self.last_checked = datetime.now()
+        self.last_checked = timezone.now()
         self.save()
 
     def set_closed(self):
-        self.last_checked = datetime.now()
+        self.last_checked = timezone.now()
         self.adoptionnoticestatus.set_closed()
 
     def set_active(self):
-        self.last_checked = datetime.now()
+        self.last_checked = timezone.now()
         if not hasattr(self, 'adoptionnoticestatus'):
             AdoptionNoticeStatus.create_other(self)
         self.adoptionnoticestatus.set_active()
 
     def set_to_review(self):
-        self.last_checked = datetime.now()
+        self.last_checked = timezone.now()
         if not hasattr(self, 'adoptionnoticestatus'):
             AdoptionNoticeStatus.create_other(self)
         self.adoptionnoticestatus.set_to_review()
@@ -436,7 +435,7 @@ class Animal(models.Model):
 
     @property
     def age(self):
-        return datetime.today().date() - self.date_of_birth
+        return timezone.now().today().date() - self.date_of_birth
 
     @property
     def hr_age(self):
