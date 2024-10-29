@@ -172,7 +172,7 @@ def search(request):
         if max_distance == "":
             max_distance = None
         geo_api = GeoAPI()
-        search_position = geo_api.get_coordinates_from_query(request.POST['postcode'])
+        search_position = geo_api.get_coordinates_from_query(request.POST['location'])
         if search_position is None:
             place_not_found = True
             adoption_notices_in_distance = active_adoptions
