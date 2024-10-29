@@ -5,6 +5,7 @@ from django.urls import reverse
 from model_bakery import baker
 
 from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location
+from fellchensammlung.views import add_adoption_notice
 
 
 class AnimalAndAdoptionTest(TestCase):
@@ -100,3 +101,42 @@ class SearchTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "TestAdoption1")
         self.assertNotContains(response, "TestAdoption3")
+
+
+class UpdateQueueTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        test_user0 = User.objects.create_user(username='testuser0',
+                                              first_name="Admin",
+                                              last_name="BOFH",
+                                              password='12345')
+        test_user0.is_superuser = True
+        test_user0.save()
+
+        # Location of Berlin: lat 52.5170365 lon 13.3888599 PLZ 10115 (Mitte)
+
+        cls.adoption1 = baker.make(AdoptionNotice, name="TestAdoption1")
+        adoption2 = baker.make(AdoptionNotice, name="TestAdoption2")
+        adoption3 = baker.make(AdoptionNotice, name="TestAdoption3")
+
+        cls.adoption1.set_to_review()
+        adoption3.set_active()
+        adoption2.set_to_review()
+
+    def set_updated(self):
+        # First get the list
+        response = self.client.get(reverse('updatequeue'))
+        self.assertEqual(response.status_code, 200)
+        # Make sure Adoption1 is in response
+        self.assertContains(response, "TestAdoption1")
+        self.assertNotContains(response, "TestAdoption2")
+
+        self.assertFalse(self.adoption1.is_active)
+
+        # Mark as checked
+        response = self.client.post(reverse('updatequeue'), {"adoption_notice_id": self.adoption1.id, "action": "checked_active"})
+        self.assertEqual(response.status_code, 200)
+
+        self.assertTrue(self.adoption1.is_active)
+
+
