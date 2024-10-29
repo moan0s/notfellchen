@@ -1,5 +1,3 @@
-import datetime
-
 from django import forms
 
 from .models import AdoptionNotice, Animal, Image, ReportAdoptionNotice, ReportComment, ModerationAction, User, Species, \
@@ -175,5 +173,5 @@ def _get_distances():
 
 
 class AdoptionNoticeSearchForm(forms.Form):
-    postcode = forms.CharField(max_length=20, label=_("Postleitzahl"))
+    location = forms.CharField(max_length=20, label=_("Stadt"))
     max_distance = forms.ChoiceField(choices=_get_distances, label=_("Max. Distanz"))
