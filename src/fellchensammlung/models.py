@@ -301,6 +301,18 @@ class AdoptionNotice(models.Model):
         self.last_checked = datetime.now()
         self.adoptionnoticestatus.set_closed()
 
+    def set_active(self):
+        self.last_checked = datetime.now()
+        if not hasattr(self, 'adoptionnoticestatus'):
+            AdoptionNoticeStatus.create_other(self)
+        self.adoptionnoticestatus.set_active()
+
+    def set_to_review(self):
+        self.last_checked = datetime.now()
+        if not hasattr(self, 'adoptionnoticestatus'):
+            AdoptionNoticeStatus.create_other(self)
+        self.adoptionnoticestatus.set_to_review()
+
 
 class AdoptionNoticeStatus(models.Model):
     """
@@ -367,6 +379,15 @@ class AdoptionNoticeStatus(models.Model):
     def get_minor_choices(major_status):
         return AdoptionNoticeStatus.MINOR_STATUS_CHOICES[major_status]
 
+    @staticmethod
+    def create_other(an_instance):
+        # Used as empty status to be changed immediately
+        major_status = AdoptionNoticeStatus.DISABLED
+        minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.DISABLED]["other"]
+        AdoptionNoticeStatus.objects.create(major_status=major_status,
+                                            minor_status=minor_status,
+                                            adoption_notice=an_instance)
+
     def set_closed(self):
         self.major_status = self.MAJOR_STATUS_CHOICES[self.CLOSED]
         self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED]["other"]
@@ -375,6 +396,17 @@ class AdoptionNoticeStatus(models.Model):
     def deactivate_unchecked(self):
         self.major_status = self.MAJOR_STATUS_CHOICES[self.DISABLED]
         self.minor_status = self.MINOR_STATUS_CHOICES[self.DISABLED]["unchecked"]
+        self.save()
+
+    def set_active(self):
+        self.major_status = self.MAJOR_STATUS_CHOICES[self.ACTIVE]
+        self.minor_status = self.MINOR_STATUS_CHOICES[self.ACTIVE]["searching"]
+        self.save()
+
+    def set_to_review(self):
+        self.major_status = AdoptionNoticeStatus.AWAITING_ACTION
+        self.minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.AWAITING_ACTION][
+            "waiting_for_review"]
         self.save()
 
 
