@@ -294,6 +294,7 @@ class AdoptionNotice(models.Model):
 
     def set_checked(self):
         self.last_checked = timezone.now()
+        self.set_active()
         self.save()
 
     def set_closed(self):
