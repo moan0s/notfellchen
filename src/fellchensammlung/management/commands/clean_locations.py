@@ -1,6 +1,6 @@
 from django.core.management import BaseCommand
 from fellchensammlung.models import AdoptionNotice, Location
-from fellchensammlung.tools.geo import clean_locations
+from fellchensammlung.tools.admin import clean_locations
 
 
 class Command(BaseCommand):
