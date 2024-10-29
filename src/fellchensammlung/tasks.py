@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 from notfellchen.celery import app as celery_app
 from .tools.admin import clean_locations, deactivate_unchecked_adoption_notices
 from .tools.misc import healthcheck_ok
@@ -8,9 +8,9 @@ from .models import Location, AdoptionNotice, Timestamp
 def set_timestamp(key: str):
     try:
         ts = Timestamp.objects.get(key=key)
-        ts.timestamp = datetime.now()
+        ts.timestamp = timezone.now()
     except Timestamp.DoesNotExist:
-        Timestamp.objects.create(key=key, timestamp=datetime.now())
+        Timestamp.objects.create(key=key, timestamp=timezone.now())
 
 
 @celery_app.task(name="admin.clean_locations")
