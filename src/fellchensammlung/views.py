@@ -205,16 +205,9 @@ def add_adoption_notice(request):
 
             # Set correct status
             if request.user.trust_level >= User.TRUST_LEVEL[User.COORDINATOR]:
-                major_status = AdoptionNoticeStatus.ACTIVE
-                minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.ACTIVE]["searching"]
+                instance.set_active()
             else:
-                major_status = AdoptionNoticeStatus.AWAITING_ACTION
-                minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.AWAITING_ACTION][
-                    "waiting_for_review"]
-            status = AdoptionNoticeStatus.objects.create(major_status=major_status,
-                                                         minor_status=minor_status,
-                                                         adoption_notice=instance)
-            status.save()
+                instance.set_to_review()
 
             # Get the species and number of animals from the form
             species = form.cleaned_data["species"]
