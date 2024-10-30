@@ -3,32 +3,10 @@
 {% block content %}
     <h1>{% translate "Aktualitätscheck" %}</h1>
     <p>{% translate "Überprüfe ob Vermittlungen noch aktuell sind" %}</p>
-    {% for adoption_notice in adoption_notices %}
-        <div class="card">
-            <h1>
-                <a href="{{ adoption_notice.get_absolute_url }}">{{ adoption_notice.name }}</a>
-            </h1>
-            {% if adoption_notice.further_information %}
-                <p>{% translate "Externe Quelle" %}: {{ adoption_notice.link_to_more_information | safe }}</p>
-            {% endif %}
-            <div>
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden"
-                           name="adoption_notice_id"
-                           value="{{ adoption_notice.pk }}">
-                           <input type="hidden" name="action" value="checked_active">
-                    <button class="btn" type="submit">{% translate "Vermittlung noch aktuell" %}</button>
-                </form>
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden"
-                           name="adoption_notice_id"
-                           value="{{ adoption_notice.pk }}">
-                           <input type="hidden" name="action" value="checked_inactive">
-                    <button class="btn" type="submit">{% translate "Vermittlung inaktiv" %}</button>
-                </form>
-            </div>
-        </div>
-    {% endfor %}
+    <div class="container-cards">
+        <h1>{% translate 'Vermittlungen zur Überprüfung' %}</h1>
+        {% for adoption_notice in adoption_notices %}
+            {% include "fellchensammlung/partials/partial-check-adoption-notice.html" %}
+        {% endfor %}
+    </div>
 {% endblock %}
