@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from model_bakery import baker
 
-from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location
+from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus
 from fellchensammlung.views import add_adoption_notice
 
 
@@ -75,7 +75,7 @@ class SearchTest(TestCase):
 
         adoption1.set_active()
         adoption3.set_active()
-        adoption2.set_to_review()
+        adoption2.set_unchecked()
 
     def test_basic_view(self):
         response = self.client.get(reverse('search'))
@@ -109,7 +109,8 @@ class UpdateQueueTest(TestCase):
         test_user0 = User.objects.create_user(username='testuser0',
                                               first_name="Admin",
                                               last_name="BOFH",
-                                              password='12345')
+                                              password='12345',
+                                              trust_level=User.TRUST_LEVEL[User.MODERATOR])
         test_user0.is_superuser = True
         test_user0.save()
 
@@ -117,13 +118,19 @@ class UpdateQueueTest(TestCase):
 
         cls.adoption1 = baker.make(AdoptionNotice, name="TestAdoption1")
         adoption2 = baker.make(AdoptionNotice, name="TestAdoption2")
-        adoption3 = baker.make(AdoptionNotice, name="TestAdoption3")
+        cls.adoption3 = baker.make(AdoptionNotice, name="TestAdoption3")
 
-        cls.adoption1.set_to_review()
-        adoption3.set_active()
-        adoption2.set_to_review()
+        cls.adoption1.set_unchecked()
+        cls.adoption3.set_unchecked()
 
-    def set_updated(self):
+    def test_login_required(self):
+        response = self.client.get(reverse('updatequeue'))
+        self.assertEqual(response.status_code, 302)
+        self.assertEquals(response.url, "/accounts/login/?next=/updatequeue/")
+
+    def test_set_updated(self):
+        self.client.login(username='testuser0', password='12345')
+
         # First get the list
         response = self.client.get(reverse('updatequeue'))
         self.assertEqual(response.status_code, 200)
@@ -134,9 +141,30 @@ class UpdateQueueTest(TestCase):
         self.assertFalse(self.adoption1.is_active)
 
         # Mark as checked
-        response = self.client.post(reverse('updatequeue'), {"adoption_notice_id": self.adoption1.id, "action": "checked_active"})
+        response = self.client.post(reverse('updatequeue'), {"adoption_notice_id": self.adoption1.pk,
+                                                             "action": "checked_active"})
         self.assertEqual(response.status_code, 200)
-
+        self.adoption1.refresh_from_db()
         self.assertTrue(self.adoption1.is_active)
 
+    def test_set_checked_inactive(self):
+        self.client.login(username='testuser0', password='12345')
+        # First get the list
+        response = self.client.get(reverse('updatequeue'))
+        self.assertEqual(response.status_code, 200)
+        # Make sure Adoption3 is in response
+        self.assertContains(response, "TestAdoption3")
+        self.assertNotContains(response, "TestAdoption2")
 
+        self.assertFalse(self.adoption3.is_active)
+
+        # Mark as checked
+        response = self.client.post(reverse('updatequeue'),
+                                    {"adoption_notice_id": self.adoption3.id, "action": "checked_inactive"})
+        self.assertEqual(response.status_code, 200)
+        self.adoption3.refresh_from_db()
+
+        # Make sure correct status is set and AN is not shown anymore
+        self.assertNotContains(response, "TestAdoption3")
+        self.assertFalse(self.adoption3.is_active)
+        self.assertEqual(self.adoption3.adoptionnoticestatus.major_status, AdoptionNoticeStatus.CLOSED)
