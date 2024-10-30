@@ -62,4 +62,4 @@ def get_unchecked_adoption_notices(weeks=3):
 
 def deactivate_unchecked_adoption_notices():
     for adoption_notice in get_unchecked_adoption_notices(weeks=3):
-        AdoptionNoticeStatus.objects.get(adoption_notice=adoption_notice).deactivate_unchecked()
+        AdoptionNoticeStatus.objects.get(adoption_notice=adoption_notice).set_unchecked()

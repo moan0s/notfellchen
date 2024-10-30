@@ -207,7 +207,7 @@ def add_adoption_notice(request):
             if request.user.trust_level >= User.TRUST_LEVEL[User.COORDINATOR]:
                 instance.set_active()
             else:
-                instance.set_to_review()
+                instance.set_unchecked()
 
             # Get the species and number of animals from the form
             species = form.cleaned_data["species"]
@@ -449,22 +449,18 @@ def modqueue(request):
 def updatequeue(request):
     #TODO: Make sure update can only be done for instances with permission
     if request.method == "POST":
-        print(request.POST.get("adoption_notice_id"))
         adoption_notice = AdoptionNotice.objects.get(id=request.POST.get("adoption_notice_id"))
         action = request.POST.get("action")
-        print(f"Action: {action}")
         if action == "checked_inactive":
             adoption_notice.set_closed()
-        elif action == "checked_active":
-            print("set checked")
-            adoption_notice.set_checked()
+        if action == "checked_active":
+            adoption_notice.set_active()
 
     if user_is_trust_level_or_above(request.user, User.MODERATOR):
         last_checked_adoption_list = AdoptionNotice.objects.order_by("last_checked")
     else:
         last_checked_adoption_list = AdoptionNotice.objects.filter(owner=request.user).order_by("last_checked")
     adoption_notices = [adoption for adoption in last_checked_adoption_list if adoption.is_active or adoption.is_to_be_checked]
-
     context = {"adoption_notices": adoption_notices}
     return render(request, 'fellchensammlung/updatequeue.html', context=context)
 

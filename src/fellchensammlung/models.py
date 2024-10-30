@@ -292,11 +292,6 @@ class AdoptionNotice(models.Model):
             return False
         return self.adoptionnoticestatus.is_to_be_checked or (include_active and self.adoptionnoticestatus.is_active)
 
-    def set_checked(self):
-        self.last_checked = timezone.now()
-        self.set_active()
-        self.save()
-
     def set_closed(self):
         self.last_checked = timezone.now()
         self.adoptionnoticestatus.set_closed()
@@ -307,11 +302,11 @@ class AdoptionNotice(models.Model):
             AdoptionNoticeStatus.create_other(self)
         self.adoptionnoticestatus.set_active()
 
-    def set_to_review(self):
+    def set_unchecked(self):
         self.last_checked = timezone.now()
         if not hasattr(self, 'adoptionnoticestatus'):
             AdoptionNoticeStatus.create_other(self)
-        self.adoptionnoticestatus.set_to_review()
+        self.adoptionnoticestatus.set_unchecked()
 
 
 class AdoptionNoticeStatus(models.Model):
@@ -393,7 +388,7 @@ class AdoptionNoticeStatus(models.Model):
         self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED]["other"]
         self.save()
 
-    def deactivate_unchecked(self):
+    def set_unchecked(self):
         self.major_status = self.MAJOR_STATUS_CHOICES[self.DISABLED]
         self.minor_status = self.MINOR_STATUS_CHOICES[self.DISABLED]["unchecked"]
         self.save()
@@ -403,11 +398,6 @@ class AdoptionNoticeStatus(models.Model):
         self.minor_status = self.MINOR_STATUS_CHOICES[self.ACTIVE]["searching"]
         self.save()
 
-    def set_to_review(self):
-        self.major_status = AdoptionNoticeStatus.AWAITING_ACTION
-        self.minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.AWAITING_ACTION][
-            "waiting_for_review"]
-        self.save()
 
 
 class Animal(models.Model):
