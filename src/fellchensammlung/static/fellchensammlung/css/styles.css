@@ -115,6 +115,10 @@ textarea {
     }
 }
 
+.spaced {
+    margin-bottom: 30px;
+}
+
 /*******************************/
 /* PARTIAL SPECIFIC CONTAINERS */
 /*******************************/
@@ -161,6 +165,16 @@ textarea {
     b {
         text-shadow: 2px 2px var(--shadow-one);
     }
+}
+
+/*************/
+/* Modifiers */
+/*************/
+
+/* Used to enlargen cards */
+.full-width {
+    width: 100%;
+    flex: none;
 }
 
 /***********/

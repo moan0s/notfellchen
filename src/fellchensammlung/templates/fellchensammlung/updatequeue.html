@@ -3,9 +3,15 @@
 {% block content %}
     <h1>{% translate "Aktualitätscheck" %}</h1>
     <p>{% translate "Überprüfe ob Vermittlungen noch aktuell sind" %}</p>
-    <div class="container-cards">
-        <h1>{% translate 'Vermittlungen zur Überprüfung' %}</h1>
-        {% for adoption_notice in adoption_notices %}
+    <div class="container-cards spaced">
+        <h1>{% translate 'Deaktivierte Vermittlungen zur Überprüfung' %}</h1>
+        {% for adoption_notice in adoption_notices_disabled %}
+            {% include "fellchensammlung/partials/partial-check-adoption-notice.html" %}
+        {% endfor %}
+    </div>
+    <div class="container-cards spaced">
+        <h1>{% translate 'Aktive Vermittlungen zur Überprüfung' %}</h1>
+        {% for adoption_notice in adoption_notices_active %}
             {% include "fellchensammlung/partials/partial-check-adoption-notice.html" %}
         {% endfor %}
     </div>
