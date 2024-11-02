@@ -287,10 +287,10 @@ class AdoptionNotice(models.Model):
         return self.adoptionnoticestatus.is_active
 
     @property
-    def is_to_be_checked(self, include_active=False):
+    def is_disabled_unchecked(self):
         if not hasattr(self, 'adoptionnoticestatus'):
             return False
-        return self.adoptionnoticestatus.is_to_be_checked or (include_active and self.adoptionnoticestatus.is_active)
+        return self.adoptionnoticestatus.is_disabled_unchecked
 
     def set_closed(self):
         self.last_checked = timezone.now()
@@ -367,7 +367,7 @@ class AdoptionNoticeStatus(models.Model):
         return self.major_status == self.ACTIVE
 
     @property
-    def is_to_be_checked(self):
+    def is_disabled_unchecked(self):
         return self.major_status == self.DISABLED and self.minor_status == "unchecked"
 
     @staticmethod
