@@ -54,7 +54,7 @@ def get_unchecked_adoption_notices(weeks=3):
 
     # Query for active adoption notices that were checked in the last three weeks
     unchecked_adoptions = AdoptionNotice.objects.filter(
-        last_checked__gte=three_weeks_ago
+        last_checked__lte=three_weeks_ago
     )
     active_unchecked_adoptions = [adoption for adoption in unchecked_adoptions if adoption.is_active]
     return active_unchecked_adoptions
