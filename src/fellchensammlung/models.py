@@ -180,7 +180,9 @@ class AdoptionNotice(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.name}"
+        if not hasattr(self, 'adoptionnoticestatus'):
+            return self.name
+        return f"[{self.adoptionnoticestatus.as_string()}] {self.name}"
 
     created_at = models.DateField(verbose_name=_('Erstellt am'), default=timezone.now)
     last_checked = models.DateTimeField(verbose_name=_('Zuletzt überprüft am'), default=timezone.now)
@@ -361,6 +363,9 @@ class AdoptionNoticeStatus(models.Model):
 
     def __str__(self):
         return f"{self.adoption_notice}: {self.major_status}, {self.minor_status}"
+
+    def as_string(self):
+        return f"{self.major_status}, {self.minor_status}"
 
     @property
     def is_active(self):
