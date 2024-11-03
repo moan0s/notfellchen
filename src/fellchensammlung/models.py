@@ -59,6 +59,7 @@ class User(AbstractUser):
     preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
                                            verbose_name=_('Bevorzugte Sprache'))
     trust_level = models.IntegerField(choices=TRUST_LEVEL, default=TRUST_LEVEL[MEMBER])
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _('Nutzer*in')
@@ -82,6 +83,8 @@ class Image(models.Model):
     image = models.ImageField(upload_to='images')
     alt_text = models.TextField(max_length=2000)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.alt_text
@@ -95,6 +98,8 @@ class Species(models.Model):
     """Model representing a species of animal."""
     name = models.CharField(max_length=200, help_text=_('Name der Tierart'),
                             verbose_name=_('Name'))
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -110,6 +115,8 @@ class Location(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     name = models.CharField(max_length=2000)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name} ({self.latitude:.5}, {self.longitude:.5})"
@@ -171,6 +178,8 @@ class RescueOrganization(models.Model):
     facebook = models.URLField(null=True, blank=True, verbose_name=_('Facebook Profil'))
     fediverse_profile = models.URLField(null=True, blank=True, verbose_name=_('Fediverse Profil'))
     website = models.URLField(null=True, blank=True, verbose_name=_('Website'))
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class AdoptionNotice(models.Model):
@@ -185,6 +194,7 @@ class AdoptionNotice(models.Model):
         return f"[{self.adoptionnoticestatus.as_string()}] {self.name}"
 
     created_at = models.DateField(verbose_name=_('Erstellt am'), default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
     last_checked = models.DateTimeField(verbose_name=_('Zuletzt überprüft am'), default=timezone.now)
     searching_since = models.DateField(verbose_name=_('Sucht nach einem Zuhause seit'))
     name = models.CharField(max_length=200)
@@ -360,6 +370,8 @@ class AdoptionNoticeStatus(models.Model):
         minor_choices.update(MINOR_STATUS_CHOICES[key])
     minor_status = models.CharField(choices=minor_choices, max_length=200)
     adoption_notice = models.OneToOneField(AdoptionNotice, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.adoption_notice}: {self.major_status}, {self.minor_status}"
@@ -425,6 +437,8 @@ class Animal(models.Model):
     sex = models.CharField(max_length=20, choices=SEX_CHOICES, )
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -468,6 +482,8 @@ class Rule(models.Model):
     language = models.ForeignKey(Language, on_delete=models.PROTECT)
     # Rule identifier allows to translate rules with the same identifier
     rule_identifier = models.CharField(max_length=24)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -491,6 +507,7 @@ class Report(models.Model):
     reported_broken_rules = models.ManyToManyField(Rule)
     user_comment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"[{self.status}]: {self.user_comment:.20}"
@@ -537,12 +554,12 @@ class ModerationAction(models.Model):
     }
     action = models.CharField(max_length=30, choices=ACTIONS.items())
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     public_comment = models.TextField(blank=True)
     # Only visible to moderator
     private_comment = models.TextField(blank=True)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
 
-    # TODO: Needs field for moderator that performed the action
 
     def __str__(self):
         return f"[{self.action}]: {self.public_comment}"
@@ -587,6 +604,7 @@ class Announcement(Text):
     """
     logged_in_only = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     publish_start_time = models.DateTimeField(verbose_name="Veröffentlichungszeitpunkt")
     publish_end_time = models.DateTimeField(verbose_name="Veröffentlichungsende")
     IMPORTANT = "important"
@@ -635,6 +653,7 @@ class Comment(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
     text = models.TextField(verbose_name="Inhalt")
     reply_to = models.ForeignKey("self", verbose_name="Antwort auf", blank=True, null=True, on_delete=models.CASCADE)
@@ -652,6 +671,7 @@ class Comment(models.Model):
 
 class BaseNotification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=100)
     text = models.TextField(verbose_name="Inhalt")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
@@ -677,6 +697,7 @@ class Subscriptions(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.owner} - {self.adoption_notice}"
@@ -690,6 +711,7 @@ class Log(models.Model):
     action = models.CharField(max_length=255, verbose_name=_("Aktion"))
     text = models.CharField(max_length=1000, verbose_name=_("Log text"))
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"[{self.action}] - {self.user} - {self.created_at.strftime('%H:%M:%S %d-%m-%Y ')}"
