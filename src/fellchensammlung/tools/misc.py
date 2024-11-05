@@ -34,3 +34,11 @@ def healthcheck_ok():
         requests.get(settings.HEALTHCHECKS_URL, timeout=10)
     except requests.RequestException as e:
         logging.error("Ping to healthcheck-server failed: %s" % e)
+
+
+def is_404(url):
+    try:
+        result = requests.get(url, timeout=10)
+        return result.status_code == 404
+    except requests.RequestException as e:
+        logging.warning(f"Request to {url} failed: {e}")
