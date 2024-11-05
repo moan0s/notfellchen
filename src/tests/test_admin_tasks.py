@@ -31,9 +31,9 @@ class DeactiviationTest(TestCase):
     def test_get_unchecked_adoption_notices(self):
         result = get_unchecked_adoption_notices()
 
-        self.assertContains(result, self.adoption1)
-        self.assertNotContains(result, self.adoption2)
-        self.assertNotContains(result, self.adoption3)
+        self.assertIn(self.adoption1, result)
+        self.assertNotIn(self.adoption2, result)
+        self.assertNotIn(self.adoption3, result)
 
     def test_deactivate_unchecked_adoption_notices(self):
         self.assertTrue(self.adoption1.is_active)
