@@ -1,7 +1,10 @@
+import logging
+
 from django.utils import timezone
 from datetime import timedelta
 
-from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus
+from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus, Log
+from fellchensammlung.tools.misc import is_404
 
 
 def clean_locations(quiet=True):
@@ -60,6 +63,22 @@ def get_unchecked_adoption_notices(weeks=3):
     return active_unchecked_adoptions
 
 
+def get_active_adoption_notices():
+    ans = AdoptionNotice.objects.all()
+    active_adoptions = [adoption for adoption in ans if adoption.is_active]
+    return active_adoptions
+
+
 def deactivate_unchecked_adoption_notices():
     for adoption_notice in get_unchecked_adoption_notices(weeks=3):
         AdoptionNoticeStatus.objects.get(adoption_notice=adoption_notice).set_unchecked()
+
+
+def deactivate_404_adoption_notices():
+    for adoption_notice in get_active_adoption_notices():
+        if adoption_notice.link_to_more_information != "":
+            if is_404(adoption_notice.link_to_more_information):
+                adoption_notice.set_closed()
+                logging_msg = f"Automatically set Adoption Notice {adoption_notice.id} closed as link to more information returened 404"
+                logging.info(logging_msg)
+                Log.objects.create(action="automated", text=logging_msg)

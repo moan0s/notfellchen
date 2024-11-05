@@ -707,7 +707,7 @@ class Log(models.Model):
     """
     Basic class that allows logging random entries for later inspection
     """
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("Nutzer*in"))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("Nutzer*in"), blank=True, null=True)
     action = models.CharField(max_length=255, verbose_name=_("Aktion"))
     text = models.CharField(max_length=1000, verbose_name=_("Log text"))
     created_at = models.DateTimeField(auto_now_add=True)
