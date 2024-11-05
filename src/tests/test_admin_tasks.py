@@ -2,6 +2,7 @@ from datetime import timedelta
 from django.utils import timezone
 
 from fellchensammlung.tools.admin import get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices
+from fellchensammlung.tools.misc import is_404
 from django.test import TestCase
 
 from model_bakery import baker
@@ -49,3 +50,11 @@ class DeactiviationTest(TestCase):
         self.assertFalse(self.adoption1.is_active)
         self.assertFalse(self.adoption2.is_active)
         self.assertTrue(self.adoption3.is_active)
+
+
+class PingTest(TestCase):
+    def test_is_404(self):
+        urls = [("https://hyteck.de/maxwell", True),
+                ("https://hyteck.de", False)]
+        for url, expected_result in urls:
+            self.assertEqual(is_404(url), expected_result)
