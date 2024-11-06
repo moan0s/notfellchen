@@ -152,6 +152,7 @@ class UpdateQueueTest(TestCase):
         # First get the list
         response = self.client.get(reverse('updatequeue'))
         self.assertEqual(response.status_code, 200)
+
         # Make sure Adoption3 is in response
         self.assertContains(response, "TestAdoption3")
         self.assertNotContains(response, "TestAdoption2")
