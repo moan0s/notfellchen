@@ -76,8 +76,8 @@ def deactivate_unchecked_adoption_notices():
 
 def deactivate_404_adoption_notices():
     for adoption_notice in get_active_adoption_notices():
-        if adoption_notice.link_to_more_information != "":
-            if is_404(adoption_notice.link_to_more_information):
+        if adoption_notice.further_information != "":
+            if is_404(adoption_notice.further_information):
                 adoption_notice.set_closed()
                 logging_msg = f"Automatically set Adoption Notice {adoption_notice.id} closed as link to more information returened 404"
                 logging.info(logging_msg)
