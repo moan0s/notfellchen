@@ -16,9 +16,13 @@ app.conf.beat_schedule = {
         'task': 'admin.clean_locations',
         'schedule': crontab(hour=2),
     },
-    'daily-deactivation': {
-        'task': 'admin.deactivate_unchecked',
+    'daily-unchecked-deactivation': {
+        'task': 'admin.daily_unchecked_deactivation',
         'schedule': crontab(hour=1),
+    },
+    'daily-404-deactivation': {
+        'task': 'admin.deactivate_404_adoption_notices',
+        'schedule': crontab(hour=3),
     },
 }
 

@@ -1,6 +1,6 @@
 from django.utils import timezone
 from notfellchen.celery import app as celery_app
-from .tools.admin import clean_locations, deactivate_unchecked_adoption_notices
+from .tools.admin import clean_locations, deactivate_unchecked_adoption_notices, deactivate_404_adoption_notices
 from .tools.misc import healthcheck_ok
 from .models import Location, AdoptionNotice, Timestamp
 
@@ -19,10 +19,16 @@ def task_clean_locations():
     set_timestamp("task_clean_locations")
 
 
-@celery_app.task(name="admin.deactivate_unchecked")
+@celery_app.task(name="admin.daily_unchecked_deactivation")
 def task_deactivate_unchecked():
     deactivate_unchecked_adoption_notices()
-    set_timestamp("task_deactivate_unchecked")
+    set_timestamp("task_daily_unchecked_deactivation")
+
+
+@celery_app.task(name="admin.deactivate_404_adoption_notices")
+def task_deactivate_unchecked():
+    deactivate_404_adoption_notices()
+    set_timestamp("task_deactivate_404_adoption_notices")
 
 
 @celery_app.task(name="commit.add_location")
