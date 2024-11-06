@@ -67,12 +67,18 @@ class PingTest(TestCase):
                                    last_checked=less_than_three_weeks_ago,
                                    further_information=link_active)
         cls.adoption2 = baker.make(AdoptionNotice,
-                                   name="TestAdoption1",
+                                   name="TestAdoption2",
                                    created_at=less_than_three_weeks_ago,
                                    last_checked=less_than_three_weeks_ago,
                                    further_information=link_inactive)
+        cls.adoption3 = baker.make(AdoptionNotice,
+                                   name="TestAdoption3",
+                                   created_at=less_than_three_weeks_ago,
+                                   last_checked=less_than_three_weeks_ago,
+                                   further_information=None)
         cls.adoption1.set_active()
         cls.adoption2.set_active()
+        cls.adoption3.set_active()
 
     def test_is_404(self):
         urls = [("https://hyteck.de/maxwell", True),
