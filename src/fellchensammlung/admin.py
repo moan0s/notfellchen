@@ -14,6 +14,7 @@ class StatusInline(admin.StackedInline):
 
 @admin.register(AdoptionNotice)
 class AdoptionNoticeAdmin(admin.ModelAdmin):
+    search_fields = ("name__contains", "description__contains")
     inlines = [
         StatusInline,
     ]
