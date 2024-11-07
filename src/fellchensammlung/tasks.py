@@ -9,6 +9,7 @@ def set_timestamp(key: str):
     try:
         ts = Timestamp.objects.get(key=key)
         ts.timestamp = timezone.now()
+        ts.save()
     except Timestamp.DoesNotExist:
         Timestamp.objects.create(key=key, timestamp=timezone.now())
 
