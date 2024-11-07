@@ -1,11 +1,11 @@
-***********
-Users guide
-***********
+******************
+User Dokumentation
+******************
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Inhalt:
    
    registrierung.rst
    vermittlungen.rst
-   moderationskonzept.rt
+   moderationskonzept.rst
    benachrichtigungen.rst
