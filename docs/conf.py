@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Notfellchen'
-copyright = 'Julian-Samuel Gebühr'
+copyright = 'CC-BY-SA Julian-Samuel Gebühr'
 author = 'Julian-Samuel Gebühr'
 
 # The short X.Y version
