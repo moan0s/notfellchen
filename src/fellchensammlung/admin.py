@@ -2,7 +2,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib import admin
 from django.utils.html import format_html
 
-from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log
+from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions
@@ -50,9 +50,15 @@ class ReportAdoptionNoticeAdmin(admin.ModelAdmin):
     reported_content_link.short_description = "Reported Content"
 
 
+@admin.register(RescueOrganization)
+class RescueOrganizationAdmin(admin.ModelAdmin):
+    search_fields = ("name__contains", )
+    list_display = ("name", "trusted", "allows_using_materials", "website")
+    list_filter = ("allows_using_materials", "trusted",)
+
+
 admin.site.register(Animal)
 admin.site.register(Species)
-admin.site.register(RescueOrganization)
 admin.site.register(Location)
 admin.site.register(Rule)
 admin.site.register(Image)
@@ -63,3 +69,4 @@ admin.site.register(Announcement)
 admin.site.register(AdoptionNoticeStatus)
 admin.site.register(Subscriptions)
 admin.site.register(Log)
+admin.site.register(Timestamp)
