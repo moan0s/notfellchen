@@ -51,6 +51,7 @@ Therefore, a solution is used where a number of predefined texts per site are su
 | `privacy_statement` | About    |
 | `terms_of_service`  | About    |
 | `imprint`           | About    |
+| `about_us`          | About    |
 | Any rule            | About    |
 
 # Developer Notes

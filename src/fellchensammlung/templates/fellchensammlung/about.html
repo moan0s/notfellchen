@@ -5,6 +5,11 @@
 {% block title %}<title>{% translate "Über uns und Regeln" %}</title>{% endblock %}
 
 {% block content %}
+    {% if about_us %}
+        <h1>{{ about_us.title }}</h1>
+        {{ about_us.content | render_markdown }}
+    {% endif %}
+
     <h1>{% translate "Regeln" %}</h1>
     {% include "fellchensammlung/lists/list-rules.html" %}
 

@@ -340,7 +340,7 @@ def about(request):
     lang = Language.objects.get(languagecode=language_code)
 
     legal = {}
-    for text_code in ["terms_of_service", "privacy_statement", "imprint"]:
+    for text_code in ["terms_of_service", "privacy_statement", "imprint", "about_us"]:
         try:
             legal[text_code] = Text.objects.get(text_code=text_code, language=lang, )
         except Text.DoesNotExist:
