@@ -177,6 +177,7 @@ class RescueOrganization(models.Model):
     instagram = models.URLField(null=True, blank=True, verbose_name=_('Instagram Profil'))
     facebook = models.URLField(null=True, blank=True, verbose_name=_('Facebook Profil'))
     fediverse_profile = models.URLField(null=True, blank=True, verbose_name=_('Fediverse Profil'))
+    email = models.EmailField(null=True, blank=True, verbose_name=_('E-Mail'))
     website = models.URLField(null=True, blank=True, verbose_name=_('Website'))
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
