@@ -197,6 +197,7 @@ select, .button {
     border-radius: 8px;
     border: none;
     font-weight: bold;
+    display: block;
 }
 
 .btn2 {
@@ -207,6 +208,9 @@ select, .button {
     border: none;
     margin: 5px;
 }
+
+
+
 
 /*********************/
 /* UNIQUE COMPONENTS */
