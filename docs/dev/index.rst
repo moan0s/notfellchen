@@ -8,5 +8,6 @@ Installation, customization and contributing
 
    deployment.rst
    contributing.rst
+   translation.rst
    release.rst
    backup.rst
