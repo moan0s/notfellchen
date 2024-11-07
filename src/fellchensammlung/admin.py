@@ -14,7 +14,7 @@ class StatusInline(admin.StackedInline):
 
 @admin.register(AdoptionNotice)
 class AdoptionNoticeAdmin(admin.ModelAdmin):
-    search_fields = ("name__contains", "description__contains")
+    search_fields = ("name__icontains", "description__icontains")
     inlines = [
         StatusInline,
     ]
@@ -53,7 +53,7 @@ class ReportAdoptionNoticeAdmin(admin.ModelAdmin):
 
 @admin.register(RescueOrganization)
 class RescueOrganizationAdmin(admin.ModelAdmin):
-    search_fields = ("name__contains", )
+    search_fields = ("name__icontains", )
     list_display = ("name", "trusted", "allows_using_materials", "website")
     list_filter = ("allows_using_materials", "trusted",)
 
