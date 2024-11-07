@@ -53,9 +53,14 @@ class ReportAdoptionNoticeAdmin(admin.ModelAdmin):
 
 @admin.register(RescueOrganization)
 class RescueOrganizationAdmin(admin.ModelAdmin):
-    search_fields = ("name__icontains", )
+    search_fields = ("name__icontains",)
     list_display = ("name", "trusted", "allows_using_materials", "website")
     list_filter = ("allows_using_materials", "trusted",)
+
+
+@admin.register(Text)
+class TextAdmin(admin.ModelAdmin):
+    search_fields = ("title__icontains", "text_code__icontains",)
 
 
 admin.site.register(Animal)
@@ -65,7 +70,6 @@ admin.site.register(Rule)
 admin.site.register(Image)
 admin.site.register(ModerationAction)
 admin.site.register(Language)
-admin.site.register(Text)
 admin.site.register(Announcement)
 admin.site.register(AdoptionNoticeStatus)
 admin.site.register(Subscriptions)
