@@ -1,6 +1,7 @@
 Benachrichtigungen
 ==================
 
+Ersteller*innen von Vermittlungen werden über neue Kommentare per Mail benachrichtigt, ebenso alle die die Vermittlung abonniert haben.
 Jede Vermittlung kann abonniert werden. Dafür klickst du auf die Glocke neben dem Titel der Vermittlung.
 
 .. image:: abonnieren.png
