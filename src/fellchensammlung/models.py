@@ -121,6 +121,10 @@ class Location(models.Model):
     def __str__(self):
         return f"{self.name} ({self.latitude:.5}, {self.longitude:.5})"
 
+    @property
+    def str_hr(self):
+        return f"{self.name.split(',')[0]}"
+
     @staticmethod
     def get_location_from_string(location_string):
         geo_api = geo.GeoAPI()

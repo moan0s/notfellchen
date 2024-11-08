@@ -12,7 +12,7 @@
         <p>
             <b>Ort</b>
             {% if adoption_notice.location %}
-                {{ adoption_notice.location }}
+                {{ adoption_notice.location.str_hr }}
             {% else %}
                 {{ adoption_notice.location_string }}
             {% endif %}
