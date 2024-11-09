@@ -185,6 +185,7 @@ class RescueOrganization(models.Model):
     website = models.URLField(null=True, blank=True, verbose_name=_('Website'))
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    comment = models.TextField(verbose_name=_("Kommentar"), null=True, blank=True,)
 
 
 class AdoptionNotice(models.Model):
