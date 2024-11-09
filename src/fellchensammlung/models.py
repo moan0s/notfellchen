@@ -218,6 +218,24 @@ class AdoptionNotice(models.Model):
         return Animal.objects.filter(adoption_notice=self)
 
     @property
+    def sexes(self):
+        sexes = set()
+        for animal in self.animals:
+            sexes.update(animal.sex)
+        return sexes
+
+    def sex_code(self):
+        if len(self.sexes) > 1:
+            return "mixed"
+        elif self.sexes.pop() == Animal.MALE:
+            return "male"
+        elif self.sexes.pop() == Animal.FEMALE:
+            return "female"
+        else:
+            return "mixed"
+
+
+    @property
     def comments(self):
         return Comment.objects.filter(adoption_notice=self)
 
@@ -421,7 +439,6 @@ class AdoptionNoticeStatus(models.Model):
         self.save()
 
 
-
 class Animal(models.Model):
     MALE_NEUTERED = "M_N"
     MALE = "M"
@@ -564,7 +581,6 @@ class ModerationAction(models.Model):
     # Only visible to moderator
     private_comment = models.TextField(blank=True)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
-
 
     def __str__(self):
         return f"[{self.action}]: {self.public_comment}"
