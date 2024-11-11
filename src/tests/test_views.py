@@ -169,3 +169,4 @@ class UpdateQueueTest(TestCase):
         self.assertNotContains(response, "TestAdoption3")
         self.assertFalse(self.adoption3.is_active)
         self.assertEqual(self.adoption3.adoptionnoticestatus.major_status, AdoptionNoticeStatus.CLOSED)
+
