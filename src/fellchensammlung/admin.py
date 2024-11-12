@@ -1,5 +1,7 @@
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+import csv
+
 from django.contrib import admin
+from django.http import HttpResponse
 from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.http import urlencode
@@ -30,6 +32,7 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ("usernamname__icontains", "first_name__icontains", "last_name__icontains", "email__icontains")
     list_display = ("username", "email", "trust_level", "is_active", "view_adoption_notices")
     list_filter = ("is_active", "trust_level",)
+    actions = ("export_as_csv",)
 
     def view_adoption_notices(self, obj):
         count = obj.adoption_notices.count()
@@ -40,6 +43,21 @@ class UserAdmin(admin.ModelAdmin):
         )
         return format_html('<a href="{}">{} Adoption Notices</a>', url, count)
 
+    def export_as_csv(self, request, queryset):
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = _("Ausgewählte User exportieren")
 
 def _reported_content_link(obj):
     reported_content = obj.reported_content
