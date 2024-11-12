@@ -537,6 +537,7 @@ def external_site_warning(request):
     context = {"url": url}
     language_code = translation.get_language()
     lang = Language.objects.get(languagecode=language_code)
-    Text.get_texts(["external_site_warning", "good_adoption_practices"], language=lang)
+    texts = Text.get_texts(["external_site_warning", "good_adoption_practices"], language=lang)
+    context.update(texts)
 
     return render(request, 'fellchensammlung/external_site_warning.html', context=context)

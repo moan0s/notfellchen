@@ -44,15 +44,16 @@ nf query_location <query>
 There is a system for customizing texts in Notfellchen. Not every change of a tet should mean an update of the software. But this should also not become a CMS.
 Therefore, a solution is used where a number of predefined texts per site are supported. These markdown texts will then be included in the site, if defined.
 
-| Textcode            | Location |
-|---------------------|----------|
-| `how_to`            | Index    |
-| `introduction`      | Index    |
-| `privacy_statement` | About    |
-| `terms_of_service`  | About    |
-| `imprint`           | About    |
-| `about_us`          | About    |
-| Any rule            | About    |
+| Textcode                | Location              |
+|-------------------------|-----------------------|
+| `how_to`                | Index                 |
+| `introduction`          | Index                 |
+| `privacy_statement`     | About                 |
+| `terms_of_service`      | About                 |
+| `imprint`               | About                 |
+| `about_us`              | About                 |
+| `external_site_warning` | External Site Warning |
+| Any rule                | About                 |
 
 # Developer Notes
 

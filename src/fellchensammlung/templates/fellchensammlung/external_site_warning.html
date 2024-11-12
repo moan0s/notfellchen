@@ -1,10 +1,15 @@
 {% extends "fellchensammlung/base_generic.html" %}
 {% load i18n %}
+    {% load custom_tags %}
 {% block content %}
     <div class="card">
-        {% blocktranslate %}
-            <p>Achtung du verlässt notfellchen.org</p>
-        {% endblocktranslate %}
-        <a href="{{ url }}" class="btn button" >{% translate "Weiter" %}</a>
+        {% if external_site_warning %}
+            {{ external_site_warning.content | render_markdown }}
+        {% else %}
+            {% blocktranslate %}
+                <p>Achtung du verlässt notfellchen.org</p>
+            {% endblocktranslate %}
+        {% endif %}
+        <a href="{{ url }}" class="btn button">{% translate "Weiter" %}</a>
     </div>
 {% endblock content %}
