@@ -62,6 +62,9 @@ class RescueOrganizationAdmin(admin.ModelAdmin):
 class TextAdmin(admin.ModelAdmin):
     search_fields = ("title__icontains", "text_code__icontains",)
 
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_filter = ("user",)
 
 admin.site.register(Animal)
 admin.site.register(Species)
