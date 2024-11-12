@@ -1,6 +1,6 @@
 from django.test import TestCase
 from fellchensammlung.forms import AdoptionNoticeFormWithDateWidgetAutoAnimal
-from fellchensammlung.models import Animal, Species
+from fellchensammlung.models import Species
 from model_bakery import baker
 
 
@@ -10,7 +10,7 @@ class TestAdoptionNoticeFormWithDateWidgetAutoAnimal(TestCase):
         rat = baker.make(Species, name="Farbratte")
 
     def test_forms(self):
-        form_data = {"name": "Max + und + Moritz",
+        form_data = {"name": "TestAdoption3",
                      "species": Species.objects.first(),
                      "num_animals": "2",
                      "date_of_birth": "2024-11-04",
@@ -22,6 +22,4 @@ class TestAdoptionNoticeFormWithDateWidgetAutoAnimal(TestCase):
                      "further_information": "https://notfellchen.org",
                      "save-and-add-another-animal": "Speichern"}
         form = AdoptionNoticeFormWithDateWidgetAutoAnimal(data=form_data)
-        print(form.errors)
-
         self.assertTrue(form.is_valid())
