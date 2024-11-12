@@ -20,7 +20,8 @@ class AnimalAndAdoptionTest(TestCase):
                                               first_name="Max",
                                               last_name="Müller",
                                               password='12345')
-        test_user1.save()
+        test_user0.trust_level = User.TRUST_LEVEL[User.ADMIN]
+        test_user0.save()
 
         adoption1 = baker.make(AdoptionNotice, name="TestAdoption1")
         rat = baker.make(Species, name="Farbratte")
@@ -49,6 +50,28 @@ class AnimalAndAdoptionTest(TestCase):
         self.assertEqual(str(response.context['user']), 'testuser0')
         self.assertContains(response, "TestAdoption1")
         self.assertContains(response, "Rat1")
+
+    def test_creating_AN_as_admin(self):
+        self.client.login(username='testuser0', password='12345')
+
+        form_data = {"name": "TestAdoption4",
+                     "species": Species.objects.first().pk,
+                     "num_animals": "2",
+                     "date_of_birth": "2024-11-04",
+                     "sex": "M",
+                     "group_only": "on",
+                     "searching_since": "2024-11-10",
+                     "location_string": "Mannheim",
+                     "description": "Blaaaa",
+                     "further_information": "https://notfellchen.org",
+                     "save-and-add-another-animal": "Speichern"}
+
+        response = self.client.post(reverse('add-adoption'), data=form_data)
+        print(response.content)
+
+        self.assertTrue(response.status_code < 400)
+        self.assertTrue(AdoptionNotice.objects.get(name="TestAdoption4").is_active)
+
 
 
 class SearchTest(TestCase):
