@@ -1,4 +1,8 @@
+from venv import create
+
 import django.conf.global_settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import gettext
@@ -9,6 +13,7 @@ from fellchensammlung.models import User
 from notfellchen.settings import host
 
 NEWLINE = "\r\n"
+
 
 def mail_admins_new_report(report):
     subject = _("Neue Meldung")
@@ -28,6 +33,24 @@ def mail_admins_new_report(report):
         report_url = "https://" + host + report.get_absolute_url()
         link_text = f"Um alle Details zu sehen, geh bitte auf: {report_url}"
         body_text = greeting + new_report_text + reported_rules_text + comment_text + link_text
+        message = mail.EmailMessage(subject, body_text, settings.DEFAULT_FROM_EMAIL, [moderator.email])
+        print("Sending email to ", moderator.email)
+        message.send()
+
+
+@receiver(post_save, sender=User)
+def mail_admins_new_member(sender, instance: User, created: bool, **kwargs):
+    if not created:
+        return
+    subject = _("Neuer User") + f": {instance.username}"
+    for moderator in User.objects.filter(trust_level__gt=User.TRUST_LEVEL[User.MODERATOR]):
+        greeting = _("Moin,") + "{NEWLINE}"
+        new_report_text = _("es hat sich eine neue Person registriert.") + "{NEWLINE}"
+        user_detail_text = _("Username") + f": {instance.username}{NEWLINE}" + _(
+            "E-Mail") + f": {instance.email}{NEWLINE}"
+        user_url = "https://" + host + instance.get_absolute_url()
+        link_text = f"Um alle Details zu sehen, geh bitte auf: {user_url}"
+        body_text = greeting + new_report_text + user_detail_text + link_text
         message = mail.EmailMessage(subject, body_text, settings.DEFAULT_FROM_EMAIL, [moderator.email])
         print("Sending email to ", moderator.email)
         message.send()
