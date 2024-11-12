@@ -75,6 +75,10 @@ class User(AbstractUser):
         return BaseNotification.objects.filter(user=self, read=False).count()
 
     @property
+    def adoption_notices(self):
+        return AdoptionNotice.objects.filter(owner=self)
+
+    @property
     def owner(self):
         return self
 

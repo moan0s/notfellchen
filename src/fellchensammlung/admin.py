@@ -1,11 +1,14 @@
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib import admin
 from django.utils.html import format_html
+from django.urls import reverse
+from django.utils.http import urlencode
 
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions
+from django.utils.translation import gettext_lazy as _
 
 
 class StatusInline(admin.StackedInline):
@@ -15,13 +18,27 @@ class StatusInline(admin.StackedInline):
 @admin.register(AdoptionNotice)
 class AdoptionNoticeAdmin(admin.ModelAdmin):
     search_fields = ("name__icontains", "description__icontains")
+    list_filter = ("owner",)
     inlines = [
         StatusInline,
     ]
 
 
 # Re-register UserAdmin
-admin.site.register(User)
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    search_fields = ("usernamname__icontains", "first_name__icontains", "last_name__icontains", "email__icontains")
+    list_display = ("username", "email", "trust_level", "is_active", "view_adoption_notices")
+    list_filter = ("is_active", "trust_level",)
+
+    def view_adoption_notices(self, obj):
+        count = obj.adoption_notices.count()
+        url = (
+                reverse("admin:fellchensammlung_adoptionnotice_changelist")
+                + "?"
+                + urlencode({"owner__id": f"{obj.id}"})
+        )
+        return format_html('<a href="{}">{} Adoption Notices</a>', url, count)
 
 
 def _reported_content_link(obj):
