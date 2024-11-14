@@ -2,7 +2,7 @@
 {% load custom_tags %}
 {% load i18n %}
 
-{% block title %}<title>{{adoption_notice.name }}</title>{% endblock %}
+{% block title %}<title>{{ adoption_notice.name }}</title>{% endblock %}
 
 {% block content %}
     <div class="detail-adoption-notice-header">
@@ -34,6 +34,9 @@
         <table>
             <tr>
                 <th>{% translate "Ort" %}</th>
+                {% if adoption_notice.organization %}
+                    <th>{% translate "Organisation" %}</th>
+                {% endif %}
                 <th>{% translate "Suchen seit" %}</th>
                 <th>{% translate "Zuletzt aktualisiert" %}</th>
                 <th>{% translate "Weitere Informationen" %}</th>
@@ -46,6 +49,9 @@
                         {{ adoption_notice.location_string }}
                     {% endif %}
                 </td>
+                {% if adoption_notice.organization %}
+                    <td>{% translate "Organisation" %}</td>
+                {% endif %}
 
                 <td>{{ adoption_notice.searching_since }}</td>
                 <td>{{ adoption_notice.last_checked | date:'d. F Y' }}</td>
@@ -54,7 +60,8 @@
                         <form method="get" action="{% url 'external-site' %}">
                             <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
                             <button class="btn" type="submit" id="submit">
-                                 {{ adoption_notice.further_information | domain }} <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                {{ adoption_notice.further_information | domain }} <i
+                                    class="fa-solid fa-arrow-up-right-from-square"></i>
                             </button>
                         </form>
                     </td>
