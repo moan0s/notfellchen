@@ -148,7 +148,8 @@ def adoption_notice_edit(request, adoption_notice_id):
             adoption_notice_instance.save()
 
             """Log"""
-            Log.objects.create(user=request.user, action="adoption_notice_edit", text=f"{request.user} hat Vermittlung {adoption_notice.pk} geändert")
+            Log.objects.create(user=request.user, action="adoption_notice_edit",
+                               text=f"{request.user} hat Vermittlung {adoption_notice.pk} geändert")
             return redirect(reverse("adoption-notice-detail", args=[adoption_notice_instance.pk], ))
     else:
         form = AdoptionNoticeForm(instance=adoption_notice)
@@ -541,3 +542,8 @@ def external_site_warning(request):
     context.update(texts)
 
     return render(request, 'fellchensammlung/external_site_warning.html', context=context)
+
+
+def detail_view_rescue_organization(request, rescue_organization_id):
+    org = RescueOrganization.objects.get(pk=rescue_organization_id)
+    return render(request, 'fellchensammlung/details/detail-rescue-organization.html', context={"org": org})

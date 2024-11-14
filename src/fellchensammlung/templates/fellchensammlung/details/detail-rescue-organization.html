@@ -1,0 +1,19 @@
+{% extends "fellchensammlung/base_generic.html" %}
+{% load custom_tags %}
+{% load i18n %}
+
+{% block title %}<title>{{ org.name }}</title>{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h1>{{ org.name }}</h1>
+
+        <b><i class="fa-solid fa-location-dot"></i></b>
+        {% if org.location %}
+            {{ org.location.str_hr }}
+        {% else %}
+            {{ org.location_string }}
+        {% endif %}
+        <p>{{ org.description | render_markdown }}</p>
+    </div>
+{% endblock %}

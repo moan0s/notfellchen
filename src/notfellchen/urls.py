@@ -25,9 +25,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-urlpatterns += i18n_patterns (
+urlpatterns += i18n_patterns(
     path("", include("fellchensammlung.urls")),
-    prefix_default_language = False
+    prefix_default_language=False
 )
 
 if settings.DEBUG:
