@@ -149,6 +149,8 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     organization_affiliation = models.ForeignKey(RescueOrganization, on_delete=models.PROTECT, null=True, blank=True,
                                                  verbose_name=_('Organisation'))
+    reason_for_signup = models.TextField(verbose_name=_("Grund für die Registrierung"))
+    REQUIRED_FIELDS = ["reason_for_signup", "email"]
 
     class Meta:
         verbose_name = _('Nutzer*in')
