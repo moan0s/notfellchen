@@ -34,7 +34,6 @@ def mail_admins_new_report(report):
         link_text = f"Um alle Details zu sehen, geh bitte auf: {report_url}"
         body_text = greeting + new_report_text + reported_rules_text + comment_text + link_text
         message = mail.EmailMessage(subject, body_text, settings.DEFAULT_FROM_EMAIL, [moderator.email])
-        print("Sending email to ", moderator.email)
         message.send()
 
 
