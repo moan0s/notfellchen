@@ -1,1 +1,1 @@
-{% load i18n %}{% translate "Account aktivieren" %} {{ site.name }}
+{% load i18n %}{{ site.name }}: {% translate "Account aktivieren" %}
