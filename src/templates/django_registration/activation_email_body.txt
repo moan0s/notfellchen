@@ -1,8 +1,10 @@
 {% load i18n %}
 {{ site.name }}: {% trans "Account aktivieren" %}
 
+{% trans 'Hier ist dein Aktivierungs-Key. Mit diesem kannst du deinen Account freischalten.' %}
+{{ activation_key }}
 
-{% trans "Öffne den folgenden link im Browser um deinen Account zu aktivieren" %}:
-https://{{ site.domain }}{% url 'django_registration_activate' activation_key%}
+{% trans "Öffne den folgenden link im Browser und gib den Aktivierungs-Key dort ein" %}:
+https://{{ site.domain }}{% url 'django_registration_activate' %}
 
-{% blocktrans %}Der link ist gültig für {{ expiration_days }} tage.{% endblocktrans %}
+{% blocktrans %}Der Link ist für {{ expiration_days }} Tage gültig.{% endblocktrans %}
