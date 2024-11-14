@@ -111,6 +111,7 @@ class RescueOrganization(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
     comment = models.TextField(verbose_name=_("Kommentar"), null=True, blank=True, )
+    description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))  # Markdown allowed
 
 
 class User(AbstractUser):
