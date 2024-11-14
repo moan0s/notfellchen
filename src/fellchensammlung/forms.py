@@ -51,6 +51,7 @@ class AdoptionNoticeForm(forms.ModelForm):
                 'group_only',
                 'searching_since',
                 'location_string',
+                'organization',
                 'description',
                 'further_information',
             ),
@@ -58,13 +59,14 @@ class AdoptionNoticeForm(forms.ModelForm):
 
     class Meta:
         model = AdoptionNotice
-        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string"]
+        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string",
+                  "organization"]
 
 
 class AdoptionNoticeFormWithDateWidget(AdoptionNoticeForm):
     class Meta:
         model = AdoptionNotice
-        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string"]
+        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string", "organization"]
         widgets = {
             'searching_since': DateInput(),
         }
