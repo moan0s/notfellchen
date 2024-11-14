@@ -43,6 +43,9 @@ table {
 a {
     color: inherit;
 }
+a.btn, a.btn2 {
+    text-decoration: none;
+}
 
 table {
     border: none;
