@@ -50,7 +50,7 @@
                     {% endif %}
                 </td>
                 {% if adoption_notice.organization %}
-                    <td>{% translate "Organisation" %}</td>
+                    <td><a href="{{adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a></td>
                 {% endif %}
 
                 <td>{{ adoption_notice.searching_since }}</td>
