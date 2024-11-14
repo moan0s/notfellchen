@@ -34,86 +34,6 @@ class Language(models.Model):
         verbose_name_plural = _('Sprachen')
 
 
-class User(AbstractUser):
-    """
-    Model that holds a user's profile, including the django user model
-
-    The trust levels act as permission system and can be displayed as a badge for the user
-    """
-
-    # Admins can perform all actions and have the highest trust associated with them
-    # Moderators can make moderation decisions regarding the deletion of content
-    # Coordinators can create adoption notices without them being checked
-    # Members can create adoption notices that must be activated
-    ADMIN = "admin"
-    MODERATOR = "Moderator"
-    COORDINATOR = "Koordinator*in"
-    MEMBER = "Mitglied"
-    TRUST_LEVEL = {
-        ADMIN: 4,
-        MODERATOR: 3,
-        COORDINATOR: 2,
-        MEMBER: 1,
-    }
-
-    preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
-                                           verbose_name=_('Bevorzugte Sprache'))
-    trust_level = models.IntegerField(choices=TRUST_LEVEL, default=TRUST_LEVEL[MEMBER])
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = _('Nutzer*in')
-        verbose_name_plural = _('Nutzer*innen')
-
-    def get_absolute_url(self):
-        return reverse("user-detail", args=[str(self.pk)])
-
-    def get_notifications_url(self):
-        return self.get_absolute_url()
-
-    def get_num_unread_notifications(self):
-        return BaseNotification.objects.filter(user=self, read=False).count()
-
-    @property
-    def adoption_notices(self):
-        return AdoptionNotice.objects.filter(owner=self)
-
-    @property
-    def owner(self):
-        return self
-
-
-class Image(models.Model):
-    image = models.ImageField(upload_to='images')
-    alt_text = models.TextField(max_length=2000)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.alt_text
-
-    @property
-    def as_html(self):
-        return f'<img src="{MEDIA_URL}/{self.image}" alt="{self.alt_text}">'
-
-
-class Species(models.Model):
-    """Model representing a species of animal."""
-    name = models.CharField(max_length=200, help_text=_('Name der Tierart'),
-                            verbose_name=_('Name'))
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        """String for representing the Model object."""
-        return self.name
-
-    class Meta:
-        verbose_name = _('Tierart')
-        verbose_name_plural = _('Tierarten')
-
-
 class Location(models.Model):
     place_id = models.IntegerField()
     latitude = models.FloatField()
@@ -190,7 +110,89 @@ class RescueOrganization(models.Model):
     website = models.URLField(null=True, blank=True, verbose_name=_('Website'))
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    comment = models.TextField(verbose_name=_("Kommentar"), null=True, blank=True,)
+    comment = models.TextField(verbose_name=_("Kommentar"), null=True, blank=True, )
+
+
+class User(AbstractUser):
+    """
+    Model that holds a user's profile, including the django user model
+
+    The trust levels act as permission system and can be displayed as a badge for the user
+    """
+
+    # Admins can perform all actions and have the highest trust associated with them
+    # Moderators can make moderation decisions regarding the deletion of content
+    # Coordinators can create adoption notices without them being checked
+    # Members can create adoption notices that must be activated
+    ADMIN = "admin"
+    MODERATOR = "Moderator"
+    COORDINATOR = "Koordinator*in"
+    MEMBER = "Mitglied"
+    TRUST_LEVEL = {
+        ADMIN: 4,
+        MODERATOR: 3,
+        COORDINATOR: 2,
+        MEMBER: 1,
+    }
+
+    preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
+                                           verbose_name=_('Bevorzugte Sprache'))
+    trust_level = models.IntegerField(choices=TRUST_LEVEL, default=TRUST_LEVEL[MEMBER])
+    updated_at = models.DateTimeField(auto_now=True)
+    organization_affiliation = models.ForeignKey(RescueOrganization, on_delete=models.PROTECT, null=True, blank=True,
+                                                 verbose_name=_('Organisation'))
+
+    class Meta:
+        verbose_name = _('Nutzer*in')
+        verbose_name_plural = _('Nutzer*innen')
+
+    def get_absolute_url(self):
+        return reverse("user-detail", args=[str(self.pk)])
+
+    def get_notifications_url(self):
+        return self.get_absolute_url()
+
+    def get_num_unread_notifications(self):
+        return BaseNotification.objects.filter(user=self, read=False).count()
+
+    @property
+    def adoption_notices(self):
+        return AdoptionNotice.objects.filter(owner=self)
+
+    @property
+    def owner(self):
+        return self
+
+
+class Image(models.Model):
+    image = models.ImageField(upload_to='images')
+    alt_text = models.TextField(max_length=2000)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.alt_text
+
+    @property
+    def as_html(self):
+        return f'<img src="{MEDIA_URL}/{self.image}" alt="{self.alt_text}">'
+
+
+class Species(models.Model):
+    """Model representing a species of animal."""
+    name = models.CharField(max_length=200, help_text=_('Name der Tierart'),
+                            verbose_name=_('Name'))
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return self.name
+
+    class Meta:
+        verbose_name = _('Tierart')
+        verbose_name_plural = _('Tierarten')
 
 
 class AdoptionNotice(models.Model):
@@ -239,7 +241,6 @@ class AdoptionNotice(models.Model):
             return "female"
         else:
             return "mixed"
-
 
     @property
     def comments(self):
