@@ -16,4 +16,14 @@
         {% endif %}
         <p>{{ org.description | render_markdown }}</p>
     </div>
+    <h2>{% translate 'Vermittlungen der Organisation' %}</h2>
+    <div class="container-cards">
+        {% if org.adoption_notices %}
+            {% for adoption_notice in org.adoption_notices %}
+                {% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}
+            {% endfor %}
+        {% else %}
+            <p>{% translate "Keine Vermittlungen gefunden." %}</p>
+        {% endif %}
+    </div>
 {% endblock %}

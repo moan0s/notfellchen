@@ -113,6 +113,13 @@ class RescueOrganization(models.Model):
     comment = models.TextField(verbose_name=_("Kommentar"), null=True, blank=True, )
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))  # Markdown allowed
 
+    def get_absolute_url(self):
+        return reverse("rescue-organization-detail", args=[str(self.pk)])
+
+    @property
+    def adoption_notices(self):
+        return AdoptionNotice.objects.filter(organization=self)
+
 
 class User(AbstractUser):
     """
