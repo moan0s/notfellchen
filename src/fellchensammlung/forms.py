@@ -9,6 +9,14 @@ from django.utils.translation import gettext_lazy as _
 from notfellchen.settings import MEDIA_URL
 
 
+def animal_validator(value: str):
+    value = value.lower()
+    animal_list = ["ratte", "farbratte", "katze", "hund", "kaninchen", "hase", "kuh", "fuchs", "cow", "rat", "cat",
+                   "dog", "rabbit", "fox"]
+    if value not in animal_list:
+        raise forms.ValidationError(_("Dieses Tier kenne ich nicht. Probier ein anderes"))
+
+
 class DateInput(forms.DateInput):
     input_type = 'date'
 
@@ -62,7 +70,6 @@ class AdoptionNoticeFormWithDateWidget(AdoptionNoticeForm):
         }
 
 
-
 class AnimalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'in_adoption_notice_creation_flow' in kwargs:
@@ -90,6 +97,7 @@ class AnimalFormWithDateWidget(AnimalForm):
         widgets = {
             'date_of_birth': DateInput(),
         }
+
 
 class AdoptionNoticeFormWithDateWidgetAutoAnimal(AdoptionNoticeFormWithDateWidget):
     def __init__(self, *args, **kwargs):
@@ -159,6 +167,8 @@ class CustomRegistrationForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):
         model = User
 
+    captcha = forms.CharField(validators=[animal_validator], label=_("Nenne ein Tier (Captcha)"))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()
@@ -169,7 +179,7 @@ class CustomRegistrationForm(RegistrationForm):
 
 
 def _get_distances():
-    return {i: i for i in [10, 20, 50, 100, 200, 500]}
+    return {i: i for i in [20, 50, 100, 200, 500]}
 
 
 class AdoptionNoticeSearchForm(forms.Form):
