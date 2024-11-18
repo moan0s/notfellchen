@@ -23,6 +23,7 @@ from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices
 from .tasks import add_adoption_notice_location
+from rest_framework.authtoken.models import Token
 
 
 def user_is_trust_level_or_above(user, trust_level=User.MODERATOR):
@@ -69,7 +70,9 @@ def change_language(request):
             translation.activate(language_code)
             response = HttpResponseRedirect(redirect_path)
             response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
-    return response
+            return response
+        else:
+            return render(request, 'fellchensammlung/index.html')
 
 
 def adoption_notice_detail(request, adoption_notice_id):
@@ -415,12 +418,31 @@ def report_detail_success(request, report_id):
     return report_detail(request, report_id, form_complete=True)
 
 
+def user_detail(request, user, token=None):
+    context = {"user": user,
+               "adoption_notices": AdoptionNotice.objects.filter(owner=user),
+               "notifications": CommentNotification.objects.filter(user=user, read=False)}
+    if token is not None:
+        context["token"] = token
+    return render(request, 'fellchensammlung/details/detail-user.html', context=context)
+
+
 @login_required
-def user_detail(request, user_id):
+def user_by_id(request, user_id):
     user = User.objects.get(id=user_id)
     # Only users that are mods or owners of the user are allowed to view
     fail_if_user_not_owner_or_trust_level(request.user, user)
-    if request.method == "POST":
+    return user_detail(request, user)
+
+
+@login_required()
+def my_profile(request):
+    if request.method == 'POST':
+        if "create_token" in request.POST:
+            Token.objects.create(user=request.user)
+        elif "delete_token" in request.POST:
+            Token.objects.get(user=request.user).delete()
+
         action = request.POST.get("action")
         if action == "notification_mark_read":
             notification_id = request.POST.get("notification_id")
@@ -432,11 +454,11 @@ def user_detail(request, user_id):
             for notification in notifications:
                 notification.read = True
                 notification.save()
-
-    context = {"user": user,
-               "adoption_notices": AdoptionNotice.objects.filter(owner=user),
-               "notifications": CommentNotification.objects.filter(user=user, read=False)}
-    return render(request, 'fellchensammlung/details/detail-user.html', context=context)
+    try:
+        token = Token.objects.get(user=request.user)
+    except Token.DoesNotExist:
+        token = None
+    return user_detail(request, request.user, token)
 
 
 @user_passes_test(user_is_trust_level_or_above)

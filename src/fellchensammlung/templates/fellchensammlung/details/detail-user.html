@@ -13,8 +13,23 @@
         <p>{% translate "Keine bevorzugte Sprache gesetzt." %}</p>
     {% endif %}
 
-    {% if user.id is request.user.id %}
+    {% if token %}
+        <form action="" class="btn2" method="POST">
+            {% csrf_token %}
+            <p class="text-muted"><strong>{% translate "API token:" %}</strong> {{ token }}</p>
+            <input class="create-token" type="submit" name="delete_token" value={% translate "Delete API token" %}>
+        </form>
+    {% else %}
+        <p>{% translate "No token set." %}</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input class="create-token" type="submit" name="create_token" value={% translate "Create API token" %}>
+        </form>
+    {% endif %}
 
+    {% if user.id is request.user.id %}
+        <p><a href="{% url 'password_change' %}">{% translate "Change password here." %}</a></p>
+        <p><a href="{% url 'index' %}">{% translate "Export your data." %}</a></p>
         <h2>{% translate 'Benachrichtigungen' %}</h2>
         {% include "fellchensammlung/lists/list-notifications.html" %}
         <h2>{% translate 'Meine Vermittlungen' %}</h2>

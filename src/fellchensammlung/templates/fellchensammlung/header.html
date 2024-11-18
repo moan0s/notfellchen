@@ -26,7 +26,7 @@
 
                 </div>
 
-                <a class="btn2" href="{{ user.get_absolute_url }}"><i aria-hidden="true" class="fas fa-user"></i></a>
+                <a class="btn2" href="{% url 'user-me' %}"><i aria-hidden="true" class="fas fa-user"></i></a>
                 <form class="btn2 button_darken" action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button class="button" type="submit"><i aria-hidden="true" class="fas fa-sign-out"></i></button>
