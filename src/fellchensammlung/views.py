@@ -1,12 +1,14 @@
 import logging
 
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils import translation
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import user_passes_test
+from django.core.serializers import serialize
+import json
 
 from .mail import mail_admins_new_report
 from notfellchen import settings
@@ -569,3 +571,15 @@ def external_site_warning(request):
 def detail_view_rescue_organization(request, rescue_organization_id):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)
     return render(request, 'fellchensammlung/details/detail-rescue-organization.html', context={"org": org})
+
+
+def export_own_profile(request):
+    user = request.user
+    ANs = AdoptionNotice.objects.filter(owner=user)
+    user_as_json = serialize('json', [user])
+    user_editable = json.loads(user_as_json)
+    user_editable[0]["fields"]["password"] = "Password hash redacted for security reasons"
+    user_as_json = json.dumps(user_editable)
+    ANs_as_json = serialize('json', ANs)
+    full_json = f"{user_as_json}, {ANs_as_json}"
+    return HttpResponse(full_json, content_type="application/json")
