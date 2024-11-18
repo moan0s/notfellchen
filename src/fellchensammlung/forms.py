@@ -12,7 +12,7 @@ from notfellchen.settings import MEDIA_URL
 def animal_validator(value: str):
     value = value.lower()
     animal_list = ["ratte", "farbratte", "katze", "hund", "kaninchen", "hase", "kuh", "fuchs", "cow", "rat", "cat",
-                   "dog", "rabbit", "fox"]
+                   "dog", "rabbit", "fox", "fancy rat"]
     if value not in animal_list:
         raise forms.ValidationError(_("Dieses Tier kenne ich nicht. Probier ein anderes"))
 
@@ -169,7 +169,7 @@ class CustomRegistrationForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):
         model = User
 
-    captcha = forms.CharField(validators=[animal_validator], label=_("Nenne ein Tier (Captcha)"))
+    captcha = forms.CharField(validators=[animal_validator], label=_("Nenne eine bekannte Tierart"), help_text=_("Bitte nenne hier eine bekannte Tierart (z.B. ein Tier das an der Leine geführt wird). Das Fragen wir dich um sicherzustellen, dass du kein Roboter bist."))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
