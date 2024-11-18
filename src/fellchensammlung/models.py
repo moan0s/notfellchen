@@ -149,7 +149,7 @@ class User(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     organization_affiliation = models.ForeignKey(RescueOrganization, on_delete=models.PROTECT, null=True, blank=True,
                                                  verbose_name=_('Organisation'))
-    reason_for_signup = models.TextField(verbose_name=_("Grund für die Registrierung"))
+    reason_for_signup = models.TextField(verbose_name=_("Grund für die Registrierung"), help_text=_("Wir würden gerne wissen warum du dich registriertst, ob du dich z.B. Tiere eines bestimmten Tierheim einstellen willst 'nur mal gucken' willst. Beides ist toll! Wenn du für ein Tierheim/eine Pflegestelle arbeitest kontaktieren wir dich ggf. um dir erweiterte Rechte zu geben."))
     REQUIRED_FIELDS = ["reason_for_signup", "email"]
 
     class Meta:
