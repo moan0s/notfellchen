@@ -475,9 +475,12 @@ def modqueue(request):
 
 @login_required
 def updatequeue(request):
-    #TODO: Make sure update can only be done for instances with permission
     if request.method == "POST":
         adoption_notice = AdoptionNotice.objects.get(id=request.POST.get("adoption_notice_id"))
+        edit_permission = request.user == adoption_notice.owner or user_is_trust_level_or_above(request.user,
+                                                                                                TrustLevel.MODERATOR)
+        if not edit_permission:
+            return render(request, "fellchensammlung/errors/403.html", status=403)
         action = request.POST.get("action")
         if action == "checked_inactive":
             adoption_notice.set_closed()
