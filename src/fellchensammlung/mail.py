@@ -32,24 +32,6 @@ def mail_admins_new_report(report):
         message.send()
 
 
-@receiver(post_save, sender=User)
-def mail_admins_new_member(sender, instance: User, created: bool, **kwargs):
-    if not created:
-        return
-    subject = _("Neuer User") + f": {instance.username}"
-    for moderator in User.objects.filter(trust_level__gt=User.TRUST_LEVEL[User.MODERATOR]):
-        greeting = _("Moin,") + "{NEWLINE}"
-        new_report_text = _("es hat sich eine neue Person registriert.") + "{NEWLINE}"
-        user_detail_text = _("Username") + f": {instance.username}{NEWLINE}" + _(
-            "E-Mail") + f": {instance.email}{NEWLINE}"
-        user_url = "https://" + host + instance.get_absolute_url()
-        link_text = f"Um alle Details zu sehen, geh bitte auf: {user_url}"
-        body_text = greeting + new_report_text + user_detail_text + link_text
-        message = mail.EmailMessage(subject, body_text, settings.DEFAULT_FROM_EMAIL, [moderator.email])
-        print("Sending email to ", moderator.email)
-        message.send()
-
-
 def send_notification_email(notification_pk):
     try:
         notification = CommentNotification.objects.get(pk=notification_pk)
