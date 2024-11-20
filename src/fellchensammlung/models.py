@@ -728,7 +728,6 @@ class CommentNotification(BaseNotification):
 
     @property
     def url(self):
-        print(f"URL: self.comment.get_absolute_url()")
         return self.comment.get_absolute_url
 
 
