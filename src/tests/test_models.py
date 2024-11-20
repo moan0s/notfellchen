@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.test import TestCase
 from model_bakery import baker
 
-from fellchensammlung.models import Announcement, Language, User
+from fellchensammlung.models import Announcement, Language, User, TrustLevel
 
 
 class UserTest(TestCase):
@@ -12,7 +12,7 @@ class UserTest(TestCase):
         test_user_1 = User.objects.create(username="Testuser1", password="SUPERSECRET", email="test@example.org")
 
         self.assertTrue(test_user_1.trust_level == 1)
-        self.assertTrue(test_user_1.trust_level == User.TRUST_LEVEL[User.MEMBER])
+        self.assertTrue(test_user_1.trust_level == TrustLevel.MEMBER)
 
 
 class AnnouncementTest(TestCase):

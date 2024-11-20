@@ -210,7 +210,7 @@ def add_adoption_notice(request):
             add_adoption_notice_location.delay_on_commit(instance.pk)
 
             # Set correct status
-            if request.user.trust_level >= User.TRUST_LEVEL[User.COORDINATOR]:
+            if request.user.trust_level >= TrustLevel.MODERATOR:
                 instance.set_active()
             else:
                 instance.set_unchecked()
@@ -484,7 +484,7 @@ def updatequeue(request):
         if action == "checked_active":
             adoption_notice.set_active()
 
-    if user_is_trust_level_or_above(request.user, User.MODERATOR):
+    if user_is_trust_level_or_above(request.user, TrustLevel.MODERATOR):
         last_checked_adoption_list = AdoptionNotice.objects.order_by("last_checked")
     else:
         last_checked_adoption_list = AdoptionNotice.objects.filter(owner=request.user).order_by("last_checked")

@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from model_bakery import baker
 
-from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus
+from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel
 from fellchensammlung.views import add_adoption_notice
 
 
@@ -20,7 +20,7 @@ class AnimalAndAdoptionTest(TestCase):
                                               first_name="Max",
                                               last_name="Müller",
                                               password='12345')
-        test_user0.trust_level = User.TRUST_LEVEL[User.ADMIN]
+        test_user0.trust_level = TrustLevel.ADMIN
         test_user0.save()
 
         adoption1 = baker.make(AdoptionNotice, name="TestAdoption1")
@@ -133,7 +133,7 @@ class UpdateQueueTest(TestCase):
                                               first_name="Admin",
                                               last_name="BOFH",
                                               password='12345',
-                                              trust_level=User.TRUST_LEVEL[User.MODERATOR])
+                                              trust_level=TrustLevel.MODERATOR)
         test_user0.is_superuser = True
         test_user0.save()
 
