@@ -423,7 +423,7 @@ def report_detail_success(request, report_id):
 def user_detail(request, user, token=None):
     context = {"user": user,
                "adoption_notices": AdoptionNotice.objects.filter(owner=user),
-               "notifications": CommentNotification.objects.filter(user=user, read=False)}
+               "notifications": BaseNotification.objects.filter(user=user, read=False)}
     if token is not None:
         context["token"] = token
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
