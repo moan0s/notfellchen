@@ -41,10 +41,8 @@ table {
 }
 
 a {
-    color: inherit;
-}
-a.btn, a.btn2 {
     text-decoration: none;
+    color: inherit;
 }
 
 table {
@@ -97,6 +95,7 @@ textarea {
 .container-cards {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .card {
@@ -454,13 +453,11 @@ select, .button {
 .card h1 {
     color: var(--text-three);
     text-shadow: 1px 1px var(--shadow-three);
-    width: 85%;
 }
 
 .card h2 {
     color: var(--text-three);
     text-shadow: 1px 1px var(--shadow-three);
-    width: 85%;
 }
 
 .card img {
