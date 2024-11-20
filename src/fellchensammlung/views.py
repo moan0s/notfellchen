@@ -16,7 +16,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
-    Species, Log, Timestamp
+    Species, Log, Timestamp, TrustLevel
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
@@ -28,16 +28,16 @@ from .tasks import add_adoption_notice_location
 from rest_framework.authtoken.models import Token
 
 
-def user_is_trust_level_or_above(user, trust_level=User.MODERATOR):
-    return user.is_authenticated and user.trust_level >= User.TRUST_LEVEL[trust_level]
+def user_is_trust_level_or_above(user, trust_level=TrustLevel.MODERATOR):
+    return user.is_authenticated and user.trust_level >= trust_level
 
 
-def user_is_owner_or_trust_level(user, django_object, trust_level=User.MODERATOR):
+def user_is_owner_or_trust_level(user, django_object, trust_level=TrustLevel.MODERATOR):
     return user.is_authenticated and (
-            user.trust_level == User.TRUST_LEVEL[trust_level] or django_object.owner == user)
+            user.trust_level == trust_level or django_object.owner == user)
 
 
-def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=User.MODERATOR):
+def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=TrustLevel.MODERATOR):
     if not user_is_owner_or_trust_level(user, django_object, trust_level):
         raise PermissionDenied
 

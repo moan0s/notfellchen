@@ -121,6 +121,17 @@ class RescueOrganization(models.Model):
         return AdoptionNotice.objects.filter(organization=self)
 
 
+# Admins can perform all actions and have the highest trust associated with them
+# Moderators can make moderation decisions regarding the deletion of content
+# Coordinators can create adoption notices without them being checked
+# Members can create adoption notices that must be activated
+class TrustLevel(models.IntegerChoices):
+    MEMBER = 1, 'Member'
+    COORDINATOR = 2, 'Coordinator'
+    MODERATOR = 3, 'Moderator'
+    ADMIN = 4, 'Admin'
+
+
 class User(AbstractUser):
     """
     Model that holds a user's profile, including the django user model
@@ -128,28 +139,17 @@ class User(AbstractUser):
     The trust levels act as permission system and can be displayed as a badge for the user
     """
 
-    # Admins can perform all actions and have the highest trust associated with them
-    # Moderators can make moderation decisions regarding the deletion of content
-    # Coordinators can create adoption notices without them being checked
-    # Members can create adoption notices that must be activated
-    ADMIN = "admin"
-    MODERATOR = "Moderator"
-    COORDINATOR = "Koordinator*in"
-    MEMBER = "Mitglied"
-    TRUST_LEVEL = {
-        ADMIN: 4,
-        MODERATOR: 3,
-        COORDINATOR: 2,
-        MEMBER: 1,
-    }
-
+    trust_level = models.IntegerField(
+        choices=TrustLevel.choices,
+        default=TrustLevel.MEMBER,  # Default to the lowest trust level
+    )
     preferred_language = models.ForeignKey(Language, on_delete=models.PROTECT, null=True, blank=True,
                                            verbose_name=_('Bevorzugte Sprache'))
-    trust_level = models.IntegerField(choices=TRUST_LEVEL, default=TRUST_LEVEL[MEMBER])
     updated_at = models.DateTimeField(auto_now=True)
     organization_affiliation = models.ForeignKey(RescueOrganization, on_delete=models.PROTECT, null=True, blank=True,
                                                  verbose_name=_('Organisation'))
-    reason_for_signup = models.TextField(verbose_name=_("Grund für die Registrierung"), help_text=_("Wir würden gerne wissen warum du dich registriertst, ob du dich z.B. Tiere eines bestimmten Tierheim einstellen willst 'nur mal gucken' willst. Beides ist toll! Wenn du für ein Tierheim/eine Pflegestelle arbeitest kontaktieren wir dich ggf. um dir erweiterte Rechte zu geben."))
+    reason_for_signup = models.TextField(verbose_name=_("Grund für die Registrierung"), help_text=_(
+        "Wir würden gerne wissen warum du dich registriertst, ob du dich z.B. Tiere eines bestimmten Tierheim einstellen willst 'nur mal gucken' willst. Beides ist toll! Wenn du für ein Tierheim/eine Pflegestelle arbeitest kontaktieren wir dich ggf. um dir erweiterte Rechte zu geben."))
     REQUIRED_FIELDS = ["reason_for_signup", "email"]
 
     class Meta:
