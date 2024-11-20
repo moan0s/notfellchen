@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.core import mail
-from fellchensammlung.models import User, CommentNotification, BaseNotification
+from fellchensammlung.models import User, CommentNotification, BaseNotification, TrustLevel
 from notfellchen.settings import host
 
 NEWLINE = "\r\n"
@@ -12,7 +12,7 @@ NEWLINE = "\r\n"
 
 def mail_admins_new_report(report):
     subject = _("Neue Meldung")
-    for moderator in User.objects.filter(trust_level__gt=User.TRUST_LEVEL[User.MODERATOR]):
+    for moderator in User.objects.filter(trust_level__gt=TrustLevel.MODERATOR):
         greeting = _("Moin,") + "{NEWLINE}"
         new_report_text = _("es wurde ein Regelverstoß gemeldet.") + "{NEWLINE}"
         if len(report.reported_broken_rules.all()) > 0:
