@@ -434,7 +434,10 @@ def user_by_id(request, user_id):
     user = User.objects.get(id=user_id)
     # Only users that are mods or owners of the user are allowed to view
     fail_if_user_not_owner_or_trust_level(request.user, user)
-    return user_detail(request, user)
+    if user == request.user:
+        return my_profile(request)
+    else:
+        return user_detail(request, user)
 
 
 @login_required()
