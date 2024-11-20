@@ -451,7 +451,10 @@ def my_profile(request):
         action = request.POST.get("action")
         if action == "notification_mark_read":
             notification_id = request.POST.get("notification_id")
-            notification = CommentNotification.objects.get(pk=notification_id)
+            try:
+                notification = CommentNotification.objects.get(pk=notification_id)
+            except CommentNotification.DoesNotExist:
+                notification = BaseNotification.objects.get(pk=notification_id)
             notification.read = True
             notification.save()
         elif action == "notification_mark_all_read":
