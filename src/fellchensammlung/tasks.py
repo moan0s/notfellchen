@@ -1,5 +1,7 @@
+from celery.app import shared_task
 from django.utils import timezone
 from notfellchen.celery import app as celery_app
+from .mail import send_notification_email
 from .tools.admin import clean_locations, deactivate_unchecked_adoption_notices, deactivate_404_adoption_notices
 from .tools.misc import healthcheck_ok
 from .models import Location, AdoptionNotice, Timestamp
@@ -43,3 +45,8 @@ def add_adoption_notice_location(pk):
 def task_healthcheck():
     healthcheck_ok()
     set_timestamp("task_healthcheck")
+
+
+@shared_task
+def task_send_notification_email(notification_pk):
+    send_notification_email(notification_pk)

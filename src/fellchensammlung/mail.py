@@ -1,15 +1,10 @@
-from venv import create
-
-import django.conf.global_settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import gettext
 from django.conf import settings
 from django.core import mail
-from django.db.models import Q, Min
-from fellchensammlung.models import User
+from fellchensammlung.models import User, CommentNotification, BaseNotification
 from notfellchen.settings import host
 
 NEWLINE = "\r\n"
@@ -53,3 +48,14 @@ def mail_admins_new_member(sender, instance: User, created: bool, **kwargs):
         message = mail.EmailMessage(subject, body_text, settings.DEFAULT_FROM_EMAIL, [moderator.email])
         print("Sending email to ", moderator.email)
         message.send()
+
+
+def send_notification_email(notification_pk):
+    try:
+        notification = CommentNotification.objects.get(pk=notification_pk)
+    except CommentNotification.DoesNotExist:
+        notification = BaseNotification.objects.get(pk=notification_pk)
+    subject = f"🔔 {notification.title}"
+    body_text = notification.text
+    message = mail.EmailMessage(subject, body_text, settings.DEFAULT_FROM_EMAIL, [notification.user.email])
+    message.send()

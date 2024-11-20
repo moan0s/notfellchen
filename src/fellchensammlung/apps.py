@@ -15,3 +15,4 @@ class FellchensammlungConfig(AppConfig):
         except Permission.DoesNotExist:
             pass
         post_migrate.connect(ensure_languages, sender=self)
+        import fellchensammlung.receivers
