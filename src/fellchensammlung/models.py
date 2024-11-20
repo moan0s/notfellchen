@@ -150,6 +150,7 @@ class User(AbstractUser):
                                                  verbose_name=_('Organisation'))
     reason_for_signup = models.TextField(verbose_name=_("Grund für die Registrierung"), help_text=_(
         "Wir würden gerne wissen warum du dich registriertst, ob du dich z.B. Tiere eines bestimmten Tierheim einstellen willst 'nur mal gucken' willst. Beides ist toll! Wenn du für ein Tierheim/eine Pflegestelle arbeitest kontaktieren wir dich ggf. um dir erweiterte Rechte zu geben."))
+    email_notifications = models.BooleanField(verbose_name=_("Benachrichtigung per E-Mail"), default=True)
     REQUIRED_FIELDS = ["reason_for_signup", "email"]
 
     class Meta:
