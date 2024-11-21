@@ -178,16 +178,21 @@ def search(request):
             active_adoptions = [adoption for adoption in active_adoptions if sex in adoption.sexes]
 
         search_form = AdoptionNoticeSearchForm(request.POST)
-        max_distance = int(request.POST.get('max_distance'))
-        if max_distance == "":
-            max_distance = None
-        geo_api = GeoAPI()
-        search_position = geo_api.get_coordinates_from_query(request.POST['location'])
-        if search_position is None:
-            place_not_found = True
+        search_form.is_valid()
+        if search_form.cleaned_data["location"] == "":
             adoption_notices_in_distance = active_adoptions
+            place_not_found = False
         else:
-            adoption_notices_in_distance = [a for a in active_adoptions if a.in_distance(search_position, max_distance)]
+            max_distance = int(request.POST.get('max_distance'))
+            if max_distance == "":
+                max_distance = None
+            geo_api = GeoAPI()
+            search_position = geo_api.get_coordinates_from_query(request.POST['location'])
+            if search_position is None:
+                place_not_found = True
+                adoption_notices_in_distance = active_adoptions
+            else:
+                adoption_notices_in_distance = [a for a in active_adoptions if a.in_distance(search_position, max_distance)]
 
         context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form,
                    "place_not_found": place_not_found}

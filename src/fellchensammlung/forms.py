@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import AdoptionNotice, Animal, Image, ReportAdoptionNotice, ReportComment, ModerationAction, User, Species, \
-    Comment
+    Comment, SexChoicesWithAll
 from django_registration.forms import RegistrationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field, Hidden
@@ -66,7 +66,8 @@ class AdoptionNoticeForm(forms.ModelForm):
 class AdoptionNoticeFormWithDateWidget(AdoptionNoticeForm):
     class Meta:
         model = AdoptionNotice
-        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string", "organization"]
+        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string",
+                  "organization"]
         widgets = {
             'searching_since': DateInput(),
         }
@@ -185,7 +186,7 @@ def _get_distances():
 
 
 class AdoptionNoticeSearchForm(forms.Form):
-    location = forms.CharField(max_length=20, label=_("Stadt"))
+    location = forms.CharField(max_length=20, label=_("Stadt"), required=False)
     max_distance = forms.ChoiceField(choices=_get_distances, label=_("Max. Distanz"))
     sex = forms.ChoiceField(choices=SexChoicesWithAll, label=_("Geschlecht"), required=False,
                             initial=SexChoicesWithAll.ALL)
