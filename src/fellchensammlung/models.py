@@ -461,11 +461,20 @@ class AdoptionNoticeStatus(models.Model):
 
 
 class SexChoices(models.TextChoices):
-    MALE_NEUTERED = "M_N", "neutered male"
-    MALE = "M", "male"
-    FEMALE_NEUTERED = "F_N", "neutered female"
-    FEMALE = "F", "female"
-    INTER = "I", "intersex"
+    FEMALE = "F", _("Weiblich")
+    MALE = "M", _("Männlich")
+    MALE_NEUTERED = "M_N", _("Männlich, kastriert")
+    FEMALE_NEUTERED = "F_N", _("Weiblich, kastriert")
+    INTER = "I", _("Intergeschlechtlich")
+
+
+class SexChoicesWithAll(models.TextChoices):
+    FEMALE = "F", _("Weiblich")
+    MALE = "M", _("Männlich")
+    MALE_NEUTERED = "M_N", _("Männlich, kastriert")
+    FEMALE_NEUTERED = "F_N", _("Weiblich Kastriert")
+    INTER = "I", _("Intergeschlechtlich")
+    ALL = "A", _("Alle")
 
 
 class Animal(models.Model):
