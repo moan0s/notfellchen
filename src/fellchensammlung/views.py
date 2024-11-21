@@ -16,7 +16,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
-    Species, Log, Timestamp, TrustLevel
+    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
@@ -169,9 +169,13 @@ def animal_detail(request, animal_id):
 
 def search(request):
     place_not_found = None
+    latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
+    active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
     if request.method == 'POST':
-        latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
-        active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
+
+        sex = request.POST.get("sex")
+        if sex != SexChoicesWithAll.ALL:
+            active_adoptions = [adoption for adoption in active_adoptions if sex in adoption.sexes]
 
         search_form = AdoptionNoticeSearchForm(request.POST)
         max_distance = int(request.POST.get('max_distance'))
@@ -188,8 +192,6 @@ def search(request):
         context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form,
                    "place_not_found": place_not_found}
     else:
-        latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
-        active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
         search_form = AdoptionNoticeSearchForm()
         context = {"adoption_notices": active_adoptions, "search_form": search_form}
     return render(request, 'fellchensammlung/search.html', context=context)

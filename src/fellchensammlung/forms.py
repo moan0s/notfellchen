@@ -187,3 +187,5 @@ def _get_distances():
 class AdoptionNoticeSearchForm(forms.Form):
     location = forms.CharField(max_length=20, label=_("Stadt"))
     max_distance = forms.ChoiceField(choices=_get_distances, label=_("Max. Distanz"))
+    sex = forms.ChoiceField(choices=SexChoicesWithAll, label=_("Geschlecht"), required=False,
+                            initial=SexChoicesWithAll.ALL)
