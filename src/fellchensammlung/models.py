@@ -246,9 +246,9 @@ class AdoptionNotice(models.Model):
     def sex_code(self):
         if len(self.sexes) > 1:
             return "mixed"
-        elif self.sexes.pop() == Animal.MALE:
+        elif self.sexes.pop() == SexChoices.MALE:
             return "male"
-        elif self.sexes.pop() == Animal.FEMALE:
+        elif self.sexes.pop() == SexChoices.FEMALE:
             return "female"
         else:
             return "mixed"
@@ -457,24 +457,23 @@ class AdoptionNoticeStatus(models.Model):
         self.save()
 
 
-class Animal(models.Model):
-    MALE_NEUTERED = "M_N"
-    MALE = "M"
-    FEMALE_NEUTERED = "F_N"
-    FEMALE = "F"
-    SEX_CHOICES = {
-        MALE_NEUTERED: "neutered male",
-        MALE: "male",
-        FEMALE_NEUTERED: "neutered female",
-        FEMALE: "female",
-    }
+class SexChoices(models.TextChoices):
+    MALE_NEUTERED = "M_N", "neutered male"
+    MALE = "M", "male"
+    FEMALE_NEUTERED = "F_N", "neutered female"
+    FEMALE = "F", "female"
 
+
+class Animal(models.Model):
     date_of_birth = models.DateField(verbose_name=_('Geburtsdatum'))
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
     photos = models.ManyToManyField(Image, blank=True)
-    sex = models.CharField(max_length=20, choices=SEX_CHOICES, )
+    sex = models.CharField(
+        max_length=20,
+        choices=SexChoices.choices,
+    )
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
