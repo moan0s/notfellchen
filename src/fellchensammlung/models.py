@@ -462,6 +462,7 @@ class SexChoices(models.TextChoices):
     MALE = "M", "male"
     FEMALE_NEUTERED = "F_N", "neutered female"
     FEMALE = "F", "female"
+    INTER = "I", "intersex"
 
 
 class Animal(models.Model):
