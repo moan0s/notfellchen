@@ -244,11 +244,14 @@ class AdoptionNotice(models.Model):
         return sexes
 
     def sex_code(self):
+        # Treat Intersex as mixed in order to increase their visibility
         if len(self.sexes) > 1:
             return "mixed"
-        elif self.sexes.pop() == SexChoices.MALE:
+
+        sex = self.sexes.pop()
+        if sex == SexChoices.MALE:
             return "male"
-        elif self.sexes.pop() == SexChoices.FEMALE:
+        elif sex == SexChoices.FEMALE:
             return "female"
         else:
             return "mixed"
