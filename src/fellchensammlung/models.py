@@ -240,7 +240,7 @@ class AdoptionNotice(models.Model):
     def sexes(self):
         sexes = set()
         for animal in self.animals:
-            sexes.update(animal.sex)
+            sexes.add(animal.sex)
         return sexes
 
     def sex_code(self):
