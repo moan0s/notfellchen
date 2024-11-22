@@ -24,6 +24,13 @@ class AdoptionNoticeAdmin(admin.ModelAdmin):
     inlines = [
         StatusInline,
     ]
+    actions = ("activate",)
+
+    def activate(self, request, queryset):
+        for obj in queryset:
+            obj.set_active()
+
+    activate.short_description = _("Ausgewählte Vermittlungen aktivieren")
 
 
 # Re-register UserAdmin
