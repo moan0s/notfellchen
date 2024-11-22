@@ -53,11 +53,11 @@ def clean_locations(quiet=True):
 
 def get_unchecked_adoption_notices(weeks=3):
     now = timezone.now()
-    three_weeks_ago = now - timedelta(weeks=weeks)
+    n_weeks_ago = now - timedelta(weeks=weeks)
 
-    # Query for active adoption notices that were checked in the last three weeks
+    # Query for active adoption notices that were not checked in the last n weeks
     unchecked_adoptions = AdoptionNotice.objects.filter(
-        last_checked__lte=three_weeks_ago
+        last_checked__lte=n_weeks_ago
     )
     active_unchecked_adoptions = [adoption for adoption in unchecked_adoptions if adoption.is_active]
     return active_unchecked_adoptions
@@ -71,7 +71,7 @@ def get_active_adoption_notices():
 
 def deactivate_unchecked_adoption_notices():
     for adoption_notice in get_unchecked_adoption_notices(weeks=3):
-        AdoptionNoticeStatus.objects.get(adoption_notice=adoption_notice).set_unchecked()
+        adoption_notice.set_unchecked()
 
 
 def deactivate_404_adoption_notices():
