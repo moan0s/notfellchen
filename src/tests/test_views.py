@@ -120,7 +120,7 @@ class SearchTest(TestCase):
         self.assertNotContains(response, "TestAdoption2")
 
     def test_plz_search(self):
-        response = self.client.post(reverse('search'), {"max_distance": 100, "location": "Berlin"})
+        response = self.client.post(reverse('search'), {"max_distance": 100, "location": "Berlin", "sex": "A"})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "TestAdoption1")
         self.assertNotContains(response, "TestAdoption3")
