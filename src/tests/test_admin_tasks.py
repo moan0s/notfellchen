@@ -19,16 +19,18 @@ class DeactivationTest(TestCase):
 
         cls.adoption1 = baker.make(AdoptionNotice,
                                    name="TestAdoption1",
-                                   created_at=more_than_three_weeks_ago,
-                                   last_checked=more_than_three_weeks_ago)
+                                   created_at=more_than_three_weeks_ago)
         cls.adoption2 = baker.make(AdoptionNotice, name="TestAdoption2")
         cls.adoption3 = baker.make(AdoptionNotice,
                                    name="TestAdoption3",
-                                   created_at=less_than_three_weeks_ago,
-                                   last_checked=less_than_three_weeks_ago)
+                                   created_at=less_than_three_weeks_ago)
 
         cls.adoption1.set_active()
+        cls.adoption1.last_checked = more_than_three_weeks_ago  # Reset updated_at to simulate test conditions
+        cls.adoption1.save()
         cls.adoption3.set_active()
+        cls.adoption3.last_checked = less_than_three_weeks_ago  # Reset updated_at to simulate test conditions
+        cls.adoption3.save()
 
     def test_get_unchecked_adoption_notices(self):
         result = get_unchecked_adoption_notices()
