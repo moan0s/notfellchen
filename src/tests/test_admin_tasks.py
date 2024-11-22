@@ -10,7 +10,7 @@ from model_bakery import baker
 from fellchensammlung.models import AdoptionNotice
 
 
-class DeactiviationTest(TestCase):
+class DeactivationTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         now = timezone.now()
