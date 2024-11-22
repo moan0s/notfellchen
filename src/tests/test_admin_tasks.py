@@ -96,4 +96,3 @@ class PingTest(TestCase):
         self.adoption2.refresh_from_db()
         self.assertTrue(self.adoption1.is_active)
         self.assertFalse(self.adoption2.is_active)
-
