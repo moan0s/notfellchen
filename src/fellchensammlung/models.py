@@ -350,22 +350,22 @@ class AdoptionNotice(models.Model):
 
     def set_closed(self):
         self.last_checked = timezone.now()
-        self.adoptionnoticestatus.set_closed()
         self.save()
+        self.adoptionnoticestatus.set_closed()
 
     def set_active(self):
         self.last_checked = timezone.now()
+        self.save()
         if not hasattr(self, 'adoptionnoticestatus'):
             AdoptionNoticeStatus.create_other(self)
         self.adoptionnoticestatus.set_active()
-        self.save()
 
     def set_unchecked(self):
         self.last_checked = timezone.now()
+        self.save()
         if not hasattr(self, 'adoptionnoticestatus'):
             AdoptionNoticeStatus.create_other(self)
         self.adoptionnoticestatus.set_unchecked()
-        self.save()
 
         for subscription in self.get_subscriptions():
             notification_title = _("Vermittlung deaktiviert:") + f" {self}"
