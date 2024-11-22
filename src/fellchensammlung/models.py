@@ -351,18 +351,21 @@ class AdoptionNotice(models.Model):
     def set_closed(self):
         self.last_checked = timezone.now()
         self.adoptionnoticestatus.set_closed()
+        self.save()
 
     def set_active(self):
         self.last_checked = timezone.now()
         if not hasattr(self, 'adoptionnoticestatus'):
             AdoptionNoticeStatus.create_other(self)
         self.adoptionnoticestatus.set_active()
+        self.save()
 
     def set_unchecked(self):
         self.last_checked = timezone.now()
         if not hasattr(self, 'adoptionnoticestatus'):
             AdoptionNoticeStatus.create_other(self)
         self.adoptionnoticestatus.set_unchecked()
+        self.save()
 
 
 class AdoptionNoticeStatus(models.Model):
