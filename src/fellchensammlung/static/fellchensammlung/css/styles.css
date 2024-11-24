@@ -144,6 +144,7 @@ textarea {
     border-radius: 0px 0px 8px 8px;
     background-color: var(--highlight-two);
     color: var(--highlight-one-text);
+    align-items: center;
 
     .btn2 {
         height: 40px;
@@ -344,6 +345,10 @@ select, .button {
     .menu > li:not(:last-child) {
         border-bottom: 1px solid #444;
     }
+    #header-sign-out, #header-change-language {
+        display: none;
+    }
+
 }
 
 
