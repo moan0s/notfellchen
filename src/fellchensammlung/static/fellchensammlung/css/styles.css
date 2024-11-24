@@ -141,8 +141,6 @@ textarea {
 
 .profile-card {
     display: flex;
-    border-radius: 0px 0px 8px 8px;
-    background-color: var(--highlight-two);
     color: var(--highlight-one-text);
     align-items: center;
 
@@ -259,6 +257,9 @@ select, .button {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background: #4ab457;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 #menu-toggle {
@@ -345,6 +346,7 @@ select, .button {
     .menu > li:not(:last-child) {
         border-bottom: 1px solid #444;
     }
+
     #header-sign-out, #header-change-language {
         display: none;
     }
@@ -565,7 +567,6 @@ select, .button {
 .btn-notification {
     display: inline-block;
     position: relative;
-    padding: 0;
 }
 
 /* Make the badge float in the top right corner of the button */
