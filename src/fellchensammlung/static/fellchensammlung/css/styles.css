@@ -22,6 +22,7 @@
     --text-three: var(--primary-light-one);
     --shadow-three: var(--primary-dark-one);
 }
+
 /**************************/
 /* TAG SETTINGS (GENERAL) */
 /**************************/
@@ -211,8 +212,6 @@ select, .button {
 }
 
 
-
-
 /*********************/
 /* UNIQUE COMPONENTS */
 /*********************/
@@ -226,62 +225,127 @@ select, .button {
     background-color: var(--background-two);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-}
 
-
-.nav-link {
-    color: var(--text-one);
-    text-align: center;
-    text-decoration: none;
-    border-radius: 4px;
-}
-
-.header a, .header form {
-    float: left;
-    padding: 5px 12px 5px 12px;
-    line-height: 25px;
-}
-
-.header a:hover {
-    background-color: var(--highlight-one);
-    color: var(--highlight-one-text);
-}
-
-.header a.active {
-    background-color: dodgerblue;
-    color: white;
-}
-
-
-
-.header-right select.option {
-    color: #000;
-    background-color: var(--highlight-one);
-    border: 1px;
-}
-
-.header-right {
-    float: right;
     display: flex;
-    border-radius: 0px 0px 15px 15px;
-    background-color: var(--highlight-two);
-    color: var(--highlight-one-text);
-    padding: 5px 5px 0px 5px;
-    height: 67px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: #FFF;
+    height: 50px;
+    padding: 1em;
 }
 
 
-@media screen and (max-width: 500px) {
-    .header a {
-        float: none;
-        display: block;
-        text-align: left;
+.menu {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu > li {
+    margin: 0 1rem;
+    overflow: hidden;
+}
+
+.menu-button-container {
+    display: none;
+    height: 100%;
+    width: 30px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#menu-toggle {
+    display: none;
+}
+
+.menu-button,
+.menu-button::before,
+.menu-button::after {
+    display: block;
+    background-color: #fff;
+    position: absolute;
+    height: 4px;
+    width: 30px;
+    transition: transform 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 2px;
+}
+
+.menu-button::before {
+    content: '';
+    margin-top: -8px;
+}
+
+.menu-button::after {
+    content: '';
+    margin-top: 8px;
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::before {
+    margin-top: 0px;
+    transform: rotate(405deg);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button {
+    background: rgba(255, 255, 255, 0);
+}
+
+#menu-toggle:checked + .menu-button-container .menu-button::after {
+    margin-top: 0px;
+    transform: rotate(-405deg);
+}
+
+@media (max-width: 700px) {
+    .menu-button-container {
+        display: flex;
     }
 
-    .header-right {
-        float: none;
+    .menu {
+        position: absolute;
+        top: 0;
+        margin-top: 50px;
+        left: 0;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #menu-toggle ~ nav .menu li {
+        height: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    #menu-toggle:checked ~ nav .menu li {
+        border: 1px solid #333;
+        height: 2.5em;
+        padding: 0.5em;
+        transition: height 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .menu > li {
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0.5em 0;
+        width: 100%;
+        color: white;
+        background-color: var(--background-two);
+    }
+
+    .menu > li:not(:last-child) {
+        border-bottom: 1px solid #444;
     }
 }
+
 
 .logo img {
     height: 40px;
@@ -431,9 +495,6 @@ select, .button {
 }
 
 
-
-
-
 .photos {
     display: flex;
     flex-wrap: wrap;
@@ -578,7 +639,6 @@ select, .button {
     background: var(--background-three);
     color: var(--text-two);
 }
-
 
 
 .form-comments {
