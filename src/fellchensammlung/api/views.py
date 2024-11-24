@@ -7,18 +7,36 @@ from rest_framework.permissions import IsAuthenticated
 from django.db import transaction
 from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel
 from fellchensammlung.tasks import add_adoption_notice_location
-from .serializers import AdoptionNoticeSerializer
+from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from .serializers import (
+    AnimalGetSerializer,
+    AnimalCreateSerializer,
+    RescueOrganizationSerializer,
+    AdoptionNoticeSerializer,
+    ImageCreateSerializer,
+    SpeciesSerializer,
+)
+from fellchensammlung.models import Animal, RescueOrganization, AdoptionNotice, Species, Image
 
 
 class AdoptionNoticeApiView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        serializer_context = {
-            'request': request,
-        }
+        """
+        Retrieve adoption notices with their related animals and images.
+        """
+        adoption_notice_id = kwargs.get("id")
+        if adoption_notice_id:
+            try:
+                adoption_notice = AdoptionNotice.objects.get(pk=adoption_notice_id)
+                serializer = AdoptionNoticeSerializer(adoption_notice, context={"request": request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except AdoptionNotice.DoesNotExist:
+                return Response({"error": "Adoption notice not found."}, status=status.HTTP_404_NOT_FOUND)
         adoption_notices = AdoptionNotice.objects.all()
-        serializer = AdoptionNoticeSerializer(adoption_notices, many=True, context=serializer_context)
+        serializer = AdoptionNoticeSerializer(adoption_notices, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @transaction.atomic
@@ -53,3 +71,96 @@ class AdoptionNoticeApiView(APIView):
             {"message": "Adoption notice created successfully!", "id": adoption_notice.pk},
             status=status.HTTP_201_CREATED,
         )
+
+
+class AnimalApiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        """
+        Get list of animals or a specific animal by ID.
+        """
+        animal_id = kwargs.get("id")
+        if animal_id:
+            try:
+                animal = Animal.objects.get(pk=animal_id)
+                serializer = AnimalGetSerializer(animal, context={"request": request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Animal.DoesNotExist:
+                return Response({"error": "Animal not found."}, status=status.HTTP_404_NOT_FOUND)
+        animals = Animal.objects.all()
+        serializer = AnimalGetSerializer(animals, many=True, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        """
+        Create a new animal.
+        """
+        serializer = AnimalCreateSerializer(data=request.data, context={"request": request})
+        if serializer.is_valid():
+            animal = serializer.save(owner=request.user)
+            return Response(
+                {"message": "Animal created successfully!", "id": animal.id},
+                status=status.HTTP_201_CREATED,
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RescueOrganizationApiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        """
+        Get list of rescue organizations or a specific organization by ID.
+        """
+        org_id = kwargs.get("id")
+        if org_id:
+            try:
+                organization = RescueOrganization.objects.get(pk=org_id)
+                serializer = RescueOrganizationSerializer(organization, context={"request": request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except RescueOrganization.DoesNotExist:
+                return Response({"error": "Organization not found."}, status=status.HTTP_404_NOT_FOUND)
+        organizations = RescueOrganization.objects.all()
+        serializer = RescueOrganizationSerializer(organizations, many=True, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class AddImageApiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        """
+        Add an image to an animal or adoption notice.
+        """
+        serializer = ImageCreateSerializer(data=request.data, context={"request": request})
+        if serializer.is_valid():
+            if serializer.validated_data["attach_to_type"] == "animal":
+                object_to_attach_to = Animal.objects.get(id=serializer.validated_data["attach_to"])
+            elif serializer.fields["attach_to_type"] == "adoption_notice":
+                object_to_attach_to = AdoptionNotice.objects.get(id=serializer.validated_data["attach_to"])
+            else:
+                raise ValueError("Unknown attach_to_type given, should not happen. Check serializer")
+            serializer.validated_data.pop('attach_to_type', None)
+            serializer.validated_data.pop('attach_to', None)
+            image = serializer.save(owner=request.user)
+            object_to_attach_to.photos.add(image)
+            return Response(
+                {"message": "Image added successfully!", "id": image.id},
+                status=status.HTTP_201_CREATED,
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SpeciesApiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieve a list of species.
+        """
+        species = Species.objects.all()
+        serializer = SpeciesSerializer(species, many=True, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
