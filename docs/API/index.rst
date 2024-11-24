@@ -20,8 +20,6 @@ http://notfellchen.org/
 Via token
 ---------
 
-.. warning::
-    This is currently not supported.
 
 All users are able to generate a token that allows them to use the API. This can be done in the user's profile.
 An application can then send this token in the request header for authorization.
