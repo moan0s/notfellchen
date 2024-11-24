@@ -236,6 +236,10 @@ select, .button {
 }
 
 
+#main-menu {
+    order: -1;
+}
+
 .menu {
     display: flex;
     flex-direction: row;
