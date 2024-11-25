@@ -14,8 +14,7 @@ Via browser
 -----------
 
 When a user is logged in, they can easily access the API in their browser, authenticated by their session.
-The API endpoint can be found at /library/api/
-http://notfellchen.org/
+The API endpoint can be found at http://notfellchen.org/api/adoption_notices
 
 Via token
 ---------
