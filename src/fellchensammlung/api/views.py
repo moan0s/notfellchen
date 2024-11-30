@@ -1,9 +1,5 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from rest_framework import permissions
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
 from django.db import transaction
 from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel
 from fellchensammlung.tasks import add_adoption_notice_location
@@ -114,7 +110,7 @@ class RescueOrganizationApiView(APIView):
         """
         Get list of rescue organizations or a specific organization by ID.
         """
-        org_id = kwargs.get("id")
+        org_id = kwargs .get("id")
         if org_id:
             try:
                 organization = RescueOrganization.objects.get(pk=org_id)
