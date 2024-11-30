@@ -10,21 +10,21 @@
         {{ about_us.content | render_markdown }}
     {% endif %}
 
-    <h1>{% translate "Regeln" %}</h1>
+    <h2>{% translate "Regeln" %}</h2>
     {% include "fellchensammlung/lists/list-rules.html" %}
 
     {% if privacy_statement %}
-        <h1>{{ privacy_statement.title }}</h1>
+        <h2>{{ privacy_statement.title }}</h2>
         {{ privacy_statement.content | render_markdown }}
     {% endif %}
 
     {% if terms_of_service %}
-        <h1>{{ terms_of_service.title }}</h1>
+        <h2>{{ terms_of_service.title }}</h2>
         {{ terms_of_service.content | render_markdown }}
     {% endif %}
 
     {% if imprint %}
-        <h1>{{ imprint.title }}</h1>
+        <h2>{{ imprint.title }}</h2>
         {{ imprint.content | render_markdown }}
     {% endif %}
 {% endblock %}
