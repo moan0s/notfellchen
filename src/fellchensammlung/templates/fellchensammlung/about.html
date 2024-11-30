@@ -6,25 +6,41 @@
 
 {% block content %}
     {% if about_us %}
-        <h1>{{ about_us.title }}</h1>
-        {{ about_us.content | render_markdown }}
+        <div class="card">
+            <h1>{{ about_us.title }}</h1>
+            <p>
+                {{ about_us.content | render_markdown }}
+            </p>
+        </div>
     {% endif %}
 
     <h2>{% translate "Regeln" %}</h2>
     {% include "fellchensammlung/lists/list-rules.html" %}
 
     {% if privacy_statement %}
-        <h2>{{ privacy_statement.title }}</h2>
-        {{ privacy_statement.content | render_markdown }}
+        <div class="card">
+            <h2>{{ privacy_statement.title }}</h2>
+            <p>
+                {{ privacy_statement.content | render_markdown }}
+            </p>
+        </div>
     {% endif %}
 
     {% if terms_of_service %}
-        <h2>{{ terms_of_service.title }}</h2>
-        {{ terms_of_service.content | render_markdown }}
+        <div class="card">
+            <h2>{{ terms_of_service.title }}</h2>
+            <p>
+                {{ terms_of_service.content | render_markdown }}
+            </p>
+        </div>
     {% endif %}
 
     {% if imprint %}
-        <h2>{{ imprint.title }}</h2>
-        {{ imprint.content | render_markdown }}
+        <div class="card">
+            <h2>{{ imprint.title }}</h2>
+            <p>
+                {{ imprint.content | render_markdown }}
+            </p>
+        </div>
     {% endif %}
 {% endblock %}
