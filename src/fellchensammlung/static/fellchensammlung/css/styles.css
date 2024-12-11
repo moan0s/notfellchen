@@ -594,6 +594,7 @@ select, .button {
     margin-left: auto;
     font-size: 2rem;
     padding: 10px;
+    width: 15%;
 }
 
 .notification-card-mark-read {
@@ -602,6 +603,7 @@ select, .button {
 
 .heading-card-adoption-notice {
     word-wrap: anywhere;
+    width: 80%;
 }
 
 .tags {
