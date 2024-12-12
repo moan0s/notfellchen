@@ -624,10 +624,13 @@ class ModerationAction(models.Model):
         return f"[{self.action}]: {self.public_comment}"
 
 
-"""
-Membership
-"""
 
+class TextTypeChoices(models.TextChoices):
+    DEDICATED = "dedicated", _("Fest zugeordnet")
+    MALE = "M", _("Männlich")
+    MALE_NEUTERED = "M_N", _("Männlich, kastriert")
+    FEMALE_NEUTERED = "F_N", _("Weiblich, kastriert")
+    INTER = "I", _("Intergeschlechtlich")
 
 class Text(models.Model):
     """

@@ -9,7 +9,7 @@ from django.utils.http import urlencode
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
-    Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions
+    Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, BaseNotification
 from django.utils.translation import gettext_lazy as _
 
 
@@ -66,6 +66,7 @@ class UserAdmin(admin.ModelAdmin):
 
     export_as_csv.short_description = _("Ausgewählte User exportieren")
 
+
 def _reported_content_link(obj):
     reported_content = obj.reported_content
     return format_html(f'<a href="{reported_content.get_absolute_url}">{reported_content}</a>')
@@ -104,9 +105,16 @@ class RescueOrganizationAdmin(admin.ModelAdmin):
 class TextAdmin(admin.ModelAdmin):
     search_fields = ("title__icontains", "text_code__icontains",)
 
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_filter = ("user",)
+
+
+@admin.register(BaseNotification)
+class BaseNotificationAdmin(admin.ModelAdmin):
+    list_filter = ("user", "read")
+
 
 admin.site.register(Animal)
 admin.site.register(Species)
