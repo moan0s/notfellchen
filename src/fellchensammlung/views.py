@@ -23,7 +23,8 @@ from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageFo
 from .models import Language, Announcement
 from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
-from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices
+from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
+    deactivate_404_adoption_notices
 from .tasks import add_adoption_notice_location
 from rest_framework.authtoken.models import Token
 
@@ -530,6 +531,8 @@ def instance_health_check(request):
             clean_locations(quiet=False)
         elif action == "deactivate_unchecked_adoption_notices":
             deactivate_unchecked_adoption_notices()
+        elif action == "deactivate_404":
+            deactivate_404_adoption_notices()
 
     number_of_adoption_notices = AdoptionNotice.objects.all().count()
     none_geocoded_adoption_notices = AdoptionNotice.objects.filter(location__isnull=True)

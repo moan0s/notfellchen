@@ -106,7 +106,15 @@
             {% csrf_token %}
             <input type="hidden" name="action" value="deactivate_unchecked_adoption_notices">
             <button class="btn" type="submit" id="submit">
-                <i class="fa-solid fa-broom"></i> {% translate "Deaktivire ungeprüfte Vermittlungen" %}
+                <i class="fa-solid fa-broom"></i> {% translate "Deaktiviere ungeprüfte Vermittlungen" %}
+            </button>
+        </form>
+
+        <form class="notification-card-mark-read" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="deactivate_404">
+            <button class="btn" type="submit" id="submit">
+                <i class="fa-solid fa-broom"></i> {% translate "Deaktiviere 404 Vermittlungen" %}
             </button>
         </form>
     </div>
