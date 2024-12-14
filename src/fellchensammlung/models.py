@@ -489,7 +489,7 @@ class Animal(models.Model):
     date_of_birth = models.DateField(verbose_name=_('Geburtsdatum'))
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
-    species = models.ForeignKey(Species, on_delete=models.PROTECT)
+    species = models.ForeignKey(Species, on_delete=models.PROTECT, verbose_name=_("Tierart"))
     photos = models.ManyToManyField(Image, blank=True)
     sex = models.CharField(
         max_length=20,
