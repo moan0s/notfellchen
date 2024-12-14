@@ -753,6 +753,12 @@ class CommentNotification(BaseNotification):
     def url(self):
         return self.comment.get_absolute_url
 
+class AndoptionNoticeNotification(BaseNotification):
+    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
+
+    @property
+    def url(self):
+        return self.adoption_notice.get_absolute_url
 
 class Subscriptions(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))

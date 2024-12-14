@@ -3,7 +3,8 @@ import logging
 from django.utils import timezone
 from datetime import timedelta
 
-from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus, Log
+from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus, Log, \
+    AndoptionNoticeNotification
 from fellchensammlung.tools.misc import is_404
 
 
@@ -82,3 +83,9 @@ def deactivate_404_adoption_notices():
                 logging_msg = f"Automatically set Adoption Notice {adoption_notice.id} closed as link to more information returened 404"
                 logging.info(logging_msg)
                 Log.objects.create(action="automated", text=logging_msg)
+
+                deactivation_message = f'Die Vermittlung  [{adoption_notice.name}]({adoption_notice.get_absolute_url()}) wurde automatisch deaktiviert, da die Website unter "Mehr Informationen" nicht mehr online ist.'
+                AndoptionNoticeNotification.objects.create(user=adoption_notice.owner,
+                                                           title="Vermittlung deaktiviert",
+                                                           adoption_notice=adoption_notice,
+                                                           text=deactivation_message)
