@@ -368,8 +368,8 @@ class AdoptionNotice(models.Model):
         self.adoptionnoticestatus.set_unchecked()
 
         for subscription in self.get_subscriptions():
-            notification_title = _("Vermittlung deaktiviert:") + f" {self}"
-            text = _("Die folgende Vermittlung wurde deaktiviert: ") + f"{self.name}, {self.get_absolute_url()}"
+            notification_title = _("Vermittlung deaktiviert:") + f" {self.name}"
+            text = _("Die folgende Vermittlung wurde deaktiviert: ") + f"[{self.name}]({self.get_absolute_url()})"
             BaseNotification.objects.create(user=subscription.owner, text=text, title=notification_title)
 
 
