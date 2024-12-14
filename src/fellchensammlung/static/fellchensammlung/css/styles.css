@@ -662,7 +662,16 @@ select, .button {
     }
 }
 
-.announcement {
+.announcement-header {
+    font-size: 1.2rem;
+    margin: 0px;
+    padding: 0px;
+    color: var(--text-two);
+    text-shadow: none;
+    font-weight: bold;
+}
+
+div.announcement {
     flex: 1 100%;
     margin: 10px;
     border-radius: 8px;
@@ -670,13 +679,6 @@ select, .button {
     background: var(--background-three);
     color: var(--text-two);
 
-    h1 {
-        font-size: 1.2rem;
-        margin: 0px;
-        padding: 0px;
-        color: var(--text-two);
-        text-shadow: none;
-    }
 }
 
 
