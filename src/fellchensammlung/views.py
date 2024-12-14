@@ -210,18 +210,18 @@ def add_adoption_notice(request):
                                                           in_adoption_notice_creation_flow=True)
 
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.owner = request.user
-            instance.save()
+            an_instance = form.save(commit=False)
+            an_instance.owner = request.user
+            an_instance.save()
 
             """Spin up a task that adds the location"""
-            add_adoption_notice_location.delay_on_commit(instance.pk)
+            add_adoption_notice_location.delay_on_commit(an_instance.pk)
 
             # Set correct status
             if request.user.trust_level >= TrustLevel.MODERATOR:
-                instance.set_active()
+                an_instance.set_active()
             else:
-                instance.set_unchecked()
+                an_instance.set_unchecked()
 
             # Get the species and number of animals from the form
             species = form.cleaned_data["species"]
@@ -230,13 +230,18 @@ def add_adoption_notice(request):
             date_of_birth = form.cleaned_data["date_of_birth"]
             for i in range(0, num_animals):
                 Animal.objects.create(owner=request.user,
-                                      name=f"{species} {i + 1}", adoption_notice=instance, species=species, sex=sex,
+                                      name=f"{species} {i + 1}", adoption_notice=an_instance, species=species, sex=sex,
                                       date_of_birth=date_of_birth)
 
             """Log"""
             Log.objects.create(user=request.user, action="add_adoption_notice",
-                               text=f"{request.user} hat Vermittlung {instance.pk} hinzugefügt")
-            return redirect(reverse("adoption-notice-detail", args=[instance.pk]))
+                               text=f"{request.user} hat Vermittlung {an_instance.pk} hinzugefügt")
+
+            """Subscriptions"""
+            # Automatically subscribe user that created AN to AN
+            Subscriptions.objects.create(owner=request.user, adoption_notice=an_instance)
+
+            return redirect(reverse("adoption-notice-detail", args=[an_instance.pk]))
     else:
         form = AdoptionNoticeFormWithDateWidgetAutoAnimal(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
