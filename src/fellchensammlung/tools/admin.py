@@ -85,7 +85,8 @@ def deactivate_404_adoption_notices():
                 Log.objects.create(action="automated", text=logging_msg)
 
                 deactivation_message = f'Die Vermittlung  [{adoption_notice.name}]({adoption_notice.get_absolute_url()}) wurde automatisch deaktiviert, da die Website unter "Mehr Informationen" nicht mehr online ist.'
-                AndoptionNoticeNotification.objects.create(user=adoption_notice.owner,
-                                                           title="Vermittlung deaktiviert",
-                                                           adoption_notice=adoption_notice,
-                                                           text=deactivation_message)
+                for subscription in adoption_notice.get_subscriptions():
+                    AndoptionNoticeNotification.objects.create(user=subscription.owner,
+                                                               title="Vermittlung deaktiviert",
+                                                               adoption_notice=adoption_notice,
+                                                               text=deactivation_message)
