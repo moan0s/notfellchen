@@ -13,11 +13,21 @@
             <form class="card" action="" method="POST">
                 {% csrf_token %}
                 {% if user.email_notifications %}
-                    <input class="btn" type="submit" name="toggle_email_notifications"
-                           value="{% translate 'E-Mail Benachrichtigungen deaktivieren' %}">
+                    <label class="toggle">
+                        <input type="submit" class="toggle-checkbox checked" name="toggle_email_notifications">
+                        <div class="toggle-switch round "></div>
+                        <span class="slider-label">
+                        {% translate 'E-Mail Benachrichtigungen' %}
+                        </span>
+                    </label>
                 {% else %}
-                    <input class="btn" type="submit" name="toggle_email_notifications"
-                           value="{% translate 'E-Mail Benachrichtigungen aktivieren' %}">
+                    <label class="toggle">
+                        <input type="submit" class="toggle-checkbox" name="toggle_email_notifications">
+                        <div class="toggle-switch round"></div>
+                        <span class="slider-label">
+                        {% translate 'E-Mail Benachrichtigungen' %}
+                        </span>
+                    </label>
                 {% endif %}
             </form>
             <div class="card">
