@@ -96,7 +96,7 @@ class ReportAdoptionNoticeAdmin(admin.ModelAdmin):
 
 @admin.register(RescueOrganization)
 class RescueOrganizationAdmin(admin.ModelAdmin):
-    search_fields = ("name__icontains",)
+    search_fields = ("name","description", "internal_comment", "location_string")
     list_display = ("name", "trusted", "allows_using_materials", "website")
     list_filter = ("allows_using_materials", "trusted",)
 
