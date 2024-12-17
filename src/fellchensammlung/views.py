@@ -169,7 +169,6 @@ def animal_detail(request, animal_id):
 
 
 def search(request):
-    place_not_found = None
     latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
     active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
     if request.method == 'POST':
@@ -193,6 +192,7 @@ def search(request):
                 place_not_found = True
                 adoption_notices_in_distance = active_adoptions
             else:
+                place_not_found = False
                 adoption_notices_in_distance = [a for a in active_adoptions if a.in_distance(search_position, max_distance)]
 
         context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form,
