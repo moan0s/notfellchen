@@ -157,6 +157,12 @@ class User(AbstractUser):
         verbose_name = _('Nutzer*in')
         verbose_name_plural = _('Nutzer*innen')
 
+    def get_full_name(self):
+        if self.first_name and self.last_name:
+            return self.first_name + self.last_name
+        else:
+            return self.username
+
     def get_absolute_url(self):
         return reverse("user-detail", args=[str(self.pk)])
 
