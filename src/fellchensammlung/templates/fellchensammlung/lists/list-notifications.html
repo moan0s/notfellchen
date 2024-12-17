@@ -1,5 +1,10 @@
+{% load i18n %}
 <div class="container-cards">
-    {% for notification in notifications %}
-        {% include "fellchensammlung/partials/partial-notification.html" %}
-    {% endfor %}
+    {% if notifications %}
+        {% for notification in notifications %}
+            {% include "fellchensammlung/partials/partial-notification.html" %}
+        {% endfor %}
+    {% else %}
+        <p>{% translate 'Keine ungelesenen Benachrichtigungen' %}</p>
+    {% endif %}
 </div>
