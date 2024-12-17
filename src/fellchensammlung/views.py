@@ -460,6 +460,10 @@ def my_profile(request):
             Token.objects.create(user=request.user)
         elif "delete_token" in request.POST:
             Token.objects.get(user=request.user).delete()
+        elif "toggle_email_notifications" in request.POST:
+            user = request.user
+            user.email_notifications = not user.email_notifications
+            user.save()
 
         action = request.POST.get("action")
         if action == "notification_mark_read":
@@ -475,6 +479,7 @@ def my_profile(request):
             for notification in notifications:
                 notification.read = True
                 notification.save()
+
     try:
         token = Token.objects.get(user=request.user)
     except Token.DoesNotExist:
