@@ -294,7 +294,7 @@ def add_photo_to_animal(request, animal_id):
                 form = ImageForm(in_flow=True)
                 return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
             else:
-                return redirect(reverse("animal-detail", args=[animal_id]))
+                return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
     else:
         form = ImageForm(in_flow=True)
         return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
