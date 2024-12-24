@@ -539,6 +539,13 @@ class Animal(models.Model):
         """Returns the url to access a detailed page for the animal."""
         return reverse('animal-detail', args=[str(self.id)])
 
+class DistanceChoices(models.IntegerChoices):
+    TWENTY = 20, '20 km'
+    FIFTY = 50, '50 km'
+    ONE_HUNDRED = 100, '100 km'
+    TWO_HUNDRED = 200, '200 km'
+    FIVE_HUNDRED = 500, '500 km'
+
 
 class Rule(models.Model):
     """

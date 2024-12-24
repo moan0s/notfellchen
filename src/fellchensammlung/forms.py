@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import AdoptionNotice, Animal, Image, ReportAdoptionNotice, ReportComment, ModerationAction, User, Species, \
-    Comment, SexChoicesWithAll
+    Comment, SexChoicesWithAll, DistanceChoices
 from django_registration.forms import RegistrationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field, Hidden
@@ -181,12 +181,8 @@ class CustomRegistrationForm(RegistrationForm):
         self.helper.add_input(Submit('submit', _('Registrieren'), css_class="btn"))
 
 
-def _get_distances():
-    return {i: i for i in [20, 50, 100, 200, 500]}
-
-
 class AdoptionNoticeSearchForm(forms.Form):
     location = forms.CharField(max_length=20, label=_("Stadt"), required=False)
-    max_distance = forms.ChoiceField(choices=_get_distances, label=_("Max. Distanz"))
+    max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.ONE_HUNDRED, label=_("Suchradius"))
     sex = forms.ChoiceField(choices=SexChoicesWithAll, label=_("Geschlecht"), required=False,
                             initial=SexChoicesWithAll.ALL)
