@@ -17,6 +17,15 @@
     <h2>{% translate "Regeln" %}</h2>
     {% include "fellchensammlung/lists/list-rules.html" %}
 
+    {% if faq %}
+        <div class="card">
+            <h2>{{ faq.title }}</h2>
+            <p>
+                {{ faq.content | render_markdown }}
+            </p>
+        </div>
+    {% endif %}
+
     {% if privacy_statement %}
         <div class="card">
             <h2>{{ privacy_statement.title }}</h2>
