@@ -16,7 +16,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
-    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll
+    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal

@@ -546,6 +546,23 @@ class DistanceChoices(models.IntegerChoices):
     TWO_HUNDRED = 200, '200 km'
     FIVE_HUNDRED = 500, '500 km'
 
+class SearchSubscription(models.Model):
+    """
+    SearchSubscriptions allow a user to get a notification when a new AdoptionNotice is added that matches their Search
+    criteria. Search criteria are location, SexChoicesWithAll and distance
+
+    Process:
+    - User performs a normal search
+    - User clicks Button "Subscribe to this Search"
+    - SearchSubscription is added to database
+    - On new AdoptionNotice: Check all existing SearchSubscriptions for matches
+    - For matches: Send notification to user of the SearchSubscription
+    """
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.PROTECT)
+    sex = models.CharField(max_length=20, choices=SexChoices.choices)
+    radius = models.IntegerField(choices=DistanceChoices.choices)
+
 
 class Rule(models.Model):
     """
@@ -640,13 +657,13 @@ class ModerationAction(models.Model):
         return f"[{self.action}]: {self.public_comment}"
 
 
-
 class TextTypeChoices(models.TextChoices):
     DEDICATED = "dedicated", _("Fest zugeordnet")
     MALE = "M", _("Männlich")
     MALE_NEUTERED = "M_N", _("Männlich, kastriert")
     FEMALE_NEUTERED = "F_N", _("Weiblich, kastriert")
     INTER = "I", _("Intergeschlechtlich")
+
 
 class Text(models.Model):
     """
@@ -769,12 +786,14 @@ class CommentNotification(BaseNotification):
     def url(self):
         return self.comment.get_absolute_url
 
+
 class AndoptionNoticeNotification(BaseNotification):
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
 
     @property
     def url(self):
         return self.adoption_notice.get_absolute_url
+
 
 class Subscriptions(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
