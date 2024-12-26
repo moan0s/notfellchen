@@ -21,6 +21,16 @@ class Search():
         self.place_not_found = False  # Indicates that a location was given but could not be geocoded
         self.search_form = None
 
+    def __eq__(self, other):
+        """
+        Custom equals that also supports SearchSubscriptions
+        """
+        return self.location.name == other.location.name and self.sex == other.sex and self.max_distance == other.max_distance
+
+    def _locate(self):
+        if self.location is None:
+            self.location = Location.get_location_from_string(self.location_string)
+
     def get_adoption_notices(self):
         adoptions = AdoptionNotice.objects.order_by("-created_at")
         adoptions = [adoption for adoption in adoptions if adoption.is_active]
@@ -36,7 +46,8 @@ class Search():
             self.search_form = AdoptionNoticeSearchForm(request.POST)
             self.search_form.is_valid()
             self.sex = self.search_form.cleaned_data["sex"]
-            if self.search_form.cleaned_data["location_string"] != "" and self.search_form.cleaned_data["max_distance"] != "":
+            if self.search_form.cleaned_data["location_string"] != "" and self.search_form.cleaned_data[
+                "max_distance"] != "":
                 self.area_search = True
                 self.location_string = self.search_form.cleaned_data["location_string"]
                 self.max_distance = int(self.search_form.cleaned_data["max_distance"])
@@ -50,9 +61,19 @@ class Search():
 
     def subscribe(self, user):
         logging.info(f"{user} subscribed to search")
-
-        location = Location.get_location_from_string(self.location_string)
+        self._locate()
         SearchSubscription.objects.create(owner=user,
-                                          location=location,
+                                          location=self.location,
                                           sex=self.sex,
                                           radius=self.max_distance)
+
+    def is_subscribed(self, user):
+        """
+        Returns true if a user is already subscribed to a search with these parameters
+        """
+        user_subscriptions = SearchSubscription.objects.filter(owner=user)
+        self._locate()
+        for subscription in user_subscriptions:
+            if self == subscription:
+                return True
+        return False
