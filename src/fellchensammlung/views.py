@@ -28,6 +28,8 @@ from .tools.admin import clean_locations, get_unchecked_adoption_notices, deacti
 from .tasks import add_adoption_notice_location
 from rest_framework.authtoken.models import Token
 
+from .tools.search import Search
+
 
 def user_is_trust_level_or_above(user, trust_level=TrustLevel.MODERATOR):
     return user.is_authenticated and user.trust_level >= trust_level
@@ -169,37 +171,17 @@ def animal_detail(request, animal_id):
 
 
 def search(request):
-    latest_adoption_list = AdoptionNotice.objects.order_by("-created_at")
-    active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
+    search = Search()
+    search.search_from_request(request)
     if request.method == 'POST':
+        if "subscribe_to_search" in request.POST:
+            # Make sure user is logged in
+            if not request.user.is_authenticated:
+                return redirect(f"{settings.LOGIN_URL}?next={request.path}")
 
-        sex = request.POST.get("sex")
-        if sex != SexChoicesWithAll.ALL:
-            active_adoptions = [adoption for adoption in active_adoptions if sex in adoption.sexes]
-
-        search_form = AdoptionNoticeSearchForm(request.POST)
-        search_form.is_valid()
-        if search_form.cleaned_data["location"] == "":
-            adoption_notices_in_distance = active_adoptions
-            place_not_found = False
-        else:
-            max_distance = int(request.POST.get('max_distance'))
-            if max_distance == "":
-                max_distance = None
-            geo_api = GeoAPI()
-            search_position = geo_api.get_coordinates_from_query(request.POST['location'])
-            if search_position is None:
-                place_not_found = True
-                adoption_notices_in_distance = active_adoptions
-            else:
-                place_not_found = False
-                adoption_notices_in_distance = [a for a in active_adoptions if a.in_distance(search_position, max_distance)]
-
-        context = {"adoption_notices": adoption_notices_in_distance, "search_form": search_form,
-                   "place_not_found": place_not_found}
-    else:
-        search_form = AdoptionNoticeSearchForm()
-        context = {"adoption_notices": active_adoptions, "search_form": search_form}
+            search.subscribe(request.user)
+    context = {"adoption_notices": search.get_adoption_notices(), "search_form": search.search_form,
+               "place_not_found": search.place_not_found}
     return render(request, 'fellchensammlung/search.html', context=context)
 
 
