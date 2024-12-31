@@ -6,7 +6,7 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.http import urlencode
 
-from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp
+from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, BaseNotification
@@ -114,6 +114,10 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(BaseNotification)
 class BaseNotificationAdmin(admin.ModelAdmin):
     list_filter = ("user", "read")
+
+@admin.register(SearchSubscription)
+class SearchSubscriptionAdmin(admin.ModelAdmin):
+    list_filter = ("owner",)
 
 
 admin.site.register(Animal)
