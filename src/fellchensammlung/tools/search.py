@@ -14,10 +14,11 @@ def notify_search_subscribers(adoption_notice: AdoptionNotice, only_if_active : 
     if only_if_active and not adoption_notice.is_active:
         return
     for search_subscription in SearchSubscription.objects.all():
-        if search_subscription.adoption_notice_fits_search(adoption_notice):
+        search = Search(search_subscription=search_subscription)
+        if search.adoption_notice_fits_search(adoption_notice):
             notification_text = f"{_('Zu deiner Suche')} {search_subscription} wurde eine neue Vermittlung gefunden"
             AdoptionNoticeNotification.objects.create(user=search_subscription.owner,
-                                                      title=f"{_('Neue Vermittlung')}: {adoption_notice.title}",
+                                                      title=f"{_('Neue Vermittlung')}: {adoption_notice}",
                                                       adoption_notice=adoption_notice,
                                                       text=notification_text)
 
