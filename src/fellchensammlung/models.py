@@ -560,7 +560,7 @@ class SearchSubscription(models.Model):
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.PROTECT)
-    sex = models.CharField(max_length=20, choices=SexChoices.choices)
+    sex = models.CharField(max_length=20, choices=SexChoicesWithAll.choices)
     radius = models.IntegerField(choices=DistanceChoices.choices)
 
     def __str__(self):
