@@ -171,17 +171,24 @@ def animal_detail(request, animal_id):
 
 
 def search(request):
+    # A user just visiting the search site did not search, only upon completing the search form a user has really
+    # searched. This will toggle the "subscribe" button
+    searched = False
     search = Search()
     search.search_from_request(request)
     if request.method == 'POST':
+        searched = True
         if "subscribe_to_search" in request.POST:
             # Make sure user is logged in
             if not request.user.is_authenticated:
                 return redirect(f"{settings.LOGIN_URL}?next={request.path}")
             search.subscribe(request.user)
 
-    context = {"adoption_notices": search.get_adoption_notices(), "search_form": search.search_form,
-               "place_not_found": search.place_not_found}
+    context = {"adoption_notices": search.get_adoption_notices(),
+               "search_form": search.search_form,
+               "place_not_found": search.place_not_found,
+               "user_is_subscribed_to_search": search.is_subscribed(request.user),
+               "searched": searched}
     return render(request, 'fellchensammlung/search.html', context=context)
 
 
