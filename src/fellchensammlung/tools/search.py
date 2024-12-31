@@ -1,7 +1,7 @@
 import logging
 from django.utils.translation import gettext_lazy as _
 
-from .geo import GeoAPI
+from .geo import GeoAPI, LocationProxy
 from ..forms import AdoptionNoticeSearchForm
 from ..models import SearchSubscription, AdoptionNotice, AdoptionNoticeNotification, SexChoicesWithAll, Location
 
@@ -21,15 +21,19 @@ def notify_search_subscribers(adoption_notice: AdoptionNotice):
 
 
 class Search:
-    def __init__(self):
+    def __init__(self, request=None, search_subscription=None):
         self.sex = None
         self.area_search = None
         self.max_distance = None
-        self.location_string = None
-        self.search_position = None
         self.location = None
         self.place_not_found = False  # Indicates that a location was given but could not be geocoded
         self.search_form = None
+
+        if request:
+            self.search_from_request(request)
+        elif search_subscription:
+            self.search_from_search_subscription(search_subscription)
+
 
     def __str__(self):
         return f"Search: {self.sex=}, {self.location=}, {self.search_position=}, {self.area_search=}, {self.max_distance=}"
@@ -57,7 +61,7 @@ class Search:
         # make sure it's an area search and the place is found to check location
         if self.area_search and not self.place_not_found:
             # If adoption notice is in not in search distance, return false
-            if not adoption_notice.in_distance(self.search_position, self.max_distance):
+            if not adoption_notice.in_distance(self.location.position, self.max_distance):
                 return False
         return True
 
@@ -82,9 +86,9 @@ class Search:
                 self.location_string = self.search_form.cleaned_data["location_string"]
                 self.max_distance = int(self.search_form.cleaned_data["max_distance"])
 
-                geo_api = GeoAPI()
-                self.search_position = geo_api.get_coordinates_from_query(self.location_string)
-                if self.search_position is None:
+                try:
+                    self.location = LocationProxy(self.location_string)
+                except ValueError:
                     self.place_not_found = True
         else:
             self.search_form = AdoptionNoticeSearchForm()
@@ -94,7 +98,6 @@ class Search:
         search = Search()
         search.sex = search_subscription.sex
         search.location = search_subscription.location
-        search.search_position = (search_subscription.location.latitude, search_subscription.location.longitude)
         search.area_search = True
         search.max_distance = search_subscription.max_distance
 
@@ -104,7 +107,8 @@ class Search:
 
     def subscribe(self, user):
         logging.info(f"{user} subscribed to search")
-        self._locate()
+        if isinstance(self.location, LocationProxy):
+            self.location = Location.get_location_from_proxy(self.location)
         SearchSubscription.objects.create(owner=user,
                                           location=self.location,
                                           sex=self.sex,
@@ -115,7 +119,6 @@ class Search:
         Returns true if a user is already subscribed to a search with these parameters
         """
         user_subscriptions = SearchSubscription.objects.filter(owner=user)
-        self._locate()
         for subscription in user_subscriptions:
             if self == subscription:
                 return True

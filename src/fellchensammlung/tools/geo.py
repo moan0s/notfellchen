@@ -65,7 +65,8 @@ class GeoAPI:
     def get_coordinates_from_query(self, location_string):
         try:
             result = \
-            self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers).json()[0]
+                self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"},
+                                  headers=self.headers).json()[0]
         except IndexError:
             return None
         return result["lat"], result["lon"]
@@ -87,6 +88,36 @@ class GeoAPI:
             logging.warning(f"Couldn't find a result for {location_string} when querying Nominatim")
             return None
         return result
+
+
+class LocationProxy:
+    """
+    Location proxy is used as a precursor to the location model without the need to create unnecessary database objects
+    """
+
+    def __init__(self, location_string):
+        """
+        Creates the location proxy from the location string
+        """
+        self.geo_api = GeoAPI()
+        geojson = self.geo_api.get_geojson_for_query(location_string)
+        if geojson is None:
+            raise ValueError
+        result = geojson[0]
+        if "name" in result:
+            self.name = result["name"]
+        else:
+            self.name = result["display_name"]
+        self.place_id = result["place_id"]
+        self.latitude = result["lat"]
+        self.longitude = result["lon"]
+
+    def __eq__(self, other):
+        return self.place_id == other.place_id
+
+    @property
+    def position(self):
+        return (self.latitude, self.longitude)
 
 
 if __name__ == "__main__":

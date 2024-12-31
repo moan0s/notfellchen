@@ -11,6 +11,7 @@ from django.contrib.auth.models import AbstractUser
 
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL
+from .tools.geo import LocationProxy
 
 
 class Language(models.Model):
@@ -46,25 +47,29 @@ class Location(models.Model):
         return f"{self.name} ({self.latitude:.5}, {self.longitude:.5})"
 
     @property
+    def position(self):
+        return (self.latitude, self.longitude)
+
+    @property
     def str_hr(self):
         return f"{self.name.split(',')[0]}"
 
     @staticmethod
     def get_location_from_string(location_string):
-        geo_api = geo.GeoAPI()
-        geojson = geo_api.get_geojson_for_query(location_string)
-        if geojson is None:
+        try:
+            proxy = LocationProxy(location_string)
+        except ValueError:
             return None
-        result = geojson[0]
-        if "name" in result:
-            name = result["name"]
-        else:
-            name = result["display_name"]
+        location = Location.get_location_from_proxy(proxy)
+        return location
+
+    @staticmethod
+    def get_location_from_proxy(proxy):
         location = Location.objects.create(
-            place_id=result["place_id"],
-            latitude=result["lat"],
-            longitude=result["lon"],
-            name=name,
+            place_id=proxy.place_id,
+            latitude=proxy.latitude,
+            longitude=proxy.longitude,
+            name=proxy.name,
         )
         return location
 
