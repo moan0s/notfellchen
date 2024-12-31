@@ -561,10 +561,10 @@ class SearchSubscription(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.PROTECT)
     sex = models.CharField(max_length=20, choices=SexChoicesWithAll.choices)
-    radius = models.IntegerField(choices=DistanceChoices.choices)
+    max_distance = models.IntegerField(choices=DistanceChoices.choices)
 
     def __str__(self):
-        return f"{self.owner}: [{SexChoicesWithAll(self.sex).label}] {self.radius}km - {self.location}"
+        return f"{self.owner}: [{SexChoicesWithAll(self.sex).label}] {self.max_distance}km - {self.location}"
 
 
 class Rule(models.Model):
