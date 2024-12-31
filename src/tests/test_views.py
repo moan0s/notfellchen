@@ -23,7 +23,7 @@ class AnimalAndAdoptionTest(TestCase):
         test_user0.trust_level = TrustLevel.ADMIN
         test_user0.save()
 
-        adoption1 = baker.make(AdoptionNotice, name="TestAdoption1")
+        adoption1 = baker.make(AdoptionNotice, name="TestAdoption1", owner=test_user0)
         rat = baker.make(Species, name="Farbratte")
 
         rat1 = baker.make(Animal,
