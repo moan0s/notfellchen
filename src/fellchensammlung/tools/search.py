@@ -20,7 +20,7 @@ def notify_search_subscribers(adoption_notice: AdoptionNotice):
                                                       text=notification_text)
 
 
-class Search():
+class Search:
     def __init__(self):
         self.sex = None
         self.area_search = None
@@ -37,6 +37,8 @@ class Search():
     def __eq__(self, other):
         """
         Custom equals that also supports SearchSubscriptions
+
+        Only allowed to be called for located subscriptions
         """
         return self.location.name == other.location.name and self.sex == other.sex and self.max_distance == other.max_distance
 
@@ -60,11 +62,10 @@ class Search():
 
     def get_adoption_notices(self):
         adoptions = AdoptionNotice.objects.order_by("-created_at")
+        # Filter for active adoption notices
         adoptions = [adoption for adoption in adoptions if adoption.is_active]
-        if self.sex is not None and self.sex != SexChoicesWithAll.ALL:
-            adoptions = [adoption for adoption in adoptions if self.sex in adoption.sexes]
-        if self.area_search and not self.place_not_found:
-            adoptions = [a for a in adoptions if a.in_distance(self.search_position, self.max_distance)]
+        # Check if adoption notice fits search.
+        adoptions = [adoption for adoption in adoptions if self.adoption_notice_fits_search(adoption)]
 
         return adoptions
 
@@ -85,6 +86,19 @@ class Search():
                     self.place_not_found = True
         else:
             self.search_form = AdoptionNoticeSearchForm()
+
+    @staticmethod
+    def search_from_search_subscription(search_subscription: SearchSubscription):
+        search = Search()
+        search.sex = search_subscription.sex
+        search.location = search_subscription.location
+        search.search_position = (search_subscription.location.latitude, search_subscription.location.longitude)
+        search.area_search = True
+        search.max_distance = search_subscription.max_distance
+
+
+        return search
+
 
     def subscribe(self, user):
         logging.info(f"{user} subscribed to search")
