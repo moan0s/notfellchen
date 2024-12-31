@@ -40,6 +40,8 @@ class Search:
 
         Only allowed to be called for located subscriptions
         """
+        if self.location is None:
+            return False
         return self.location.name == other.location.name and self.sex == other.sex and self.max_distance == other.max_distance
 
     def _locate(self):
@@ -106,7 +108,7 @@ class Search:
         SearchSubscription.objects.create(owner=user,
                                           location=self.location,
                                           sex=self.sex,
-                                          radius=self.max_distance)
+                                          max_distance=self.max_distance)
 
     def is_subscribed(self, user):
         """
