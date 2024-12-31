@@ -44,13 +44,13 @@ class Search:
 
         Only allowed to be called for located subscriptions
         """
-        if self.location is None:
+        # If both locations are empty check only for sex
+        if self.location is None and other.location is None:
+            return self.sex == other.sex
+        # If one location is empty and the other is not, they are not equal
+        elif self.location is not None and other.location is None or self.location is None and other.location is not None:
             return False
-        return self.location.name == other.location.name and self.sex == other.sex and self.max_distance == other.max_distance
-
-    def _locate(self):
-        if self.location is None:
-            self.location = Location.get_location_from_string(self.location_string)
+        return self.location == other.location and self.sex == other.sex and self.max_distance == other.max_distance
 
     def adoption_notice_fits_search(self, adoption_notice: AdoptionNotice):
         # Make sure sex is set and sex is not set to all (then it can be disregarded)
