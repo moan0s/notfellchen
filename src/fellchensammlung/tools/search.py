@@ -21,6 +21,9 @@ class Search():
         self.place_not_found = False  # Indicates that a location was given but could not be geocoded
         self.search_form = None
 
+    def __str__(self):
+        return f"Search: {self.sex=}, {self.location=}, {self.search_position=}, {self.area_search=}, {self.max_distance=}"
+
     def __eq__(self, other):
         """
         Custom equals that also supports SearchSubscriptions
