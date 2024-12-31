@@ -25,7 +25,7 @@ from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
     deactivate_404_adoption_notices
-from .tasks import add_adoption_notice_location
+from .tasks import add_adoption_notice_location, notify_subscribers
 from rest_framework.authtoken.models import Token
 
 from .tools.search import Search
@@ -219,6 +219,7 @@ def add_adoption_notice(request):
             # Set correct status
             if request.user.trust_level >= TrustLevel.MODERATOR:
                 an_instance.set_active()
+                notify_subscribers.delay_on_commit(an_instance.pk)
             else:
                 an_instance.set_unchecked()
 

@@ -1,3 +1,5 @@
+import logging
+
 from celery.app import shared_task
 from django.utils import timezone
 from notfellchen.celery import app as celery_app
@@ -5,6 +7,7 @@ from .mail import send_notification_email
 from .tools.admin import clean_locations, deactivate_unchecked_adoption_notices, deactivate_404_adoption_notices
 from .tools.misc import healthcheck_ok
 from .models import Location, AdoptionNotice, Timestamp
+from .tools.search import notify_search_subscribers
 
 
 def set_timestamp(key: str):
@@ -40,6 +43,11 @@ def add_adoption_notice_location(pk):
     Location.add_location_to_object(instance)
     set_timestamp("add_adoption_notice_location")
 
+@celery_app.task(name="commit.notify_subscribers")
+def notify_subscribers(pk):
+    instance = AdoptionNotice.objects.get(pk=pk)
+    notify_search_subscribers(instance)
+    logging.info(f"Subscribers for AN {pk} have been notified")
 
 @celery_app.task(name="tools.healthcheck")
 def task_healthcheck():

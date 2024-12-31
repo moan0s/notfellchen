@@ -6,11 +6,13 @@ from ..forms import AdoptionNoticeSearchForm
 from ..models import SearchSubscription, AdoptionNotice, AdoptionNoticeNotification, SexChoicesWithAll, Location
 
 
-def notify_search_subscribers(adoption_notice: AdoptionNotice):
+def notify_search_subscribers(adoption_notice: AdoptionNotice, only_if_active : bool = True):
     """
     This functions checks for all search subscriptions if the new adoption notice fits the search.
     If the new adoption notice fits the search subscription, it sends a notification to the user that created the search.
     """
+    if only_if_active and not adoption_notice.is_active:
+        return
     for search_subscription in SearchSubscription.objects.all():
         if search_subscription.adoption_notice_fits_search(adoption_notice):
             notification_text = f"{_('Zu deiner Suche')} {search_subscription} wurde eine neue Vermittlung gefunden"
