@@ -563,6 +563,9 @@ class SearchSubscription(models.Model):
     sex = models.CharField(max_length=20, choices=SexChoices.choices)
     radius = models.IntegerField(choices=DistanceChoices.choices)
 
+    def __str__(self):
+        return f"{self.owner}: {self.sex} {self.radius}km - {self.location}"
+
 
 class Rule(models.Model):
     """
