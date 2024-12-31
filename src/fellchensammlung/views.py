@@ -178,8 +178,8 @@ def search(request):
             # Make sure user is logged in
             if not request.user.is_authenticated:
                 return redirect(f"{settings.LOGIN_URL}?next={request.path}")
-
             search.subscribe(request.user)
+
     context = {"adoption_notices": search.get_adoption_notices(), "search_form": search.search_form,
                "place_not_found": search.place_not_found}
     return render(request, 'fellchensammlung/search.html', context=context)
