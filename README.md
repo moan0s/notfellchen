@@ -85,7 +85,7 @@ a selfhosted Nominatim instance to avoid overburdening the publicly hosted insta
 geocoding is only supported for Germany right now.
 
 ToDos
-* [ ] Implement a report that shows the number of location strings that could not be converted into a location
+* [x] Implement a report that shows the number of location strings that could not be converted into a location
 * [x] Add a management command to re-query location strings to fill location
 
 ## Maps
@@ -125,3 +125,20 @@ Start beat
 ```zsh
  celery -A notfellchen.celery beat
 ```
+
+# Contributing
+
+This project is currently solely developed by me, moanos. I'd like that to change and will be very happy for contributions
+and shared responsibilities. Some ideas where you can look for contributing first
+
+* CSS structure: It's a hot mess right now, and I'm happy it somehow works. As you might see, there is much room for improvement. Refactoring this and streamlining the look across the app would be amazing.
+* Docker: If you know how to build a docker container that is a) smaller or b) utilizes staged builds this would be amazing. Any improvement welcome
+* Testing: Writing tests is always welcome, and it's likely you discover a few bugs
+
+I'm also very happy for all other contributions. Before you do large refactoring efforts or features, best write a short
+issue for it before you spend a lot of work.
+
+Send PRs either to [codeberg](https://codeberg.org/moanos/notfellchen) (preferred) or [Github](https://github.com/moan0s/notfellchen).
+CI (currently only for dcumentation) runs via [git.hyteck.de](https://git.hyteck.de), you can also ask moanos for an account there.
+
+Also welcome are new issues with suggestions or bugs and additions to the documentation.
