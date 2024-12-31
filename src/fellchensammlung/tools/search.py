@@ -1,13 +1,23 @@
 import logging
+from django.utils.translation import gettext_lazy as _
 
 from .geo import GeoAPI
 from ..forms import AdoptionNoticeSearchForm
-from ..models import SearchSubscription, AdoptionNotice, BaseNotification, SexChoicesWithAll, Location
+from ..models import SearchSubscription, AdoptionNotice, AdoptionNoticeNotification, SexChoicesWithAll, Location
 
 
-def notify_search_subscribers(new_adoption_notice: AdoptionNotice):
+def notify_search_subscribers(adoption_notice: AdoptionNotice):
+    """
+    This functions checks for all search subscriptions if the new adoption notice fits the search.
+    If the new adoption notice fits the search subscription, it sends a notification to the user that created the search.
+    """
     for search_subscription in SearchSubscription.objects.all():
-        BaseNotification.objects.create(user=search_subscription.owner)
+        if search_subscription.adoption_notice_fits_search(adoption_notice):
+            notification_text = f"{_('Zu deiner Suche')} {search_subscription} wurde eine neue Vermittlung gefunden"
+            AdoptionNoticeNotification.objects.create(user=search_subscription.owner,
+                                                      title=f"{_('Neue Vermittlung')}: {adoption_notice.title}",
+                                                      adoption_notice=adoption_notice,
+                                                      text=notification_text)
 
 
 class Search():
@@ -33,6 +43,20 @@ class Search():
     def _locate(self):
         if self.location is None:
             self.location = Location.get_location_from_string(self.location_string)
+
+    def adoption_notice_fits_search(self, adoption_notice: AdoptionNotice):
+        # Make sure sex is set and sex is not set to all (then it can be disregarded)
+        if self.sex is not None and self.sex != SexChoicesWithAll.ALL:
+            # AN does not fit search if search sex is not in available sexes of this AN
+            if not self.sex in adoption_notice.sexes:
+                return False
+        # make sure it's an area search and the place is found to check location
+        if self.area_search and not self.place_not_found:
+            # If adoption notice is in not in search distance, return false
+            if not adoption_notice.in_distance(self.search_position, self.max_distance):
+                return False
+        return True
+
 
     def get_adoption_notices(self):
         adoptions = AdoptionNotice.objects.order_by("-created_at")
