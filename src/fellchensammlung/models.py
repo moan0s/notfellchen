@@ -559,12 +559,15 @@ class SearchSubscription(models.Model):
     - For matches: Send notification to user of the SearchSubscription
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    location = models.ForeignKey(Location, on_delete=models.PROTECT)
+    location = models.ForeignKey(Location, on_delete=models.PROTECT, null=True)
     sex = models.CharField(max_length=20, choices=SexChoicesWithAll.choices)
-    max_distance = models.IntegerField(choices=DistanceChoices.choices)
+    max_distance = models.IntegerField(choices=DistanceChoices.choices, null=True)
 
     def __str__(self):
-        return f"{self.owner}: [{SexChoicesWithAll(self.sex).label}] {self.max_distance}km - {self.location}"
+        if self.location and self.max_distance:
+            return f"{self.owner}: [{SexChoicesWithAll(self.sex).label}] {self.max_distance}km - {self.location}"
+        else:
+            return f"{self.owner}: [{SexChoicesWithAll(self.sex).label}]"
 
 
 class Rule(models.Model):
