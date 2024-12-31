@@ -564,7 +564,7 @@ class SearchSubscription(models.Model):
     radius = models.IntegerField(choices=DistanceChoices.choices)
 
     def __str__(self):
-        return f"{self.owner}: {self.sex} {self.radius}km - {self.location}"
+        return f"{self.owner}: [{SexChoicesWithAll(self.sex).label}] {self.radius}km - {self.location}"
 
 
 class Rule(models.Model):
