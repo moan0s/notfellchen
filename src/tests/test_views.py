@@ -149,7 +149,7 @@ class UpdateQueueTest(TestCase):
     def test_login_required(self):
         response = self.client.get(reverse('updatequeue'))
         self.assertEqual(response.status_code, 302)
-        self.assertEquals(response.url, "/accounts/login/?next=/updatequeue/")
+        self.assertEqual(response.url, "/accounts/login/?next=/updatequeue/")
 
     def test_set_updated(self):
         self.client.login(username='testuser0', password='12345')
