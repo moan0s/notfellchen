@@ -4,7 +4,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus, Log, \
-    AndoptionNoticeNotification
+    AdoptionNoticeNotification
 from fellchensammlung.tools.misc import is_404
 
 
@@ -86,7 +86,7 @@ def deactivate_404_adoption_notices():
 
                 deactivation_message = f'Die Vermittlung  [{adoption_notice.name}]({adoption_notice.get_absolute_url()}) wurde automatisch deaktiviert, da die Website unter "Mehr Informationen" nicht mehr online ist.'
                 for subscription in adoption_notice.get_subscriptions():
-                    AndoptionNoticeNotification.objects.create(user=subscription.owner,
+                    AdoptionNoticeNotification.objects.create(user=subscription.owner,
                                                                title="Vermittlung deaktiviert",
                                                                adoption_notice=adoption_notice,
                                                                text=deactivation_message)

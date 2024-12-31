@@ -790,7 +790,7 @@ class CommentNotification(BaseNotification):
         return self.comment.get_absolute_url
 
 
-class AndoptionNoticeNotification(BaseNotification):
+class AdoptionNoticeNotification(BaseNotification):
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
 
     @property
