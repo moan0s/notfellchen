@@ -114,12 +114,18 @@ class Search:
                                           sex=self.sex,
                                           max_distance=self.max_distance)
 
+    def get_subscription_or_none(self, user):
+        user_subscriptions = SearchSubscription.objects.filter(owner=user)
+        for subscription in user_subscriptions:
+            if self == subscription:
+                return subscription
+
     def is_subscribed(self, user):
         """
         Returns true if a user is already subscribed to a search with these parameters
         """
-        user_subscriptions = SearchSubscription.objects.filter(owner=user)
-        for subscription in user_subscriptions:
-            if self == subscription:
-                return True
-        return False
+        subscription = self.get_subscription_or_none()
+        if subscription is None:
+            return False
+        else:
+            return True

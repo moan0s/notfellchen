@@ -183,11 +183,21 @@ def search(request):
             if not request.user.is_authenticated:
                 return redirect(f"{settings.LOGIN_URL}?next={request.path}")
             search.subscribe(request.user)
+        if "unsubscribe_to_search" in request.POST:
+            if not request.user.is_authenticated:
+                return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+            search_subscription = SearchSubscription.objects.get(pk=request.POST["unsubscribe_to_search"])
+            if search_subscription.owner == request.user:
+                search_subscription.delete()
+            else:
+                raise PermissionDenied
+
+
 
     context = {"adoption_notices": search.get_adoption_notices(),
                "search_form": search.search_form,
                "place_not_found": search.place_not_found,
-               "user_is_subscribed_to_search": search.is_subscribed(request.user),
+               "subscribed_search": search.get_subscription_or_none(request.user),
                "searched": searched}
     return render(request, 'fellchensammlung/search.html', context=context)
 
