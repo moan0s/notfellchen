@@ -195,12 +195,15 @@ def search(request):
         subscribed_search = search.get_subscription_or_none(request.user)
     else:
         subscribed_search = None
+
     context = {"adoption_notices": search.get_adoption_notices(),
                "search_form": search.search_form,
                "place_not_found": search.place_not_found,
                "subscribed_search": subscribed_search,
                "searched": searched,
-               "adoption_notices_map": AdoptionNotice.get_active_ANs()}
+               "adoption_notices_map": AdoptionNotice.get_active_ANs(),
+               "map_center": search.position,
+               "search_radius": search.max_distance,}
     return render(request, 'fellchensammlung/search.html', context=context)
 
 

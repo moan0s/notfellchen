@@ -1,7 +1,7 @@
 import logging
 from django.utils.translation import gettext_lazy as _
 
-from .geo import GeoAPI, LocationProxy
+from .geo import LocationProxy, Position
 from ..forms import AdoptionNoticeSearchForm
 from ..models import SearchSubscription, AdoptionNotice, AdoptionNoticeNotification, SexChoicesWithAll, Location
 
@@ -68,6 +68,13 @@ class Search:
             self.location = LocationProxy(self.location_string)
         except ValueError:
             self.place_not_found = True
+
+    @property
+    def position(self):
+        if self.area_search and not self.place_not_found:
+            return Position(latitude=self.location.latitude, longitude=self.location.longitude)
+        else:
+            return None
 
     def adoption_notice_fits_search(self, adoption_notice: AdoptionNotice):
         # Make sure sex is set and sex is not set to all (then it can be disregarded)

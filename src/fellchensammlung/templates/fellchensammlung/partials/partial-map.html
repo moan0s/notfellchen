@@ -6,35 +6,81 @@
 <script src="{% settings_value "MAP_TILE_SERVER" %}/assets/maplibre-gl/maplibre-gl.js"></script>
 <link href="{% settings_value "MAP_TILE_SERVER" %}/assets/maplibre-gl/maplibre-gl.css" rel="stylesheet"/>
 
+<!-- add Turf see https://maplibre.org/maplibre-gl-js/docs/examples/draw-a-radius/ -->
+<script src="{% static 'fellchensammlung/js/turf.min.js' %}"></script>
+
 <!-- add container for the map -->
 <div id="map" style="width:100%;aspect-ratio:16/9"></div>
 
 <!-- start map -->
 <script>
+    {% if map_center %}
+        var center = [{{ map_center.longitude }}, {{ map_center.latitude }}];
+    {% else %}
+        var center = [10.49, 50.68];
+    {% endif %}
 
     let map = new maplibregl.Map({
         container: 'map',
         style: '{% static "fellchensammlung/map/styles/colorful.json" %}',
-        center: [10.49, 50.68],
+        center: center,
         zoom: 5
     }).addControl(new maplibregl.NavigationControl());
 
     {% for adoption_notice in adoption_notices_map %}
         {% if adoption_notice.location %}
-        // create the popup
-        const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}`);
+            // create the popup
+            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}`);
 
-        // create DOM element for the marker
-        const el_{{ forloop.counter }} = document.createElement('div');
-        el_{{ forloop.counter }}.id = 'marker_{{ forloop.counter }}';
-        el_{{ forloop.counter }}.classList.add('marker');
+            // create DOM element for the marker
+            const el_{{ forloop.counter }} = document.createElement('div');
+            el_{{ forloop.counter }}.id = 'marker_{{ forloop.counter }}';
+            el_{{ forloop.counter }}.classList.add('marker');
 
-        const location_popup_{{ forloop.counter }} = [{{ adoption_notice.location.longitude | pointdecimal }}, {{ adoption_notice.location.latitude | pointdecimal }}];
-        // create the marker
-        new maplibregl.Marker({element: el_{{ forloop.counter }}})
-            .setLngLat(location_popup_{{ forloop.counter }})
-            .setPopup(popup_{{ forloop.counter }}) // sets a popup on this marker
-            .addTo(map);
+            const location_popup_{{ forloop.counter }} = [{{ adoption_notice.location.longitude | pointdecimal }}, {{ adoption_notice.location.latitude | pointdecimal }}];
+            // create the marker
+            new maplibregl.Marker({element: el_{{ forloop.counter }}})
+                .setLngLat(location_popup_{{ forloop.counter }})
+                .setPopup(popup_{{ forloop.counter }}) // sets a popup on this marker
+                .addTo(map);
         {% endif %}
     {% endfor %}
+
+    map.on('load', () => {
+        const radius = {{ search_radius }}; // kilometer
+        const options = {
+            steps: 64,
+            units: 'kilometers'
+        };
+        const circle = turf.circle(center, radius, options);
+
+        // Add the circle as a GeoJSON source
+        map.addSource('location-radius', {
+            type: 'geojson',
+            data: circle
+        });
+
+        // Add a fill layer with some transparency
+        map.addLayer({
+            id: 'location-radius',
+            type: 'fill',
+            source: 'location-radius',
+            paint: {
+                'fill-color': '#8CCFFF',
+                'fill-opacity': 0.5
+            }
+        });
+
+        // Add a line layer to draw the circle outline
+        map.addLayer({
+            id: 'location-radius-outline',
+            type: 'line',
+            source: 'location-radius',
+            paint: {
+                'line-color': '#0094ff',
+                'line-width': 3
+            }
+        });
+    });
+
 </script>
