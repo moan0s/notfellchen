@@ -182,7 +182,7 @@ class CustomRegistrationForm(RegistrationForm):
 
 
 class AdoptionNoticeSearchForm(forms.Form):
-    location_string = forms.CharField(max_length=20, label=_("Stadt"), required=False)
-    max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.ONE_HUNDRED, label=_("Suchradius"))
     sex = forms.ChoiceField(choices=SexChoicesWithAll, label=_("Geschlecht"), required=False,
                             initial=SexChoicesWithAll.ALL)
+    max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.ONE_HUNDRED, label=_("Suchradius"))
+    location_string = forms.CharField(max_length=20, label=_("Stadt"), required=False)
