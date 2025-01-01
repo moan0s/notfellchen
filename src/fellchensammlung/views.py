@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.auth.views import redirect_to_login
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -181,11 +182,11 @@ def search(request):
         if "subscribe_to_search" in request.POST:
             # Make sure user is logged in
             if not request.user.is_authenticated:
-                return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+                return redirect_to_login(next=request.path)
             search.subscribe(request.user)
         if "unsubscribe_to_search" in request.POST:
             if not request.user.is_authenticated:
-                return redirect(f"{settings.LOGIN_URL}?next={request.path}")
+                return redirect_to_login(next=request.path)
             search_subscription = SearchSubscription.objects.get(pk=request.POST["unsubscribe_to_search"])
             if search_subscription.owner == request.user:
                 search_subscription.delete()
