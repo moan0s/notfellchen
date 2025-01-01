@@ -439,7 +439,8 @@ def report_detail_success(request, report_id):
 def user_detail(request, user, token=None):
     context = {"user": user,
                "adoption_notices": AdoptionNotice.objects.filter(owner=user),
-               "notifications": BaseNotification.objects.filter(user=user, read=False)}
+               "notifications": BaseNotification.objects.filter(user=user, read=False),
+               "search_subscriptions": SearchSubscription.objects.filter(owner=user),}
     if token is not None:
         context["token"] = token
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
@@ -482,6 +483,10 @@ def my_profile(request):
             for notification in notifications:
                 notification.read = True
                 notification.save()
+        elif action == "search_subscription_delete":
+            search_subscription_id = request.POST.get("search_subscription_id")
+            SearchSubscription.objects.get(pk=search_subscription_id).delete()
+            logging.info(f"Deleted subscription {search_subscription_id}")
 
     try:
         token = Token.objects.get(user=request.user)

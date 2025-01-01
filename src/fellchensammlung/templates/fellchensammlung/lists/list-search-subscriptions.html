@@ -1,0 +1,10 @@
+{% load i18n %}
+<div class="container-cards">
+    {% if search_subscriptions %}
+        {% for search_subscription in search_subscriptions %}
+            {% include "fellchensammlung/partials/partial-search-subscription.html" %}
+        {% endfor %}
+    {% else %}
+        <p>{% translate 'Keine abonnierten Suchen' %}</p>
+    {% endif %}
+</div>

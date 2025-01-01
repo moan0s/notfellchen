@@ -700,7 +700,7 @@ a.btn, a.btn2, a.nav-link {
     padding: 5px;
 }
 
-.comment, .notification {
+.comment, .notification, .search-subscription {
     flex: 1 100%;
     margin: 10px;
     border-radius: 8px;
