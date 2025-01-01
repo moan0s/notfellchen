@@ -11,10 +11,12 @@ def notify_search_subscribers(adoption_notice: AdoptionNotice, only_if_active : 
     This functions checks for all search subscriptions if the new adoption notice fits the search.
     If the new adoption notice fits the search subscription, it sends a notification to the user that created the search.
     """
+    logging.debug(f"Notifying {adoption_notice}.")
     if only_if_active and not adoption_notice.is_active:
-        logging.warning(f"No notifications triggered for adoption notice {adoption_notice} because it's not active.")
+        logging.debug(f"No notifications triggered for adoption notice {adoption_notice} because it's not active.")
         return
     for search_subscription in SearchSubscription.objects.all():
+        logging.debug(f"Search subscription {search_subscription} found.")
         search = Search(search_subscription=search_subscription)
         if search.adoption_notice_fits_search(adoption_notice):
             notification_text = f"{_('Zu deiner Suche')} {search_subscription} wurde eine neue Vermittlung gefunden"
@@ -22,8 +24,11 @@ def notify_search_subscribers(adoption_notice: AdoptionNotice, only_if_active : 
                                                       title=f"{_('Neue Vermittlung')}: {adoption_notice}",
                                                       adoption_notice=adoption_notice,
                                                       text=notification_text)
+            logging.debug(f"Notification for search subscription {search_subscription} was sent.")
+        else:
+            logging.debug(f"Adoption notice {adoption_notice} was not fitting the search subscription.")
 
-    logging.info(f"Subscribers for AN {adoption_notice.pk} have been notified")
+    logging.info(f"Subscribers for AN {adoption_notice.pk} have been notified\n")
 
 
 class Search:
