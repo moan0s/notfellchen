@@ -204,13 +204,17 @@ a.btn, a.btn2, a.nav-link {
     text-decoration: none;
 }
 
-.btn2 {
+.btn2, .btn3 {
     background-color: var(--secondary-light-one);
     color: var(--primary-dark-one);
     padding: 8px;
     border-radius: 4px;
     border: none;
     margin: 5px;
+}
+
+.btn3 {
+    border: 1px solid black;
 }
 
 .switch {
@@ -601,6 +605,16 @@ a.btn, a.btn2, a.nav-link {
     align-items: center;
     flex-wrap: wrap;
 
+}
+
+.search-subscription-header {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    h3 {
+        width: 80%;
+    }
 }
 
 .table-adoption-notice-info {

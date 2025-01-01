@@ -3,11 +3,11 @@
 <div class="search-subscription">
     <div class="search-subscription-header">
         <h3>{{ search_subscription }}</h3>
-        <form class="notification-card-mark-read" method="POST">
+        <form class="" method="POST">
             {% csrf_token %}
             <input type="hidden" name="action" value="search_subscription_delete">
             <input type="hidden" name="search_subscription_id" value="{{ search_subscription.pk }}">
-            <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-close"></i></button>
+            <button class="btn3" type="submit" id="submit"><i class="fa-solid fa-close"></i></button>
         </form>
     </div>
     <table>
