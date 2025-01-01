@@ -29,6 +29,8 @@ def calculate_distance_between_coordinates(position1, position2):
 
     distance_in_km = earth_radius_km * c
 
+    logging.debug(f"Calculated Distance: {distance_in_km:.5}km")
+
     return distance_in_km
 
 
