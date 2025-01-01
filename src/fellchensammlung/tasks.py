@@ -37,17 +37,14 @@ def task_deactivate_unchecked():
     set_timestamp("task_deactivate_404_adoption_notices")
 
 
-@celery_app.task(name="commit.add_location")
-def add_adoption_notice_location(pk):
+@celery_app.task(name="commit.post_an_save")
+def post_adoption_notice_save(pk):
     instance = AdoptionNotice.objects.get(pk=pk)
     Location.add_location_to_object(instance)
     set_timestamp("add_adoption_notice_location")
+    logging.info(f"Location was added to Adoption notice {pk}")
 
-@celery_app.task(name="commit.notify_subscribers")
-def notify_subscribers(pk):
-    instance = AdoptionNotice.objects.get(pk=pk)
-    notify_search_subscribers(instance)
-    logging.info(f"Subscribers for AN {pk} have been notified")
+    notify_search_subscribers(instance, only_if_active=True)
 
 @celery_app.task(name="tools.healthcheck")
 def task_healthcheck():

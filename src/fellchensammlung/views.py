@@ -25,7 +25,7 @@ from .tools.geo import GeoAPI
 from .tools.metrics import gather_metrics_data
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
     deactivate_404_adoption_notices
-from .tasks import add_adoption_notice_location, notify_subscribers
+from .tasks import post_adoption_notice_save
 from rest_framework.authtoken.models import Token
 
 from .tools.search import Search
@@ -212,15 +212,9 @@ def add_adoption_notice(request):
         if form.is_valid():
             an_instance = form.save(commit=False)
             an_instance.owner = request.user
-            an_instance.save()
 
-            """Spin up a task that adds the location"""
-            add_adoption_notice_location.delay_on_commit(an_instance.pk)
-
-            # Set correct status
             if request.user.trust_level >= TrustLevel.MODERATOR:
                 an_instance.set_active()
-                notify_subscribers.delay_on_commit(an_instance.pk)
             else:
                 an_instance.set_unchecked()
 
@@ -237,6 +231,9 @@ def add_adoption_notice(request):
             """Log"""
             Log.objects.create(user=request.user, action="add_adoption_notice",
                                text=f"{request.user} hat Vermittlung {an_instance.pk} hinzugefügt")
+
+            """Spin up a task that adds the location"""
+            post_adoption_notice_save.delay(an_instance.id)
 
             """Subscriptions"""
             # Automatically subscribe user that created AN to AN

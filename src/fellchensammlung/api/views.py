@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
 from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel
-from fellchensammlung.tasks import add_adoption_notice_location
+from fellchensammlung.tasks import post_adoption_notice_save
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .serializers import (
@@ -47,7 +47,7 @@ class AdoptionNoticeApiView(APIView):
         adoption_notice = serializer.save(owner=request.user)
 
         # Add the location
-        add_adoption_notice_location.delay_on_commit(adoption_notice.pk)
+        post_adoption_notice_save.delay_on_commit(adoption_notice.pk)
 
         # Only set active when user has trust level moderator or higher
         if request.user.trust_level >= TrustLevel.MODERATOR:
