@@ -191,13 +191,14 @@ def search(request):
                 search_subscription.delete()
             else:
                 raise PermissionDenied
-
-
-
+    if request.user.is_authenticated:
+        subscribed_search = search.get_subscription_or_none(request.user)
+    else:
+        subscribed_search = None
     context = {"adoption_notices": search.get_adoption_notices(),
                "search_form": search.search_form,
                "place_not_found": search.place_not_found,
-               "subscribed_search": search.get_subscription_or_none(request.user),
+               "subscribed_search": subscribed_search,
                "searched": searched}
     return render(request, 'fellchensammlung/search.html', context=context)
 
