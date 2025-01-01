@@ -42,7 +42,7 @@ class Search:
 
 
     def __str__(self):
-        return f"Search: {self.sex=}, {self.location=}, {self.search_position=}, {self.area_search=}, {self.max_distance=}"
+        return f"Search: {self.sex=}, {self.location=}, {self.area_search=}, {self.max_distance=}"
 
     def __eq__(self, other):
         """
