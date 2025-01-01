@@ -28,7 +28,7 @@ class Search:
         self.sex = None
         self.area_search = None
         self.max_distance = None
-        self.location = None
+        self.location = None # Can either be Location (DjangoModel) or LocationProxy
         self.place_not_found = False  # Indicates that a location was given but could not be geocoded
         self.search_form = None
 
@@ -54,6 +54,12 @@ class Search:
         elif self.location is not None and other.location is None or self.location is None and other.location is not None:
             return False
         return self.location == other.location and self.sex == other.sex and self.max_distance == other.max_distance
+
+    def _locate(self):
+        try:
+            self.location = LocationProxy(self.location_string)
+        except ValueError:
+            self.place_not_found = True
 
     def adoption_notice_fits_search(self, adoption_notice: AdoptionNotice):
         # Make sure sex is set and sex is not set to all (then it can be disregarded)
@@ -88,11 +94,7 @@ class Search:
                 self.area_search = True
                 self.location_string = self.search_form.cleaned_data["location_string"]
                 self.max_distance = int(self.search_form.cleaned_data["max_distance"])
-
-                try:
-                    self.location = LocationProxy(self.location_string)
-                except ValueError:
-                    self.place_not_found = True
+                self._locate()
         else:
             self.search_form = AdoptionNoticeSearchForm()
 
