@@ -1,4 +1,4 @@
-from fellchensammlung.tools.geo import calculate_distance_between_coordinates
+from fellchensammlung.tools.geo import calculate_distance_between_coordinates, LocationProxy
 from django.test import TestCase
 
 
@@ -22,3 +22,22 @@ class DistanceTest(TestCase):
             except AssertionError as e:
                 print(f"Distance calculation failed. Expected {distance}, got {result}")
                 raise e
+
+    def test_e2e_distance(self):
+        l_stuttgart = LocationProxy("Stuttgart")
+        l_tue = LocationProxy("Tübingen")
+        # Should be 30km
+        print(f"{l_stuttgart.position} -> {l_tue.position}")
+        distance_tue_stuttgart = calculate_distance_between_coordinates(l_stuttgart.position, l_tue.position)
+        self.assertLess(distance_tue_stuttgart, 50)
+        self.assertGreater(distance_tue_stuttgart, 20)
+
+
+        l_ueberlingen = LocationProxy("Überlingen")
+        l_pfullendorf = LocationProxy("Pfullendorf")
+        # Should be 18km
+        distance_ueberlingen_pfullendorf = calculate_distance_between_coordinates(l_stuttgart.position, l_tue.position)
+        self.assertLess(distance_tue_stuttgart, 21)
+        self.assertGreaer(distance_tue_stuttgart, 15)
+
+
