@@ -52,3 +52,6 @@ class TestSearch(TestCase):
 
         self.assertEqual(search_subscription1, search1)
 
+    def test_notification(self):
+        self.client.login(username='testuser0', password='12345')
+

@@ -67,7 +67,6 @@ class AnimalAndAdoptionTest(TestCase):
                      "save-and-add-another-animal": "Speichern"}
 
         response = self.client.post(reverse('add-adoption'), data=form_data)
-        print(response.content)
 
         self.assertTrue(response.status_code < 400)
         self.assertTrue(AdoptionNotice.objects.get(name="TestAdoption4").is_active)
