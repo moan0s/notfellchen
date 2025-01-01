@@ -4,26 +4,31 @@
 {% block title %}<title>{% translate "Suche" %}</title>{% endblock %}
 
 {% block content %}
-    <form class="form-search card" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="longitude" maxlength="200" id="longitude">
-        <input type="hidden" name="latitude" maxlength="200" id="latitude">
-        {{ search_form.as_p }}
-        <button class="btn" type="submit" value="search" name="search">
-            <i class="fas fa-search"></i> {% trans 'Suchen' %}
-        </button>
-        {% if searched %}
-            {% if subscribed_search %}
-                <button class="btn" type="submit" value="{{ subscribed_search.pk }}" name="unsubscribe_to_search">
-                    <i class="fas fa-bell-slash"></i> {% trans 'Suche nicht mehr abonnieren' %}
-                </button>
-            {% else %}
-                <button class="btn" type="submit" name="subscribe_to_search">
-                    <i class="fas fa-bell"></i> {% trans 'Suche abonnieren' %}
-                </button>
+    <div class="container-cards">
+        <form class="form-search card half" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="longitude" maxlength="200" id="longitude">
+            <input type="hidden" name="latitude" maxlength="200" id="latitude">
+            {{ search_form.as_p }}
+            <button class="btn" type="submit" value="search" name="search">
+                <i class="fas fa-search"></i> {% trans 'Suchen' %}
+            </button>
+            {% if searched %}
+                {% if subscribed_search %}
+                    <button class="btn" type="submit" value="{{ subscribed_search.pk }}" name="unsubscribe_to_search">
+                        <i class="fas fa-bell-slash"></i> {% trans 'Suche nicht mehr abonnieren' %}
+                    </button>
+                {% else %}
+                    <button class="btn" type="submit" name="subscribe_to_search">
+                        <i class="fas fa-bell"></i> {% trans 'Suche abonnieren' %}
+                    </button>
+                {% endif %}
             {% endif %}
-        {% endif %}
-    </form>
+        </form>
+        <div class="card half">
+            {% include "fellchensammlung/partials/partial-map.html" %}
+        </div>
+    </div>
     {% if place_not_found %}
         <p class="error">{% translate "Ort nicht gefunden" %}</p>
     {% endif %}

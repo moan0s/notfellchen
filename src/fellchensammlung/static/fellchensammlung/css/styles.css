@@ -746,6 +746,10 @@ div.announcement {
 
 }
 
+.half {
+    width: 49%;
+}
+
 /************************/
 /* GENERAL HIGHLIGHTING */
 /************************/

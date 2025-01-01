@@ -199,7 +199,8 @@ def search(request):
                "search_form": search.search_form,
                "place_not_found": search.place_not_found,
                "subscribed_search": subscribed_search,
-               "searched": searched}
+               "searched": searched,
+               "adoption_notices_map": AdoptionNotice.get_active_ANs()}
     return render(request, 'fellchensammlung/search.html', context=context)
 
 
@@ -518,7 +519,7 @@ def updatequeue(request):
 
 
 def map(request):
-    adoption_notices = AdoptionNotice.objects.all()  #TODO: Filter to active
+    adoption_notices = AdoptionNotice.get_active_ANs()
     context = {"adoption_notices_map": adoption_notices}
     return render(request, 'fellchensammlung/map.html', context=context)
 
