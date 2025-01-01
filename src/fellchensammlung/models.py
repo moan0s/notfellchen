@@ -300,6 +300,11 @@ class AdoptionNotice(models.Model):
         # returns all subscriptions to that adoption notice
         return Subscriptions.objects.filter(adoption_notice=self)
 
+    @staticmethod
+    def get_active_ANs():
+        active_ans = [an for an in AdoptionNotice.objects.all() if an.is_active]
+        return active_ans
+
     def get_photos(self):
         """
         First trys to get group photos that are attached to the adoption notice if there is none it trys to fetch
