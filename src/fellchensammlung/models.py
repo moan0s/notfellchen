@@ -572,6 +572,8 @@ class SearchSubscription(models.Model):
     location = models.ForeignKey(Location, on_delete=models.PROTECT, null=True)
     sex = models.CharField(max_length=20, choices=SexChoicesWithAll.choices)
     max_distance = models.IntegerField(choices=DistanceChoices.choices, null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         if self.location and self.max_distance:
