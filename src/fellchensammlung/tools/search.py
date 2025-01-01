@@ -69,11 +69,13 @@ class Search:
         if self.sex is not None and self.sex != SexChoicesWithAll.ALL:
             # AN does not fit search if search sex is not in available sexes of this AN
             if not self.sex in adoption_notice.sexes:
+                logging.debug("Sex mismatch")
                 return False
         # make sure it's an area search and the place is found to check location
         if self.area_search and not self.place_not_found:
             # If adoption notice is in not in search distance, return false
             if not adoption_notice.in_distance(self.location.position, self.max_distance):
+                logging.debug("Area mismatch")
                 return False
         return True
 
