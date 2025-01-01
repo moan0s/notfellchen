@@ -101,5 +101,5 @@ class TestSearch(TestCase):
         """
         notify_search_subscribers(self.adoption1)
 
-        self.assertTrue(AdoptionNoticeNotification.objects.filter(user=self.test_user1).exists())
-        self.assertFalse(AdoptionNoticeNotification.objects.filter(user=self.test_user1).exists())
+        self.assertTrue(AdoptionNoticeNotification.objects.filter(user=self.test_user1, adoption_notice=self.adoption1).exists())
+        self.assertFalse(AdoptionNoticeNotification.objects.filter(user=self.test_user2).exists())
