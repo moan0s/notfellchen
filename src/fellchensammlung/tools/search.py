@@ -103,16 +103,11 @@ class Search:
         else:
             self.search_form = AdoptionNoticeSearchForm()
 
-    @staticmethod
-    def search_from_search_subscription(search_subscription: SearchSubscription):
-        search = Search()
-        search.sex = search_subscription.sex
-        search.location = search_subscription.location
-        search.area_search = True
-        search.max_distance = search_subscription.max_distance
-
-
-        return search
+    def search_from_search_subscription(self, search_subscription: SearchSubscription):
+        self.sex = search_subscription.sex
+        self.location = search_subscription.location
+        self.area_search = True
+        self.max_distance = search_subscription.max_distance
 
 
     def subscribe(self, user):
