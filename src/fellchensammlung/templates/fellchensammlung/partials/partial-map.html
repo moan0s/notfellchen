@@ -24,7 +24,7 @@
         container: 'map',
         style: '{% static "fellchensammlung/map/styles/colorful.json" %}',
         center: center,
-        zoom: 5
+        zoom: {{ zoom_level }}
     }).addControl(new maplibregl.NavigationControl());
 
     {% for adoption_notice in adoption_notices_map %}

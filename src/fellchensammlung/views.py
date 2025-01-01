@@ -21,7 +21,7 @@ from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageFo
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
 from .models import Language, Announcement
-from .tools.geo import GeoAPI
+from .tools.geo import GeoAPI, zoom_level_for_radius
 from .tools.metrics import gather_metrics_data
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
     deactivate_404_adoption_notices
@@ -203,7 +203,8 @@ def search(request):
                "searched": searched,
                "adoption_notices_map": AdoptionNotice.get_active_ANs(),
                "map_center": search.position,
-               "search_radius": search.max_distance,}
+               "search_radius": search.max_distance,
+               "zoom_level": zoom_level_for_radius(search.max_distance)}
     return render(request, 'fellchensammlung/search.html', context=context)
 
 

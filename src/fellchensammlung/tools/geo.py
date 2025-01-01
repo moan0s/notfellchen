@@ -11,6 +11,18 @@ from notfellchen import settings
 Position = namedtuple('Position', ['latitude', 'longitude'])
 
 
+def zoom_level_for_radius(radius) -> int:
+    if radius <= 20:
+        return 8
+    if radius <= 50:
+        return 7
+    if radius <= 150:
+        return 6
+    if radius <= 300:
+        return 5
+    else:
+        return 4
+
 def calculate_distance_between_coordinates(position1, position2):
     """
     Calculate the distance between two points identified by coordinates
