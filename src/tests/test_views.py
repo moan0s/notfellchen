@@ -91,6 +91,7 @@ class SearchTest(TestCase):
         berlin = Location.get_location_from_string("Berlin")
         adoption1.location = berlin
         adoption1.save()
+
         stuttgart = Location.get_location_from_string("Stuttgart")
         adoption3.location = stuttgart
         adoption3.save()
@@ -118,11 +119,14 @@ class SearchTest(TestCase):
         self.assertContains(response, "TestAdoption3")
         self.assertNotContains(response, "TestAdoption2")
 
-    def test_plz_search(self):
-        response = self.client.post(reverse('search'), {"max_distance": 100, "location_string": "Berlin", "sex": "A"})
+    def test_location_search(self):
+        response = self.client.post(reverse('search'), {"max_distance": 50, "location_string": "Berlin", "sex": "A"})
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "TestAdoption1")
-        self.assertNotContains(response, "TestAdoption3")
+        # We can't use assertContains because TestAdoption3 will always be in response at is included in map
+        # In order to test properly, we need to only care for the context that influences the list display
+        an_names = [a.name for a in response.context["adoption_notices"]]
+        self.assertTrue("TestAdoption1" in an_names) # Adoption in Berlin
+        self.assertFalse("TestAdoption3" in an_names) # Adoption in Stuttgart
 
 
 class UpdateQueueTest(TestCase):
