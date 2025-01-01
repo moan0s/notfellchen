@@ -12,6 +12,8 @@ Position = namedtuple('Position', ['latitude', 'longitude'])
 
 
 def zoom_level_for_radius(radius) -> int:
+    if radius is None:
+        return 4
     if radius <= 20:
         return 8
     if radius <= 50:
