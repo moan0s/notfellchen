@@ -20,11 +20,17 @@
         var center = [10.49, 50.68];
     {% endif %}
 
+    {% if zoom_level %}
+        var zoom_level = {{ zoom_level }};
+    {% else %}
+        var zoom_level = 4;
+    {% endif %}
+
     let map = new maplibregl.Map({
         container: 'map',
         style: '{% static "fellchensammlung/map/styles/colorful.json" %}',
         center: center,
-        zoom: {{ zoom_level }}
+        zoom: zoom_level
     }).addControl(new maplibregl.NavigationControl());
 
     {% for adoption_notice in adoption_notices_map %}
@@ -46,41 +52,43 @@
         {% endif %}
     {% endfor %}
 
-    map.on('load', () => {
-        const radius = {{ search_radius }}; // kilometer
-        const options = {
-            steps: 64,
-            units: 'kilometers'
-        };
-        const circle = turf.circle(center, radius, options);
+    {% if search_radius  %}
+        map.on('load', () => {
+            const radius = {{ search_radius }}; // kilometer
+            const options = {
+                steps: 64,
+                units: 'kilometers'
+            };
+            const circle = turf.circle(center, radius, options);
 
-        // Add the circle as a GeoJSON source
-        map.addSource('location-radius', {
-            type: 'geojson',
-            data: circle
-        });
+            // Add the circle as a GeoJSON source
+            map.addSource('location-radius', {
+                type: 'geojson',
+                data: circle
+            });
 
-        // Add a fill layer with some transparency
-        map.addLayer({
-            id: 'location-radius',
-            type: 'fill',
-            source: 'location-radius',
-            paint: {
-                'fill-color': '#8CCFFF',
-                'fill-opacity': 0.5
-            }
-        });
+            // Add a fill layer with some transparency
+            map.addLayer({
+                id: 'location-radius',
+                type: 'fill',
+                source: 'location-radius',
+                paint: {
+                    'fill-color': '#8CCFFF',
+                    'fill-opacity': 0.5
+                }
+            });
 
-        // Add a line layer to draw the circle outline
-        map.addLayer({
-            id: 'location-radius-outline',
-            type: 'line',
-            source: 'location-radius',
-            paint: {
-                'line-color': '#0094ff',
-                'line-width': 3
-            }
+            // Add a line layer to draw the circle outline
+            map.addLayer({
+                id: 'location-radius-outline',
+                type: 'line',
+                source: 'location-radius',
+                paint: {
+                    'line-color': '#0094ff',
+                    'line-width': 3
+                }
+            });
         });
-    });
+    {% endif %}
 
 </script>
