@@ -50,7 +50,15 @@
                     {% endif %}
                 </td>
                 {% if adoption_notice.organization %}
-                    <td><a href="{{adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a></td>
+                    <td>
+                        <div>
+                            <a href="{{ adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a>
+                            {% if adoption_notice.organization.trusted %}
+                                <div class="checkmark"><i class="fa-solid fa-check"></i></div>
+                            {% endif %}
+                        </div>
+                    </td>
+
                 {% endif %}
 
                 <td>{{ adoption_notice.searching_since }}</td>
