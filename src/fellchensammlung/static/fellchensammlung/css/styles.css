@@ -222,7 +222,7 @@ a.btn, a.btn2, a.nav-link {
     position: relative;
     left: 0.2rem;
     bottom: 0.075rem;
-    background-color: var(--primary-dark-one);
+    background-color: var(--primary-light-one);
     color: var(--secondary-light-one);
     border-radius: 0.5rem;
     width: 1.5rem;
@@ -285,6 +285,45 @@ a.btn, a.btn2, a.nav-link {
     margin-left: 5px;
     position: relative;
     top: 2px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: var(--primary-dark-one);
+  color: var(--secondary-light-one);
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: var(--primary-dark-one) transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 /*********************/

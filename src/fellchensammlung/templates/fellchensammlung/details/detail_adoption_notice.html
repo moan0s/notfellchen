@@ -54,9 +54,14 @@
                         <div>
                             <a href="{{ adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a>
                             {% if adoption_notice.organization.trusted %}
+                                <div class="tooltip">
                                 <div class="checkmark"><i class="fa-solid fa-check"></i></div>
+                                <span class="tooltiptext">
+                                    {% translate 'Diese Organisation kennt sich mit Ratten aus und achtet auf gute Abgabebedingungen' %}
+                                </span>
+
                             {% endif %}
-                        </div>
+                            </div>
                     </td>
 
                 {% endif %}
