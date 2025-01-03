@@ -767,7 +767,7 @@ a.btn, a.btn2, a.nav-link {
 .inline-container {
     display: inline-block;
 }
-.inline-container > *:first-child {
+.inline-container > * {
     vertical-align:middle;
 }
 
@@ -792,7 +792,6 @@ a.btn, a.btn2, a.nav-link {
 }
 
 .detail-adoption-notice-header a {
-    display: inline-block;
     float: right;
 }
 
