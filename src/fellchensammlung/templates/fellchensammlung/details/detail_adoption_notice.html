@@ -8,7 +8,7 @@
     <div class="detail-adoption-notice-header">
         <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}
             {% if not is_subscribed %}
-                <div class="tooltip">
+                <div class="tooltip bottom">
                     <form class="notification-card-mark-read" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="action" value="subscribe">
@@ -59,7 +59,7 @@
                         <div>
                             <a href="{{ adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a>
                             {% if adoption_notice.organization.trusted %}
-                                <div class="tooltip">
+                                <div class="tooltip top">
                                     <div class="checkmark"><i class="fa-solid fa-check"></i></div>
                                     <span class="tooltiptext">
                                     {% translate 'Diese Organisation kennt sich mit Ratten aus und achtet auf gute Abgabebedingungen' %}

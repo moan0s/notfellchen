@@ -287,45 +287,84 @@ a.btn, a.btn2, a.nav-link {
     top: 2px;
 }
 
+/* Refactor tooltip based on https://luigicavalieri.com/blog/css-tooltip-appearing-from-any-direction/ to allow different directions */
 .tooltip {
+    display: inline-flex;
+    justify-content: center;
     position: relative;
-    display: inline-block;
-}
-
-.tooltip .tooltiptext {
-    font-size: 1rem;
-    font-weight: normal;
-    visibility: hidden;
-    width: 200px;
-    background-color: var(--primary-dark-one);
-    color: var(--secondary-light-one);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -100px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: var(--primary-dark-one) transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
-    visibility: visible;
+    display: flex;
     opacity: 1;
+    visibility: visible;
 }
+
+.tooltip .tooltiptext {
+    border-radius: 4px;
+    bottom: calc(100% + 0.6em + 2px);
+    box-shadow: 0px 2px 4px #07172258;
+    background-color: var(--primary-dark-one);
+    color: var(--secondary-light-one);
+    font-size: 0.68rem;
+    justify-content: center;
+    line-height: 1.35em;
+    padding: 0.5em 0.7em;
+    position: absolute;
+    text-align: center;
+    width: 7rem;
+    z-index: 1;
+    display: flex;
+    opacity: 0;
+    transition: all 0.3s ease-in;
+    visibility: hidden;
+}
+
+.tooltip .tooltiptext::before {
+    border-width: 0.6em 0.8em 0;
+    border-color: transparent;
+    border-top-color: var(--primary-dark-one);
+    content: "";
+    display: block;
+    border-style: solid;
+    position: absolute;
+    top: 100%;
+}
+
+/* Makes the tooltip fly from above */
+.tooltip.top .tooltiptext {
+    margin-bottom: 8px;
+}
+
+.tooltip.top:hover .tooltiptext {
+    margin-bottom: 0;
+}
+
+/* Make adjustments for bottom */
+.tooltip.bottom .tooltiptext {
+    top: calc(100% + 0.6em + 2px);
+    margin-top: 8px;
+}
+
+.tooltip.bottom:hover .tooltiptext {
+    margin-top: 0;
+}
+
+.tooltip.bottom .tooltiptext::before {
+    transform: rotate(180deg);
+    /* 100% of the height of .tooltip */
+    bottom: 100%;
+}
+
+.tooltip:not(.top) .tooltiptext {
+  bottom: auto;
+
+}
+
+.tooltip:not(.top) .tooltiptext::before {
+  top: auto;
+}
+
 
 /*********************/
 /* UNIQUE COMPONENTS */
