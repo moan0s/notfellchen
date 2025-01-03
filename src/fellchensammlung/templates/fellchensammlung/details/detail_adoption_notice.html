@@ -37,18 +37,20 @@
         {% endif %}
     </div>
     <div class="table-adoption-notice-info">
-        <table>
+        <table class="responsive">
+            <thead>
             <tr>
-                <th>{% translate "Ort" %}</th>
+                <td>{% translate "Ort" %}</td>
                 {% if adoption_notice.organization %}
-                    <th>{% translate "Organisation" %}</th>
+                    <td>{% translate "Organisation" %}</td>
                 {% endif %}
-                <th>{% translate "Suchen seit" %}</th>
-                <th>{% translate "Zuletzt aktualisiert" %}</th>
-                <th>{% translate "Weitere Informationen" %}</th>
+                <td>{% translate "Suchen seit" %}</td>
+                <td>{% translate "Zuletzt aktualisiert" %}</td>
+                <td>{% translate "Weitere Informationen" %}</td>
             </tr>
+            </thead>
             <tr>
-                <td>
+                <td data-label="{% trans 'Ort' %} ">
                     {% if adoption_notice.location %}
                         {{ adoption_notice.location }}
                     {% else %}
@@ -56,7 +58,7 @@
                     {% endif %}
                 </td>
                 {% if adoption_notice.organization %}
-                    <td>
+                    <td data-label="{% trans 'Organisation' %}">
                         <div>
                             <a href="{{ adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a>
                             {% if adoption_notice.organization.trusted %}
@@ -73,10 +75,11 @@
 
                 {% endif %}
 
-                <td>{{ adoption_notice.searching_since }}</td>
-                <td>{{ adoption_notice.last_checked | date:'d. F Y' }}</td>
-                {% if adoption_notice.further_information %}
-                    <td>
+                <td data-label="{% trans 'Suchen seit' %}">{{ adoption_notice.searching_since }}</td>
+                <td data-label="{% trans 'Zuletzt aktualisiert' %}">
+                    {{ adoption_notice.last_checked | date:'d. F Y' }}</td>
+                <td data-label="{% trans 'Weitere Informationen' %}">
+                    {% if adoption_notice.further_information %}
                         <form method="get" action="{% url 'external-site' %}">
                             <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
                             <button class="btn" type="submit" id="submit">
@@ -84,10 +87,10 @@
                                     class="fa-solid fa-arrow-up-right-from-square"></i>
                             </button>
                         </form>
-                    </td>
-                {% else %}
-                    <td>-</td>
-                {% endif %}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
             </tr>
         </table>
     </div>

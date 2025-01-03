@@ -37,12 +37,44 @@ body {
 }
 
 
+a {
+    color: inherit;
+}
+
 table {
     width: 100%;
 }
 
-a {
-    color: inherit;
+@media screen and (max-width: 600px) {
+    .responsive thead {
+        visibility: hidden;
+        height: 0;
+        position: absolute;
+    }
+
+    .responsive tr {
+        display: block;
+    }
+
+    .responsive td {
+        border: 1px solid;
+        border-bottom: none;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+        width: 100%;
+    }
+
+    .responsive td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .responsive td:last-child {
+        border-bottom: 1px solid;
+    }
 }
 
 table {
@@ -64,7 +96,7 @@ td {
     padding: 5px;
 }
 
-th {
+thead td {
     border: 3px solid black;
     border-collapse: collapse;
     padding: 8px;
@@ -357,12 +389,12 @@ a.btn, a.btn2, a.nav-link {
 }
 
 .tooltip:not(.top) .tooltiptext {
-  bottom: auto;
+    bottom: auto;
 
 }
 
 .tooltip:not(.top) .tooltiptext::before {
-  top: auto;
+    top: auto;
 }
 
 
@@ -767,8 +799,9 @@ a.btn, a.btn2, a.nav-link {
 .inline-container {
     display: inline-block;
 }
+
 .inline-container > * {
-    vertical-align:middle;
+    vertical-align: middle;
 }
 
 .heading-card-adoption-notice {
@@ -796,7 +829,7 @@ a.btn, a.btn2, a.nav-link {
 }
 
 @media (max-width: 920px) {
-    .detail-adoption-notice-header h1 {
+    .detail-adoption-notice-header .inline-container {
         width: 100%;
     }
 
