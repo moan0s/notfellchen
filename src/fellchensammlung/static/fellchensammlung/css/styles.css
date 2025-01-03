@@ -758,12 +758,17 @@ a.btn, a.btn2, a.nav-link {
 .adoption-card-report-link, .notification-card-mark-read {
     margin-left: auto;
     font-size: 2rem;
-    padding: 10px;
-    width: 15%;
 }
 
 .notification-card-mark-read {
     display: inline;
+}
+
+.inline-container {
+    display: inline-block;
+}
+.inline-container > *:first-child {
+    vertical-align:middle;
 }
 
 .heading-card-adoption-notice {
@@ -783,7 +788,6 @@ a.btn, a.btn2, a.nav-link {
 }
 
 .detail-adoption-notice-header h1 {
-    width: 50%;
     display: inline-block;
 }
 

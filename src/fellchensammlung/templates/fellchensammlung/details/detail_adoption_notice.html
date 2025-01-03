@@ -6,7 +6,8 @@
 
 {% block content %}
     <div class="detail-adoption-notice-header">
-        <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}
+        <div class="inline-container">
+            <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}</h1>
             {% if not is_subscribed %}
                 <div class="tooltip bottom">
                     <form class="notification-card-mark-read" method="post">
@@ -27,7 +28,7 @@
                     <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-bell-slash"></i></button>
                 </form>
             {% endif %}
-        </h1>
+        </div>
         {% if has_edit_permission %}
             <a class="btn2"
                href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">{% translate 'Foto hinzufügen' %}</a>
