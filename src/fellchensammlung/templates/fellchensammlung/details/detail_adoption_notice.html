@@ -7,7 +7,7 @@
 {% block content %}
     <div class="detail-adoption-notice-header">
         <div class="inline-container">
-            <h1 class="detail-adoption-notice-header">{{ adoption_notice.name }}</h1>
+            <h1>{{ adoption_notice.name }}</h1>
             {% if not is_subscribed %}
                 <div class="tooltip bottom">
                     <form class="notification-card-mark-read" method="post">
