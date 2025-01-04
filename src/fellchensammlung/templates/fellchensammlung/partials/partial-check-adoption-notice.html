@@ -4,6 +4,7 @@
     <h1>
         <a href="{{ adoption_notice.get_absolute_url }}">{{ adoption_notice.name }}</a>
     </h1>
+    <i>{% translate 'Zuletzt geprüft:' %} {{ adoption_notice.last_checked_hr }}</i>
     {% if adoption_notice.further_information %}
         <p>{% translate "Externe Quelle" %}: {{ adoption_notice.link_to_more_information | safe }}</p>
     {% endif %}
