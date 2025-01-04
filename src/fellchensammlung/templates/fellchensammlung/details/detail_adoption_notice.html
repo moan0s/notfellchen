@@ -77,7 +77,8 @@
 
                 <td data-label="{% trans 'Suchen seit' %}">{{ adoption_notice.searching_since }}</td>
                 <td data-label="{% trans 'Zuletzt aktualisiert' %}">
-                    {{ adoption_notice.last_checked | date:'d. F Y' }}</td>
+                    {{ adoption_notice.last_checked_hr }}
+                </td>
                 <td data-label="{% trans 'Weitere Informationen' %}">
                     {% if adoption_notice.further_information %}
                         <form method="get" action="{% url 'external-site' %}">

@@ -12,6 +12,7 @@ from django.contrib.auth.models import AbstractUser
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL
 from .tools.geo import LocationProxy
+from .tools.misc import age_as_hr_string, time_since_as_hr_string
 
 
 class Language(models.Model):
@@ -256,6 +257,13 @@ class AdoptionNotice(models.Model):
         for animal in self.animals:
             sexes.add(animal.sex)
         return sexes
+
+    @property
+    def last_checked_hr(self):
+        time_since_last_checked = timezone.now() - self.last_checked
+        print(time_since_as_hr_string(time_since_last_checked))
+        return time_since_as_hr_string(time_since_last_checked)
+
 
     def sex_code(self):
         # Treat Intersex as mixed in order to increase their visibility

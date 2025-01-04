@@ -1,6 +1,9 @@
 import datetime as datetime
 import logging
 
+from django.utils.translation import ngettext
+from django.utils.translation import gettext as _
+
 from notfellchen import settings
 import requests
 
@@ -27,6 +30,37 @@ def age_as_hr_string(age: datetime.timedelta) -> str:
         return f'{weeks:.0f} Woche{pluralize(weeks, "n")}'
     else:
         return f'{days:.0f} Tag{pluralize(days)}'
+
+
+def time_since_as_hr_string(age: datetime.timedelta) -> str:
+    days = age.days
+    weeks = age.days / 7
+    months = age.days / 30
+    years = age.days / 365
+    if years >= 1:
+        text = ngettext(
+            "vor einem Jahr",
+            "vor %(years) Tagen",
+            years,
+        ) % {
+                   "years": years,
+               }
+    elif months >= 3:
+        _("vor %(month) Monaten") % {"month": months}
+    elif weeks >= 3:
+        text = _("vor %(weeks) Wochen") % {"weeks": weeks}
+    else:
+        if days == 0:
+            text = _("Heute")
+        else:
+            text = ngettext(
+                "vor einem Tag",
+                "vor %(count)d Tagen",
+                days,
+            ) % {
+                       "count": days,
+                   }
+    return text
 
 
 def healthcheck_ok():
