@@ -130,6 +130,10 @@ textarea {
     width: 100%;
 }
 
+.container-cards  h1 {
+    width: 100%; /* Make sure heading fills complete line */
+}
+
 .card {
     flex: 1 25%;
     margin: 10px;
