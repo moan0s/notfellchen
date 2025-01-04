@@ -7,7 +7,7 @@
     {% if adoption_notice.further_information %}
         <p>{% translate "Externe Quelle" %}: {{ adoption_notice.link_to_more_information | safe }}</p>
     {% endif %}
-    <div>
+    <div class="container-edit-buttons">
         <form method="post">
             {% csrf_token %}
             <input type="hidden"
