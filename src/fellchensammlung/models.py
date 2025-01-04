@@ -261,7 +261,6 @@ class AdoptionNotice(models.Model):
     @property
     def last_checked_hr(self):
         time_since_last_checked = timezone.now() - self.last_checked
-        print(time_since_as_hr_string(time_since_last_checked))
         return time_since_as_hr_string(time_since_last_checked)
 
 
