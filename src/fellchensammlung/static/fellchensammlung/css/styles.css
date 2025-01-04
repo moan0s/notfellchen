@@ -130,7 +130,8 @@ textarea {
     width: 100%;
 }
 
-.container-cards  h1 {
+.container-cards h1,
+.container-cards h2 {
     width: 100%; /* Make sure heading fills complete line */
 }
 
@@ -152,8 +153,8 @@ textarea {
     }
 }
 
-.spaced {
-    margin-bottom: 30px;
+.spaced > * {
+    margin: 10px;
 }
 
 /*******************************/

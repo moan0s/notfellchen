@@ -6,75 +6,78 @@
 
 {% block content %}
     <h1>{{ user.get_full_name }}</h1>
+    <div class="spaced">
 
-    <div class="container-cards">
-        <div class="card">
-            <p><strong>{% translate "Username" %}:</strong> {{ user.username }}</p>
-            <p><strong>{% translate "E-Mail" %}:</strong> {{ user.email }}</p>
-        </div>
-    </div>
-
-
-    <h2>{% trans 'Profil verwalten' %}</h2>
-    <div class="container-cards">
-        <div class="container-comment-form">
-            <p>
-                <a class="btn2" href="{% url 'password_change' %}">{% translate "Change password" %}</a>
-                <a class="btn2" href="{% url 'user-me-export' %}">{% translate "Daten exportieren" %}</a>
-            </p>
-        </div>
-    </div>
-
-    {% if user.id is request.user.id %}
-        <div class="detail-animal-header"><h2>{% trans 'Einstellungen' %}</h2></div>
         <div class="container-cards">
-            <form class="card" action="" method="POST">
-                {% csrf_token %}
-                {% if user.email_notifications %}
-                    <label class="toggle">
-                        <input type="submit" class="toggle-checkbox checked" name="toggle_email_notifications">
-                        <div class="toggle-switch round "></div>
-                        <span class="slider-label">
-                        {% translate 'E-Mail Benachrichtigungen' %}
-                        </span>
-                    </label>
-                {% else %}
-                    <label class="toggle">
-                        <input type="submit" class="toggle-checkbox" name="toggle_email_notifications">
-                        <div class="toggle-switch round"></div>
-                        <span class="slider-label">
-                        {% translate 'E-Mail Benachrichtigungen' %}
-                        </span>
-                    </label>
-                {% endif %}
-            </form>
+            <h2>{% trans 'Daten' %}</h2>
             <div class="card">
-                {% if token %}
-                    <form action="" method="POST">
-                        {% csrf_token %}
-                        <p class="text-muted"><strong>{% translate "API token:" %}</strong> {{ token }}</p>
-                        <input class="btn" type="submit" name="delete_token"
-                               value={% translate "Delete API token" %}>
-                    </form>
-                {% else %}
-                    <p>{% translate "Kein API-Token vorhanden." %}</p>
-                    <form action="" method="POST">
-                        {% csrf_token %}
-                        <input class="btn" type="submit" name="create_token"
-                               value={% translate "Create API token" %}>
-                    </form>
-                {% endif %}
+                <p><strong>{% translate "Username" %}:</strong> {{ user.username }}</p>
+                <p><strong>{% translate "E-Mail" %}:</strong> {{ user.email }}</p>
             </div>
         </div>
 
-        <h2>{% translate 'Benachrichtigungen' %}</h2>
-        {% include "fellchensammlung/lists/list-notifications.html" %}
 
-        <h2>{% translate 'Abonnierte Suchen' %}</h2>
-        {% include "fellchensammlung/lists/list-search-subscriptions.html" %}
+        <div class="container-cards">
+            <h2>{% trans 'Profil verwalten' %}</h2>
+            <div class="container-comment-form">
+                <p>
+                    <a class="btn2" href="{% url 'password_change' %}">{% translate "Change password" %}</a>
+                    <a class="btn2" href="{% url 'user-me-export' %}">{% translate "Daten exportieren" %}</a>
+                </p>
+            </div>
+        </div>
 
-        <h2>{% translate 'Meine Vermittlungen' %}</h2>
-        {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+        {% if user.id is request.user.id %}
+            <div class="detail-animal-header"><h2>{% trans 'Einstellungen' %}</h2></div>
+            <div class="container-cards">
+                <form class="card" action="" method="POST">
+                    {% csrf_token %}
+                    {% if user.email_notifications %}
+                        <label class="toggle">
+                            <input type="submit" class="toggle-checkbox checked" name="toggle_email_notifications">
+                            <div class="toggle-switch round "></div>
+                            <span class="slider-label">
+                        {% translate 'E-Mail Benachrichtigungen' %}
+                        </span>
+                        </label>
+                    {% else %}
+                        <label class="toggle">
+                            <input type="submit" class="toggle-checkbox" name="toggle_email_notifications">
+                            <div class="toggle-switch round"></div>
+                            <span class="slider-label">
+                        {% translate 'E-Mail Benachrichtigungen' %}
+                        </span>
+                        </label>
+                    {% endif %}
+                </form>
+                <div class="card">
+                    {% if token %}
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <p class="text-muted"><strong>{% translate "API token:" %}</strong> {{ token }}</p>
+                            <input class="btn" type="submit" name="delete_token"
+                                   value={% translate "Delete API token" %}>
+                        </form>
+                    {% else %}
+                        <p>{% translate "Kein API-Token vorhanden." %}</p>
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <input class="btn" type="submit" name="create_token"
+                                   value={% translate "Create API token" %}>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
 
-    {% endif %}
+            <h2>{% translate 'Benachrichtigungen' %}</h2>
+            {% include "fellchensammlung/lists/list-notifications.html" %}
+
+            <h2>{% translate 'Abonnierte Suchen' %}</h2>
+            {% include "fellchensammlung/lists/list-search-subscriptions.html" %}
+
+            <h2>{% translate 'Meine Vermittlungen' %}</h2>
+            {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+
+        {% endif %}
+    </div>
 {% endblock %}
