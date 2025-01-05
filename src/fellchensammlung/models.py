@@ -861,3 +861,11 @@ class Timestamp(models.Model):
 
     def ___str__(self):
         return f"[{self.key}] - {self.timestamp.strftime('%H:%M:%S %d-%m-%Y ')} - {self.data}"
+
+class SpeciesSpecificURL(models.Model):
+    """
+    Model that allows to specify a URL for a rescue organization where a certain species can be found
+    """
+    species = models.ForeignKey(Species, on_delete=models.CASCADE, verbose_name=_("Tierart"))
+    rescues_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE, verbose_name=_("Tierschutzorganisation"))
+    url = models.URLField(verbose_name=_("Tierartspezifische URL"))

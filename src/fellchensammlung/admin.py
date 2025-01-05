@@ -6,7 +6,8 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.http import urlencode
 
-from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription
+from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription, \
+    SpeciesSpecificURL
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, BaseNotification
@@ -93,12 +94,18 @@ class ReportAdoptionNoticeAdmin(admin.ModelAdmin):
 
     reported_content_link.short_description = "Reported Content"
 
+class SpeciesSpecificURLInline(admin.StackedInline):
+    model = SpeciesSpecificURL
 
 @admin.register(RescueOrganization)
 class RescueOrganizationAdmin(admin.ModelAdmin):
     search_fields = ("name","description", "internal_comment", "location_string")
     list_display = ("name", "trusted", "allows_using_materials", "website")
     list_filter = ("allows_using_materials", "trusted",)
+
+    inlines = [
+        SpeciesSpecificURLInline,
+    ]
 
 
 @admin.register(Text)
