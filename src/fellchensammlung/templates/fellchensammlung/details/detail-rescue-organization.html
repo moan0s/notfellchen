@@ -15,7 +15,41 @@
             {{ org.location_string }}
         {% endif %}
         <p>{{ org.description | render_markdown }}</p>
+        <table class="responsive">
+            <thead>
+            <tr>
+                {% if org.website %}
+                    <td>{% translate "Website" %}</td>
+                {% endif %}
+                {% if org.phone_number %}
+                    <td>{% translate "Telefonnummer" %}</td>
+                {% endif %}
+                {% if org.email %}
+                    <td>{% translate "E-Mail" %}</td>
+                {% endif %}
+            </tr>
+            </thead>
+            <tr>
+                {% if org.website %}
+                    <td data-label="{% trans 'Website' %} ">
+                        {{ org.website }}
+                    </td>
+                {% endif %}
+                {% if org.phone_number %}
+                    <td data-label="{% trans 'Telefonnummer' %}">
+                        {{ org.phone_number }}
+                    </td>
+                {% endif %}
+
+                {% if org.email %}
+                    <td data-label="{% trans 'E-Mail' %}">
+                        {{ org.email }}
+                    </td>
+                {% endif %}
+            </tr>
+        </table>
     </div>
+
     <h2>{% translate 'Vermittlungen der Organisation' %}</h2>
     <div class="container-cards">
         {% if org.adoption_notices %}
