@@ -169,7 +169,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap4",
     "rest_framework",
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',  # required for Django collectstatic discovery
 ]
 
 MIDDLEWARE = [
@@ -283,5 +285,16 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    'TITLE': 'Notfellchen API',
+    'DESCRIPTION': 'Adopt a animal in need',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }

@@ -39,7 +39,8 @@ dependencies = [
     "django-crispy-forms",
     "crispy-bootstrap4",
     "djangorestframework",
-    "celery[redis]"
+    "celery[redis]",
+    "drf-spectacular[sidecar]"
 ]
 
 dynamic = ["version", "readme"]
