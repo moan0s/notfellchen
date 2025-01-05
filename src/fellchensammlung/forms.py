@@ -7,6 +7,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field, Hidden
 from django.utils.translation import gettext_lazy as _
 from notfellchen.settings import MEDIA_URL
+from crispy_forms.layout import Div
 
 
 def animal_validator(value: str):
@@ -124,11 +125,21 @@ class ImageForm(forms.ModelForm):
         self.helper.form_id = 'form-animal-photo'
         self.helper.form_class = 'card'
         self.helper.form_method = 'post'
+
         if in_flow:
-            self.helper.add_input(Submit('save-and-add-another', _('Speichern und weiteres Foto hinzufügen')))
-            self.helper.add_input(Submit('submit', _('Speichern')))
+           submits= Div(Submit('submit', _('Speichern')),
+                      Submit('save-and-add-another', _('Speichern und weiteres Foto hinzufügen')), css_class="container-edit-buttons")
         else:
-            self.helper.add_input(Submit('submit', _('Submit')))
+            submits = Fieldset(Submit('submit', _('Speichern')), css_class="container-edit-buttons")
+        self.helper.layout = Layout(
+            Div(
+                'image',
+                'alt_text',
+                css_class="spaced",
+            ),
+            submits
+        )
+
 
     class Meta:
         model = Image

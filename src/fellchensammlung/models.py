@@ -1,5 +1,6 @@
 import uuid
 from random import choices
+from tabnanny import verbose
 
 from django.db import models
 from django.urls import reverse
@@ -199,7 +200,7 @@ class User(AbstractUser):
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images')
-    alt_text = models.TextField(max_length=2000)
+    alt_text = models.TextField(max_length=2000, verbose_name=_('Alternativtext'))
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
