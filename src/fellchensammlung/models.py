@@ -1,4 +1,5 @@
 import uuid
+from random import choices
 
 from django.db import models
 from django.urls import reverse
@@ -81,6 +82,8 @@ class Location(models.Model):
         instance.location = location
         instance.save()
 
+class ExternalSourceChoices(models.TextChoices):
+    OSM = "OSM", _("Open Street Map")
 
 class RescueOrganization(models.Model):
     def __str__(self):
@@ -118,6 +121,10 @@ class RescueOrganization(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     internal_comment = models.TextField(verbose_name=_("Interner Kommentar"), null=True, blank=True, )
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))  # Markdown allowed
+    external_object_identifier = models.CharField(max_length=200, null=True, blank=True, verbose_name=_('External Object Identifier'))
+    external_source_identifier = models.CharField(max_length=200, null=True, blank=True,
+                                                  choices=ExternalSourceChoices.choices,
+                                                  verbose_name=_('External Source Identifier'))
 
     def get_absolute_url(self):
         return reverse("rescue-organization-detail", args=[str(self.pk)])
