@@ -814,7 +814,8 @@ a.btn, a.btn2, a.nav-link {
     vertical-align: middle;
 }
 
-.heading-card-adoption-notice {
+h2.heading-card-adoption-notice {
+    font-size: 2rem;
     word-wrap: anywhere;
     width: 80%;
 }
