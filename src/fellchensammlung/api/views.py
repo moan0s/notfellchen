@@ -11,7 +11,7 @@ from .serializers import (
     RescueOrganizationSerializer,
     AdoptionNoticeSerializer,
     ImageCreateSerializer,
-    SpeciesSerializer,
+    SpeciesSerializer, RescueOrgSerializer,
 )
 from fellchensammlung.models import Animal, RescueOrganization, AdoptionNotice, Species, Image
 
@@ -122,6 +122,19 @@ class RescueOrganizationApiView(APIView):
         serializer = RescueOrganizationSerializer(organizations, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        """
+        Create or update a rescue organization.
+        """
+        serializer = RescueOrgSerializer(data=request.data, context={"request": request})
+        if serializer.is_valid():
+            rescue_org = serializer.save(owner=request.user)
+            return Response(
+                {"message": "Rescue organization created/updated successfully successfully!", "id": rescue_org.id},
+                status=status.HTTP_201_CREATED,
+            )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AddImageApiView(APIView):
     permission_classes = [IsAuthenticated]

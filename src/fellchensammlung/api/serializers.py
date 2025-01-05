@@ -14,6 +14,11 @@ class AnimalCreateSerializer(serializers.ModelSerializer):
         model = Animal
         fields = ["name", "date_of_birth", "description", "species", "sex", "adoption_notice"]
 
+class RescueOrgSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RescueOrganization
+        fields = ["name", "location_string", "instagram", "facebook", "fediverse_profile", "email", "phone_number",
+                  "website", "description", "external_object_identifier", "external_source_identifier"]
 
 class AnimalGetSerializer(serializers.ModelSerializer):
     class Meta:
