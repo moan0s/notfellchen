@@ -605,11 +605,15 @@ def external_site_warning(request):
 
     return render(request, 'fellchensammlung/external_site_warning.html', context=context)
 
+def list_rescue_organizations(request):
+    rescue_organizations = RescueOrganization.objects.all()
+    context = {"rescue_organizations": rescue_organizations}
+    return render(request, 'fellchensammlung/animal-shelters.html', context=context)
 
 def detail_view_rescue_organization(request, rescue_organization_id):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)
     return render(request, 'fellchensammlung/details/detail-rescue-organization.html',
-                  context={"org": org, "map_center": org.position, "zoom_level": 6, "map_pins": [org.position]})
+                  context={"org": org, "map_center": org.position, "zoom_level": 6, "rescue_organizations": [org]})
 
 
 def export_own_profile(request):

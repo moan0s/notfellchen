@@ -52,35 +52,23 @@
         {% endif %}
     {% endfor %}
 
-    {% for map_pin in map_pins %}
-        map.on('load', async () => {
-            image = await map.loadImage("{% static 'fellchensammlung/img/animal_shelter.png' %}");
-            map.addImage('cat', image.data);
-            map.addSource('point', {
-                'type': 'geojson',
-                'data': {
-                    'type': 'FeatureCollection',
-                    'features': [
-                        {
-                            'type': 'Feature',
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': [parseFloat({{ map_pin.longitude }}), parseFloat({{ map_pin.latitude }})]
-                            }
-                        }
-                    ]
-                }
-            });
-            map.addLayer({
-                'id': 'points',
-                'type': 'symbol',
-                'source': 'point',
-                'layout': {
-                    'icon-image': 'cat',
-                    'icon-size': 0.25
-                }
-            });
-        });
+    {% for rescue_orgnization in rescue_organizations %}
+        {% if rescue_orgnization.location %}
+            // create the popup
+            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}`);
+
+            // create DOM element for the marker
+            const el_{{ forloop.counter }} = document.createElement('div');
+            el_{{ forloop.counter }}.id = 'marker_{{ forloop.counter }}';
+            el_{{ forloop.counter }}.classList.add('animal-shelter-marker', 'marker');
+
+            const location_popup_{{ forloop.counter }} = [{{ rescue_orgnization.location.longitude | pointdecimal }}, {{ rescue_orgnization.location.latitude | pointdecimal }}];
+            // create the marker
+            new maplibregl.Marker({element: el_{{ forloop.counter }}})
+                .setLngLat(location_popup_{{ forloop.counter }})
+                .setPopup(popup_{{ forloop.counter }}) // sets a popup on this marker
+                .addTo(map);
+        {% endif %}
     {% endfor %}
 
     {% if search_radius  %}

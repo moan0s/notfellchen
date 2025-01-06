@@ -140,6 +140,12 @@ class RescueOrganization(models.Model):
             return Position(latitude=self.location.latitude, longitude=self.location.longitude)
         else:
             return None
+    @property
+    def description_short(self):
+        if self.description is None:
+            return ""
+        if len(self.description) > 200:
+            return self.description[:200] + f" ... [weiterlesen]({self.get_absolute_url()})"
 
 
 

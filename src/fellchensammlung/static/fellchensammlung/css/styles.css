@@ -937,6 +937,10 @@ div.announcement {
     cursor: pointer;
 }
 
+.animal-shelter-marker {
+    background-image: url('../img/animal_shelter.png'); !important;
+}
+
 .maplibregl-popup {
     max-width: 600px !important;
 }

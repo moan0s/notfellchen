@@ -1,0 +1,24 @@
+{% load custom_tags %}
+{% load i18n %}
+
+<div class="card">
+    <div>
+        <div class="header-card-adoption-notice">
+            <h2 class="heading-card-adoption-notice"><a
+                   href="{{ rescue_organization.get_absolute_url }}"> {{ rescue_organization.name }}</a></h2>
+        </div>
+        <p>
+            <b><i class="fa-solid fa-location-dot"></i></b>
+            {% if rescue_organization.location %}
+                {{ rescue_organization.location.str_hr }}
+            {% else %}
+                {{ rescue_organization.location_string }}
+            {% endif %}
+        </p>
+        <p>
+            {% if rescue_organization.description_short %}
+                {{ rescue_organization.description_short | render_markdown }}
+            {% endif %}
+        </p>
+    </div>
+</div>
