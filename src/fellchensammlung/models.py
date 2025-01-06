@@ -13,7 +13,7 @@ from django.contrib.auth.models import AbstractUser
 
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL
-from .tools.geo import LocationProxy
+from .tools.geo import LocationProxy, Position
 from .tools.misc import age_as_hr_string, time_since_as_hr_string
 
 
@@ -133,6 +133,14 @@ class RescueOrganization(models.Model):
     @property
     def adoption_notices(self):
         return AdoptionNotice.objects.filter(organization=self)
+
+    @property
+    def position(self):
+        if self.location:
+            return Position(latitude=self.location.latitude, longitude=self.location.longitude)
+        else:
+            return None
+
 
 
 # Admins can perform all actions and have the highest trust associated with them

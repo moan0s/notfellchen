@@ -608,7 +608,8 @@ def external_site_warning(request):
 
 def detail_view_rescue_organization(request, rescue_organization_id):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)
-    return render(request, 'fellchensammlung/details/detail-rescue-organization.html', context={"org": org})
+    return render(request, 'fellchensammlung/details/detail-rescue-organization.html',
+                  context={"org": org, "map_center": org.position, "zoom_level": 6, "map_pins": [org.position]})
 
 
 def export_own_profile(request):

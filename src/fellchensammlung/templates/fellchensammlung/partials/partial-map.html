@@ -15,7 +15,7 @@
 <!-- start map -->
 <script>
     {% if map_center %}
-        var center = [{{ map_center.longitude }}, {{ map_center.latitude }}];
+        var center = [parseFloat({{ map_center.longitude }}), parseFloat({{ map_center.latitude }})];
     {% else %}
         var center = [10.49, 50.68];
     {% endif %}
@@ -50,6 +50,37 @@
                 .setPopup(popup_{{ forloop.counter }}) // sets a popup on this marker
                 .addTo(map);
         {% endif %}
+    {% endfor %}
+
+    {% for map_pin in map_pins %}
+        map.on('load', async () => {
+            image = await map.loadImage("{% static 'fellchensammlung/img/animal_shelter.png' %}");
+            map.addImage('cat', image.data);
+            map.addSource('point', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': [
+                        {
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [parseFloat({{ map_pin.longitude }}), parseFloat({{ map_pin.latitude }})]
+                            }
+                        }
+                    ]
+                }
+            });
+            map.addLayer({
+                'id': 'points',
+                'type': 'symbol',
+                'source': 'point',
+                'layout': {
+                    'icon-image': 'cat',
+                    'icon-size': 0.25
+                }
+            });
+        });
     {% endfor %}
 
     {% if search_radius  %}

@@ -5,50 +5,56 @@
 {% block title %}<title>{{ org.name }}</title>{% endblock %}
 
 {% block content %}
-    <div class="card">
-        <h1>{{ org.name }}</h1>
+    <div class="container-cards">
+        <div class="card half">
+            <h1>{{ org.name }}</h1>
 
-        <b><i class="fa-solid fa-location-dot"></i></b>
-        {% if org.location %}
-            {{ org.location.str_hr }}
-        {% else %}
-            {{ org.location_string }}
-        {% endif %}
-        <p>{{ org.description | render_markdown }}</p>
-        <table class="responsive">
-            <thead>
-            <tr>
-                {% if org.website %}
-                    <td>{% translate "Website" %}</td>
-                {% endif %}
-                {% if org.phone_number %}
-                    <td>{% translate "Telefonnummer" %}</td>
-                {% endif %}
-                {% if org.email %}
-                    <td>{% translate "E-Mail" %}</td>
-                {% endif %}
-            </tr>
-            </thead>
-            <tr>
-                {% if org.website %}
-                    <td data-label="{% trans 'Website' %} ">
-                        {{ org.website }}
-                    </td>
-                {% endif %}
-                {% if org.phone_number %}
-                    <td data-label="{% trans 'Telefonnummer' %}">
-                        {{ org.phone_number }}
-                    </td>
-                {% endif %}
+            <b><i class="fa-solid fa-location-dot"></i></b>
+            {% if org.location %}
+                {{ org.location.str_hr }}
+            {% else %}
+                {{ org.location_string }}
+            {% endif %}
+            <p>{{ org.description | render_markdown }}</p>
+            <table class="responsive">
+                <thead>
+                <tr>
+                    {% if org.website %}
+                        <td>{% translate "Website" %}</td>
+                    {% endif %}
+                    {% if org.phone_number %}
+                        <td>{% translate "Telefonnummer" %}</td>
+                    {% endif %}
+                    {% if org.email %}
+                        <td>{% translate "E-Mail" %}</td>
+                    {% endif %}
+                </tr>
+                </thead>
+                <tr>
+                    {% if org.website %}
+                        <td data-label="{% trans 'Website' %} ">
+                            {{ org.website }}
+                        </td>
+                    {% endif %}
+                    {% if org.phone_number %}
+                        <td data-label="{% trans 'Telefonnummer' %}">
+                            {{ org.phone_number }}
+                        </td>
+                    {% endif %}
 
-                {% if org.email %}
-                    <td data-label="{% trans 'E-Mail' %}">
-                        {{ org.email }}
-                    </td>
-                {% endif %}
-            </tr>
-        </table>
+                    {% if org.email %}
+                        <td data-label="{% trans 'E-Mail' %}">
+                            {{ org.email }}
+                        </td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+        <div class="card half">
+            {% include "fellchensammlung/partials/partial-map.html" %}
+        </div>
     </div>
+
 
     <h2>{% translate 'Vermittlungen der Organisation' %}</h2>
     <div class="container-cards">
