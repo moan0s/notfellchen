@@ -52,17 +52,17 @@
         {% endif %}
     {% endfor %}
 
-    {% for rescue_orgnization in rescue_organizations %}
-        {% if rescue_orgnization.location %}
+    {% for rescue_organization in rescue_organizations %}
+        {% if rescue_organization.location %}
             // create the popup
-            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}`);
+            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-rescue-organization.html" %}`);
 
             // create DOM element for the marker
             const el_{{ forloop.counter }} = document.createElement('div');
             el_{{ forloop.counter }}.id = 'marker_{{ forloop.counter }}';
             el_{{ forloop.counter }}.classList.add('animal-shelter-marker', 'marker');
 
-            const location_popup_{{ forloop.counter }} = [{{ rescue_orgnization.location.longitude | pointdecimal }}, {{ rescue_orgnization.location.latitude | pointdecimal }}];
+            const location_popup_{{ forloop.counter }} = [{{ rescue_organization.location.longitude | pointdecimal }}, {{ rescue_organization.location.latitude | pointdecimal }}];
             // create the marker
             new maplibregl.Marker({element: el_{{ forloop.counter }}})
                 .setLngLat(location_popup_{{ forloop.counter }})
