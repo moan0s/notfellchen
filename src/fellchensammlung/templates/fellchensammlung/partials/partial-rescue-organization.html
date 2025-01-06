@@ -3,10 +3,8 @@
 
 <div class="card">
     <div>
-        <div class="header-card-adoption-notice">
-            <h2 class="heading-card-adoption-notice"><a
-                   href="{{ rescue_organization.get_absolute_url }}"> {{ rescue_organization.name }}</a></h2>
-        </div>
+        <h2 class="heading-card-adoption-notice"><a
+                href="{{ rescue_organization.get_absolute_url }}"> {{ rescue_organization.name }}</a></h2>
         <p>
             <b><i class="fa-solid fa-location-dot"></i></b>
             {% if rescue_organization.location %}
