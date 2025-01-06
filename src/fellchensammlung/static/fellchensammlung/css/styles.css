@@ -816,6 +816,7 @@ a.btn, a.btn2, a.nav-link {
 
 h2.heading-card-adoption-notice {
     font-size: 2rem;
+    line-height: 2rem;
     word-wrap: anywhere;
     width: 80%;
 }
