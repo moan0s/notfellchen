@@ -82,15 +82,6 @@ class GeoAPI:
         else:
             self.requests = requests
 
-    def get_coordinates_from_query(self, location_string):
-        try:
-            result = \
-                self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"},
-                                  headers=self.headers).json()[0]
-        except IndexError:
-            return None
-        return result["lat"], result["lon"]
-
     def _get_raw_response(self, location_string):
         result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers)
         return result.content
@@ -142,5 +133,4 @@ class LocationProxy:
 
 if __name__ == "__main__":
     geo = GeoAPI(debug=False)
-    print(geo.get_coordinates_from_query("12101"))
     print(calculate_distance_between_coordinates(('48.4949904', '9.040330235970146'), ("48.648333", "9.451111")))
