@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load custom_tags %}
 <div class="card">
     <div class="detail-animal-header">
         <h1><a href="{% url 'animal-detail' animal_id=animal.pk %}">{{ animal.name }}</a></h1>
@@ -19,7 +20,7 @@
     </div>
 
     {% if animal.description %}
-        <p>{{ animal.description }}</p>
+        <p>{{ animal.description | render_markdown }}</p>
     {% endif %}
     {% for photo in  animal.get_photos %}
         <img src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{{ photo.alt_text }}">
