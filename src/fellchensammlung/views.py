@@ -204,6 +204,7 @@ def search(request):
                "searched": searched,
                "adoption_notices_map": AdoptionNotice.get_active_ANs(),
                "map_center": search.position,
+               "location": search.location,
                "search_radius": search.max_distance,
                "zoom_level": zoom_level_for_radius(search.max_distance)}
     return render(request, 'fellchensammlung/search.html', context=context)

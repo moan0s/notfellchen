@@ -27,6 +27,10 @@
                     {% endif %}
                 {% endif %}
             </div>
+
+            {% if location %}
+                <b>{% translate 'Gefundener Suchort:' %}</b> {{ location }}
+            {% endif %}
         </form>
         <div class="card half">
             {% include "fellchensammlung/partials/partial-map.html" %}
