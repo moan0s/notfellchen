@@ -90,6 +90,9 @@ HEALTHCHECKS_URL = config.get("monitoring", "healthchecks_url", fallback=None)
 
 """ GEOCODING """
 GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://nominatim.hyteck.de/search")
+# GEOCODING_API_FORMAT is allowed to be one of ['nominatim', 'photon']
+GEOCODING_API_FORMAT = config.get("geocoding", "api_format", fallback="nominatim")
+
 """ Tile Server """
 MAP_TILE_SERVER = config.get("map", "tile_server", fallback="https://tiles.hyteck.de")
 

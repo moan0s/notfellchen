@@ -25,6 +25,7 @@ def zoom_level_for_radius(radius) -> int:
     else:
         return 4
 
+
 def calculate_distance_between_coordinates(position1, position2):
     """
     Calculate the distance between two points identified by coordinates
@@ -66,8 +67,41 @@ class RequestMock:
         return ResponseMock()
 
 
+class GeoFeature:
+
+    @staticmethod
+    def geofeatures_from_photon_result(result):
+        geofeatures = []
+        for feature in result["features"]:
+            geojson = {}
+            geojson['name'] = feature["properties"]["name"]
+            geojson['place_id'] = feature["properties"]["osm_id"]
+            geojson['lat'] = feature["geometry"]["coordinates"][1]
+            geojson['lon'] = feature["geometry"]["coordinates"][0]
+            geofeatures.append(geojson)
+        return geofeatures
+
+    @staticmethod
+    def geofeatures_from_nominatim_result(result):
+        geofeatures = []
+        for feature in result:
+            geojson = {}
+            if "name" in feature:
+                geojson['name'] = feature["name"]
+            else:
+                geojson['name'] = feature["display_name"]
+            geojson['place_id'] = feature["place_id"]
+            geojson['lat'] = feature["lat"]
+            geojson['lon'] = feature["lon"]
+            geofeatures.append(geojson)
+        return geofeatures
+
+
 class GeoAPI:
     api_url = settings.GEOCODING_API_URL
+    api_format = settings.GEOCODING_API_FORMAT
+    assert api_format in ['nominatim', 'photon']
+
     # Set User-Agent headers as required by most usage policies (and it's the nice thing to do)
     headers = {
         'User-Agent': f"Notfellchen {nf_version}",
@@ -88,17 +122,27 @@ class GeoAPI:
 
     def get_geojson_for_query(self, location_string):
         try:
-            result = self.requests.get(self.api_url,
-                                       {"q": location_string,
-                                        "format": "jsonv2"},
-                                       headers=self.headers).json()
+            if self.api_format == 'nominatim':
+                result = self.requests.get(self.api_url,
+                                           {"q": location_string,
+                                            "format": "jsonv2"},
+                                           headers=self.headers).json()
+                geofeatures = GeoFeature.geofeatures_from_nominatim_result(result)
+            elif self.api_format == 'photon':
+                result = self.requests.get(self.api_url,
+                                           {"q": location_string},
+                                           headers=self.headers).json()
+                geofeatures = GeoFeature.geofeatures_from_photon_result(result)
+            else:
+                raise NotImplementedError
+
         except Exception as e:
-            logging.warning(f"Exception {e} when querying Nominatim")
+            logging.warning(f"Exception {e} when querying geocoding server")
             return None
-        if len(result) == 0:
-            logging.warning(f"Couldn't find a result for {location_string} when querying Nominatim")
+        if len(geofeatures) == 0:
+            logging.warning(f"Couldn't find a result for {location_string} when querying geocoding server")
             return None
-        return result
+        return geofeatures
 
 
 class LocationProxy:
@@ -111,14 +155,11 @@ class LocationProxy:
         Creates the location proxy from the location string
         """
         self.geo_api = GeoAPI()
-        geojson = self.geo_api.get_geojson_for_query(location_string)
-        if geojson is None:
+        geofeatures = self.geo_api.get_geojson_for_query(location_string)
+        if geofeatures is None:
             raise ValueError
-        result = geojson[0]
-        if "name" in result:
-            self.name = result["name"]
-        else:
-            self.name = result["display_name"]
+        result = geofeatures[0]
+        self.name = result["name"]
         self.place_id = result["place_id"]
         self.latitude = result["lat"]
         self.longitude = result["lon"]
