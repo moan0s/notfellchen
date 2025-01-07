@@ -123,12 +123,14 @@ class GeoAPI:
     def get_geojson_for_query(self, location_string):
         try:
             if self.api_format == 'nominatim':
+                logging.info(f"Querying nominatim instance for: {location_string} ({self.api_url})")
                 result = self.requests.get(self.api_url,
                                            {"q": location_string,
                                             "format": "jsonv2"},
                                            headers=self.headers).json()
                 geofeatures = GeoFeature.geofeatures_from_nominatim_result(result)
             elif self.api_format == 'photon':
+                logging.info(f"Querying photon instance for: {location_string} ({self.api_url})")
                 result = self.requests.get(self.api_url,
                                            {"q": location_string},
                                            headers=self.headers).json()
@@ -166,6 +168,9 @@ class LocationProxy:
 
     def __eq__(self, other):
         return self.place_id == other.place_id
+
+    def __str__(self):
+        return self.name
 
     @property
     def position(self):
