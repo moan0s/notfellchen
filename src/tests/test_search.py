@@ -6,7 +6,7 @@ from fellchensammlung.models import SearchSubscription, User, TrustLevel, Adopti
     Animal, Species, AdoptionNoticeNotification, SexChoices
 from model_bakery import baker
 
-from fellchensammlung.tools.geo import GeoAPI
+from fellchensammlung.tools.geo import LocationProxy
 from fellchensammlung.tools.search import Search, notify_search_subscribers
 
 
@@ -72,8 +72,7 @@ class TestSearch(TestCase):
                                                                  max_distance=100
                                                                  )
         search1 = Search()
-        geoapi = GeoAPI()
-        search1.search_position = geoapi.get_coordinates_from_query("Stuttgart")
+        search1.search_position = LocationProxy("Stuttgart").position
         search1.max_distance = 100
         search1.area_search = True
         search1.sex = SexChoicesWithAll.ALL
