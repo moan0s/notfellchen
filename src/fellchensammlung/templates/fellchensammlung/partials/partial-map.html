@@ -15,7 +15,7 @@
 <!-- start map -->
 <script>
     {% if map_center %}
-        var center = [parseFloat({{ map_center.longitude }}), parseFloat({{ map_center.latitude }})];
+        var center = [{{ map_center.longitude | pointdecimal }}, {{ map_center.latitude | pointdecimal }}];
     {% else %}
         var center = [10.49, 50.68];
     {% endif %}
@@ -84,8 +84,7 @@
                             'type': 'Feature',
                             'geometry': {
                                 'type': 'Point',
-                                'coordinates': [parseFloat({{ map_pin.location.longitude  }}),
-                                    parseFloat({{ map_pin.location.latitude  }})]
+                                'coordinates': [{{ map_pin.location.longitude | pointdecimal }}, {{ map_pin.location.latitude | pointdecimal }}]
                             }
                         }
                     ]
