@@ -36,8 +36,8 @@ class DistanceTest(TestCase):
         l_ueberlingen = LocationProxy("Überlingen")
         l_pfullendorf = LocationProxy("Pfullendorf")
         # Should be 18km
-        distance_ueberlingen_pfullendorf = calculate_distance_between_coordinates(l_stuttgart.position, l_tue.position)
-        self.assertLess(distance_tue_stuttgart, 21)
-        self.assertGreaer(distance_tue_stuttgart, 15)
+        distance_ueberlingen_pfullendorf = calculate_distance_between_coordinates(l_ueberlingen.position, l_pfullendorf.position)
+        self.assertLess(distance_ueberlingen_pfullendorf, 21)
+        self.assertGreater(distance_ueberlingen_pfullendorf, 15)
 
 
