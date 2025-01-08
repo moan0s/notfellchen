@@ -80,17 +80,13 @@ docker run -p8000:7345 moanos/notfellchen:latest
 ## Geocoding
 
 Geocoding services (search map data by name, address or postcode) are provided via the
-[Nominatim](https://nominatim.org/) API, powered by [OpenStreetMap](https://openstreetmap.org) data. Notfellchen uses
-a selfhosted Nominatim instance to avoid overburdening the publicly hosted instance. Due to ressource constraints
-geocoding is only supported for Germany right now.
-
-ToDos
-* [x] Implement a report that shows the number of location strings that could not be converted into a location
-* [x] Add a management command to re-query location strings to fill location
+either [Nominatim](https://nominatim.org/) or [photon](https://github.com/komoot/photon) API, powered by [OpenStreetMap](https://openstreetmap.org) data.
+Notfellchen uses a selfhosted Photon instance to avoid overburdening the publicly hosted instance.
 
 ## Maps
 
 The map on the main homepage is powered by [Versatiles](https://versatiles.org), and rendered using [Maplibre](https://maplibre.org/).
+The Versatiles server is self-hosted and does not send data to third parties.
 
 ## Translation
 
