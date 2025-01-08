@@ -196,4 +196,4 @@ class AdoptionNoticeSearchForm(forms.Form):
     sex = forms.ChoiceField(choices=SexChoicesWithAll, label=_("Geschlecht"), required=False,
                             initial=SexChoicesWithAll.ALL)
     max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.ONE_HUNDRED, label=_("Suchradius"))
-    location_string = forms.CharField(max_length=20, label=_("Stadt"), required=False)
+    location_string = forms.CharField(max_length=100, label=_("Stadt"), required=False)

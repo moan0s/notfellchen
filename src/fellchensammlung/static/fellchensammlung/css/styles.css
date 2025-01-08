@@ -909,6 +909,25 @@ div.announcement {
     width: 49%;
 }
 
+
+#results {
+    margin-top: 10px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.result-item {
+    padding: 8px;
+    margin: 4px 0;
+    background-color: #ddd1a5;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.result-item:hover {
+    background-color: #ede1b5;
+}
+
 /************************/
 /* GENERAL HIGHLIGHTING */
 /************************/
@@ -939,7 +958,8 @@ div.announcement {
 }
 
 .animal-shelter-marker {
-    background-image: url('../img/animal_shelter.png'); !important;
+    background-image: url('../img/animal_shelter.png');
+!important;
 }
 
 .maplibregl-popup {

@@ -9,7 +9,9 @@
             {% csrf_token %}
             <input type="hidden" name="longitude" maxlength="200" id="longitude">
             <input type="hidden" name="latitude" maxlength="200" id="latitude">
+            <input type="hidden" id="place_id" name="place_id">
             {{ search_form.as_p }}
+            <ul id="results"></ul>
             <div class="container-edit-buttons">
                 <button class="btn" type="submit" value="search" name="search">
                     <i class="fas fa-search"></i> {% trans 'Suchen' %}
@@ -40,4 +42,47 @@
         </div>
     </div>
     {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+
+    <script>
+        const locationInput = document.getElementById('id_location_string');
+        const resultsList = document.getElementById('results');
+        const placeIdInput = document.getElementById('place_id');
+
+        locationInput.addEventListener('input', async function () {
+            const query = locationInput.value.trim();
+
+            if (query.length < 3) {
+                resultsList.innerHTML = ''; // Don't search for or show results if input is less than 3 characters
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://photon.hyteck.de/api/?q=${encodeURIComponent(query)}&limit=5`);
+                const data = await response.json();
+
+                if (data && data.features) {
+                    const locations = data.features.slice(0, 5); // Show only the first 5 results
+                    resultsList.innerHTML = ''; // Clear previous results
+
+                    locations.forEach(location => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('result-item');
+                        listItem.textContent = location.properties.name;
+
+                        // Add event when user clicks on a result location
+                        listItem.addEventListener('click', () => {
+
+                            locationInput.value = location.properties.name; // Set input field to selected location
+                            resultsList.innerHTML = ''; // Clear the results after selecting a location
+                        });
+
+                        resultsList.appendChild(listItem);
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching location data:', error);
+                resultsList.innerHTML = '<li class="result-item">Error fetching data. Please try again.</li>';
+            }
+        });
+    </script>
 {% endblock %}

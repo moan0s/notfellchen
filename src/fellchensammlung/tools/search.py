@@ -39,6 +39,8 @@ class Search:
         self.location = None # Can either be Location (DjangoModel) or LocationProxy
         self.place_not_found = False  # Indicates that a location was given but could not be geocoded
         self.search_form = None
+        # Either place_id or location string must be set for area search
+        self.location_string = None
 
         if request:
             self.search_from_request(request)
@@ -106,6 +108,7 @@ class Search:
             self.search_form = AdoptionNoticeSearchForm(request.POST)
             self.search_form.is_valid()
             self.sex = self.search_form.cleaned_data["sex"]
+
             if self.search_form.cleaned_data["location_string"] != "" and self.search_form.cleaned_data[
                 "max_distance"] != "":
                 self.area_search = True
