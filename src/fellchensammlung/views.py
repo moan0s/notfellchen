@@ -207,7 +207,8 @@ def search(request):
                "map_pins": [search],
                "location": search.location,
                "search_radius": search.max_distance,
-               "zoom_level": zoom_level_for_radius(search.max_distance)}
+               "zoom_level": zoom_level_for_radius(search.max_distance),
+               "geocoding_api_url": settings.GEOCODING_API_URL,}
     return render(request, 'fellchensammlung/search.html', context=context)
 
 

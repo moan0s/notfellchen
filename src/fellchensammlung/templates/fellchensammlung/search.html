@@ -57,7 +57,7 @@
             }
 
             try {
-                const response = await fetch(`https://photon.hyteck.de/api/?q=${encodeURIComponent(query)}&limit=5`);
+                const response = await fetch(`{{ geocoding_api_url }}/?q=${encodeURIComponent(query)}&limit=5`);
                 const data = await response.json();
 
                 if (data && data.features) {
