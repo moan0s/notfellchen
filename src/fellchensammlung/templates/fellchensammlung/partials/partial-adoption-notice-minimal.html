@@ -2,31 +2,34 @@
 {% load i18n %}
 
 <div class="card">
-    <div>
-        <div class="header-card-adoption-notice">
-            <h2 class="heading-card-adoption-notice"><a
-                   href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a></h2>
+    <div class="header-card-adoption-notice">
+        <h2 class="heading-card-adoption-notice"><a
+                href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a></h2>
+        <div class="tooltip bottom">
             <a class="adoption-card-report-link" href="{{ adoption_notice.get_report_url }}"><i
                     class="fa-solid fa-flag"></i></a>
+            <span class="tooltiptext">
+                        {% translate 'Melde diese Vermittlung an Moderator*innen' %}
+                    </span>
         </div>
-        <p>
-            <b><i class="fa-solid fa-location-dot"></i></b>
-            {% if adoption_notice.location %}
-                {{ adoption_notice.location.str_hr }}
-            {% else %}
-                {{ adoption_notice.location_string }}
-            {% endif %}
-        </p>
-        <p>
-            {% if adoption_notice.description_short %}
-                {{ adoption_notice.description_short | render_markdown }}
-            {% endif %}
-        </p>
-        {% if adoption_notice.get_photo %}
-            <div class="adoption-notice-img img-small">
-                <img src="{{ MEDIA_URL }}/{{ adoption_notice.get_photo.image }}"
-                     alt="{{ adoption_notice.get_photo.alt_text }}">
-            </div>
-        {% endif %}
     </div>
+    <p>
+        <b><i class="fa-solid fa-location-dot"></i></b>
+        {% if adoption_notice.location %}
+            {{ adoption_notice.location.str_hr }}
+        {% else %}
+            {{ adoption_notice.location_string }}
+        {% endif %}
+    </p>
+    <p>
+        {% if adoption_notice.description_short %}
+            {{ adoption_notice.description_short | render_markdown }}
+        {% endif %}
+    </p>
+    {% if adoption_notice.get_photo %}
+        <div class="adoption-notice-img img-small">
+            <img src="{{ MEDIA_URL }}/{{ adoption_notice.get_photo.image }}"
+                 alt="{{ adoption_notice.get_photo.alt_text }}">
+        </div>
+    {% endif %}
 </div>

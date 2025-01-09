@@ -740,7 +740,7 @@ a.btn, a.btn2, a.nav-link {
 
 .header-card-adoption-notice {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
 
@@ -801,6 +801,11 @@ a.btn, a.btn2, a.nav-link {
     margin-left: auto;
     font-size: 2rem;
 }
+
+.adoption-card-report-link {
+    margin-right: 12px;
+}
+
 
 .notification-card-mark-read {
     display: inline;
