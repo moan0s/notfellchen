@@ -46,20 +46,14 @@ def time_since_as_hr_string(age: datetime.timedelta) -> str:
                    "years": years,
                }
     elif months >= 3:
-        _("vor %(month)d Monaten") % {"month": months}
+        text = _("vor %(month)d Monaten") % {"month": months}
     elif weeks >= 3:
         text = _("vor %(weeks)d Wochen") % {"weeks": weeks}
     else:
         if days == 0:
             text = _("Heute")
         else:
-            text = ngettext(
-                "vor einem Tag",
-                "vor %(count)d Tagen",
-                days,
-            ) % {
-                       "count": days,
-                   }
+            text = ngettext("vor einem Tag","vor %(count)d Tagen", days,) % {"count": days,}
     return text
 
 
