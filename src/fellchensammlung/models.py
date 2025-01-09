@@ -648,8 +648,8 @@ class Report(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text=_('ID dieses reports'),
                           verbose_name=_('ID'))
     status = models.CharField(max_length=30, choices=STATES)
-    reported_broken_rules = models.ManyToManyField(Rule)
-    user_comment = models.TextField(blank=True)
+    reported_broken_rules = models.ManyToManyField(Rule, verbose_name=_("Regeln gegen die verstoßen wurde"))
+    user_comment = models.TextField(blank=True, verbose_name=_("Kommentar/Zusätzliche Information"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
