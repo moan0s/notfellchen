@@ -16,7 +16,7 @@
     <p><b>{% translate "Kommentar zur Meldung" %}:</b>
         {{ report.user_comment }}
     </p>
-    <div>
+    <div class="container-edit-buttons">
         <form action="allow" class="">
             {% csrf_token %}
             <input type="hidden" name="report_id" value="{{ report.pk }}">
