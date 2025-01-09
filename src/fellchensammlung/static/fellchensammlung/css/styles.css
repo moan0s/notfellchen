@@ -963,6 +963,14 @@ div.announcement {
     border: rgba(17, 58, 224, 0.51) 4px solid;
 }
 
+.error {
+    color: #370707;
+    font-weight: bold;
+}
+
+.error::before {
+    content: "⚠️";
+}
 
 /*******/
 /* MAP */

@@ -30,6 +30,11 @@
                     {% endif %}
                 {% endif %}
             </div>
+        {% if place_not_found %}
+            <p class="error">
+                {% trans 'Ort nicht gefunden' %}
+            </p>
+        {% endif %}
         </form>
         <div class="card half">
             {% include "fellchensammlung/partials/partial-map.html" %}
