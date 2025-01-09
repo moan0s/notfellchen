@@ -62,12 +62,12 @@
                     locations.forEach(location => {
                         const listItem = document.createElement('li');
                         listItem.classList.add('result-item');
-                        listItem.textContent = location.properties.name + ifdef(location.properties.city, " (", ")");
+                        listItem.textContent = geojson_to_summary(location);
 
                         // Add event when user clicks on a result location
                         listItem.addEventListener('click', () => {
 
-                            locationInput.value = location.properties.name + ifdef(location.properties.city, ", ", "") + ifdef(location.properties.country, ", ", ""); // Set input field to selected location
+                            locationInput.value = geojson_to_searchable_string(location); // Set input field to selected location
                             resultsList.innerHTML = ''; // Clear the results after selecting a location
                         });
 
