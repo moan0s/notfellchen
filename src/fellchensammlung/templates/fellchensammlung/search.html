@@ -29,13 +29,6 @@
                     {% endif %}
                 {% endif %}
             </div>
-
-            {% if location %}
-                <b>{% translate 'Gefundener Suchort:' %}</b> {{ location }}
-            {% endif %}
-            {% if place_not_found %}
-                <p class="error">{% translate "Ort nicht gefunden" %}</p>
-            {% endif %}
         </form>
         <div class="card half">
             {% include "fellchensammlung/partials/partial-map.html" %}
