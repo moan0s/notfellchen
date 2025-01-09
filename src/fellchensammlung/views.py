@@ -204,6 +204,7 @@ def search(request):
                "searched": searched,
                "adoption_notices_map": AdoptionNotice.get_active_ANs(),
                "map_center": search.position,
+               "search_center": search.position,
                "map_pins": [search],
                "location": search.location,
                "search_radius": search.max_distance,

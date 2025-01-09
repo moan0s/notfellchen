@@ -14,22 +14,23 @@
 
 <!-- start map -->
 <script>
-    {% if map_center %}
-        var center = [{{ map_center.longitude | pointdecimal }}, {{ map_center.latitude | pointdecimal }}];
-    {% else %}
-        var center = [10.49, 50.68];
-    {% endif %}
-
     {% if zoom_level %}
         var zoom_level = {{ zoom_level }};
     {% else %}
         var zoom_level = 4;
     {% endif %}
 
+    {% if map_center %}
+        var map_center = [{{ map_center.longitude | pointdecimal }}, {{ map_center.latitude | pointdecimal }}];
+    {% else %}
+        var map_center = [10.49, 50.68]; <!-- Point middle of Germany -->
+        zoom_level = 4;  //Overwrite zoom level when no place is found
+    {% endif %}
+
     let map = new maplibregl.Map({
         container: 'map',
         style: '{% static "fellchensammlung/map/styles/colorful.json" %}',
-        center: center,
+        center: map_center,
         zoom: zoom_level
     }).addControl(new maplibregl.NavigationControl());
 
@@ -102,14 +103,15 @@
         });
     });
 
-    {% if search_radius  %}
+    {% if search_center  %}
+        var search_center = [{{ search_center.longitude | pointdecimal }}, {{ search_center.latitude | pointdecimal }}];
         map.on('load', () => {
             const radius = {{ search_radius }}; // kilometer
             const options = {
                 steps: 64,
                 units: 'kilometers'
             };
-            const circle = turf.circle(center, radius, options);
+            const circle = turf.circle(search_center, radius, options);
 
             // Add the circle as a GeoJSON source
             map.addSource('location-radius', {
