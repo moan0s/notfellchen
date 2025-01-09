@@ -928,6 +928,20 @@ div.announcement {
     background-color: #ede1b5;
 }
 
+.label {
+    border-radius: 8px;
+    padding: 4px;
+    color: #fff;
+}
+
+.active-adoption {
+    background-color: #4a9455;
+}
+
+.inactive-adoption {
+    background-color: #000;
+}
+
 /************************/
 /* GENERAL HIGHLIGHTING */
 /************************/

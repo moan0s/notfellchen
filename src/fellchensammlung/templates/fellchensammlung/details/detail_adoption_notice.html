@@ -28,6 +28,11 @@
                     <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-bell-slash"></i></button>
                 </form>
             {% endif %}
+            {% if adoption_notice.is_active %}
+                <span id="submit" class="label active-adoption" style=>{% trans 'Aktive Vermittlung' %}</span>
+            {% else %}
+                <span id="submit" class="label inactive-adoption" style=>{% trans 'Vermittlung inaktiv' %}</span>
+            {% endif %}
         </div>
         {% if has_edit_permission %}
             <a class="btn2"
