@@ -4,6 +4,7 @@
 {% block title %}<title>{% translate "Suche" %}</title>{% endblock %}
 
 {% block content %}
+    {% get_current_language as LANGUAGE_CODE_CURRENT %}
     <div class="container-cards">
         <form class="form-search card half" method="post">
             {% csrf_token %}
@@ -35,6 +36,7 @@
         </div>
     </div>
     {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+    Lang {{ LANGUAGE_CODE_CURRENT }}
 
     <script>
         const locationInput = document.getElementById('id_location_string');
@@ -50,7 +52,7 @@
             }
 
             try {
-                const response = await fetch(`{{ geocoding_api_url }}/?q=${encodeURIComponent(query)}&limit=5`);
+                const response = await fetch(`{{ geocoding_api_url }}/?q=${encodeURIComponent(query)}&limit=5&lang={{ LANGUAGE_CODE_CURRENT }}`);
                 const data = await response.json();
 
                 if (data && data.features) {
@@ -65,7 +67,7 @@
                         // Add event when user clicks on a result location
                         listItem.addEventListener('click', () => {
 
-                            locationInput.value = location.properties.name +ifdef(location.properties.city, ", ", "")  + ifdef(location.properties.country, ", ", ""); // Set input field to selected location
+                            locationInput.value = location.properties.name + ifdef(location.properties.city, ", ", "") + ifdef(location.properties.country, ", ", ""); // Set input field to selected location
                             resultsList.innerHTML = ''; // Clear the results after selecting a location
                         });
 
