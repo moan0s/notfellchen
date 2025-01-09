@@ -39,7 +39,7 @@ class Language(models.Model):
 
 
 class Location(models.Model):
-    place_id = models.IntegerField()
+    place_id = models.IntegerField()  # OSM id
     latitude = models.FloatField()
     longitude = models.FloatField()
     name = models.CharField(max_length=2000)
@@ -83,8 +83,10 @@ class Location(models.Model):
         instance.location = location
         instance.save()
 
+
 class ExternalSourceChoices(models.TextChoices):
     OSM = "OSM", _("Open Street Map")
+
 
 class RescueOrganization(models.Model):
     def __str__(self):
@@ -122,7 +124,8 @@ class RescueOrganization(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     internal_comment = models.TextField(verbose_name=_("Interner Kommentar"), null=True, blank=True, )
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))  # Markdown allowed
-    external_object_identifier = models.CharField(max_length=200, null=True, blank=True, verbose_name=_('External Object Identifier'))
+    external_object_identifier = models.CharField(max_length=200, null=True, blank=True,
+                                                  verbose_name=_('External Object Identifier'))
     external_source_identifier = models.CharField(max_length=200, null=True, blank=True,
                                                   choices=ExternalSourceChoices.choices,
                                                   verbose_name=_('External Source Identifier'))
@@ -140,13 +143,13 @@ class RescueOrganization(models.Model):
             return Position(latitude=self.location.latitude, longitude=self.location.longitude)
         else:
             return None
+
     @property
     def description_short(self):
         if self.description is None:
             return ""
         if len(self.description) > 200:
             return self.description[:200] + f" ... [weiterlesen]({self.get_absolute_url()})"
-
 
 
 # Admins can perform all actions and have the highest trust associated with them
@@ -284,7 +287,6 @@ class AdoptionNotice(models.Model):
     def last_checked_hr(self):
         time_since_last_checked = timezone.now() - self.last_checked
         return time_since_as_hr_string(time_since_last_checked)
-
 
     def sex_code(self):
         # Treat Intersex as mixed in order to increase their visibility
@@ -578,12 +580,14 @@ class Animal(models.Model):
         """Returns the url to access a detailed page for the animal."""
         return reverse('animal-detail', args=[str(self.id)])
 
+
 class DistanceChoices(models.IntegerChoices):
     TWENTY = 20, '20 km'
     FIFTY = 50, '50 km'
     ONE_HUNDRED = 100, '100 km'
     TWO_HUNDRED = 200, '200 km'
     FIVE_HUNDRED = 500, '500 km'
+
 
 class SearchSubscription(models.Model):
     """
@@ -877,10 +881,12 @@ class Timestamp(models.Model):
     def ___str__(self):
         return f"[{self.key}] - {self.timestamp.strftime('%H:%M:%S %d-%m-%Y ')} - {self.data}"
 
+
 class SpeciesSpecificURL(models.Model):
     """
     Model that allows to specify a URL for a rescue organization where a certain species can be found
     """
     species = models.ForeignKey(Species, on_delete=models.CASCADE, verbose_name=_("Tierart"))
-    rescues_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE, verbose_name=_("Tierschutzorganisation"))
+    rescues_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
+                                             verbose_name=_("Tierschutzorganisation"))
     url = models.URLField(verbose_name=_("Tierartspezifische URL"))
