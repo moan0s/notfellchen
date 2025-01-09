@@ -21,12 +21,17 @@
                     </span>
                 </div>
             {% else %}
-                <form class="notification-card-mark-read" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="action" value="unsubscribe">
-                    <input type="hidden" name="adoption_notice_id" value="{{ adoption_notice.pk }}">
-                    <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-bell-slash"></i></button>
-                </form>
+                <div class="tooltip bottom">
+                    <form class="notification-card-mark-read" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="unsubscribe">
+                        <input type="hidden" name="adoption_notice_id" value="{{ adoption_notice.pk }}">
+                        <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-bell-slash"></i></button>
+                    </form>
+                    <span class="tooltiptext">
+                        {% translate 'Deabonnieren. Du bekommst keine Benachrichtigungen zu dieser Vermittlung mehr' %}
+                    </span>
+                </div>
             {% endif %}
             {% if adoption_notice.is_active %}
                 <span id="submit" class="label active-adoption" style=>{% trans 'Aktive Vermittlung' %}</span>
