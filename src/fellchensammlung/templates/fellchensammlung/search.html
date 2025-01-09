@@ -60,12 +60,12 @@
                     locations.forEach(location => {
                         const listItem = document.createElement('li');
                         listItem.classList.add('result-item');
-                        listItem.textContent = location.properties.name + " (" + location.properties.city+")";
+                        listItem.textContent = location.properties.name + ifdef(location.properties.city, " (", ")");
 
                         // Add event when user clicks on a result location
                         listItem.addEventListener('click', () => {
 
-                            locationInput.value = location.properties.name + ", " + location.properties.city + ", " + location.properties.country; // Set input field to selected location
+                            locationInput.value = location.properties.name +ifdef(location.properties.city, ", ", "")  + ifdef(location.properties.country, ", ", ""); // Set input field to selected location
                             resultsList.innerHTML = ''; // Clear the results after selecting a location
                         });
 
