@@ -74,7 +74,10 @@ class GeoFeature:
         geofeatures = []
         for feature in result["features"]:
             geojson = {}
-            geojson['name'] = feature["properties"]["name"]
+            try:
+                geojson['name'] = feature["properties"]["name"]
+            except KeyError:
+                geojson['name'] = feature["properties"]["street"]
             geojson['place_id'] = feature["properties"]["osm_id"]
             geojson['lat'] = feature["geometry"]["coordinates"][1]
             geojson['lon'] = feature["geometry"]["coordinates"][0]
@@ -120,7 +123,7 @@ class GeoAPI:
         result = self.requests.get(self.api_url, {"q": location_string, "format": "jsonv2"}, headers=self.headers)
         return result.content
 
-    def get_geojson_for_query(self, location_string):
+    def get_geojson_for_query(self, location_string, language="de"):
         try:
             if self.api_format == 'nominatim':
                 logging.info(f"Querying nominatim instance for: {location_string} ({self.api_url})")
@@ -132,8 +135,9 @@ class GeoAPI:
             elif self.api_format == 'photon':
                 logging.info(f"Querying photon instance for: {location_string} ({self.api_url})")
                 result = self.requests.get(self.api_url,
-                                           {"q": location_string},
+                                           {"q": location_string, "lang": language},
                                            headers=self.headers).json()
+                logging.warning(result)
                 geofeatures = GeoFeature.geofeatures_from_photon_result(result)
             else:
                 raise NotImplementedError
