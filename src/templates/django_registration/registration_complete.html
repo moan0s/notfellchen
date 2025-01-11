@@ -2,5 +2,10 @@
 {% load i18n %}
 
 {% block content %}
-<p>{% translate "Du bist nun registriert. Du hast eine E-Mail mit einem Link zur Aktivierung deines Kontos bekommen." %}</p>
+    <p class="card">
+        {% blocktranslate %}
+            Du bist nun registriert und hast eine E-Mail mit einem Link zur Aktivierung deines Kontos bekommen. Solltest
+            du die E-Mail nicht erhalten haben oder andere Fragen haben, schreib uns an info@notfellchen.org
+        {% endblocktranslate %}
+    </p>
 {% endblock %}
