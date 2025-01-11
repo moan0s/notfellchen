@@ -60,8 +60,9 @@
                 const data = await response.json();
 
                 if (data && data.features) {
-                    const locations = data.features.slice(0, 5); // Show only the first 5 results
                     resultsList.innerHTML = ''; // Clear previous results
+
+                    const locations = data.features.slice(0, 5); // Show only the first 5 results
 
                     locations.forEach(location => {
                         const listItem = document.createElement('li');
