@@ -17,7 +17,7 @@ from notfellchen import settings
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
-    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription
+    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, AdoptionNoticeNotification
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
@@ -209,7 +209,7 @@ def search(request):
                "location": search.location,
                "search_radius": search.max_distance,
                "zoom_level": zoom_level_for_radius(search.max_distance),
-               "geocoding_api_url": settings.GEOCODING_API_URL,}
+               "geocoding_api_url": settings.GEOCODING_API_URL, }
     return render(request, 'fellchensammlung/search.html', context=context)
 
 
@@ -242,7 +242,7 @@ def add_adoption_notice(request):
             Log.objects.create(user=request.user, action="add_adoption_notice",
                                text=f"{request.user} hat Vermittlung {an_instance.pk} hinzugefügt")
 
-            """Spin up a task that adds the location"""
+            """Spin up a task that adds the location and notifies search subscribers"""
             post_adoption_notice_save.delay(an_instance.id)
 
             """Subscriptions"""
@@ -445,7 +445,7 @@ def user_detail(request, user, token=None):
     context = {"user": user,
                "adoption_notices": AdoptionNotice.objects.filter(owner=user),
                "notifications": BaseNotification.objects.filter(user=user, read=False),
-               "search_subscriptions": SearchSubscription.objects.filter(owner=user),}
+               "search_subscriptions": SearchSubscription.objects.filter(owner=user), }
     if token is not None:
         context["token"] = token
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
@@ -609,10 +609,12 @@ def external_site_warning(request):
 
     return render(request, 'fellchensammlung/external_site_warning.html', context=context)
 
+
 def list_rescue_organizations(request):
     rescue_organizations = RescueOrganization.objects.all()
     context = {"rescue_organizations": rescue_organizations}
     return render(request, 'fellchensammlung/animal-shelters.html', context=context)
+
 
 def detail_view_rescue_organization(request, rescue_organization_id):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)

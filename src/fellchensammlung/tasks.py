@@ -7,6 +7,7 @@ from .mail import send_notification_email
 from .tools.admin import clean_locations, deactivate_unchecked_adoption_notices, deactivate_404_adoption_notices
 from .tools.misc import healthcheck_ok
 from .models import Location, AdoptionNotice, Timestamp
+from .tools.notifications import notify_moderators_of_AN_to_be_checked
 from .tools.search import notify_search_subscribers
 
 
@@ -45,6 +46,7 @@ def post_adoption_notice_save(pk):
     logging.info(f"Location was added to Adoption notice {pk}")
 
     notify_search_subscribers(instance, only_if_active=True)
+    notify_moderators_of_AN_to_be_checked(instance)
 
 @celery_app.task(name="tools.healthcheck")
 def task_healthcheck():
