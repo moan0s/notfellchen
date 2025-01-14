@@ -137,7 +137,6 @@ class GeoAPI:
                 result = self.requests.get(self.api_url,
                                            {"q": location_string, "lang": language},
                                            headers=self.headers).json()
-                logging.warning(result)
                 geofeatures = GeoFeature.geofeatures_from_photon_result(result)
             else:
                 raise NotImplementedError
