@@ -818,7 +818,8 @@ class Comment(models.Model):
 class BaseNotification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    title = models.CharField(max_length=100)
+    read_at = models.DateTimeField(blank=True, null=True, verbose_name=_("Gelesen am"))
+    title = models.CharField(max_length=100, verbose_name=_("Titel"))
     text = models.TextField(verbose_name="Inhalt")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     read = models.BooleanField(default=False)
@@ -828,6 +829,11 @@ class BaseNotification(models.Model):
 
     def get_absolute_url(self):
         self.user.get_notifications_url()
+
+    def mark_read(self):
+        self.read = True
+        self.read_at = timezone.now()
+        self.save()
 
 
 class CommentNotification(BaseNotification):

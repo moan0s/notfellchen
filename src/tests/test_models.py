@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.test import TestCase
 from model_bakery import baker
 
-from fellchensammlung.models import Announcement, Language, User, TrustLevel
+from fellchensammlung.models import Announcement, Language, User, TrustLevel, BaseNotification
 
 
 class UserTest(TestCase):
@@ -77,3 +77,21 @@ class AnnouncementTest(TestCase):
         self.assertTrue(self.announcement2 not in active_announcements)
         self.assertTrue(self.announcement4 not in active_announcements)
         self.assertTrue(self.announcement5 in active_announcements)
+
+
+class TestNotifications(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_user_1 = User.objects.create(username="Testuser1", password="SUPERSECRET", email="test@example.org")
+
+    def test_mark_read(self):
+        not1 = BaseNotification.objects.create(user=self.test_user_1, text="New rats to adopt", title="🔔 New Rat alert")
+        not2 = BaseNotification.objects.create(user=self.test_user_1,
+                                               text="New wombat to adopt", title="🔔 New Wombat alert")
+        not1.mark_read()
+
+        self.assertTrue(not1.read)
+        self.assertFalse(not2.read)
+        self.assertTrue((timezone.now() - timedelta(hours=1)) < not1.read_at < timezone.now())
+        self.assertIsNone(not2.read_at)
+

@@ -481,13 +481,11 @@ def my_profile(request):
                 notification = CommentNotification.objects.get(pk=notification_id)
             except CommentNotification.DoesNotExist:
                 notification = BaseNotification.objects.get(pk=notification_id)
-            notification.read = True
-            notification.save()
+            notification.mark_read()
         elif action == "notification_mark_all_read":
             notifications = CommentNotification.objects.filter(user=request.user, mark_read=False)
             for notification in notifications:
-                notification.read = True
-                notification.save()
+                notification.mark_read()
         elif action == "search_subscription_delete":
             search_subscription_id = request.POST.get("search_subscription_id")
             SearchSubscription.objects.get(pk=search_subscription_id).delete()
