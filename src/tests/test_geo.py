@@ -27,7 +27,6 @@ class DistanceTest(TestCase):
         l_stuttgart = LocationProxy("Stuttgart")
         l_tue = LocationProxy("Tübingen")
         # Should be 30km
-        print(f"{l_stuttgart.position} -> {l_tue.position}")
         distance_tue_stuttgart = calculate_distance_between_coordinates(l_stuttgart.position, l_tue.position)
         self.assertLess(distance_tue_stuttgart, 50)
         self.assertGreater(distance_tue_stuttgart, 20)
