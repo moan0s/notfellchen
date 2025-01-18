@@ -264,6 +264,20 @@ class AdoptionDetailTest(TestCase):
             data={"action": "subscribe"})
         self.assertTrue(Subscriptions.objects.filter(owner__username="testuser0").exists())
 
+
+    def test_unsubscribe(self):
+        # Make sure subscription exists
+        an = AdoptionNotice.objects.get(name="TestAdoption1")
+        user = User.objects.get(username="testuser0")
+        subscription = Subscriptions.objects.get_or_create(owner=user, adoption_notice=an)
+
+        # Unsubscribe
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.post(
+            reverse('adoption-notice-detail', args=str(an.pk)),
+            data={"action": "unsubscribe"})
+        self.assertFalse(Subscriptions.objects.filter(owner__username="testuser0").exists())
+
     def test_login_required(self):
         response = self.client.post(
             reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
