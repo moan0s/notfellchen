@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from model_bakery import baker
 
-from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel
+from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, Animal
 from fellchensammlung.views import add_adoption_notice
 
 
@@ -70,6 +70,33 @@ class AnimalAndAdoptionTest(TestCase):
 
         self.assertTrue(response.status_code < 400)
         self.assertTrue(AdoptionNotice.objects.get(name="TestAdoption4").is_active)
+        an = AdoptionNotice.objects.get(name="TestAdoption4")
+        animals = Animal.objects.filter(adoption_notice=an)
+        self.assertTrue(len(animals) == 2)
+
+    def test_creating_AN_as_user(self):
+            self.client.login(username='testuser1', password='12345')
+
+            form_data = {"name": "TestAdoption5",
+                         "species": Species.objects.first().pk,
+                         "num_animals": "3",
+                         "date_of_birth": "2024-12-04",
+                         "sex": "M",
+                         "group_only": "on",
+                         "searching_since": "2024-11-10",
+                         "location_string": "München",
+                         "description": "Blaaaa",
+                         "further_information": "https://notfellchen.org/",
+                         "save-and-add-another-animal": "Speichern"}
+
+            response = self.client.post(reverse('add-adoption'), data=form_data)
+
+            self.assertTrue(response.status_code < 400)
+            self.assertFalse(AdoptionNotice.objects.get(name="TestAdoption5").is_active)
+            an = AdoptionNotice.objects.get(name="TestAdoption5")
+            animals = Animal.objects.filter(adoption_notice=an)
+            self.assertTrue(len(animals) == 3)
+            self.assertTrue(an.sexes == set("M",))
 
 
 
