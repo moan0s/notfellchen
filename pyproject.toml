@@ -8,13 +8,13 @@ build-backend = "setuptools.build_meta"
 name = "notfellchen"
 description = "A tool to help."
 authors = [
-  {name = "moanos", email = "julian-samuel@gebuehr.net"},
+    { name = "moanos", email = "julian-samuel@gebuehr.net" },
 ]
 maintainers = [
-  {name = "moanos", email = "julian-samuel@gebuehr.net"},
+    { name = "moanos", email = "julian-samuel@gebuehr.net" },
 ]
 keywords = ["animal", "adoption", "django", "rescue", ]
-license = {text = "AGPL-3.0-or-later"}
+license = { text = "AGPL-3.0-or-later" }
 classifiers = [
     "Environment :: Web",
     "License :: OSI Approved :: GNU Affero General Public License v3",
@@ -24,14 +24,12 @@ classifiers = [
 ]
 dependencies = [
     "Django",
-    "coverage",
     "codecov",
     "sphinx",
     "sphinx-rtd-theme",
     "gunicorn",
     "fontawesomefree",
     "whitenoise",
-    "model_bakery",
     "markdown",
     "Pillow",
     "django-registration",
@@ -47,7 +45,9 @@ dynamic = ["version", "readme"]
 
 [project.optional-dependencies]
 develop = [
-  "pytest",
+    "pytest",
+    "coverage",
+    "model_bakery",
 ]
 
 [project.urls]
@@ -62,6 +62,6 @@ nf = 'notfellchen.main:main'
 
 
 [tool.setuptools.dynamic]
-version = {attr = "notfellchen.__version__"}
-readme = {file = "README.md"}
+version = { attr = "notfellchen.__version__" }
+readme = { file = "README.md" }
 
