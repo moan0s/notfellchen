@@ -130,6 +130,8 @@ def adoption_notice_detail(request, adoption_notice_id):
             if action == "unsubscribe":
                 subscription.delete()
                 is_subscribed = False
+        elif action == "subscribe":
+            return redirect_to_login(next=request.path)
         else:
             raise PermissionDenied
     else:
