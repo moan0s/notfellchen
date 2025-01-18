@@ -21,11 +21,10 @@ class BasicViewTest(TestCase):
         test_user0.save()
 
         ans = []
-        for i in range(0,8):
+        for i in range(0, 8):
             ans.append(baker.make(AdoptionNotice, name=f"TestAdoption{i}"))
-        for i in range(0,4):
+        for i in range(0, 4):
             AdoptionNotice.objects.get(name=f"TestAdoption{i}").set_active()
-
 
     def test_index_logged_in(self):
         self.client.login(username='testuser0', password='12345')
@@ -42,4 +41,3 @@ class BasicViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "TestAdoption1")
         self.assertNotContains(response, "TestAdoption4")  # Should not be active, therefore not shown
-
