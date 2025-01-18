@@ -77,6 +77,26 @@ docker push moanos/notfellchen:latest
 docker run -p8000:7345 moanos/notfellchen:latest
 ```
 
+## Testing
+
+Tests can be run with
+
+```zsh
+nf test src
+```
+
+If you want to report on code coverage run
+
+```zsh
+coverage run --source='.' src/manage.py test src
+```
+
+and
+
+```
+coverage report
+```
+
 ## Geocoding
 
 Geocoding services (search map data by name, address or postcode) are provided via the
