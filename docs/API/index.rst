@@ -36,6 +36,11 @@ An application can then send this token in the request header for authorization.
 Endpoints
 ---------
 
+All Endpoints are documented at  https://notfellchen.org/api/schema/swagger-ui/ or at https://notfellchen.org/api/schema/redoc/ if you prefer redoc.
+The OpenAI schema can be downloaded at https://notfellchen.org/api/schema/
+
+Examples are documented here.
+
 Get Adoption Notices
 ++++++++++++++++++++
 

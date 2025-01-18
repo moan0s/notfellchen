@@ -5,7 +5,7 @@ Report a bug
 ^^^^^^^^^^^^
 
 To report a bug, file an issue on `Github
-<https://codeberg.org/moanos/notfellchen/issues>`_
+<https://github.com/moan0s/notfellchen/issues>`_
 
 Try to include the following information:
 
@@ -29,7 +29,7 @@ To contribute simply clone the directory, make your changes and file a
 pull request.
 
 If you want to know what can be done, have a look at the current `Github
-<https://codeberg.org/moanos/notfellchen/issues>`_.
+<https://github.com/moan0s/notfellchen/issues>`_.
 
 Get in touch!
 ^^^^^^^^^^^^^

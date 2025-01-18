@@ -5,8 +5,7 @@ What qualifies as release?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A new release should be announced when a significant number functions, bugfixes or other improvements to the software
-is made. Usually this indicates a minor release.
-Major releases are yet to be determined.
+is made. Notfellchen follows `Semantic Versioning <https://semver.org/>`_.
 
 What should be done before a release?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -14,7 +13,7 @@ What should be done before a release?
 Tested basic functions
 ######################
 
-Run :command:`pytest`
+Run :command:`nf test src`
 
 Test upgrade on a copy of a production database
 ###############################################
@@ -38,4 +37,4 @@ Do a final commit on this change, and tag the commit as release with appropriate
     git tag -a v1.0.0 -m "Releasing version v1.0.0"
     git push origin v1.0.0
 
-Make sure the tag is visible on Codeberg and celebrate 🥳
+Make sure the tag is visible on GitHub/Codeberg and celebrate 🥳
