@@ -259,6 +259,11 @@ a.btn, a.btn2, a.nav-link {
     border: 1px solid black;
 }
 
+.btn-small {
+    font-size: medium;
+    padding: 6px;
+}
+
 .checkmark {
     display: inline-block;
     position: relative;

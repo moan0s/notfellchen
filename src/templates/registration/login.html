@@ -3,25 +3,32 @@
 
 {% block content %}
 
-  {% if form.errors %}
-    <p>{% translate "Dein Username oder Passwort ist falsch." %}</p>
-  {% endif %}
+    {% if form.errors %}
+        <p>{% translate "Dein Username oder Passwort ist falsch." %}</p>
+    {% endif %}
 
-{% if user.is_authenticated %}
-  <p>{% translate "Du bist bereits eingeloggt." %}</p>
-  {% else %} {% if next %}
-    <p>{% translate "Bitte log dich ein um diese Seite sehen zu können." %}</p>
-  {% endif %}
-{% endif %}
+    {% if user.is_authenticated %}
+        <p>{% translate "Du bist bereits eingeloggt." %}</p>
+    {% else %} {% if next %}
+        <p class="card">{% translate "Bitte log dich ein um diese Seite sehen zu können." %}</p>
+    {% endif %}
+    {% endif %}
 
-{% if not user.is_authenticated %}
-  <form class="card" method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-      {{ form.as_p }}
-    <input class="btn" type="submit" value={% translate "Einloggen" %} />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
+    {% if not user.is_authenticated %}
+        <div class="card">
+        <div class="container-edit-buttons">
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn" type="submit" value="{% translate 'Einloggen' %}"/>
+                <input type="hidden" name="next" value="{{ next }}"/>
+            </form>
+            </div>
 
-  <p><a class="btn2" href="{% url 'password_reset' %}">{% translate "Passwort vergessen?" %}</a></p>
-{% endif %}
+            <div class="container-edit-buttons">
+                <a class="btn btn-small" href="{% url 'password_reset' %}">{% translate "Passwort vergessen?" %}</a>
+                <a class="btn btn-small" href="{% url 'django_registration_register' %}">{% translate "Registrieren" %}</a>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
