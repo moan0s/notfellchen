@@ -4,7 +4,8 @@ from django.urls import reverse
 
 from model_bakery import baker
 
-from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, Animal
+from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, \
+    Animal, Subscriptions
 from fellchensammlung.views import add_adoption_notice
 
 
@@ -75,29 +76,28 @@ class AnimalAndAdoptionTest(TestCase):
         self.assertTrue(len(animals) == 2)
 
     def test_creating_AN_as_user(self):
-            self.client.login(username='testuser1', password='12345')
+        self.client.login(username='testuser1', password='12345')
 
-            form_data = {"name": "TestAdoption5",
-                         "species": Species.objects.first().pk,
-                         "num_animals": "3",
-                         "date_of_birth": "2024-12-04",
-                         "sex": "M",
-                         "group_only": "on",
-                         "searching_since": "2024-11-10",
-                         "location_string": "München",
-                         "description": "Blaaaa",
-                         "further_information": "https://notfellchen.org/",
-                         "save-and-add-another-animal": "Speichern"}
+        form_data = {"name": "TestAdoption5",
+                     "species": Species.objects.first().pk,
+                     "num_animals": "3",
+                     "date_of_birth": "2024-12-04",
+                     "sex": "M",
+                     "group_only": "on",
+                     "searching_since": "2024-11-10",
+                     "location_string": "München",
+                     "description": "Blaaaa",
+                     "further_information": "https://notfellchen.org/",
+                     "save-and-add-another-animal": "Speichern"}
 
-            response = self.client.post(reverse('add-adoption'), data=form_data)
+        response = self.client.post(reverse('add-adoption'), data=form_data)
 
-            self.assertTrue(response.status_code < 400)
-            self.assertFalse(AdoptionNotice.objects.get(name="TestAdoption5").is_active)
-            an = AdoptionNotice.objects.get(name="TestAdoption5")
-            animals = Animal.objects.filter(adoption_notice=an)
-            self.assertTrue(len(animals) == 3)
-            self.assertTrue(an.sexes == set("M",))
-
+        self.assertTrue(response.status_code < 400)
+        self.assertFalse(AdoptionNotice.objects.get(name="TestAdoption5").is_active)
+        an = AdoptionNotice.objects.get(name="TestAdoption5")
+        animals = Animal.objects.filter(adoption_notice=an)
+        self.assertTrue(len(animals) == 3)
+        self.assertTrue(an.sexes == set("M", ))
 
 
 class SearchTest(TestCase):
@@ -152,8 +152,8 @@ class SearchTest(TestCase):
         # We can't use assertContains because TestAdoption3 will always be in response at is included in map
         # In order to test properly, we need to only care for the context that influences the list display
         an_names = [a.name for a in response.context["adoption_notices"]]
-        self.assertTrue("TestAdoption1" in an_names) # Adoption in Berlin
-        self.assertFalse("TestAdoption3" in an_names) # Adoption in Stuttgart
+        self.assertTrue("TestAdoption1" in an_names)  # Adoption in Berlin
+        self.assertFalse("TestAdoption3" in an_names)  # Adoption in Stuttgart
 
 
 class UpdateQueueTest(TestCase):
@@ -223,3 +223,50 @@ class UpdateQueueTest(TestCase):
         self.assertFalse(self.adoption3.is_active)
         self.assertEqual(self.adoption3.adoptionnoticestatus.major_status, AdoptionNoticeStatus.CLOSED)
 
+
+class AdoptionDetailTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        test_user0 = User.objects.create_user(username='testuser0',
+                                              first_name="Admin",
+                                              last_name="BOFH",
+                                              password='12345')
+        test_user0.save()
+
+        test_user1 = User.objects.create_user(username='testuser1',
+                                              first_name="Max",
+                                              last_name="Müller",
+                                              password='12345')
+        test_user0.trust_level = TrustLevel.ADMIN
+        test_user0.save()
+
+        adoption1 = baker.make(AdoptionNotice, name="TestAdoption1")
+        adoption2 = baker.make(AdoptionNotice, name="TestAdoption2")
+        adoption3 = baker.make(AdoptionNotice, name="TestAdoption3")
+
+        berlin = Location.get_location_from_string("Berlin")
+        adoption1.location = berlin
+        adoption1.save()
+
+        stuttgart = Location.get_location_from_string("Stuttgart")
+        adoption3.location = stuttgart
+        adoption3.save()
+
+        adoption1.set_active()
+        adoption3.set_active()
+        adoption2.set_unchecked()
+
+
+    def test_subscribe(self):
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.post(
+            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
+            data={"action": "subscribe"})
+        self.assertTrue(Subscriptions.objects.filter(owner__username="testuser0").exists())
+
+    def test_login_required(self):
+        response = self.client.post(
+            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
+            data={"action": "subscribe"})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/accounts/login/?next=/vermittlung/1/")
