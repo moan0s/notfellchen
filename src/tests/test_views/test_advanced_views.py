@@ -234,9 +234,9 @@ class AdoptionDetailTest(TestCase):
         test_user0.save()
 
         cls.test_user1 = User.objects.create_user(username='testuser1',
-                                              first_name="Max",
-                                              last_name="Müller",
-                                              password='12345')
+                                                  first_name="Max",
+                                                  last_name="Müller",
+                                                  password='12345')
         test_user0.trust_level = TrustLevel.ADMIN
         test_user0.save()
 
@@ -256,6 +256,16 @@ class AdoptionDetailTest(TestCase):
         adoption3.set_active()
         adoption2.set_unchecked()
 
+    def test_basic_view(self):
+        response = self.client.get(
+            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+        self.assertEqual(response.status_code, 200)
+
+    def test_basic_view_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.get(
+            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+        self.assertEqual(response.status_code, 200)
 
     def test_subscribe(self):
         self.client.login(username='testuser0', password='12345')
@@ -263,7 +273,6 @@ class AdoptionDetailTest(TestCase):
             reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
             data={"action": "subscribe"})
         self.assertTrue(Subscriptions.objects.filter(owner__username="testuser0").exists())
-
 
     def test_unsubscribe(self):
         # Make sure subscription exists
@@ -302,3 +311,54 @@ class AdoptionDetailTest(TestCase):
         self.assertTrue(Comment.objects.filter(user__username="testuser0").exists())
         self.assertFalse(CommentNotification.objects.filter(user__username="testuser0").exists())
         self.assertTrue(CommentNotification.objects.filter(user__username="testuser1").exists())
+
+
+class AdoptionEditTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        test_user0 = User.objects.create_user(username='testuser0',
+                                              first_name="Admin",
+                                              last_name="BOFH",
+                                              password='12345')
+        test_user0.save()
+
+        cls.test_user1 = User.objects.create_user(username='testuser1',
+                                                  first_name="Max",
+                                                  last_name="Müller",
+                                                  password='12345')
+
+        adoption1 = baker.make(AdoptionNotice, name="TestAdoption1", description="Test1", owner=test_user0)
+        adoption2 = baker.make(AdoptionNotice, name="TestAdoption2", description="Test2")
+
+    def test_basic_view(self):
+        response = self.client.get(
+            reverse('adoption-notice-edit', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+        self.assertEqual(response.status_code, 302)
+
+    def test_basic_view_logged_in_unauthorized(self):
+        self.client.login(username='testuser1', password='12345')
+        response = self.client.get(
+            reverse('adoption-notice-edit', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+        self.assertEqual(response.status_code, 403)
+
+    def test_basic_view_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.get(
+            reverse('adoption-notice-edit', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit(self):
+        data = {"name": "Mia",
+                "searching_since": "01.01.2025",
+                "location_string": "Paderborn",
+                "organization": "",
+                "description": "Test3",
+                "further_information": ""}
+        an = AdoptionNotice.objects.get(name="TestAdoption1")
+        assert self.client.login(username='testuser0', password='12345')
+        response = self.client.post(reverse("adoption-notice-edit", args=str(an.pk)), data=data, follow=True)
+        self.assertEqual(response.redirect_chain[0][1], 302)  # See https://docs.djangoproject.com/en/5.1/topics/testing/tools/
+        self.assertEqual(response.status_code, 200)  # Redirects to AN page
+        self.assertContains(response, "Test3")
+        self.assertContains(response, "Mia")
+        self.assertNotContains(response, "Test1")
