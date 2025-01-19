@@ -5,7 +5,7 @@ from django.urls import reverse
 from model_bakery import baker
 
 from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, \
-    Animal, Subscriptions
+    Animal, Subscriptions, Comment
 from fellchensammlung.views import add_adoption_notice
 
 
@@ -284,3 +284,16 @@ class AdoptionDetailTest(TestCase):
             data={"action": "subscribe"})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/accounts/login/?next=/vermittlung/1/")
+
+    def test_unauthenticated_comment(self):
+        response = self.client.post(
+            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
+            data={"action": "comment"})
+        self.assertEqual(response.status_code, 403)
+
+    def test_comment(self):
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.post(
+            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
+            data={"action": "comment", "text": "Test"})
+        self.assertTrue(Comment.objects.filter(user__username="testuser0").exists())
