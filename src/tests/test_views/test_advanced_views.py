@@ -5,7 +5,7 @@ from django.urls import reverse
 from model_bakery import baker
 
 from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, \
-    Animal, Subscriptions, Comment
+    Animal, Subscriptions, Comment, CommentNotification
 from fellchensammlung.views import add_adoption_notice
 
 
@@ -233,7 +233,7 @@ class AdoptionDetailTest(TestCase):
                                               password='12345')
         test_user0.save()
 
-        test_user1 = User.objects.create_user(username='testuser1',
+        cls.test_user1 = User.objects.create_user(username='testuser1',
                                               first_name="Max",
                                               last_name="Müller",
                                               password='12345')
@@ -292,8 +292,13 @@ class AdoptionDetailTest(TestCase):
         self.assertEqual(response.status_code, 403)
 
     def test_comment(self):
+        an1 = AdoptionNotice.objects.get(name="TestAdoption1")
+        # Set up subscription
+        Subscriptions.objects.create(owner=self.test_user1, adoption_notice=an1)
         self.client.login(username='testuser0', password='12345')
         response = self.client.post(
-            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
+            reverse('adoption-notice-detail', args=str(an1.pk)),
             data={"action": "comment", "text": "Test"})
         self.assertTrue(Comment.objects.filter(user__username="testuser0").exists())
+        self.assertFalse(CommentNotification.objects.filter(user__username="testuser0").exists())
+        self.assertTrue(CommentNotification.objects.filter(user__username="testuser1").exists())
