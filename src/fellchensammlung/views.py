@@ -2,6 +2,7 @@ import logging
 
 from django.contrib.auth.views import redirect_to_login
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.http.response import HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -133,7 +134,7 @@ def adoption_notice_detail(request, adoption_notice_id):
         elif action == "subscribe":
             return redirect_to_login(next=request.path)
         else:
-            raise PermissionDenied
+            return HttpResponseForbidden()
     else:
         comment_form = CommentForm(instance=adoption_notice)
     context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
