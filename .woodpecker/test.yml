@@ -1,0 +1,13 @@
+---
+
+steps:
+  test:
+    image: python
+    commands:
+      - python -m pip install '.[develop]'
+      - coverage run --source='.' src/manage.py test src && coverage html
+      - coverage html
+      - cat htmlcov/index.html
+
+
+
