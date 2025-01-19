@@ -6,6 +6,9 @@ steps:
     commands:
       - cd docs && make html
 
+    when:
+      event: [ tag, push ]
+
   deploy:
     image: appleboy/drone-scp
     settings:
@@ -19,6 +22,8 @@ steps:
       source: docs/_build/html/
       key:
         from_secret: ssh_key
+    when:
+      event: [ tag, push ]
 
 
 

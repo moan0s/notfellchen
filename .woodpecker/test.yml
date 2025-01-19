@@ -8,6 +8,7 @@ steps:
       - coverage run --source='.' src/manage.py test src && coverage html
       - coverage html
       - cat htmlcov/index.html
-
+    when:
+      event: [tag, push]
 
 
