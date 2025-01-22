@@ -89,9 +89,9 @@ CELERY_RESULT_BACKEND = config.get("celery", "backend", fallback="redis://localh
 HEALTHCHECKS_URL = config.get("monitoring", "healthchecks_url", fallback=None)
 
 """ GEOCODING """
-GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://nominatim.hyteck.de/search")
+GEOCODING_API_URL = config.get("geocoding", "api_url", fallback="https://photon.hyteck.de/api")
 # GEOCODING_API_FORMAT is allowed to be one of ['nominatim', 'photon']
-GEOCODING_API_FORMAT = config.get("geocoding", "api_format", fallback="nominatim")
+GEOCODING_API_FORMAT = config.get("geocoding", "api_format", fallback="photon")
 
 """ Tile Server """
 MAP_TILE_SERVER = config.get("map", "tile_server", fallback="https://tiles.hyteck.de")
