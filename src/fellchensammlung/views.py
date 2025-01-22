@@ -633,3 +633,9 @@ def export_own_profile(request):
     ANs_as_json = serialize('json', ANs)
     full_json = f"{user_as_json}, {ANs_as_json}"
     return HttpResponse(full_json, content_type="application/json")
+
+
+def styleguide(request):
+
+    context = {"geocoding_api_url": settings.GEOCODING_API_URL, }
+    return render(request, 'fellchensammlung/styleguide.html', context=context)
