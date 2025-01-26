@@ -25,10 +25,7 @@ def transform_osm_data(feature):
         "website": prop.get("website"),
         "opening_hours": prop.get("opening_hours"),
         "email": prop.get("email"),
-        "location": {
-            "type": geometry.get("type", "Point"),
-            "coordinates": geometry.get("coordinates", [])
-        },
+        "location_string": f'{prop.get("addr:street", "")} {prop.get("addr:housenumber", "")} {prop.get("addr:postcode", "")} {prop.get("addr:city", "")}',
         "external_object_id": prop.get("@id"),
         "external_source_id": "OSM"
     }
