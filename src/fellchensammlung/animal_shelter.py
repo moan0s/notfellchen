@@ -16,7 +16,7 @@ def load_osm_data(file_path):
 
 def transform_osm_data(feature):
     #Transform a single OSM feature into the API payload format
-    prop = feature.get("prop", {})
+    prop = feature.get("properties", {})
     geometry = feature.get("geometry", {})
 
     return {
