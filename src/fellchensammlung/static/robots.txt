@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+
+User-agent: OpenAI
+Disallow: /
+
+Sitemap: https://notfellchen.org/sitemap.xml

@@ -16,6 +16,7 @@ from .serializers import (
 from fellchensammlung.models import Animal, RescueOrganization, AdoptionNotice, Species, Image
 from drf_spectacular.utils import extend_schema
 
+
 class AdoptionNoticeApiView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -84,7 +85,6 @@ class AdoptionNoticeApiView(APIView):
         )
 
 
-
 class AnimalApiView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -117,6 +117,7 @@ class AnimalApiView(APIView):
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class RescueOrganizationApiView(APIView):
     permission_classes = [IsAuthenticated]
@@ -159,12 +160,13 @@ class RescueOrganizationApiView(APIView):
         """
         serializer = RescueOrgSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
-            rescue_org = serializer.save(owner=request.user)
+            rescue_org = serializer.save()
             return Response(
                 {"message": "Rescue organization created/updated successfully!", "id": rescue_org.id},
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class AddImageApiView(APIView):
     permission_classes = [IsAuthenticated]
