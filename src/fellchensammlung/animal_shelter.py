@@ -67,7 +67,7 @@ def send_to_api(data, endpoint, headers):
     if response.status_code == 201:
         print(f"Success: Shelter '{data['name']}' uploaded.")
     elif response.status_code == 400:
-        print(f"Error: Shelter '{data['name']}' already exists or invalid data.")
+        print(f"Error: Shelter '{data['name']}' already exists or invalid data. {response.text}")
     else:
         print(f"Unexpected Error: {response.status_code} - {response.text}")
         raise ConnectionError
