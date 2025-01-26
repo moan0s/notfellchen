@@ -146,6 +146,16 @@ class SearchTest(TestCase):
         self.assertContains(response, "TestAdoption3")
         self.assertNotContains(response, "TestAdoption2")
 
+    def test_unauthenticated_subscribe(self):
+        response = self.client.post(reverse('search'), {"subscribe_to_search": ""})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/accounts/login/?next=/suchen/")
+
+    def test_unauthenticated_unsubscribe(self):
+        response = self.client.post(reverse('search'), {"unsubscribe_to_search": 1})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/accounts/login/?next=/suchen/")
+
     def test_location_search(self):
         response = self.client.post(reverse('search'), {"max_distance": 50, "location_string": "Berlin", "sex": "A"})
         self.assertEqual(response.status_code, 200)
@@ -357,7 +367,8 @@ class AdoptionEditTest(TestCase):
         an = AdoptionNotice.objects.get(name="TestAdoption1")
         assert self.client.login(username='testuser0', password='12345')
         response = self.client.post(reverse("adoption-notice-edit", args=str(an.pk)), data=data, follow=True)
-        self.assertEqual(response.redirect_chain[0][1], 302)  # See https://docs.djangoproject.com/en/5.1/topics/testing/tools/
+        self.assertEqual(response.redirect_chain[0][1],
+                         302)  # See https://docs.djangoproject.com/en/5.1/topics/testing/tools/
         self.assertEqual(response.status_code, 200)  # Redirects to AN page
         self.assertContains(response, "Test3")
         self.assertContains(response, "Mia")
