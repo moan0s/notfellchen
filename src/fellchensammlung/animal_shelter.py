@@ -8,11 +8,13 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
+
 def load_osm_data(file_path):
     #Load OSM data from a GeoJSON file.
     with open(file_path, "r", encoding="utf-8") as file:
         data = json.load(file)
     return data
+
 
 def transform_osm_data(feature):
     #Transform a single OSM feature into the API payload format
@@ -30,8 +32,9 @@ def transform_osm_data(feature):
         "external_source_id": "OSM"
     }
 
+
 def send_to_api(data):
-    #Send transformed data to the Notfellchen API.
+    # Send transformed data to the Notfellchen API.
     response = requests.post(ENDPOINT, headers=HEADERS, json=data)
     if response.status_code == 201:
         print(f"Success: Shelter '{data['name']}' uploaded.")
@@ -43,7 +46,6 @@ def send_to_api(data):
 def main():
     # Step 1: Load OSM data
     osm_data = load_osm_data(OSM_DATA_FILE)
-    
 
     # Step 2: Process each shelter and send it to the API
     for feature in osm_data.get("features", []):
