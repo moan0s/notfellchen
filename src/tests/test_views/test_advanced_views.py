@@ -5,7 +5,8 @@ from django.urls import reverse
 from model_bakery import baker
 
 from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, \
-    Animal, Subscriptions, Comment, CommentNotification
+    Animal, Subscriptions, Comment, CommentNotification, SearchSubscription
+from fellchensammlung.tools.geo import LocationProxy
 from fellchensammlung.views import add_adoption_notice
 
 
@@ -155,6 +156,25 @@ class SearchTest(TestCase):
         response = self.client.post(reverse('search'), {"unsubscribe_to_search": 1})
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/accounts/login/?next=/suchen/")
+
+    def test_subscribe(self):
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.post(reverse('search'), {"max_distance": 50, "location_string": "Berlin", "sex": "A",
+                                                        "subscribe_to_search": ""})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(SearchSubscription.objects.filter(owner=User.objects.get(username='testuser0'),
+                                                          max_distance=50).exists())
+
+    def test_unsubscribe(self):
+        user0 = User.objects.get(username='testuser0')
+        self.client.login(username='testuser0', password='12345')
+        location = Location.get_location_from_string("München")
+        subscription = SearchSubscription.objects.create(owner=user0, max_distance=200, location=location, sex="A")
+        response = self.client.post(reverse('search'), {"max_distance": 200, "location_string": "München", "sex": "A",
+                                                        "unsubscribe_to_search": subscription.pk})
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(SearchSubscription.objects.filter(owner=User.objects.get(username='testuser0'),
+                                                           max_distance=200).exists())
 
     def test_location_search(self):
         response = self.client.post(reverse('search'), {"max_distance": 50, "location_string": "Berlin", "sex": "A"})
