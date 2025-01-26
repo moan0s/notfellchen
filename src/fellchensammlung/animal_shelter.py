@@ -42,6 +42,8 @@ def send_to_api(data):
         print(f"Error: Shelter '{data['name']}' already exists or invalid data.")
     else:
         print(f"Unexpected Error: {response.status_code} - {response.text}")
+        raise ConnectionError
+
 
 def main():
     # Step 1: Load OSM data
