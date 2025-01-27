@@ -1,7 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from fellchensammlung.models import User, TrustLevel, AdoptionNotice, Species
+from docs.conf import language
+from fellchensammlung.models import User, TrustLevel, AdoptionNotice, Species, Rule, Language
 from model_bakery import baker
 
 
@@ -26,6 +27,8 @@ class BasicViewTest(TestCase):
         for i in range(0, 4):
             AdoptionNotice.objects.get(name=f"TestAdoption{i}").set_active()
 
+        Rule.objects.create(title="Rule 1", rule_text="Description of r1", rule_identifier="rule1", language=Language.objects.get(name="English"))
+
     def test_index_logged_in(self):
         self.client.login(username='testuser0', password='12345')
 
@@ -41,3 +44,24 @@ class BasicViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "TestAdoption1")
         self.assertNotContains(response, "TestAdoption4")  # Should not be active, therefore not shown
+
+    def test_about_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Rule 1")
+
+    def test_about_anonymous(self):
+        response = self.client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Rule 1")
+
+    def test_report_adoption_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+        an = AdoptionNotice.objects.get(name="TestAdoption0")
+        response = self.client.get(reverse('report-adoption-notice', args=str(an.pk)))
+        self.assertEqual(response.status_code, 200)
+
+        data = {"reported_broken_rules": 1, "user_comment": "animal cruelty"}
+        response = self.client.post(reverse('report-adoption-notice', args=str(an.pk)), data=data)
+        self.assertEqual(response.status_code, 302)
