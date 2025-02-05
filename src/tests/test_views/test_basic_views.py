@@ -27,12 +27,18 @@ class BasicViewTest(TestCase):
         for i in range(0, 4):
             AdoptionNotice.objects.get(name=f"TestAdoption{i}").set_active()
 
-        Rule.objects.create(title="Rule 1", rule_text="Description of r1", rule_identifier="rule1",
-                            language=Language.objects.get(name="English"))
+        rule1 = Rule.objects.create(title="Rule 1", rule_text="Description of r1", rule_identifier="rule1",
+                                    language=Language.objects.get(name="English"))
 
         an1 = AdoptionNotice.objects.get(name="TestAdoption0")
         comment1 = Comment.objects.create(adoption_notice=an1, text="Comment1", user=test_user1)
         comment2 = Comment.objects.create(adoption_notice=an1, text="Comment2", user=test_user1)
+        comment3 = Comment.objects.create(adoption_notice=an1, text="Comment3", user=test_user1)
+
+        report_comment1 = ReportComment.objects.create(reported_comment=comment1,
+                                                       user_comment="ReportComment1")
+        report_comment1.save()
+        report_comment1.reported_broken_rules.set({rule1,})
 
     def test_index_logged_in(self):
         self.client.login(username='testuser0', password='12345')
@@ -100,3 +106,31 @@ class BasicViewTest(TestCase):
         response = self.client.post(reverse('report-comment', args=str(c.pk)), data=data)
         self.assertEqual(response.status_code, 302)
         self.assertTrue(ReportComment.objects.filter(reported_comment=c.pk).exists())
+
+    def test_show_report_details_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+        report = ReportComment.objects.get(user_comment="ReportComment1")
+        response = self.client.get(reverse('report-detail', args=(report.pk,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Rule 1")
+        self.assertContains(response, "ReportComment1")
+        self.assertNotContains(response, '<form action="allow" class="">')
+
+    def test_show_report_details_anonymous(self):
+        report = ReportComment.objects.get(user_comment="ReportComment1")
+        response = self.client.get(reverse('report-detail', args=(report.pk,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Rule 1")
+        self.assertContains(response, "ReportComment1")
+        self.assertNotContains(response, '<form action="allow" class="">')
+
+    def test_show_report_details_admin(self):
+        self.client.login(username='testuser1', password='12345')
+        report = ReportComment.objects.get(user_comment="ReportComment1")
+        response = self.client.get(reverse('report-detail', args=(report.pk,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Rule 1")
+        self.assertContains(response, "ReportComment1")
+        self.assertContains(response, '<form action="allow" class="">')
+
+
