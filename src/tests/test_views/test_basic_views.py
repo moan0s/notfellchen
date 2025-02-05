@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from docs.conf import language
-from fellchensammlung.models import User, TrustLevel, AdoptionNotice, Species, Rule, Language
+from fellchensammlung.models import User, TrustLevel, AdoptionNotice, Species, Rule, Language, Comment, ReportComment
 from model_bakery import baker
 
 
@@ -27,7 +27,12 @@ class BasicViewTest(TestCase):
         for i in range(0, 4):
             AdoptionNotice.objects.get(name=f"TestAdoption{i}").set_active()
 
-        Rule.objects.create(title="Rule 1", rule_text="Description of r1", rule_identifier="rule1", language=Language.objects.get(name="English"))
+        Rule.objects.create(title="Rule 1", rule_text="Description of r1", rule_identifier="rule1",
+                            language=Language.objects.get(name="English"))
+
+        an1 = AdoptionNotice.objects.get(name="TestAdoption0")
+        comment1 = Comment.objects.create(adoption_notice=an1, text="Comment1", user=test_user1)
+        comment2 = Comment.objects.create(adoption_notice=an1, text="Comment2", user=test_user1)
 
     def test_index_logged_in(self):
         self.client.login(username='testuser0', password='12345')
@@ -74,3 +79,24 @@ class BasicViewTest(TestCase):
         data = {"reported_broken_rules": 1, "user_comment": "animal cruelty"}
         response = self.client.post(reverse('report-adoption-notice', args=str(an.pk)), data=data)
         self.assertEqual(response.status_code, 302)
+
+    def test_report_comment_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+        c = Comment.objects.get(text="Comment1")
+        response = self.client.get(reverse('report-comment', args=str(c.pk)))
+        self.assertEqual(response.status_code, 200)
+
+        data = {"reported_broken_rules": 1, "user_comment": "animal cruelty"}
+        response = self.client.post(reverse('report-comment', args=str(c.pk)), data=data)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(ReportComment.objects.filter(reported_comment=c.pk).exists())
+
+    def test_report_comment_anonymous(self):
+        c = Comment.objects.get(text="Comment2")
+        response = self.client.get(reverse('report-comment', args=str(c.pk)))
+        self.assertEqual(response.status_code, 200)
+
+        data = {"reported_broken_rules": 1, "user_comment": "animal cruelty"}
+        response = self.client.post(reverse('report-comment', args=str(c.pk)), data=data)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(ReportComment.objects.filter(reported_comment=c.pk).exists())
