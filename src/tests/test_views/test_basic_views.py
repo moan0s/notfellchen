@@ -65,3 +65,12 @@ class BasicViewTest(TestCase):
         data = {"reported_broken_rules": 1, "user_comment": "animal cruelty"}
         response = self.client.post(reverse('report-adoption-notice', args=str(an.pk)), data=data)
         self.assertEqual(response.status_code, 302)
+
+    def test_report_adoption_anonymous(self):
+        an = AdoptionNotice.objects.get(name="TestAdoption0")
+        response = self.client.get(reverse('report-adoption-notice', args=str(an.pk)))
+        self.assertEqual(response.status_code, 200)
+
+        data = {"reported_broken_rules": 1, "user_comment": "animal cruelty"}
+        response = self.client.post(reverse('report-adoption-notice', args=str(an.pk)), data=data)
+        self.assertEqual(response.status_code, 302)
