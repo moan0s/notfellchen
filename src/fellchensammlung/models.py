@@ -149,7 +149,7 @@ class RescueOrganization(models.Model):
         if self.description is None:
             return ""
         if len(self.description) > 200:
-            return self.description[:200] + f" ... [weiterlesen]({self.get_absolute_url()})"
+            return self.description[:200] + _(f" ... [weiterlesen]({self.get_absolute_url()})")
 
 
 # Admins can perform all actions and have the highest trust associated with them
