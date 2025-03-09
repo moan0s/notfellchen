@@ -431,8 +431,10 @@ def report_detail(request, report_id, form_complete=False):
     """
     report = Report.objects.get(pk=report_id)
     moderation_actions = ModerationAction.objects.filter(report_id=report_id)
+    is_mod_or_above = user_is_trust_level_or_above(request.user, TrustLevel.MODERATOR)
 
-    context = {"report": report, "moderation_actions": moderation_actions, "form_complete": form_complete}
+    context = {"report": report, "moderation_actions": moderation_actions,
+               "form_complete": form_complete, "is_mod_or_above": is_mod_or_above}
 
     return render(request, 'fellchensammlung/details/detail-report.html', context)
 

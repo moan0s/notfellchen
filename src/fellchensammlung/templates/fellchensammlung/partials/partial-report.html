@@ -16,16 +16,18 @@
     <p><b>{% translate "Kommentar zur Meldung" %}:</b>
         {{ report.user_comment }}
     </p>
-    <div class="container-edit-buttons">
-        <form action="allow" class="">
-            {% csrf_token %}
-            <input type="hidden" name="report_id" value="{{ report.pk }}">
-            <button class="btn allow" type="submit">{% translate "Inhalt genehmigen" %}</button>
-        </form>
-        <form action="disallow" class="">
-            {% csrf_token %}
-            <input type="hidden" name="report_id" value="{{ report.pk }}">
-            <button class="btn allow" type="submit">{% translate "Inhalt als gesperrt kennzeichnen" %}</button>
-        </form>
-    </div>
+    {% if is_mod_or_above %}
+        <div class="container-edit-buttons">
+            <form action="allow" class="">
+                {% csrf_token %}
+                <input type="hidden" name="report_id" value="{{ report.pk }}">
+                <button class="btn allow" type="submit">{% translate "Inhalt genehmigen" %}</button>
+            </form>
+            <form action="disallow" class="">
+                {% csrf_token %}
+                <input type="hidden" name="report_id" value="{{ report.pk }}">
+                <button class="btn allow" type="submit">{% translate "Inhalt als gesperrt kennzeichnen" %}</button>
+            </form>
+        </div>
+    {% endif %}
 </div>
