@@ -122,6 +122,7 @@ class RescueOrganization(models.Model):
     website = models.URLField(null=True, blank=True, verbose_name=_('Website'))
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    last_checked = models.DateTimeField(verbose_name=_('Datum der letzten Prüfung'))
     internal_comment = models.TextField(verbose_name=_("Interner Kommentar"), null=True, blank=True, )
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))  # Markdown allowed
     external_object_identifier = models.CharField(max_length=200, null=True, blank=True,
@@ -150,6 +151,15 @@ class RescueOrganization(models.Model):
             return ""
         if len(self.description) > 200:
             return self.description[:200] + _(f" ... [weiterlesen]({self.get_absolute_url()})")
+
+    def set_checked(self):
+        self.last_checked = timezone.now()
+        self.save()
+
+    @property
+    def last_checked_hr(self):
+        time_since_last_checked = timezone.now() - self.last_checked
+        return time_since_as_hr_string(time_since_last_checked)
 
 
 # Admins can perform all actions and have the highest trust associated with them

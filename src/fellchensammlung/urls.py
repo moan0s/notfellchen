@@ -31,9 +31,11 @@ urlpatterns = [
     # ex: /adoption_notice/7/edit
     path("vermittlung/<int:adoption_notice_id>/edit", views.adoption_notice_edit, name="adoption-notice-edit"),
     # ex: /vermittlung/5/add-photo
-    path("vermittlung/<int:adoption_notice_id>/add-photo", views.add_photo_to_adoption_notice, name="adoption-notice-add-photo"),
+    path("vermittlung/<int:adoption_notice_id>/add-photo", views.add_photo_to_adoption_notice,
+         name="adoption-notice-add-photo"),
     # ex: /adoption_notice/2/add-animal
-    path("vermittlung/<int:adoption_notice_id>/add-animal", views.adoption_notice_add_animal, name="adoption-notice-add-animal"),
+    path("vermittlung/<int:adoption_notice_id>/add-animal", views.adoption_notice_add_animal,
+         name="adoption-notice-add-animal"),
 
     path("tierschutzorganisationen/", views.list_rescue_organizations, name="rescue-organizations"),
     path("organisation/<int:rescue_organization_id>/", views.detail_view_rescue_organization,
@@ -57,8 +59,10 @@ urlpatterns = [
     path("meldung/<uuid:report_id>/", views.report_detail, name="report-detail"),
     path("meldung/<uuid:report_id>/sucess", views.report_detail_success, name="report-detail-success"),
     path("modqueue/", views.modqueue, name="modqueue"),
-    
+
     path("updatequeue/", views.updatequeue, name="updatequeue"),
+
+    path("organization-check/", views.rescue_organization_check, name="organization-check"),
 
     ###########
     ## USERS ##

@@ -1,0 +1,21 @@
+{% load i18n %}
+{% load custom_tags %}
+<div class="card">
+    <h1>
+        <a href="{{ rescue_org.get_absolute_url }}">{{ rescue_org.name }}</a>
+    </h1>
+    <i>{% translate 'Zuletzt geprüft:' %} {{ rescue_org.last_checked_hr }}</i>
+    {% if rescue_org.website %}
+        <p>{% translate "Website" %}: {{ rescue_org.website | safe }}</p>
+    {% endif %}
+    <div class="container-edit-buttons">
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden"
+                   name="rescue_organization_id"
+                   value="{{ rescue_org.pk }}">
+            <input type="hidden" name="action" value="checked">
+            <button class="btn" type="submit">{% translate "Organisation geprüft" %}</button>
+        </form>
+    </div>
+</div>

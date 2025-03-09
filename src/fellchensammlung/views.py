@@ -639,3 +639,18 @@ def styleguide(request):
 
     context = {"geocoding_api_url": settings.GEOCODING_API_URL, }
     return render(request, 'fellchensammlung/styleguide.html', context=context)
+
+@login_required
+def rescue_organization_check(request):
+    if request.method == "POST":
+        rescue_org = RescueOrganization.objects.get(id=request.POST.get("rescue_organization_id"))
+        edit_permission = user_is_trust_level_or_above(request.user, TrustLevel.MODERATOR)
+        if not edit_permission:
+            return render(request, "fellchensammlung/errors/403.html", status=403)
+        action = request.POST.get("action")
+        if action == "checked":
+            rescue_org.set_checked()
+
+    last_checked_rescue_orgs = RescueOrganization.objects.order_by("last_checked")
+    context = {"rescue_orgs": last_checked_rescue_orgs,}
+    return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
