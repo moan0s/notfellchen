@@ -108,7 +108,7 @@ class BasicViewTest(TestCase):
         self.assertTrue(ReportComment.objects.filter(reported_comment=c.pk).exists())
 
     def test_show_report_details_logged_in(self):
-        self.client.login(username='testuser0', password='12345')
+        self.client.login(username='testuser1', password='12345')
         report = ReportComment.objects.get(user_comment="ReportComment1")
         response = self.client.get(reverse('report-detail', args=(report.pk,)))
         self.assertEqual(response.status_code, 200)
@@ -125,7 +125,7 @@ class BasicViewTest(TestCase):
         self.assertNotContains(response, '<form action="allow" class="">')
 
     def test_show_report_details_admin(self):
-        self.client.login(username='testuser1', password='12345')
+        self.client.login(username='testuser0', password='12345')
         report = ReportComment.objects.get(user_comment="ReportComment1")
         response = self.client.get(reverse('report-detail', args=(report.pk,)))
         self.assertEqual(response.status_code, 200)
