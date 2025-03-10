@@ -687,14 +687,24 @@ class Report(models.Model):
         The alternative would be to use the ContentType framework:
         https://docs.djangoproject.com/en/5.1/ref/contrib/contenttypes/
         """
-        print("dodo")
         if hasattr(self, "reportadoptionnotice"):
             return self.reportadoptionnotice.adoption_notice
         elif hasattr(self, "reportcomment"):
             return self.reportcomment.reported_comment
-        print("dada")
-        return "didi"
+        return None
 
+    @property
+    def reported_content_url(self):
+        """
+        Same as reported_content, just for url
+        """
+        if hasattr(self, "reportadoptionnotice"):
+            print("dada")
+            print(self.reportadoptionnotice.adoption_notice.get_absolute_url)
+            return self.reportadoptionnotice.adoption_notice.get_absolute_url
+        elif hasattr(self, "reportcomment"):
+            return self.reportcomment.reported_comment.get_absolute_url
+        return None
 
 class ReportAdoptionNotice(Report):
     adoption_notice = models.ForeignKey("AdoptionNotice", on_delete=models.CASCADE)

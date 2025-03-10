@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="report card">
     <h2>
-        {% translate 'Meldung von ' %}<i>{{ report.reported_content }}</i>
+        {% translate 'Meldung von ' %} <a href="{{ report.reported_content_url }}"><i>{{ report.reported_content }}</i></a>
     </h2>
     {% if report.reported_broken_rules %}
         {% translate "Regeln gegen die Verstoßen wurde" %}
