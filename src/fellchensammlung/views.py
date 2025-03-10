@@ -429,7 +429,8 @@ def report_detail(request, report_id, form_complete=False):
     """
     Detailed view of a report, including moderation actions
     """
-    report = Report.objects.get(pk=report_id)
+    # Prefetching reduces the number of queries to the database that are needed (see reported_content)
+    report = Report.objects.select_related("reportadoptionnotice", "reportcomment").get(pk=report_id)
     moderation_actions = ModerationAction.objects.filter(report_id=report_id)
     is_mod_or_above = user_is_trust_level_or_above(request.user, TrustLevel.MODERATOR)
 
@@ -505,7 +506,7 @@ def my_profile(request):
 
 @user_passes_test(user_is_trust_level_or_above)
 def modqueue(request):
-    open_reports = Report.objects.filter(status=Report.WAITING)
+    open_reports = Report.objects.select_related("reportadoptionnotice", "reportcomment").filter(status=Report.WAITING)
     context = {"reports": open_reports}
     return render(request, 'fellchensammlung/modqueue.html', context=context)
 

@@ -680,6 +680,21 @@ class Report(models.Model):
     def get_moderation_actions(self):
         return ModerationAction.objects.filter(report=self)
 
+    @property
+    def reported_content(self):
+        """
+        Dynamically fetch the reported content based on subclass.
+        The alternative would be to use the ContentType framework:
+        https://docs.djangoproject.com/en/5.1/ref/contrib/contenttypes/
+        """
+        print("dodo")
+        if hasattr(self, "reportadoptionnotice"):
+            return self.reportadoptionnotice.adoption_notice
+        elif hasattr(self, "reportcomment"):
+            return self.reportcomment.reported_comment
+        print("dada")
+        return "didi"
+
 
 class ReportAdoptionNotice(Report):
     adoption_notice = models.ForeignKey("AdoptionNotice", on_delete=models.CASCADE)
@@ -687,6 +702,9 @@ class ReportAdoptionNotice(Report):
     @property
     def reported_content(self):
         return self.adoption_notice
+
+    def __str__(self):
+        return f"Report der Vermittlung {self.adoption_notice}"
 
 
 class ReportComment(Report):
