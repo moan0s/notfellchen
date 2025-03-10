@@ -699,7 +699,6 @@ class Report(models.Model):
         Same as reported_content, just for url
         """
         if hasattr(self, "reportadoptionnotice"):
-            print("dada")
             print(self.reportadoptionnotice.adoption_notice.get_absolute_url)
             return self.reportadoptionnotice.adoption_notice.get_absolute_url
         elif hasattr(self, "reportcomment"):
