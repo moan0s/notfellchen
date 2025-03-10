@@ -13,8 +13,12 @@
             {% endfor %}
         </ul>
     {% endif %}
-    <p><b>{% translate "Kommentar zur Meldung" %}:</b>
-        {{ report.user_comment }}
+    <p>
+        {% if report.user_comment %}
+            <b>{% translate "Kommentar zur Meldung" %}:</b> {{ report.user_comment }}
+        {% else %}
+            <i>{% translate 'Es wurde kein Kommentar zur Meldung hinzugefügt.' %}</i>
+        {% endif %}
     </p>
     {% if is_mod_or_above %}
         <div class="container-edit-buttons">
