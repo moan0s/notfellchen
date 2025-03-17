@@ -705,6 +705,7 @@ class Report(models.Model):
             return self.reportcomment.reported_comment.get_absolute_url
         return None
 
+
 class ReportAdoptionNotice(Report):
     adoption_notice = models.ForeignKey("AdoptionNotice", on_delete=models.CASCADE)
 
