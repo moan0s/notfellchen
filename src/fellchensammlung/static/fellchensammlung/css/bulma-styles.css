@@ -1,0 +1,24 @@
+/***************/
+/* MAIN COLORS */
+/***************/
+
+:root {
+    --primary-light-one: #5daa68;
+    --primary-light-two: #4a9455;
+    --primary-semidark-one: #356c3c;
+    --primary-dark-one: #17311b;
+    --secondary-light-one: #faf1cf;
+    --secondary-light-two: #e1d7b5;
+    --background-one: var(--primary-light-one);
+    --background-two: var(--primary-light-two);
+    --background-three: var(--secondary-light-one);
+    --background-four: var(--primary-dark-one);
+    --highlight-one: var(--primary-dark-one);
+    --highlight-one-text: var(--secondary-light-one);
+    --highlight-two: var(--primary-semidark-one);
+    --text-one: var(--secondary-light-one);
+    --shadow-one: var(--primary-dark-one);
+    --text-two: var(--primary-dark-one);
+    --text-three: var(--primary-light-one);
+    --shadow-three: var(--primary-dark-one);
+}
