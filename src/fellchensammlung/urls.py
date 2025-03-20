@@ -113,5 +113,6 @@ urlpatterns = [
     ###############
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
     path("styleguide", views.styleguide, name="styleguide"),
+    path("styleguide-bulma", views.styleguide_bulma, name="styleguide-bulma"),
 
 ]

@@ -1,0 +1,31 @@
+{% load custom_tags %}
+{% load i18n %}
+{% load static %}
+{% get_current_language as LANGUAGE_CODE%}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% block title %}{% endblock %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% translate "Farbratten aus dem Tierschutz finden und adoptieren" %}">
+    <!-- Add additional CSS in static file -->
+    <link rel="stylesheet" href="{% static 'fellchensammlung/css/bulma-styles.css' %}">
+    <link rel="stylesheet" href="{% static 'fellchensammlung/css/bulma/css/bulma.css' %}">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'fellchensammlung/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'fellchensammlung/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'fellchensammlung/favicon/favicon-16x16.png' %}">
+    {% get_oxitraffic_script_if_enabled %}
+</head>
+<body>
+{% block header %}
+{% endblock %}
+<div>
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

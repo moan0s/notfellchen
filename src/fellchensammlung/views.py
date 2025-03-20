@@ -639,9 +639,13 @@ def export_own_profile(request):
 
 
 def styleguide(request):
-
     context = {"geocoding_api_url": settings.GEOCODING_API_URL, }
     return render(request, 'fellchensammlung/styleguide.html', context=context)
+
+
+def styleguide_bulma(request):
+    return render(request, 'fellchensammlung/styleguide-bulma.html')
+
 
 @login_required
 def rescue_organization_check(request):
@@ -655,5 +659,5 @@ def rescue_organization_check(request):
             rescue_org.set_checked()
 
     last_checked_rescue_orgs = RescueOrganization.objects.order_by("last_checked")
-    context = {"rescue_orgs": last_checked_rescue_orgs,}
+    context = {"rescue_orgs": last_checked_rescue_orgs, }
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
