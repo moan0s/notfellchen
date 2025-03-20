@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from fellchensammlung.models import BaseNotification, CommentNotification, User, TrustLevel
+from fellchensammlung.models import BaseNotification, CommentNotification, User, TrustLevel, RescueOrganization
 from .tasks import task_send_notification_email
 from notfellchen.settings import host
 from django.utils.translation import gettext_lazy as _
@@ -14,6 +14,13 @@ def comment_notification_receiver(sender, instance: BaseNotification, created: b
 @receiver(post_save, sender=BaseNotification)
 def base_notification_receiver(sender, instance: BaseNotification, created: bool, **kwargs):
     if not created or not instance.user.email_notifications:
+        return
+    else:
+        task_send_notification_email.delay(instance.pk)
+
+@receiver(post_save, sender=RescueOrganization)
+def rescue_org_receiver(sender, instance: RescueOrganization, created: bool, **kwargs):
+    if instance.location:
         return
     else:
         task_send_notification_email.delay(instance.pk)

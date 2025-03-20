@@ -6,7 +6,7 @@ from notfellchen.celery import app as celery_app
 from .mail import send_notification_email
 from .tools.admin import clean_locations, deactivate_unchecked_adoption_notices, deactivate_404_adoption_notices
 from .tools.misc import healthcheck_ok
-from .models import Location, AdoptionNotice, Timestamp
+from .models import Location, AdoptionNotice, Timestamp, RescueOrganization
 from .tools.notifications import notify_of_AN_to_be_checked
 from .tools.search import notify_search_subscribers
 
@@ -57,3 +57,10 @@ def task_healthcheck():
 @shared_task
 def task_send_notification_email(notification_pk):
     send_notification_email(notification_pk)
+
+@celery_app.task(name="commit.post_rescue_org_save")
+def post_rescue_org_save(pk):
+    instance = RescueOrganization.objects.get(pk=pk)
+    Location.add_location_to_object(instance)
+    set_timestamp("add_rescue_org_location")
+    logging.info(f"Location was added to Rescue Organization {pk}")

@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
 from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel
-from fellchensammlung.tasks import post_adoption_notice_save
+from fellchensammlung.tasks import post_adoption_notice_save, post_rescue_org_save
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .serializers import (
@@ -161,10 +161,14 @@ class RescueOrganizationApiView(APIView):
         serializer = RescueOrgSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             rescue_org = serializer.save()
+            # Add the location
+            post_rescue_org_save.delay_on_commit(rescue_org.pk)
             return Response(
                 {"message": "Rescue organization created/updated successfully!", "id": rescue_org.id},
                 status=status.HTTP_201_CREATED,
             )
+
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
