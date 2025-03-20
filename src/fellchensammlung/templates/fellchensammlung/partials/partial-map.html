@@ -3,8 +3,8 @@
 {% load i18n %}
 
 <!-- add MapLibre JavaScript and CSS -->
-<script src="{% settings_value "MAP_TILE_SERVER" %}/assets/maplibre-gl/maplibre-gl.js"></script>
-<link href="{% settings_value "MAP_TILE_SERVER" %}/assets/maplibre-gl/maplibre-gl.css" rel="stylesheet"/>
+<script src="{% settings_value "MAP_TILE_SERVER" %}/assets/lib/maplibre-gl/maplibre-gl.js"></script>
+<link href="{% settings_value "MAP_TILE_SERVER" %}/assets/lib/maplibre-gl/maplibre-gl.css" rel="stylesheet"/>
 
 <!-- add Turf see https://maplibre.org/maplibre-gl-js/docs/examples/draw-a-radius/ -->
 <script src="{% static 'fellchensammlung/js/turf.min.js' %}"></script>
