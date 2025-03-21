@@ -130,14 +130,37 @@ class RescueOrganizationApiView(APIView):
                 'description': 'ID of the rescue organization to retrieve.',
                 'type': int
             },
+            {
+                'name': 'trusted',
+                'required': False,
+                'description': 'Filter by trusted status (true/false).',
+                'type': bool
+            },
+            {
+                'name': 'external_object_identifier',
+                'required': False,
+                'description': 'Filter by external object identifier. Use "None" to filter for an empty field',
+                'type': str
+            },
+            {
+                'name': 'external_source_identifier',
+                'required': False,
+                'description': 'Filter by external source identifier. Use "None" to filter for an empty field',
+                'type': str
+            },
         ],
         responses={200: RescueOrganizationSerializer(many=True)}
     )
     def get(self, request, *args, **kwargs):
         """
-        Get list of rescue organizations or a specific organization by ID.
+        Get list of rescue organizations or a specific organization by ID or get a list with available filters for
+        - external_object_identifier
+        - external_source_identifier
         """
-        org_id = kwargs.get("id")
+        org_id = request.query_params.get("id")
+        external_object_identifier = request.query_params.get("external_object_identifier")
+        external_source_identifier = request.query_params.get("external_source_identifier")
+
         if org_id:
             try:
                 organization = RescueOrganization.objects.get(pk=org_id)
@@ -145,14 +168,26 @@ class RescueOrganizationApiView(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except RescueOrganization.DoesNotExist:
                 return Response({"error": "Organization not found."}, status=status.HTTP_404_NOT_FOUND)
+
         organizations = RescueOrganization.objects.all()
+
+        if external_object_identifier:
+            if external_object_identifier == "None":
+                external_object_identifier = None
+            organizations = organizations.filter(external_object_identifier=external_object_identifier)
+
+        if external_source_identifier:
+            if external_source_identifier == "None":
+                external_source_identifier = None
+            organizations = organizations.filter(external_source_identifier=external_source_identifier)
+
         serializer = RescueOrganizationSerializer(organizations, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @transaction.atomic
     @extend_schema(
-        request=RescueOrgSerializer,  # Document the request body
-        responses={201: 'Rescue organization created/updated successfully!'}
+        request=RescueOrgSerializer,
+        responses={201: 'Rescue organization created successfully!'}
     )
     def post(self, request, *args, **kwargs):
         """
@@ -164,10 +199,9 @@ class RescueOrganizationApiView(APIView):
             # Add the location
             post_rescue_org_save.delay_on_commit(rescue_org.pk)
             return Response(
-                {"message": "Rescue organization created/updated successfully!", "id": rescue_org.id},
+                {"message": "Rescue organization created successfully!", "id": rescue_org.id},
                 status=status.HTTP_201_CREATED,
             )
-
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
