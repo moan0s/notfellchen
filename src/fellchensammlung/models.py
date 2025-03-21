@@ -125,6 +125,9 @@ class RescueOrganization(models.Model):
                                                   choices=ExternalSourceChoices.choices,
                                                   verbose_name=_('External Source Identifier'))
 
+    class Meta:
+        unique_together = ('external_object_identifier', 'external_source_identifier',)
+
     def get_absolute_url(self):
         return reverse("rescue-organization-detail", args=[str(self.pk)])
 
