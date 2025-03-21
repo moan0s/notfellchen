@@ -205,6 +205,30 @@ class RescueOrganizationApiView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @transaction.atomic
+    @extend_schema(
+        request=RescueOrgSerializer,
+        responses={200: 'Rescue organization updated successfully!'}
+    )
+    def patch(self, request, *args, **kwargs):
+        """
+        Partially update a rescue organization.
+        """
+        org_id = kwargs.get("id")
+        if not org_id:
+            return Response({"error": "ID is required for updating."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            organization = RescueOrganization.objects.get(pk=org_id)
+        except RescueOrganization.DoesNotExist:
+            return Response({"error": "Organization not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = RescueOrgSerializer(organization, data=request.data, partial=True, context={"request": request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Rescue organization updated successfully!"}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AddImageApiView(APIView):
     permission_classes = [IsAuthenticated]
