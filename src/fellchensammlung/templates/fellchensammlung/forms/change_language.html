@@ -1,5 +1,5 @@
 {% load i18n %}
-<form class="btn2" action="{% url 'change-language' %}" method="post" onchange='this.form.submit()'>
+<form class="btn2 select" action="{% url 'change-language' %}" method="post" onchange='this.form.submit()'>
     {% csrf_token %}
     <select name="language" onchange='this.form.submit()'>
         {% get_current_language as LANGUAGE_CODE_CURRENT %}

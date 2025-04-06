@@ -3,26 +3,31 @@
 <footer class="footer">
     <div class="columns">
         <div class="column">
+            <div class="block">
+                <h3 class="bd-footer-title title is-3 has-text-left">
+                    Notfellchen
+                </h3>
 
-            <!-- Heading is left aligned, medium weight -->
-            <h4 class="bd-footer-title
-                 has-text-left">
-                Notfellchen
-            </h4>
-
-            <!-- footer content -->
-            <p class="bd-footer-link
+                <!-- footer content -->
+                <p class="bd-footer-link
                 has-text-left">
-                Für Menschen die Ratten aus dem Tierschutz ein liebendes Zuhause geben wollen.
-            </p>
+                    Für Menschen die Ratten aus dem Tierschutz ein liebendes Zuhause geben wollen.
+                </p>
+            </div>
+
+            <div class="block">
+                <h3 class="bd-footer-title title is-5">
+                    {% trans 'Sprache ändern' %}
+                </h3>
+                {% include "fellchensammlung/forms/change_language.html" %}
+            </div>
 
         </div>
 
         <div class="column">
-            <h3 class="bd-footer-title
-                 has-text-justify">
+            <h4 class="bd-footer-title title is-4 has-text-justify">
                 Technisches
-            </h3>
+            </h4>
 
             <p class="bd-footer-link">
                 <a class="nav-link " href="{% url "rss" %}">
