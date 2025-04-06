@@ -3,7 +3,9 @@
 
 <section class="header">
     <div>
-        <a href="{% url "index" %}" class="logo"><img src={% static 'fellchensammlung/img/logo_transparent.png' %}></a>
+        <a href="{% url "index" %}" class="logo">
+            <img src="{% static 'fellchensammlung/img/logo_transparent.png' %}" alt="{% trans 'Notfellchen Logo' %}">
+        </a>
     </div>
 
     <div class="profile-card">
@@ -27,7 +29,7 @@
             </form>
         {% else %}
             <a class="btn2" href="{% url "django_registration_register" %}">{% translate "Registrieren" %}</a>
-            <a class="btn2" href="{% url "login" %}"><i class="fa fa-sign-in" aria-hidden="true"></i></a>
+            <a class="btn2" href="{% url "login" %}"><i class="fa fa-sign-in" aria-label="Login"></i></a>
         {% endif %}
         <input id="menu-toggle" type="checkbox"/>
         <label class='menu-button-container' for="menu-toggle">
