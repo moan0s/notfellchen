@@ -1,0 +1,54 @@
+{% load static %}
+{% load i18n %}
+<footer class="footer">
+    <div class="columns">
+        <div class="column">
+
+            <!-- Heading is left aligned, medium weight -->
+            <h4 class="bd-footer-title
+                 has-text-left">
+                Notfellchen
+            </h4>
+
+            <!-- footer content -->
+            <p class="bd-footer-link
+                has-text-left">
+                Für Menschen die Ratten aus dem Tierschutz ein liebendes Zuhause geben wollen.
+            </p>
+
+        </div>
+
+        <div class="column">
+            <h3 class="bd-footer-title
+                 has-text-justify">
+                Technisches
+            </h3>
+
+            <p class="bd-footer-link">
+                <a class="nav-link " href="{% url "rss" %}">
+                    <i class="fa-solid fa-rss"></i> {% translate 'RSS' %}
+                </a>
+                <br/>
+
+                <a href="https://dokumentation.notfellchen.org/">
+                  <span class="icon-text">
+                    <span>{% translate 'Dokumentation' %}</span>
+                  </span>
+                </a>
+                <br/>
+
+                <a href="mailto:info@notfellchen.org">
+                  <span class="icon-text">
+                    <span>{% translate 'Probleme melden' %}</span>
+                  </span>
+                </a>
+                <br/>
+                <a href="https://codeberg.org/moanos/notfellchen">
+                  <span class="icon-text">
+                    <span>{% trans 'Code' %}</span>
+                  </span>
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
