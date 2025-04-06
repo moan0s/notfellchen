@@ -644,7 +644,7 @@ def styleguide(request):
 
 
 def styleguide_bulma(request):
-    return render(request, 'fellchensammlung/styleguide-bulma.html')
+    return render(request, 'fellchensammlung/bulma-styleguide.html')
 
 
 @login_required

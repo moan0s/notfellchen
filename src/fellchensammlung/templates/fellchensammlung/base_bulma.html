@@ -16,6 +16,9 @@
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
 
+    <script src="{% static 'fellchensammlung/js/custom.js' %}"></script>
+    <script src="{% static 'fellchensammlung/js/toggles.js' %}"></script>
+
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'fellchensammlung/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'fellchensammlung/favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'fellchensammlung/favicon/favicon-16x16.png' %}">
@@ -23,6 +26,7 @@
 </head>
 <body>
 {% block header %}
+    {% include "fellchensammlung/bulma-header.html" %}
 {% endblock %}
 <div>
     {% block content %}{% endblock %}
