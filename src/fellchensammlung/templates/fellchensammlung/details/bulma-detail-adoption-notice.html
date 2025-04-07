@@ -7,7 +7,7 @@
 {% block content %}
     <div class="card">
         <div class="card-header">
-            <h1 class="card-header-title is-1">{{ adoption_notice.name }}</h1>
+            <h1 class="card-header-title title is-2">{{ adoption_notice.name }}</h1>
         </div>
         <div class="card-content">
             <div class="grid">
@@ -24,7 +24,7 @@
                         </div>
                         {% if adoption_notice.organization %}
                             <div class="cell">
-                                <h2 class="is-title-1">{% translate "Organisation" %}</h2>
+                                <h2><strong>{% translate "Organisation" %}</strong></h2>
                                 <div>
                                     <a href="{{ adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a>
                                     {% if adoption_notice.organization.trusted %}
@@ -35,17 +35,17 @@
                         {% endif %}
 
                         <div class="cell">
-                            <h2>{% translate "Suchen seit" %}</h2>
+                            <h2><strong>{% translate "Suchen seit" %}</strong></h2>
                             <p>{{ adoption_notice.searching_since }}</p>
                         </div>
 
                         <div class="cell">
-                            <h2>{% translate "Zuletzt aktualisiert" %}</h2>
+                            <h2><strong>{% translate "Zuletzt aktualisiert" %}</strong></h2>
                             <p>{{ adoption_notice.last_checked_hr }}</p>
                         </div>
 
                         <div class="cell">
-                            <h2>{% translate "Weitere Informationen" %}</h2>
+                            <h2><strong>{% translate "Weitere Informationen" %}</strong></h2>
                             {% if adoption_notice.further_information %}
                                 <form method="get" action="{% url 'external-site' %}">
                                     <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
@@ -92,7 +92,7 @@
                     </div>
                 </div>
             </div>
-        </div>r
+        </div>
         <div class="card-footer">
             {% if has_edit_permission %}
                 <div class="columns">
