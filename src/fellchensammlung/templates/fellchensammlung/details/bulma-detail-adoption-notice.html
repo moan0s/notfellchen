@@ -1,0 +1,125 @@
+{% extends "fellchensammlung/base_bulma.html" %}
+{% load custom_tags %}
+{% load i18n %}
+
+{% block title %}<title>{{ adoption_notice.name }}</title>{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-header-title is-1">{{ adoption_notice.name }}</h1>
+        </div>
+        <div class="card-content">
+            <div class="grid">
+                <div class="cell">
+                    <!--- General Information --->
+                    <div class="grid">
+                        <div class="cell">
+                            <h2><strong>{% translate "Ort" %}</strong></h2>
+                            <p>{% if adoption_notice.location %}
+                                {{ adoption_notice.location }}
+                            {% else %}
+                                {{ adoption_notice.location_string }}
+                            {% endif %}</p>
+                        </div>
+                        {% if adoption_notice.organization %}
+                            <div class="cell">
+                                <h2 class="is-title-1">{% translate "Organisation" %}</h2>
+                                <div>
+                                    <a href="{{ adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a>
+                                    {% if adoption_notice.organization.trusted %}
+                                        <div class="tag"><i class="fa-solid fa-check"></i></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="cell">
+                            <h2>{% translate "Suchen seit" %}</h2>
+                            <p>{{ adoption_notice.searching_since }}</p>
+                        </div>
+
+                        <div class="cell">
+                            <h2>{% translate "Zuletzt aktualisiert" %}</h2>
+                            <p>{{ adoption_notice.last_checked_hr }}</p>
+                        </div>
+
+                        <div class="cell">
+                            <h2>{% translate "Weitere Informationen" %}</h2>
+                            {% if adoption_notice.further_information %}
+                                <form method="get" action="{% url 'external-site' %}">
+                                    <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
+                                    <button class="btn" type="submit" id="submit">
+                                        {{ adoption_notice.further_information | domain }} <i
+                                            class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </button>
+                                </form>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
+            <div class="grid">
+                <!--- Images --->
+                <div class="cell">
+                    <h1>{% translate "Bilder" %}</h1>
+                    <div class="grid">
+                        {% for photo in  adoption_notice.get_photos %}
+                            <div class="cell" id="#my-gallery">
+                                <img src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{{ photo.alt_text }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!--- Description --->
+                <div class="cell">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1>{% translate "Beschreibung" %}</h1>
+                        </div>
+                        <div class="card-content">
+                            <p>{% if adoption_notice.description %}
+                                {{ adoption_notice.description | render_markdown }}
+                            {% else %}
+                                {% translate "Keine Beschreibung angegeben" %}
+                            {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>r
+        <div class="card-footer">
+            {% if has_edit_permission %}
+                <div class="columns">
+                    <div class="column">
+                        <a class="button is-primary is-light"
+                           href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">
+                            {% translate 'Foto hinzufügen' %}
+                        </a>
+                    </div>
+                    <div class="column">
+                        <a class="button is-primary"
+                           href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
+                            {% translate 'Bearbeiten' %}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="grid">
+        {% for animal in adoption_notice.animals %}
+            <div class="cell">
+                {% include "fellchensammlung/partials/partial-animal-card.html" %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% include "fellchensammlung/partials/partial-comment-section.html" %}
+
+{% endblock %}

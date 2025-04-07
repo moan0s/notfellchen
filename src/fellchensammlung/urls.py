@@ -18,6 +18,7 @@ sitemaps = {
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("bulma/", views.index_bulma, name="index-bulma"),
     path("rss/", LatestAdoptionNoticesFeed(), name="rss"),
     path("metrics/", views.metrics, name="metrics"),
     # ex: /animal/5/
@@ -28,6 +29,7 @@ urlpatterns = [
     path("tier/<int:animal_id>/add-photo", views.add_photo_to_animal, name="animal-add-photo"),
     # ex: /adoption_notice/7/
     path("vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail, name="adoption-notice-detail"),
+    path("bulma/vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail_bulma, name="adoption-notice-detail-bulma"),
     # ex: /adoption_notice/7/edit
     path("vermittlung/<int:adoption_notice_id>/edit", views.adoption_notice_edit, name="adoption-notice-edit"),
     # ex: /vermittlung/5/add-photo
