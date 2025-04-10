@@ -68,11 +68,16 @@
                 <div class="cell">
                     <h1>{% translate "Bilder" %}</h1>
                     <div class="grid">
-                        {% for photo in  adoption_notice.get_photos %}
-                            <div class="cell" id="#my-gallery">
-                                <img src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{{ photo.alt_text }}">
-                            </div>
-                        {% endfor %}
+                        <div class="cell" id="my-gallery">
+                            {% for photo in adoption_notice.get_photos %}
+                                <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                                   data-pswp-width="{{ photo.image.width }}"
+                                   data-pswp-height="{{ photo.image.height }}"
+                                   target="_blank">
+                                    <img style="height: 12rem" src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{ photo.alt_text }}"/>
+                                </a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <!--- Description --->
