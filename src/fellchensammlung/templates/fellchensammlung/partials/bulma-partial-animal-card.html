@@ -1,0 +1,38 @@
+{% load i18n %}
+{% load custom_tags %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-header-title">
+            <a href="{% url 'animal-detail' animal_id=animal.pk %}">{{ animal.name }}</a>
+
+        </h1>
+
+        <div class="tags">
+            <div class="tag species">{{ animal.species }}</div>
+            <div class="tag sex">{{ animal.get_sex_display }}</div>
+        </div>
+    </div>
+    <div class="card-content">
+        {% if animal.description %}
+            <p>{{ animal.description | render_markdown }}</p>
+        {% endif %}
+        <div class="cell" id="my-gallery">
+            {% for photo in  animal.get_photos %}
+                <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                   data-pswp-width="{{ photo.image.width }}"
+                   data-pswp-height="{{ photo.image.height }}"
+                   target="_blank">
+                    <img src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{{ photo.alt_text }}">
+                </a>
+            {% endfor %}
+        </div>
+        <!--- Assume a user does not have edit permissions on animal if they have no other edit permission   --->
+        {% if has_edit_permission %}
+            <div class="container-edit-buttons">
+                <a class="button" href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
+                <a class="button"
+                   href="{% url 'animal-add-photo' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
