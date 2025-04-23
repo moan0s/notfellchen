@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+<div class="card">
+    <div class="card-header">
+        <div class="card-header-title">
+            {% blocktrans %}
+                Als {{ user }} kommentieren
+            {% endblocktrans %}
+        </div>
+    </div>
+    <div class="card-content">
+        {% crispy comment_form %}
+    </div>
+</div>
