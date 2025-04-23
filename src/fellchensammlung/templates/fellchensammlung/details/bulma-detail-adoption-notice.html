@@ -65,8 +65,9 @@
             <div class="coloumns">
                 <!--- Images --->
                 <div class="coloumn block">
-                    <h1>{% translate "Bilder" %}</h1>
-                    <div class="grid">
+                <div class="card">
+                    <h1 class="card-header-title title is-2">{% translate "Bilder" %}</h1>
+                    <div class="grid card-content">
                         <div class="cell" id="my-gallery">
                             {% for photo in adoption_notice.get_photos %}
                                 <a href="{{ MEDIA_URL }}/{{ photo.image }}"
@@ -78,6 +79,7 @@
                             {% endfor %}
                         </div>
                     </div>
+                </div>
                 </div>
                 <!--- Description --->
                 <div class="coloumn block">
