@@ -101,14 +101,14 @@
         </div>
         <div class="card-footer">
             {% if has_edit_permission %}
-                <div class="columns">
+                <div class="card-footer-item">
                     <div class="column">
                         <a class="button is-primary is-light"
                            href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">
                             {% translate 'Foto hinzufügen' %}
                         </a>
                     </div>
-                    <div class="column">
+                    <div class="card-footer-item">
                         <a class="button is-primary"
                            href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
                             {% translate 'Bearbeiten' %}
