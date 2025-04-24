@@ -28,9 +28,9 @@
         </div>
         <!--- Assume a user does not have edit permissions on animal if they have no other edit permission   --->
         {% if has_edit_permission %}
-            <div class="container-edit-buttons">
-                <a class="button" href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
-                <a class="button"
+            <div class="card-footer">
+                <a class="card-footer-item button" href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
+                <a class="card-footer-item button"
                    href="{% url 'animal-add-photo' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
             </div>
         {% endif %}
