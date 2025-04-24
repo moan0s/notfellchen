@@ -74,13 +74,21 @@ class GeoFeature:
         geofeatures = []
         for feature in result["features"]:
             geojson = {}
-            try:
-                geojson['name'] = feature["properties"]["name"]
-            except KeyError:
-                geojson['name'] = feature["properties"]["street"]
+            # Necessary features
             geojson['place_id'] = feature["properties"]["osm_id"]
             geojson['lat'] = feature["geometry"]["coordinates"][1]
             geojson['lon'] = feature["geometry"]["coordinates"][0]
+            try:
+                geojson['name'] = feature["properties"]["name"]
+            except KeyError:
+                geojson['name'] = feature["properties"]["osm_id"]
+
+            optional_keys = ["housenumber", "street", "city", "postcode", "county", "countrycode"]
+            for key in optional_keys:
+                try:
+                    geojson[key] = feature["properties"][key]
+                except KeyError:
+                    pass
             geofeatures.append(geojson)
         return geofeatures
 
@@ -161,6 +169,7 @@ class LocationProxy:
         """
         self.geo_api = GeoAPI()
         geofeatures = self.geo_api.get_geojson_for_query(location_string)
+
         if geofeatures is None:
             raise ValueError
         result = geofeatures[0]
@@ -168,6 +177,12 @@ class LocationProxy:
         self.place_id = result["place_id"]
         self.latitude = result["lat"]
         self.longitude = result["lon"]
+        optional_keys = ["housenumber", "street", "city", "postcode", "county", "countrycode"]
+        for key in optional_keys:
+            try:
+                self.__setattr__(key, result[key])
+            except KeyError:
+                self.__setattr__(key, None)
 
     def __eq__(self, other):
         return self.place_id == other.place_id

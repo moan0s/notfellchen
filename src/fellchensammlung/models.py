@@ -47,11 +47,12 @@ class Location(models.Model):
     housenumber = models.CharField(max_length=20, blank=True, null=True)
     postcode = models.CharField(max_length=20, blank=True, null=True)
     street = models.CharField(max_length=200, blank=True, null=True)
+    county = models.CharField(max_length=200, blank=True, null=True)
     # Country code as per ISO 3166-1 alpha-2
     # https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
-    country = models.CharField(max_length=2, verbose_name=_("Ländercode"),
-                               help_text=_("Standardisierter Ländercode nach ISO 3166-1 ALPHA-2"),
-                               blank=True, null=True)
+    countrycode = models.CharField(max_length=2, verbose_name=_("Ländercode"),
+                                   help_text=_("Standardisierter Ländercode nach ISO 3166-1 ALPHA-2"),
+                                   blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -82,6 +83,11 @@ class Location(models.Model):
             latitude=proxy.latitude,
             longitude=proxy.longitude,
             name=proxy.name,
+            postcode=proxy.postcode,
+            city=proxy.city,
+            street=proxy.street,
+            county=proxy.county,
+            countrycode=proxy.countrycode,
         )
         return location
 
