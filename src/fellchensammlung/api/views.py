@@ -1,7 +1,8 @@
+from fellchensammlung.api.serializers import LocationSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
-from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel
+from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel, Location
 from fellchensammlung.tasks import post_adoption_notice_save, post_rescue_org_save
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -274,3 +275,63 @@ class SpeciesApiView(APIView):
         species = Species.objects.all()
         serializer = SpeciesSerializer(species, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class LocationApiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        parameters=[
+            {
+                'name': 'id',
+                'required': False,
+                'description': 'ID of the location to retrieve.',
+                'type': int
+            },
+        ],
+        responses={200: LocationSerializer(many=True)}
+    )
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieve a location
+        """
+        location_id = kwargs.get("id")
+        if location_id:
+            try:
+                location = Location.objects.get(pk=location_id)
+                serializer = LocationSerializer(location, context={"request": request})
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Location.DoesNotExist:
+                return Response({"error": "Location not found."}, status=status.HTTP_404_NOT_FOUND)
+        locations = Location.objects.all()
+        serializer = LocationSerializer(locations, many=True, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @transaction.atomic
+    @extend_schema(
+        request=LocationSerializer,
+        responses={201: 'Location created successfully!'}
+    )
+    def post(self, request, *args, **kwargs):
+        """
+        API view to add a location
+        """
+        serializer = LocationSerializer(data=request.data, context={'request': request})
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        location = serializer.save()
+
+        # Log the action
+        Log.objects.create(
+            user=request.user,
+            action="add_location",
+            text=f"{request.user} added adoption notice {location.pk} via API",
+        )
+
+        # Return success response with new adoption notice details
+        return Response(
+            {"message": "Location created successfully!", "id": location.pk},
+            status=status.HTTP_201_CREATED,
+        )
+
+

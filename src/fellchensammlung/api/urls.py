@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     AdoptionNoticeApiView,
-    AnimalApiView, RescueOrganizationApiView, AddImageApiView, SpeciesApiView
+    AnimalApiView, RescueOrganizationApiView, AddImageApiView, SpeciesApiView, LocationApiView
 )
 
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
     path("organizations/<int:id>/", RescueOrganizationApiView.as_view(), name="api-organization-detail"),
     path("images/", AddImageApiView.as_view(), name="api-add-image"),
     path("species/", SpeciesApiView.as_view(), name="api-species-list"),
+    path("locations/", LocationApiView.as_view(), name="api-locations-list"),
 ]

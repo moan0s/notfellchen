@@ -1,4 +1,4 @@
-from ..models import Animal, RescueOrganization, AdoptionNotice, Species, Image
+from ..models import Animal, RescueOrganization, AdoptionNotice, Species, Image, Location
 from rest_framework import serializers
 
 
@@ -50,4 +50,10 @@ class ImageCreateSerializer(serializers.ModelSerializer):
 class SpeciesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Species
+        fields = "__all__"
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
         fields = "__all__"
