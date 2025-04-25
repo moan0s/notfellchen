@@ -3,10 +3,27 @@ from rest_framework import serializers
 
 
 class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
+    location = serializers.PrimaryKeyRelatedField(
+        queryset=Location.objects.all(),
+        required=False,
+        allow_null=True
+    )
+    location_details = serializers.StringRelatedField(source='location', read_only=True)
+    organization = serializers.PrimaryKeyRelatedField(
+        queryset=RescueOrganization.objects.all(),
+        required=False,
+        allow_null=True
+    )
+    organization = serializers.PrimaryKeyRelatedField(
+        queryset=RescueOrganization.objects.all(),
+        required=False,
+        allow_null=True
+    )
+
     class Meta:
         model = AdoptionNotice
         fields = ['created_at', 'last_checked', "searching_since", "name", "description", "further_information",
-                  "group_only"]
+                  "group_only", "location", "location_details", "organization"]
 
 
 class AnimalCreateSerializer(serializers.ModelSerializer):
@@ -14,11 +31,13 @@ class AnimalCreateSerializer(serializers.ModelSerializer):
         model = Animal
         fields = ["name", "date_of_birth", "description", "species", "sex", "adoption_notice"]
 
+
 class RescueOrgSerializer(serializers.ModelSerializer):
     class Meta:
         model = RescueOrganization
         fields = ["name", "location_string", "instagram", "facebook", "fediverse_profile", "email", "phone_number",
                   "website", "description", "external_object_identifier", "external_source_identifier"]
+
 
 class AnimalGetSerializer(serializers.ModelSerializer):
     class Meta:
