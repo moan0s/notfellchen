@@ -20,10 +20,16 @@ class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
         allow_null=True
     )
 
+    photos = serializers.PrimaryKeyRelatedField(
+        queryset=Image.objects.all(),
+        many=True,
+        required=False
+    )
+
     class Meta:
         model = AdoptionNotice
         fields = ['created_at', 'last_checked', "searching_since", "name", "description", "further_information",
-                  "group_only", "location", "location_details", "organization"]
+                  "group_only", "location", "location_details", "organization", "photos"]
 
 
 class AnimalCreateSerializer(serializers.ModelSerializer):
