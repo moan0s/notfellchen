@@ -39,7 +39,7 @@ class Language(models.Model):
 
 
 class Location(models.Model):
-    place_id = models.IntegerField()  # OSM id
+    place_id = models.CharField(max_length=200)  # OSM id
     latitude = models.FloatField()
     longitude = models.FloatField()
     name = models.CharField(max_length=2000)
