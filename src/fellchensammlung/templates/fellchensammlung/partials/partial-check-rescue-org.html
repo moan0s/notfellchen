@@ -6,7 +6,7 @@
     </h1>
     <i>{% translate 'Zuletzt geprüft:' %} {{ rescue_org.last_checked_hr }}</i>
     {% if rescue_org.website %}
-        <p>{% translate "Website" %}: {{ rescue_org.website | safe }}</p>
+        <p>{% translate "Website" %}: <a href="{{ rescue_org.website }}">{{ rescue_org.website }}</a></p>
     {% endif %}
     <div class="container-edit-buttons">
         <form method="post">
