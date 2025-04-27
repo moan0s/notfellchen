@@ -76,7 +76,7 @@
         image = await map.loadImage('{% static "fellchensammlung/img/pin.png" %}');
         map.addImage('pin', image.data);
         {% for map_pin in map_pins %}
-            map.addSource('point', {
+            map.addSource('point_{{ forloop.counter }}', {
                 'type': 'geojson',
                 'data': {
                     'type': 'FeatureCollection',
@@ -91,16 +91,16 @@
                     ]
                 }
             });
+            map.addLayer({
+                'id': 'point_{{ forloop.counter }}',
+                'type': 'circle',
+                'source': 'point_{{ forloop.counter }}',
+                'paint': {
+                    'circle-radius': 18,
+                    'circle-color': '#ff878980'
+                }
+            });
         {% endfor %}
-        map.addLayer({
-            'id': 'pints',
-            'type': 'symbol',
-            'source': 'point',
-            'layout': {
-                'icon-image': 'pin',
-                'icon-size': 0.1
-            }
-        });
     });
 
     {% if search_center  %}
