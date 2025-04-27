@@ -3,7 +3,7 @@ import logging
 from django.contrib.auth.views import redirect_to_login
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.http.response import HttpResponseForbidden
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils import translation
@@ -202,7 +202,7 @@ def animal_detail(request, animal_id):
 
 
 def search_important_locations(request, important_location_slug):
-    i_location = ImportantLocation.objects.get(slug=important_location_slug)
+    i_location = get_object_or_404(ImportantLocation, slug=important_location_slug)
     search = Search()
     search.search_from_predefined_i_location(i_location)
     context = {"adoption_notices": search.get_adoption_notices(),
