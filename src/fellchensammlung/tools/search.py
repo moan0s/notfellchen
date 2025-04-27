@@ -6,7 +6,7 @@ from ..forms import AdoptionNoticeSearchForm
 from ..models import SearchSubscription, AdoptionNotice, AdoptionNoticeNotification, SexChoicesWithAll, Location
 
 
-def notify_search_subscribers(adoption_notice: AdoptionNotice, only_if_active : bool = True):
+def notify_search_subscribers(adoption_notice: AdoptionNotice, only_if_active: bool = True):
     """
     This functions checks for all search subscriptions if the new adoption notice fits the search.
     If the new adoption notice fits the search subscription, it sends a notification to the user that created the search.
@@ -36,7 +36,7 @@ class Search:
         self.sex = None
         self.area_search = None
         self.max_distance = None
-        self.location = None # Can either be Location (DjangoModel) or LocationProxy
+        self.location = None  # Can either be Location (DjangoModel) or LocationProxy
         self.place_not_found = False  # Indicates that a location was given but could not be geocoded
         self.search_form = None
         # Either place_id or location string must be set for area search
@@ -46,7 +46,6 @@ class Search:
             self.search_from_request(request)
         elif search_subscription:
             self.search_from_search_subscription(search_subscription)
-
 
     def __str__(self):
         return f"Search: {self.sex=}, {self.location=}, {self.area_search=}, {self.max_distance=}"
@@ -93,7 +92,6 @@ class Search:
                 return False
         return True
 
-
     def get_adoption_notices(self):
         adoptions = AdoptionNotice.objects.order_by("-created_at")
         # Filter for active adoption notices
@@ -118,12 +116,20 @@ class Search:
         else:
             self.search_form = AdoptionNoticeSearchForm()
 
+    def search_from_predefined_i_location(self, i_location, max_distance=100):
+        self.sex = SexChoicesWithAll.ALL
+        self.location = i_location.location
+        self.area_search = True
+        self.search_form = AdoptionNoticeSearchForm(initial={"location_string": self.location.name,
+                                                             "max_distance": max_distance,
+                                                             "sex": SexChoicesWithAll.ALL})
+        self.max_distance = max_distance
+
     def search_from_search_subscription(self, search_subscription: SearchSubscription):
         self.sex = search_subscription.sex
         self.location = search_subscription.location
         self.area_search = True
         self.max_distance = search_subscription.max_distance
-
 
     def subscribe(self, user):
         logging.info(f"{user} subscribed to search")

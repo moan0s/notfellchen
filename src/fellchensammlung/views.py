@@ -18,7 +18,8 @@ from notfellchen import settings
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
-    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, AdoptionNoticeNotification
+    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, AdoptionNoticeNotification, \
+    ImportantLocation
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
@@ -198,6 +199,26 @@ def animal_detail(request, animal_id):
     animal = Animal.objects.get(id=animal_id)
     context = {"animal": animal}
     return render(request, 'fellchensammlung/details/detail_animal.html', context=context)
+
+
+def search_important_locations(request, important_location_slug):
+    i_location = ImportantLocation.objects.get(slug=important_location_slug)
+    search = Search()
+    search.search_from_predefined_i_location(i_location)
+    context = {"adoption_notices": search.get_adoption_notices(),
+               "search_form": search.search_form,
+               "place_not_found": search.place_not_found,
+               "subscribed_search": None,
+               "searched": False,
+               "adoption_notices_map": AdoptionNotice.get_active_ANs(),
+               "map_center": search.position,
+               "search_center": search.position,
+               "map_pins": [search],
+               "location": search.location,
+               "search_radius": search.max_distance,
+               "zoom_level": zoom_level_for_radius(search.max_distance),
+               "geocoding_api_url": settings.GEOCODING_API_URL, }
+    return render(request, 'fellchensammlung/search.html', context=context)
 
 
 def search(request):

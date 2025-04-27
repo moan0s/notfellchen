@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils.http import urlencode
 
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription, \
-    SpeciesSpecificURL
+    SpeciesSpecificURL, ImportantLocation
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, BaseNotification
@@ -94,12 +94,14 @@ class ReportAdoptionNoticeAdmin(admin.ModelAdmin):
 
     reported_content_link.short_description = "Reported Content"
 
+
 class SpeciesSpecificURLInline(admin.StackedInline):
     model = SpeciesSpecificURL
 
+
 @admin.register(RescueOrganization)
 class RescueOrganizationAdmin(admin.ModelAdmin):
-    search_fields = ("name","description", "internal_comment", "location_string")
+    search_fields = ("name", "description", "internal_comment", "location_string")
     list_display = ("name", "trusted", "allows_using_materials", "website")
     list_filter = ("allows_using_materials", "trusted",)
 
@@ -122,14 +124,26 @@ class CommentAdmin(admin.ModelAdmin):
 class BaseNotificationAdmin(admin.ModelAdmin):
     list_filter = ("user", "read")
 
+
 @admin.register(SearchSubscription)
 class SearchSubscriptionAdmin(admin.ModelAdmin):
     list_filter = ("owner",)
 
 
+class ImportantLocationInline(admin.StackedInline):
+    model = ImportantLocation
+
+
+@admin.register(Location)
+class LocationAdmin(admin.ModelAdmin):
+    search_fields = ("name__icontains", "city__icontains")
+    inlines = [
+        ImportantLocationInline,
+    ]
+
+
 admin.site.register(Animal)
 admin.site.register(Species)
-admin.site.register(Location)
 admin.site.register(Rule)
 admin.site.register(Image)
 admin.site.register(ModerationAction)
