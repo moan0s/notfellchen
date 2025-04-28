@@ -134,9 +134,29 @@ class ImportantLocationInline(admin.StackedInline):
     model = ImportantLocation
 
 
+class IsImportantListFilter(admin.SimpleListFilter):
+    # See https://docs.djangoproject.com/en/5.1/ref/contrib/admin/filters/#modeladmin-list-filters
+    title = _('Is Important Location?')
+
+    parameter_name = 'important'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('is_important', _('Important Location')),
+            ('is_normal', _('Normal Location')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'is_important':
+            return queryset.filter(importantlocation__isnull=False)
+        else:
+            return queryset.filter(importantlocation__isnull=True)
+
+
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
     search_fields = ("name__icontains", "city__icontains")
+    list_filter = [IsImportantListFilter]
     inlines = [
         ImportantLocationInline,
     ]
