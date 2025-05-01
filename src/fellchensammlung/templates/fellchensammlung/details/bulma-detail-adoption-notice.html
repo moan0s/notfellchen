@@ -1,6 +1,7 @@
 {% extends "fellchensammlung/base_bulma.html" %}
 {% load custom_tags %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}<title>{{ adoption_notice.name }}</title>{% endblock %}
 
@@ -15,6 +16,34 @@
                     <!--- General Information --->
                     <div class="grid">
                         <div class="cell">
+                            {% if adoption_notice.num_per_sex.F > 0 %}
+                                {{ adoption_notice.num_per_sex.F }}
+                                <img class="icon" src="{% static 'fellchensammlung/img/sexes/F.png' %}"
+                                     alt="{% translate 'weibliche Tiere' %}">
+                            {% endif %}
+                            {% if adoption_notice.num_per_sex.F_N > 0 %}
+                                {{ adoption_notice.num_per_sex.F_N }}
+                                <img class="icon" src="{% static 'fellchensammlung/img/sexes/F_N.png' %}"
+                                     alt="{% translate 'weiblich, kastrierte Tiere' %}">
+                            {% endif %}
+                            {% if adoption_notice.num_per_sex.I > 0 %}
+                                {{ adoption_notice.num_per_sex.I }}
+                                <img class="icon" src="{% static 'fellchensammlung/img/sexes/I.png' %}"
+                                     alt="{% translate 'intersexuelle Tiere' %}">
+                            {% endif %}
+                            {% if adoption_notice.num_per_sex.M > 0 %}
+                                {{ adoption_notice.num_per_sex.M }}
+                                <img class="icon" src="{% static 'fellchensammlung/img/sexes/M.png' %}"
+                                     alt="{% translate 'männliche Tiere' %}">
+                            {% endif %}
+                            {% if adoption_notice.num_per_sex.M_N > 0 %}
+                                {{ adoption_notice.num_per_sex.M_N }}
+                                <img class="icon" src="{% static 'fellchensammlung/img/sexes/M_N.png' %}"
+                                     alt="{% translate 'männlich, kastrierte Tiere' %}">
+                            {% endif %}
+                        </div>
+
+                        <div class="cell">
                             <h2><strong>{% translate "Ort" %}</strong></h2>
                             <p>{% if adoption_notice.location %}
                                 {{ adoption_notice.location }}
@@ -22,67 +51,32 @@
                                 {{ adoption_notice.location_string }}
                             {% endif %}</p>
                         </div>
-                        {% if adoption_notice.organization %}
-                            <div class="cell">
-                                <h2><strong>{% translate "Organisation" %}</strong></h2>
-                                <div>
-                                    <a href="{{ adoption_notice.organization.get_absolute_url }}">{{ adoption_notice.organization }}</a>
-                                    {% if adoption_notice.organization.trusted %}
-                                        <div class="tag"><i class="fa-solid fa-check"></i></div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        <div class="cell">
-                            <h2><strong>{% translate "Suchen seit" %}</strong></h2>
-                            <p>{{ adoption_notice.searching_since }}</p>
-                        </div>
-
-                        <div class="cell">
-                            <h2><strong>{% translate "Zuletzt aktualisiert" %}</strong></h2>
-                            <p>{{ adoption_notice.last_checked_hr }}</p>
-                        </div>
-
-                        <div class="cell">
-                            <h2><strong>{% translate "Weitere Informationen" %}</strong></h2>
-                            {% if adoption_notice.further_information %}
-                                <form method="get" action="{% url 'external-site' %}">
-                                    <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
-                                    <button class="btn" type="submit" id="submit">
-                                        {{ adoption_notice.further_information | domain }} <i
-                                            class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </button>
-                                </form>
-                            {% else %}
-                                -
-                            {% endif %}
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="coloumns">
+            <div class="columns">
                 <!--- Images --->
-                <div class="coloumn block">
-                <div class="card">
-                    <h1 class="card-header-title title is-2">{% translate "Bilder" %}</h1>
-                    <div class="grid card-content">
-                        <div class="cell" id="my-gallery">
-                            {% for photo in adoption_notice.get_photos %}
-                                <a href="{{ MEDIA_URL }}/{{ photo.image }}"
-                                   data-pswp-width="{{ photo.image.width }}"
-                                   data-pswp-height="{{ photo.image.height }}"
-                                   target="_blank">
-                                    <img style="height: 12rem" src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{ photo.alt_text }}"/>
-                                </a>
-                            {% endfor %}
+                <div class="column block">
+                    <div class="card">
+                        <h1 class="card-header-title title is-2">{% translate "Bilder" %}</h1>
+                        <div class="grid card-content">
+                            <div class="cell" id="my-gallery">
+                                {% for photo in adoption_notice.get_photos %}
+                                    <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                                       data-pswp-width="{{ photo.image.width }}"
+                                       data-pswp-height="{{ photo.image.height }}"
+                                       target="_blank">
+                                        <img style="height: 12rem" src="{{ MEDIA_URL }}/{{ photo.image }}"
+                                             alt="{ photo.alt_text }}"/>
+                                    </a>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
                 <!--- Description --->
-                <div class="coloumn block">
+                <div class="column block">
                     <div class="card">
                         <div class="card-header">
                             <h1 class="card-header-title title is-2">{% translate "Beschreibung" %}</h1>
@@ -118,13 +112,25 @@
             {% endif %}
         </div>
     </div>
-    <div class="grid">
+    <div class="columns">
         {% for animal in adoption_notice.animals %}
-            <div class="cell">
+            <div class="column">
                 {% include "fellchensammlung/partials/bulma-partial-animal-card.html" %}
             </div>
         {% endfor %}
     </div>
+
+
+    {% if adoption_notice.further_information %}
+        <form method="get" action="{% url 'external-site' %}">
+            <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
+            <button class="button is-primary is-fullwidth" type="submit" id="submit">
+                {{ adoption_notice.further_information | domain }} <i
+                    class="fa-solid fa-arrow-up-right-from-square"></i>
+            </button>
+        </form>
+    {% endif %}
+
 
     {% include "fellchensammlung/partials/bulma-partial-comment-section.html" %}
 

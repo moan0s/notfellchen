@@ -317,6 +317,13 @@ class AdoptionNotice(models.Model):
         return sexes
 
     @property
+    def num_per_sex(self):
+        num_per_sex = dict()
+        for sex in SexChoices:
+            num_per_sex[sex] = self.animals.filter(sex=sex).count
+        return num_per_sex
+
+    @property
     def last_checked_hr(self):
         time_since_last_checked = timezone.now() - self.last_checked
         return time_since_as_hr_string(time_since_last_checked)
