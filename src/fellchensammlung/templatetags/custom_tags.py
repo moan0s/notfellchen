@@ -49,6 +49,7 @@ def get_oxitraffic_script_if_enabled():
     else:
         return ""
 
+
 @register.filter
 @stringfilter
 def pointdecimal(value):
@@ -56,6 +57,7 @@ def pointdecimal(value):
         return f"{float(value):.9f}"
     except ValueError:
         return value
+
 
 @register.filter
 @stringfilter
@@ -68,6 +70,17 @@ def domain(url):
     except ValueError:
         return url
 
+
 @register.simple_tag
 def settings_value(name):
     return getattr(settings, name)
+
+
+@register.filter(name='add_class')
+def add_class(field, css_class):
+    return field.as_widget(attrs={"class": css_class})
+
+
+@register.filter
+def widget_type(field):
+    return field.field.widget.__class__.__name__

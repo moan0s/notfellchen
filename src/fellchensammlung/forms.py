@@ -193,6 +193,8 @@ class CustomRegistrationForm(RegistrationForm):
 
 
 class AdoptionNoticeSearchForm(forms.Form):
+    template_name = "fellchensammlung/forms/form_snippets.html"
+
     sex = forms.ChoiceField(choices=SexChoicesWithAll, label=_("Geschlecht"), required=False,
                             initial=SexChoicesWithAll.ALL)
     max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.ONE_HUNDRED, label=_("Suchradius"))
