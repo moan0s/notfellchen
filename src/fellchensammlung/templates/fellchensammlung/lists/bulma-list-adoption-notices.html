@@ -1,10 +1,12 @@
 {% load i18n %}
-<div class="container-cards">
-    {% if adoption_notices %}
+{% if adoption_notices %}
+    <div class="grid">
         {% for adoption_notice in adoption_notices %}
-            {% include "fellchensammlung/partials/bulma-partial-adoption-notice-minimal.html" %}
+            <div class="cell">
+                {% include "fellchensammlung/partials/bulma-partial-adoption-notice-minimal.html" %}
+            </div>
         {% endfor %}
-    {% else %}
-        <p>{% translate "Keine Vermittlungen gefunden." %}</p>
-    {% endif %}
-</div>
+    </div>
+{% else %}
+    <p>{% translate "Keine Vermittlungen gefunden." %}</p>
+{% endif %}
