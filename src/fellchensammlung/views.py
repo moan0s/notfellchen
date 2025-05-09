@@ -221,7 +221,11 @@ def search_important_locations(request, important_location_slug):
     return render(request, 'fellchensammlung/search.html', context=context)
 
 
-def search(request):
+def search_bulma(request):
+    return search(request, "fellchensammlung/bulma-search.html")
+
+
+def search(request, templatename="fellchensammlung/search.html"):
     # A user just visiting the search site did not search, only upon completing the search form a user has really
     # searched. This will toggle the "subscribe" button
     searched = False
@@ -260,7 +264,7 @@ def search(request):
                "search_radius": search.max_distance,
                "zoom_level": zoom_level_for_radius(search.max_distance),
                "geocoding_api_url": settings.GEOCODING_API_URL, }
-    return render(request, 'fellchensammlung/search.html', context=context)
+    return render(request, templatename, context=context)
 
 
 @login_required

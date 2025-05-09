@@ -1,0 +1,42 @@
+{% load custom_tags %}
+{% load i18n %}
+
+<div class="card">
+    <div class="header-card-adoption-notice">
+        <h2 class="heading-card-adoption-notice">
+            <a href="{{ adoption_notice.get_absolute_url }}"> {{ adoption_notice.name }}</a>
+        </h2>
+    </div>
+
+    <div class="grid">
+        <div class="cell">
+            <!--- General Information --->
+            <div class="grid">
+
+                <div class="cell">
+
+                    <p>
+                        <b><i class="fa-solid fa-location-dot"></i></b>
+                        {% if adoption_notice.location %}
+                            {{ adoption_notice.location }}
+                        {% else %}
+                            {{ adoption_notice.location_string }}
+                        {% endif %}</p>
+                </div>
+                <div class="cell">
+                    {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if adoption_notice.get_photo %}
+        <div class="adoption-notice-img img-small">
+            <img src="{{ MEDIA_URL }}/{{ adoption_notice.get_photo.image }}"
+                 alt="{{ adoption_notice.get_photo.alt_text }}">
+        </div>
+    {% endif %}
+</div>
+
+
+
