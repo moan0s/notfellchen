@@ -2,7 +2,7 @@
 <div class="container-cards">
     {% if adoption_notices %}
         {% for adoption_notice in adoption_notices %}
-            {% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}
+            {% include "fellchensammlung/partials/bulma-partial-adoption-notice-minimal.html" %}
         {% endfor %}
     {% else %}
         <p>{% translate "Keine Vermittlungen gefunden." %}</p>

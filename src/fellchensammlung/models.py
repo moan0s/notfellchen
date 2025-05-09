@@ -363,6 +363,10 @@ class AdoptionNotice(models.Model):
         """Returns the url to access a detailed page for the adoption notice."""
         return reverse('adoption-notice-detail', args=[str(self.id)])
 
+    def get_absolute_url_bulma(self):
+        """Returns the url to access a detailed page for the adoption notice."""
+        return reverse('adoption-notice-detail-bulma', args=[str(self.id)])
+
     def get_report_url(self):
         """Returns the url to report an adoption notice."""
         return reverse('report-adoption-notice', args=[str(self.id)])
