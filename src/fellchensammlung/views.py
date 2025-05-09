@@ -587,10 +587,14 @@ def updatequeue(request):
     return render(request, 'fellchensammlung/updatequeue.html', context=context)
 
 
-def map(request):
+def map(request, templatename='fellchensammlung/map.html'):
     adoption_notices = AdoptionNotice.get_active_ANs()
     context = {"adoption_notices_map": adoption_notices}
-    return render(request, 'fellchensammlung/map.html', context=context)
+    return render(request, templatename, context=context)
+
+
+def map_bulma(request):
+    return map(request, templatename='fellchensammlung/bulma-map.html')
 
 
 def metrics(request):

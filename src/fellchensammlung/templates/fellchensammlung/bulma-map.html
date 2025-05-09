@@ -1,0 +1,9 @@
+{% extends "fellchensammlung/base_bulma.html" %}
+{% load i18n %}
+{% block title %}<title>{% translate "Karte" %}</title>{% endblock %}
+
+{% block content %}
+    <div class="section" style="height:70vh">
+        {% include "fellchensammlung/partials/bulma-partial-map.html" %}
+    </div>
+{% endblock %}
