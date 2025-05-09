@@ -58,7 +58,10 @@ class Location(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} ({self.latitude:.5}, {self.longitude:.5})"
+        if self.city and self.postcode:
+            return f"{self.city} ({self.postcode})"
+        else:
+            return f"{self.name} ({self.latitude:.5}, {self.longitude:.5})"
 
     @property
     def position(self):
