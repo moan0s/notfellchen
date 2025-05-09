@@ -156,11 +156,9 @@ def adoption_notice_detail(request, adoption_notice_id, template=None):
         comment_form = CommentForm(instance=adoption_notice)
     context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
                "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed}
-    print(f"{template=}")
     if template is not None:
         return render(request, template, context=context)
     else:
-        print("dada")
         return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
 
 
