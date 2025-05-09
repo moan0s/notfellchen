@@ -32,7 +32,10 @@
         style: '{% static "fellchensammlung/map/styles/colorful/style.json" %}',
         center: map_center,
         zoom: zoom_level
-    }).addControl(new maplibregl.NavigationControl());
+    });
+
+    map.addControl(new maplibregl.FullscreenControl());
+    map.addControl(new maplibregl.NavigationControl({showCompass: false}));
 
     {% for adoption_notice in adoption_notices_map %}
         {% if adoption_notice.location %}
