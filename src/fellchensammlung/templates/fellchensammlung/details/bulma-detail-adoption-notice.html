@@ -95,18 +95,19 @@
         {% endfor %}
     </div>
 
+    <div class="block">
+        {% if adoption_notice.further_information %}
+            <form method="get" action="{% url 'external-site' %}">
+                <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
+                <button class="button is-primary is-fullwidth" type="submit" id="submit">
+                    {{ adoption_notice.further_information | domain }} <i
+                        class="fa-solid fa-arrow-up-right-from-square"></i>
+                </button>
+            </form>
+        {% endif %}
+    </div>
 
-    {% if adoption_notice.further_information %}
-        <form method="get" action="{% url 'external-site' %}">
-            <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
-            <button class="button is-primary is-fullwidth" type="submit" id="submit">
-                {{ adoption_notice.further_information | domain }} <i
-                    class="fa-solid fa-arrow-up-right-from-square"></i>
-            </button>
-        </form>
-    {% endif %}
-
-
-    {% include "fellchensammlung/partials/bulma-partial-comment-section.html" %}
-
+    <div class="block">
+        {% include "fellchensammlung/partials/bulma-partial-comment-section.html" %}
+    </div>
 {% endblock %}
