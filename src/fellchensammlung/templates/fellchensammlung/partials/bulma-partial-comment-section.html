@@ -7,7 +7,7 @@
     <div class="card-content">
         {% if adoption_notice.comments %}
             {% for comment in adoption_notice.comments %}
-                {% include "fellchensammlung/partials/partial-comment.html" %}
+                {% include "fellchensammlung/partials/bulma-partial-comment.html" %}
             {% endfor %}
         {% else %}
             <p class="is-italic">{% translate 'Noch keine Kommentare' %}</p>
