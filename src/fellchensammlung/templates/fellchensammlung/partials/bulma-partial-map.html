@@ -40,7 +40,7 @@
     {% for adoption_notice in adoption_notices_map %}
         {% if adoption_notice.location %}
             // create the popup
-            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/bulma-partial-adoption-notice-minimal.html" %}`);
+            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/bulma-partial-adoption-notice-minimal-map.html" %}`);
 
             // create DOM element for the marker
             const el_{{ forloop.counter }} = document.createElement('div');
