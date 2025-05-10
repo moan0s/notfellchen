@@ -6,11 +6,9 @@
 
 {% block content %}
     {% if about_us %}
-        <div class="card">
-            <div class="card-header">
-                <h1 class="card-header-title">{{ about_us.title }}</h1>
-            </div>
-            <div class="card-content content">
+        <div class="block">
+            <h1 class="title is-1">{{ about_us.title }}</h1>
+            <div class="content">
                 {{ about_us.content | render_markdown }}
             </div>
         </div>
@@ -18,10 +16,12 @@
 
     {% if faq %}
         <div class="card">
-            <h2>{{ faq.title }}</h2>
-            <p>
+            <div class="card-header">
+                <h2 class="card-header-title">{{ faq.title }}</h2>
+            </div>
+            <div class="card-content">
                 {{ faq.content | render_markdown }}
-            </p>
+            </div>
         </div>
     {% endif %}
 {% endblock %}
