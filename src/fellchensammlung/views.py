@@ -24,6 +24,7 @@ from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageFo
     CommentForm, ReportCommentForm, AnimalForm, \
     AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
 from .models import Language, Announcement
+from .tools import i18n
 from .tools.geo import GeoAPI, zoom_level_for_radius
 from .tools.metrics import gather_metrics_data
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
@@ -97,6 +98,8 @@ def change_language(request):
             return response
         else:
             return render(request, 'fellchensammlung/index.html')
+    else:
+        return render(request, 'fellchensammlung/index.html')
 
 
 def adoption_notice_detail(request, adoption_notice_id, template=None):
@@ -415,21 +418,23 @@ def animal_edit(request, animal_id):
 def about(request):
     rules = Rule.objects.all()
 
-    language_code = translation.get_language()
-    lang = Language.objects.get(languagecode=language_code)
-
-    legal = {}
-    for text_code in ["terms_of_service", "privacy_statement", "imprint", "about_us", "faq"]:
-        try:
-            legal[text_code] = Text.objects.get(text_code=text_code, language=lang, )
-        except Text.DoesNotExist:
-            legal[text_code] = None
+    legal = i18n.get_texts_by_language(["terms_of_service", "privacy_statement", "imprint", "about_us", "faq"])
 
     context = {"rules": rules, }
     context.update(legal)
     return render(
         request,
         "fellchensammlung/about.html",
+        context=context
+    )
+
+
+def about_bulma(request):
+    context = i18n.get_texts_by_language(["about_us", "faq"])
+
+    return render(
+        request,
+        "fellchensammlung/bulma-about.html",
         context=context
     )
 

@@ -1,0 +1,27 @@
+{% extends "fellchensammlung/base_bulma.html" %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block title %}<title>{% translate "Über uns" %}</title>{% endblock %}
+
+{% block content %}
+    {% if about_us %}
+        <div class="card">
+            <div class="card-header">
+                <h1 class="card-header-title">{{ about_us.title }}</h1>
+            </div>
+            <div class="card-content content">
+                {{ about_us.content | render_markdown }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if faq %}
+        <div class="card">
+            <h2>{{ faq.title }}</h2>
+            <p>
+                {{ faq.content | render_markdown }}
+            </p>
+        </div>
+    {% endif %}
+{% endblock %}
