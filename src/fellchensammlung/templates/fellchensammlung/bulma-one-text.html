@@ -1,0 +1,15 @@
+{% extends "fellchensammlung/base_bulma.html" %}
+{% load i18n %}
+{% load custom_tags %}
+
+{% block title %}<title>{{ text.title }}</title>{% endblock %}
+
+{% block content %}
+    <div class="block">
+        <h1 class="title is-1">{{ text.title }}</h1>
+        <div class="content">
+            {{ text.content | render_markdown }}
+        </div>
+    </div>
+
+{% endblock %}

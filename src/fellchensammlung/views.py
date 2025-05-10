@@ -439,6 +439,31 @@ def about_bulma(request):
     )
 
 
+def render_text(request, text):
+    context = {"text": text}
+
+    return render(
+        request,
+        "fellchensammlung/bulma-one-text.html",
+        context=context
+    )
+
+
+def imprint(request):
+    text = i18n.get_text_by_language("imprint")
+    return render_text(request, text)
+
+
+def privacy(request):
+    text = i18n.get_text_by_language("privacy_statement")
+    return render_text(request, text)
+
+
+def terms_of_service(request):
+    text = i18n.get_text_by_language("terms_of_service")
+    return render_text(request, text)
+
+
 def report_adoption(request, adoption_notice_id):
     """
     Form to report adoption notices

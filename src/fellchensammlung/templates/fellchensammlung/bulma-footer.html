@@ -26,6 +26,30 @@
 
         <div class="column">
             <h4 class="bd-footer-title title is-4 has-text-justify">
+                {% translate 'Über uns' %}
+            </h4>
+
+            <a class="bd-footer-link" href="{% url "about-bulma" %}">
+                {% translate 'Das Notfellchen Projekt' %}
+            </a>
+            <br/>
+            <a class="bd-footer-link" href="{% url "terms-of-service" %}">
+                {% translate 'Nutzungsbedingungen' %}
+            </a>
+            <br/>
+
+            <a class="bd-footer-link" href="{% url "privacy" %}">
+                {% translate 'Datenschutz' %}
+            </a>
+            <br/>
+            <a class="bd-footer-link" href="{% url "imprint" %}">
+                {% translate 'Impressum' %}
+            </a>
+            <br/>
+        </div>
+
+        <div class="column">
+            <h4 class="bd-footer-title title is-4 has-text-justify">
                 Technisches
             </h4>
 

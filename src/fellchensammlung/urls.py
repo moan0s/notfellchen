@@ -56,6 +56,9 @@ urlpatterns = [
 
     path("ueber-uns/", views.about, name="about"),
     path("bulma/ueber-uns/", views.about_bulma, name="about-bulma"),
+    path("impressum/", views.imprint, name="imprint"),
+    path("terms-of-service/", views.terms_of_service, name="terms-of-service"),
+    path("datenschutz/", views.privacy, name="privacy"),
 
     ################
     ## Moderation ##
