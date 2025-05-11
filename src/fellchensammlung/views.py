@@ -22,7 +22,8 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
     ImportantLocation
 from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, \
-    AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal
+    AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal, \
+    BulmaAdoptionNoticeForm
 from .models import Language, Announcement
 from .tools import i18n
 from .tools.geo import GeoAPI, zoom_level_for_radius
@@ -308,6 +309,47 @@ def add_adoption_notice(request):
     else:
         form = AdoptionNoticeFormWithDateWidgetAutoAnimal(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
+
+
+@login_required
+def add_adoption_notice_bulma(request):
+    if request.method == 'POST':
+        form = BulmaAdoptionNoticeForm(request.POST)
+
+        if form.is_valid():
+            an_instance = form.save(commit=False)
+            an_instance.owner = request.user
+
+            if request.user.trust_level >= TrustLevel.MODERATOR:
+                an_instance.set_active()
+            else:
+                an_instance.set_unchecked()
+
+            # Get the species and number of animals from the form
+            species = form.cleaned_data["species"]
+            sex = form.cleaned_data["sex"]
+            num_animals = form.cleaned_data["num_animals"]
+            date_of_birth = form.cleaned_data["date_of_birth"]
+            for i in range(0, num_animals):
+                Animal.objects.create(owner=request.user,
+                                      name=f"{species} {i + 1}", adoption_notice=an_instance, species=species, sex=sex,
+                                      date_of_birth=date_of_birth)
+
+            """Log"""
+            Log.objects.create(user=request.user, action="add_adoption_notice",
+                               text=f"{request.user} hat Vermittlung {an_instance.pk} hinzugefügt")
+
+            """Spin up a task that adds the location and notifies search subscribers"""
+            post_adoption_notice_save.delay(an_instance.id)
+
+            """Subscriptions"""
+            # Automatically subscribe user that created AN to AN
+            Subscriptions.objects.create(owner=request.user, adoption_notice=an_instance)
+
+            return redirect(reverse("adoption-notice-detail", args=[an_instance.pk]))
+    else:
+        form = BulmaAdoptionNoticeForm()
+    return render(request, 'fellchensammlung/forms/bulma-form-add-adoption.html', {'form': form})
 
 
 @login_required

@@ -22,6 +22,15 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 
+class BulmaAdoptionNoticeForm(forms.ModelForm):
+    template_name = "fellchensammlung/forms/form_snippets.html"
+
+    class Meta:
+        model = AdoptionNotice
+        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string",
+                  "organization"]
+
+
 class AdoptionNoticeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'in_adoption_notice_creation_flow' in kwargs:
@@ -127,8 +136,9 @@ class ImageForm(forms.ModelForm):
         self.helper.form_method = 'post'
 
         if in_flow:
-           submits= Div(Submit('submit', _('Speichern')),
-                      Submit('save-and-add-another', _('Speichern und weiteres Foto hinzufügen')), css_class="container-edit-buttons")
+            submits = Div(Submit('submit', _('Speichern')),
+                          Submit('save-and-add-another', _('Speichern und weiteres Foto hinzufügen')),
+                          css_class="container-edit-buttons")
         else:
             submits = Fieldset(Submit('submit', _('Speichern')), css_class="container-edit-buttons")
         self.helper.layout = Layout(
@@ -139,7 +149,6 @@ class ImageForm(forms.ModelForm):
             ),
             submits
         )
-
 
     class Meta:
         model = Image
@@ -181,7 +190,8 @@ class CustomRegistrationForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):
         model = User
 
-    captcha = forms.CharField(validators=[animal_validator], label=_("Nenne eine bekannte Tierart"), help_text=_("Bitte nenne hier eine bekannte Tierart (z.B. ein Tier das an der Leine geführt wird). Das Fragen wir dich um sicherzustellen, dass du kein Roboter bist."))
+    captcha = forms.CharField(validators=[animal_validator], label=_("Nenne eine bekannte Tierart"), help_text=_(
+        "Bitte nenne hier eine bekannte Tierart (z.B. ein Tier das an der Leine geführt wird). Das Fragen wir dich um sicherzustellen, dass du kein Roboter bist."))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -197,5 +207,6 @@ class AdoptionNoticeSearchForm(forms.Form):
 
     sex = forms.ChoiceField(choices=SexChoicesWithAll, label=_("Geschlecht"), required=False,
                             initial=SexChoicesWithAll.ALL)
-    max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.ONE_HUNDRED, label=_("Suchradius"))
+    max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.ONE_HUNDRED,
+                                     label=_("Suchradius"))
     location_string = forms.CharField(max_length=100, label=_("Stadt"), required=False)

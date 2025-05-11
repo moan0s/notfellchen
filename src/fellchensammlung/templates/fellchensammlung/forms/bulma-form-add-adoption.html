@@ -1,0 +1,28 @@
+{% extends "fellchensammlung/base_bulma.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}<title>{% translate "Vermittlung hinzufügen" %}</title>{% endblock %}
+
+{% block content %}
+    <h1>{% translate "Vermitteln" %}</h1>
+    <div class="notification">
+        <button class="delete"></button>
+        <p>
+            {% url 'terms-of-service' as rules_url %}
+            {% trans "Regeln" as rules_text %}
+            {% blocktranslate with rules_link='<a href="'|add:rules_url|add:'">'|add:rules_text|add:'</a>'|safe %}
+                Bitte mach dich zunächst mit unseren {{ rules_link }} vertraut. Dann trage hier die ersten Informationen ein.
+                Wenn du Details und Fotos zu den Tieren hinzufügen willst oder ihr Geschlecht und Geburtsdatum anpassen
+                willst,
+                kannst du das im nächsten Schritt tun.
+            {% endblocktranslate %}
+        </p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button class="button is-primary" type="submit">{% translate "Speichern" %}</button>
+    </form>
+{% endblock %}
