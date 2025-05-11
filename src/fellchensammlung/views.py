@@ -461,7 +461,13 @@ def privacy(request):
 
 def terms_of_service(request):
     text = i18n.get_text_by_language("terms_of_service")
-    return render_text(request, text)
+    rules = Rule.objects.all()
+    context = {"rules": rules, "text": text}
+    return render(
+        request,
+        "fellchensammlung/bulma-terms-of-service.html",
+        context=context
+    )
 
 
 def report_adoption(request, adoption_notice_id):
