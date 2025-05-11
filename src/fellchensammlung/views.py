@@ -314,9 +314,11 @@ def add_adoption_notice(request):
 @login_required
 def add_adoption_notice_bulma(request):
     if request.method == 'POST':
-        form = BulmaAdoptionNoticeForm(request.POST)
+        print("dada")
+        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(request.POST)
 
         if form.is_valid():
+            print("dodo")
             an_instance = form.save(commit=False)
             an_instance.owner = request.user
 
@@ -346,9 +348,11 @@ def add_adoption_notice_bulma(request):
             # Automatically subscribe user that created AN to AN
             Subscriptions.objects.create(owner=request.user, adoption_notice=an_instance)
 
-            return redirect(reverse("adoption-notice-detail", args=[an_instance.pk]))
+            return redirect(reverse("adoption-notice-detail-bulma", args=[an_instance.pk]))
+        else:
+            print(form.errors)
     else:
-        form = BulmaAdoptionNoticeForm()
+        form = AdoptionNoticeFormWithDateWidgetAutoAnimal()
     return render(request, 'fellchensammlung/forms/bulma-form-add-adoption.html', {'form': form})
 
 

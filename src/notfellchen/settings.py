@@ -176,6 +176,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_spectacular',
     'drf_spectacular_sidecar',  # required for Django collectstatic discovery
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [

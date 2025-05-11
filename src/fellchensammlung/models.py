@@ -297,11 +297,13 @@ class AdoptionNotice(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     last_checked = models.DateTimeField(verbose_name=_('Zuletzt überprüft am'), default=timezone.now)
     searching_since = models.DateField(verbose_name=_('Sucht nach einem Zuhause seit'))
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, verbose_name=_('Titel der Vermittlung'))
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
     organization = models.ForeignKey(RescueOrganization, blank=True, null=True, on_delete=models.SET_NULL,
                                      verbose_name=_('Organisation'))
-    further_information = models.URLField(null=True, blank=True, verbose_name=_('Link zu mehr Informationen'))
+    further_information = models.URLField(null=True, blank=True,
+                                          verbose_name=_('Link zu mehr Informationen'),
+                                          help_text=_("Verlinke hier die Quelle der Vermittlung (z.B. die Website des Tierheims"))
     group_only = models.BooleanField(default=False, verbose_name=_('Ausschließlich Gruppenadoption'))
     photos = models.ManyToManyField(Image, blank=True)
     location_string = models.CharField(max_length=200, verbose_name=_("Ortsangabe"))
