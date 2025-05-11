@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from fellchensammlung.api.serializers import LocationSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -149,6 +151,12 @@ class RescueOrganizationApiView(APIView):
                 'description': 'Filter by external source identifier. Use "None" to filter for an empty field',
                 'type': str
             },
+            {
+                'name': 'search',
+                'required': False,
+                'description': 'Search by organization name or location name/city.',
+                'type': str
+            },
         ],
         responses={200: RescueOrganizationSerializer(many=True)}
     )
@@ -161,6 +169,7 @@ class RescueOrganizationApiView(APIView):
         org_id = request.query_params.get("id")
         external_object_identifier = request.query_params.get("external_object_identifier")
         external_source_identifier = request.query_params.get("external_source_identifier")
+        search_query = request.query_params.get("search")
 
         if org_id:
             try:
@@ -181,6 +190,13 @@ class RescueOrganizationApiView(APIView):
             if external_source_identifier == "None":
                 external_source_identifier = None
             organizations = organizations.filter(external_source_identifier=external_source_identifier)
+        if search_query:
+            organizations = organizations.filter(
+                Q(name__icontains=search_query) |
+                Q(location_string__icontains=search_query) |
+                Q(location__name__icontains=search_query) |
+                Q(location__city__icontains=search_query)
+            )
 
         serializer = RescueOrganizationSerializer(organizations, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
