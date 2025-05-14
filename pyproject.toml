@@ -38,7 +38,8 @@ dependencies = [
     "crispy-bootstrap4",
     "djangorestframework",
     "celery[redis]",
-    "drf-spectacular[sidecar]"
+    "drf-spectacular[sidecar]",
+    "django-widget-tweaks"
 ]
 
 dynamic = ["version", "readme"]
