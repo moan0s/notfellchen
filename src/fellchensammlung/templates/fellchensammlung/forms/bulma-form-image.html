@@ -1,0 +1,29 @@
+{% extends "fellchensammlung/base_bulma.html" %}
+
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <div>
+        {% blocktranslate %}
+            Lade hier ein Foto hoch - wähle den Titel wie du willst und mach bitte eine Bildbeschreibung,
+            damit die Fotos auch für blinde und sehbehinderte Personen zugänglich sind.
+        {% endblocktranslate %}
+        <p><a class="button"
+              href="https://www.dbsv.org/bildbeschreibung-4-regeln.html">{% translate 'Anleitung für Bildbeschreibungen' %}</a>
+        </p>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field">
+            <label class="label" for="image">{{ form.image.label }}</label>
+            {{ form.image|add_class:"input"|attr:"id:image" }}
+        </div>
+        <div class="field">
+            <label class="label" for="alt-text">{{ form.alt_text.label }}</label>
+            {{ form.alt_text|add_class:"textarea"|attr:"id:alt-text"|attr:"rows:3" }}
+            <div class="is-danger">{{ form.alt_text.errors }}</div>
+        </div>
+        <input class="button is-primary" type="submit" value="{% translate "Speichern" %}">
+    </form>
+{% endblock %}

@@ -408,6 +408,38 @@ def add_photo_to_animal(request, animal_id):
         form = ImageForm(in_flow=True)
         return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
 
+@login_required
+def add_photo_to_animal_bulma(request, animal_id):
+    animal = Animal.objects.get(id=animal_id)
+    # Only users that are mods or owners of the animal are allowed to add to it
+    fail_if_user_not_owner_or_trust_level(request.user, animal)
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.owner = request.user
+            instance.save()
+
+            animal.photos.add(instance)
+
+            """Log"""
+            Log.objects.create(user=request.user, action="add_photo_to_animal",
+                               text=f"{request.user} hat Foto {instance.pk} zum Tier {animal.pk} hinzugefügt")
+
+            if "save-and-add-another" in request.POST:
+                form = ImageForm(in_flow=True)
+                return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+            else:
+                return redirect(reverse("adoption-notice-detail-bulma", args=[animal.adoption_notice.pk], ))
+        else:
+            return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+
+    else:
+        form = ImageForm(in_flow=True)
+        return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+
+
 
 @login_required
 def add_photo_to_adoption_notice(request, adoption_notice_id):
@@ -435,6 +467,33 @@ def add_photo_to_adoption_notice(request, adoption_notice_id):
     else:
         form = ImageForm(in_flow=True)
         return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
+
+@login_required
+def add_photo_to_adoption_notice_bulma(request, adoption_notice_id):
+    adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
+    # Only users that are mods or owners of the adoption notice are allowed to add to it
+    fail_if_user_not_owner_or_trust_level(request.user, adoption_notice)
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.owner = request.user
+            instance.save()
+            adoption_notice.photos.add(instance)
+            """Log"""
+            Log.objects.create(user=request.user, action="add_photo_to_animal",
+                               text=f"{request.user} hat Foto {instance.pk} zur Vermittlung {adoption_notice.pk} hinzugefügt")
+            if "save-and-add-another" in request.POST:
+                form = ImageForm(in_flow=True)
+                return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+            else:
+                return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
+        else:
+            return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+    else:
+        form = ImageForm(in_flow=True)
+        return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
 
 
 @login_required
