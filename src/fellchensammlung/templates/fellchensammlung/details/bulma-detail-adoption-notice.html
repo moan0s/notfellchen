@@ -38,16 +38,32 @@
                         <div class="column block">
                             <div class="card">
                                 <div class="grid card-content">
-                                    <div class="cell gallery">
-                                        {% for photo in adoption_notice.get_photos %}
-                                            <a href="{{ MEDIA_URL }}{{ photo.image }}"
-                                               data-pswp-width="{{ photo.image.width }}"
-                                               data-pswp-height="{{ photo.image.height }}"
-                                               target="_blank">
-                                                <img style="height: 12rem" src="{{ MEDIA_URL }}{{ photo.image }}"
-                                                     alt="{ photo.alt_text }}"/>
-                                            </a>
-                                        {% endfor %}
+                                    <div class="gallery">
+                                        {% with photo=adoption_notice.get_photos.0 %}
+                                            <div class="main-photo">
+                                                <a href="{{ MEDIA_URL }}{{ photo.image }}"
+                                                   data-pswp-width="{{ photo.image.width }}"
+                                                   data-pswp-height="{{ photo.image.height }}"
+                                                   target="_blank">
+                                                    <img src="{{ MEDIA_URL }}{{ photo.image }}"
+                                                         alt="{{ photo.alt_text }}">
+                                                </a>
+                                            </div>
+                                        {% endwith %}
+
+                                        <div class="thumbnail-row">
+                                            {% for photo in adoption_notice.get_photos|slice:"1:4" %}
+                                                <div class="thumbnail">
+                                                    <a href="{{ MEDIA_URL }}{{ photo.image }}"
+                                                       data-pswp-width="{{ photo.image.width }}"
+                                                       data-pswp-height="{{ photo.image.height }}"
+                                                       target="_blank">
+                                                        <img src="{{ MEDIA_URL }}{{ photo.image }}"
+                                                             alt="{{ photo.alt_text }}">
+                                                    </a>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
