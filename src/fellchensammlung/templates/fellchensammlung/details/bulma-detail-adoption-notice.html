@@ -6,106 +6,111 @@
 {% block title %}<title>{{ adoption_notice.name }}</title>{% endblock %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-header-title title is-2">{{ adoption_notice.name }}</h1>
-        </div>
-        <div class="card-content">
-            <div class="grid">
-                <div class="cell">
-                    <!--- General Information --->
+    <div class="columns">
+        <div class="column is-two-thirds">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-header-title title is-2">{{ adoption_notice.name }}</h1>
+                </div>
+                <div class="card-content">
                     <div class="grid">
+                        <div class="cell">
+                            <!--- General Information --->
+                            <div class="grid">
 
-                        <div class="cell">
-                            <h2><strong>{% translate "Ort" %}</strong></h2>
-                            <p>{% if adoption_notice.location %}
-                                {{ adoption_notice.location }}
-                            {% else %}
-                                {{ adoption_notice.location_string }}
-                            {% endif %}</p>
-                        </div>
-                        <div class="cell">
-                            {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
+                                <div class="cell">
+                                    <h2><strong>{% translate "Ort" %}</strong></h2>
+                                    <p>{% if adoption_notice.location %}
+                                        {{ adoption_notice.location }}
+                                    {% else %}
+                                        {{ adoption_notice.location_string }}
+                                    {% endif %}</p>
+                                </div>
+                                <div class="cell">
+                                    {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="columns">
-                <!--- Images --->
-                <div class="column block">
-                    <div class="card">
-                        <div class="grid card-content">
-                            <div class="cell" id="my-gallery">
-                                {% for photo in adoption_notice.get_photos %}
-                                    <a href="{{ MEDIA_URL }}/{{ photo.image }}"
-                                       data-pswp-width="{{ photo.image.width }}"
-                                       data-pswp-height="{{ photo.image.height }}"
-                                       target="_blank">
-                                        <img style="height: 12rem" src="{{ MEDIA_URL }}/{{ photo.image }}"
-                                             alt="{ photo.alt_text }}"/>
-                                    </a>
-                                {% endfor %}
+                    <div class="columns">
+                        <!--- Images --->
+                        <div class="column block">
+                            <div class="card">
+                                <div class="grid card-content">
+                                    <div class="cell" id="my-gallery">
+                                        {% for photo in adoption_notice.get_photos %}
+                                            <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                                               data-pswp-width="{{ photo.image.width }}"
+                                               data-pswp-height="{{ photo.image.height }}"
+                                               target="_blank">
+                                                <img style="height: 12rem" src="{{ MEDIA_URL }}/{{ photo.image }}"
+                                                     alt="{ photo.alt_text }}"/>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--- Description --->
+                        <div class="column block">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h1 class="card-header-title title is-2">{% translate "Beschreibung" %}</h1>
+                                </div>
+                                <div class="card-content">
+                                    <p class="expandable">{% if adoption_notice.description %}
+                                        {{ adoption_notice.description | render_markdown }}
+                                    {% else %}
+                                        {% translate "Keine Beschreibung angegeben" %}
+                                    {% endif %}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--- Description --->
-                <div class="column block">
-                    <div class="card">
-                        <div class="card-header">
-                            <h1 class="card-header-title title is-2">{% translate "Beschreibung" %}</h1>
+                <div class="card-footer">
+                    {% if has_edit_permission %}
+                        <div class="card-footer-item">
+                            <div class="column">
+                                <a class="button is-primary is-light"
+                                   href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">
+                                    {% translate 'Foto hinzufügen' %}
+                                </a>
+                            </div>
+                            <div class="card-footer-item">
+                                <a class="button is-primary"
+                                   href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
+                                    {% translate 'Bearbeiten' %}
+                                </a>
+                            </div>
                         </div>
-                        <div class="card-content">
-                            <p class="expandable">{% if adoption_notice.description %}
-                                {{ adoption_notice.description | render_markdown }}
-                            {% else %}
-                                {% translate "Keine Beschreibung angegeben" %}
-                            {% endif %}
-                            </p>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
-        </div>
-        <div class="card-footer">
-            {% if has_edit_permission %}
-                <div class="card-footer-item">
-                    <div class="column">
-                        <a class="button is-primary is-light"
-                           href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">
-                            {% translate 'Foto hinzufügen' %}
-                        </a>
-                    </div>
-                    <div class="card-footer-item">
-                        <a class="button is-primary"
-                           href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
-                            {% translate 'Bearbeiten' %}
-                        </a>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    <div class="columns">
-        {% for animal in adoption_notice.animals %}
-            <div class="column">
-                {% include "fellchensammlung/partials/bulma-partial-animal-card.html" %}
+            <div class="block">
+                {% if adoption_notice.further_information %}
+                    <form method="get" action="{% url 'external-site' %}">
+                        <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
+                        <button class="button is-primary is-fullwidth" type="submit" id="submit">
+                            {{ adoption_notice.further_information | domain }} <i
+                                class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </button>
+                    </form>
+                {% endif %}
             </div>
-        {% endfor %}
+        </div>
+        <div class="column">
+            {% for animal in adoption_notice.animals %}
+                <div class="block">
+                    {% include "fellchensammlung/partials/bulma-partial-animal-card.html" %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
-    <div class="block">
-        {% if adoption_notice.further_information %}
-            <form method="get" action="{% url 'external-site' %}">
-                <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
-                <button class="button is-primary is-fullwidth" type="submit" id="submit">
-                    {{ adoption_notice.further_information | domain }} <i
-                        class="fa-solid fa-arrow-up-right-from-square"></i>
-                </button>
-            </form>
-        {% endif %}
-    </div>
+
 
     <div class="block">
         {% include "fellchensammlung/partials/bulma-partial-comment-section.html" %}

@@ -4,7 +4,6 @@
     <div class="card-header">
         <h1 class="card-header-title">
             <a href="{% url 'animal-detail' animal_id=animal.pk %}">{{ animal.name }}</a>
-
         </h1>
 
         <div class="tags">
@@ -57,5 +56,5 @@
                href="{% url 'animal-add-photo-bulma' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
         </div>
     {% endif %}
-</div>
+
 </div>
