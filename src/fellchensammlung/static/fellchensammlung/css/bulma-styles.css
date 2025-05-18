@@ -63,7 +63,7 @@
 IMAGES
  *****/
 
-#my-gallery .main-photo img {
+.gallery .main-photo img {
     width: 100%;
     height: 300px;
     object-fit: cover;
