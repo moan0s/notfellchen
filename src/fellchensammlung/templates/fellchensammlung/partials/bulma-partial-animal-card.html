@@ -21,11 +21,11 @@
         <div id="my-gallery">
             {% with photo=animal.get_photos.0 %}
                 <div class="main-photo">
-                    <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                    <a href="{{ MEDIA_URL }}{{ photo.image }}"
                        data-pswp-width="{{ photo.image.width }}"
                        data-pswp-height="{{ photo.image.height }}"
                        target="_blank">
-                        <img src="{{ MEDIA_URL }}/{{ photo.image }}"
+                        <img src="{{ MEDIA_URL }}{{ photo.image }}"
                              alt="{{ photo.alt_text }}">
                     </a>
                 </div>
@@ -34,11 +34,11 @@
             <div class="thumbnail-row">
                 {% for photo in animal.get_photos|slice:"1:4" %}
                     <div class="thumbnail">
-                        <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                        <a href="{{ MEDIA_URL }}{{ photo.image }}"
                            data-pswp-width="{{ photo.image.width }}"
                            data-pswp-height="{{ photo.image.height }}"
                            target="_blank">
-                            <img src="{{ MEDIA_URL }}/{{ photo.image }}"
+                            <img src="{{ MEDIA_URL }}{{ photo.image }}"
                                  alt="{{ photo.alt_text }}">
                         </a>
                     </div>

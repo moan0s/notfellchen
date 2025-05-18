@@ -40,11 +40,11 @@
                                 <div class="grid card-content">
                                     <div class="cell" id="my-gallery">
                                         {% for photo in adoption_notice.get_photos %}
-                                            <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                                            <a href="{{ MEDIA_URL }}{{ photo.image }}"
                                                data-pswp-width="{{ photo.image.width }}"
                                                data-pswp-height="{{ photo.image.height }}"
                                                target="_blank">
-                                                <img style="height: 12rem" src="{{ MEDIA_URL }}/{{ photo.image }}"
+                                                <img style="height: 12rem" src="{{ MEDIA_URL }}{{ photo.image }}"
                                                      alt="{ photo.alt_text }}"/>
                                             </a>
                                         {% endfor %}
