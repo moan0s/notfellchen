@@ -58,3 +58,11 @@
     max-height: 500px;
     width: 90%;
 }
+
+/*****
+IMAGES
+ *****/
+
+.crop {
+    object-fit: cover;
+}

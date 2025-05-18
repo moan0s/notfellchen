@@ -13,23 +13,42 @@
         </div>
     </div>
     <div class="card-content">
-        {% if animal.description %}
-            <p>{{ animal.description | render_markdown }}</p>
-        {% endif %}
-        <div class="cell" id="my-gallery">
-            {% for photo in  animal.get_photos %}
-                <a href="{{ MEDIA_URL }}/{{ photo.image }}"
-                   data-pswp-width="{{ photo.image.width }}"
-                   data-pswp-height="{{ photo.image.height }}"
-                   target="_blank">
-                    <img src="{{ MEDIA_URL }}/{{ photo.image }}" alt="{{ photo.alt_text }}">
-                </a>
-            {% endfor %}
+        <div class="content">
+            {% if animal.description %}
+                <p>{{ animal.description | render_markdown }}</p>
+            {% endif %}
+        </div>
+        <div class="cell block" id="my-gallery">
+            <div class="grid">
+                <div class="cell is-col-span-3">
+                    {% with photo=animal.get_photos.0 %}
+                        <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                           data-pswp-width="{{ photo.image.width }}"
+                           data-pswp-height="{{ photo.image.height }}"
+                           target="_blank">
+                            <img class="image is-square" src="{{ MEDIA_URL }}/{{ photo.image }}"
+                                 alt="{{ photo.alt_text }}">
+                        </a>
+                    {% endwith %}
+                </div>
+                {% for photo in animal.get_photos %}
+                    <div class="cell">
+                        <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                           data-pswp-width="{{ photo.image.width }}"
+                           data-pswp-height="{{ photo.image.height }}"
+                           target="_blank">
+                            <img class="image is-square crop" src="{{ MEDIA_URL }}/{{ photo.image }}"
+                                 alt="{{ photo.alt_text }}">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
         <!--- Assume a user does not have edit permissions on animal if they have no other edit permission   --->
         {% if has_edit_permission %}
             <div class="card-footer">
-                <a class="card-footer-item button" href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
+                <a class="card-footer-item button"
+                   href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
                 <a class="card-footer-item button"
                    href="{% url 'animal-add-photo-bulma' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
             </div>
