@@ -13,45 +13,49 @@
         </div>
     </div>
     <div class="card-content">
-        <div class="content">
-            {% if animal.description %}
+        {% if animal.description %}
+            <div class="content">
                 <p>{{ animal.description | render_markdown }}</p>
-            {% endif %}
-        </div>
-        <div class="cell block" id="my-gallery">
-            <div class="grid">
-                <div class="cell is-col-span-3">
-                    {% with photo=animal.get_photos.0 %}
-                        <a href="{{ MEDIA_URL }}/{{ photo.image }}"
-                           data-pswp-width="{{ photo.image.width }}"
-                           data-pswp-height="{{ photo.image.height }}"
-                           target="_blank">
-                            <img class="image is-square" src="{{ MEDIA_URL }}/{{ photo.image }}"
-                                 alt="{{ photo.alt_text }}">
-                        </a>
-                    {% endwith %}
+            </div>
+        {% endif %}
+
+        <div id="my-gallery">
+            {% with photo=animal.get_photos.0 %}
+                <div class="main-photo">
+                    <a href="{{ MEDIA_URL }}/{{ photo.image }}"
+                       data-pswp-width="{{ photo.image.width }}"
+                       data-pswp-height="{{ photo.image.height }}"
+                       target="_blank">
+                        <img src="{{ MEDIA_URL }}/{{ photo.image }}"
+                             alt="{{ photo.alt_text }}">
+                    </a>
                 </div>
-                {% for photo in animal.get_photos %}
-                    <div class="cell">
+            {% endwith %}
+
+            <div class="thumbnail-row">
+                {% for photo in animal.get_photos|slice:"1:4" %}
+                    <div class="thumbnail">
                         <a href="{{ MEDIA_URL }}/{{ photo.image }}"
                            data-pswp-width="{{ photo.image.width }}"
                            data-pswp-height="{{ photo.image.height }}"
                            target="_blank">
-                            <img class="image is-square crop" src="{{ MEDIA_URL }}/{{ photo.image }}"
+                            <img src="{{ MEDIA_URL }}/{{ photo.image }}"
                                  alt="{{ photo.alt_text }}">
                         </a>
                     </div>
                 {% endfor %}
             </div>
         </div>
-        <!--- Assume a user does not have edit permissions on animal if they have no other edit permission   --->
-        {% if has_edit_permission %}
-            <div class="card-footer">
-                <a class="card-footer-item button"
-                   href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
-                <a class="card-footer-item button"
-                   href="{% url 'animal-add-photo-bulma' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
-            </div>
-        {% endif %}
     </div>
+
+    <!--- Assume a user does not have edit permissions on animal if they have no other edit permission   --->
+    {% if has_edit_permission %}
+        <div class="card-footer">
+            <a class="card-footer-item button"
+               href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
+            <a class="card-footer-item button"
+               href="{% url 'animal-add-photo-bulma' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
+        </div>
+    {% endif %}
+</div>
 </div>
