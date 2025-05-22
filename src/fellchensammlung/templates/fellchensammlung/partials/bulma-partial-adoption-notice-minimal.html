@@ -1,41 +1,69 @@
 {% load custom_tags %}
 {% load i18n %}
 
-<div class="card">
-    <div class="header-card-adoption-notice">
-        <h2 class="heading-card-adoption-notice title is-4">
+<div class="card an-card">
+    <div class="card-header">
+        <h2 class="card-header-title">
             <a href="{{ adoption_notice.get_absolute_url_bulma }}"> {{ adoption_notice.name }}</a>
         </h2>
     </div>
+    <div class="card-content">
+        <div class="grid">
+            <div class="cell">
+                <!--- General Information --->
+                <div class="grid">
 
-    <div class="grid">
-        <div class="cell">
-            <!--- General Information --->
-            <div class="grid">
+                    <div class="cell">
 
-                <div class="cell">
-
-                    <p>
-                        <b><i class="fa-solid fa-location-dot"></i></b>
-                        {% if adoption_notice.location %}
-                            {{ adoption_notice.location }}
-                        {% else %}
-                            {{ adoption_notice.location_string }}
-                        {% endif %}</p>
-                </div>
-                <div class="cell">
-                    {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
+                        <p>
+                            <b><i class="fa-solid fa-location-dot"></i></b>
+                            {% if adoption_notice.location %}
+                                {{ adoption_notice.location }}
+                            {% else %}
+                                {{ adoption_notice.location_string }}
+                            {% endif %}</p>
+                    </div>
+                    <div class="cell">
+                        {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    {% if adoption_notice.get_photo %}
-        <div class="adoption-notice-img img-small">
-            <img src="{{ MEDIA_URL }}/{{ adoption_notice.get_photo.image }}"
-                 alt="{{ adoption_notice.get_photo.alt_text }}">
-        </div>
-    {% endif %}
+        {% if adoption_notice.get_photos %}
+            <div class="gallery">
+                {% with photo=adoption_notice.get_photos.0 %}
+                    <div class="main-photo minimal">
+                        <a href="{{ MEDIA_URL }}{{ photo.image }}"
+                           data-pswp-width="{{ photo.image.width }}"
+                           data-pswp-height="{{ photo.image.height }}"
+                           target="_blank">
+                            <img src="{{ MEDIA_URL }}{{ photo.image }}"
+                                 alt="{{ photo.alt_text }}">
+                        </a>
+                    </div>
+                {% endwith %}
+
+                <div class="thumbnail-row minimal">
+                    {% for photo in adoption_notice.get_photos|slice:"1:4" %}
+                        <div class="thumbnail">
+                            <a href="{{ MEDIA_URL }}{{ photo.image }}"
+                               data-pswp-width="{{ photo.image.width }}"
+                               data-pswp-height="{{ photo.image.height }}"
+                               target="_blank">
+                                <img src="{{ MEDIA_URL }}{{ photo.image }}"
+                                     alt="{{ photo.alt_text }}">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            {% if adoption_notice.description_short %}
+                {{ adoption_notice.description_short | render_markdown }}
+            {% endif %}
+        {% endif %}
+    </div>
 </div>
 
 
