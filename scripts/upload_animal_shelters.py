@@ -82,8 +82,22 @@ def main():
         if "name" not in tierheim["properties"].keys() or "addr:city" not in tierheim["properties"].keys():
             continue
 
+        locationdata = {
+            "place_id": tierheim["id"],
+            "latitude": tierheim["geometry"]["coordinates"][0][0][0],
+            "longitude": tierheim["geometry"]["coordinates"][0][0][1],
+            "name": tierheim["properties"]["name"],
+            "city": tierheim["properties"]["addr:city"],
+            "housenumber": get_or_none(tierheim, "addr:housenumber"),
+            "postcode": get_or_none(tierheim, "addr:postcode"),
+            "street": get_or_none(tierheim, "addr:street"),
+            "countrycode": get_or_none(tierheim, "addr:country"),
+        }
+
+        locationresult = requests.post(f"{instance}/api/locations/", json=locationdata, headers=h)
+
         data = {"name": tierheim["properties"]["name"],
-                "location_string": f"{get_or_none(tierheim, "addr:street")} {get_or_none(tierheim, "addr:housenumber")}, {get_or_none(tierheim, "addr:postcode")} {tierheim["properties"]["addr:city"]}",
+                "location": json.loads(locationresult.content)["id"],
                 "phone_number": choose(("contact:phone", "phone"), tierheim["properties"], replace=True),
                 "fediverse_profile": get_or_none(tierheim, "contact:mastodon"),
                 "facebook": https(add(get_or_none(tierheim, "contact:facebook"), "facebook")),
