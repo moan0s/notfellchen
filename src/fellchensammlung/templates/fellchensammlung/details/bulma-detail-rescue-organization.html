@@ -1,0 +1,72 @@
+{% extends "fellchensammlung/base_bulma.html" %}
+{% load custom_tags %}
+{% load i18n %}
+
+{% block title %}<title>{{ org.name }}</title>{% endblock %}
+
+{% block content %}
+    <div class="columns">
+        <div class="column">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-header-title">{{ org.name }}</h1>
+                </div>
+                <div class="card-content">
+                    <div class="block">
+                        <b><i class="fa-solid fa-location-dot"></i></b>
+                        {% if org.location %}
+                            {{ org.location }}
+                        {% else %}
+                            {{ org.location_string }}
+                        {% endif %}
+                        {% if org.description %}
+                            <p>{{ org.description | render_markdown }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="panel block">
+                        <p class="panel-heading">{% trans "Kontaktdaten" %}</p>
+                        {% if org.website %}
+                            <a class="panel-block is-active">
+                            <span class="panel-icon">
+                              <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
+                            </span>
+                                {{ org.website }}
+                            </a>
+                        {% endif %}
+                    {% if org.phone_number %}
+                            <a class="panel-block is-active">
+                            <span class="panel-icon">
+                              <i class="fas fa-phone" aria-label="{% translate "Telefonnummer" %}"></i>
+                            </span>
+                                {{ org.phone_number }}
+                            </a>
+                        {% endif %}
+                    {% if org.email %}
+                            <a class="panel-block is-active">
+                            <span class="panel-icon">
+                              <i class="fas fa-envelope" aria-label="{% translate "E-Mail" %}"></i>
+                            </span>
+                                {{ org.email }}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            {% include "fellchensammlung/partials/bulma-partial-map.html" %}
+        </div>
+    </div>
+
+
+    <h2>{% translate 'Vermittlungen der Organisation' %}</h2>
+    <div class="container-cards">
+        {% if org.adoption_notices %}
+            {% for adoption_notice in org.adoption_notices %}
+                {% include "fellchensammlung/partials/bulma-partial-adoption-notice-minimal.html" %}
+            {% endfor %}
+        {% else %}
+            <p>{% translate "Keine Vermittlungen gefunden." %}</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -59,7 +59,7 @@
     {% for rescue_organization in rescue_organizations %}
         {% if rescue_organization.location %}
             // create the popup
-            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/partial-rescue-organization.html" %}`);
+            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/bulma-partial-rescue-organization-minimal-map.html" %}`);
 
             // create DOM element for the marker
             const el_{{ forloop.counter }} = document.createElement('div');

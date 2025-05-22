@@ -1,0 +1,12 @@
+{% load i18n %}
+<div class="grid is-col-min-10">
+    {% if rescue_organizations %}
+        {% for rescue_organization in rescue_organizations %}
+            <div class="cell">
+                {% include "fellchensammlung/partials/bulma-partial-rescue-organization.html" %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>{% translate "Keine Tierschutzorganisationen gefunden." %}</p>
+    {% endif %}
+</div>

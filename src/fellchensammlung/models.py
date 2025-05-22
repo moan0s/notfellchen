@@ -156,6 +156,9 @@ class RescueOrganization(models.Model):
     def get_absolute_url(self):
         return reverse("rescue-organization-detail", args=[str(self.pk)])
 
+    def get_absolute_url_bulma(self):
+        return reverse("bulma-rescue-organization-detail", args=[str(self.pk)])
+
     @property
     def adoption_notices(self):
         return AdoptionNotice.objects.filter(organization=self)
@@ -173,6 +176,8 @@ class RescueOrganization(models.Model):
             return ""
         if len(self.description) > 200:
             return self.description[:200] + _(f" ... [weiterlesen]({self.get_absolute_url()})")
+        else:
+            return self.description
 
     def set_checked(self):
         self.last_checked = timezone.now()

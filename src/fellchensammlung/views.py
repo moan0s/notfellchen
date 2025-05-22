@@ -408,6 +408,7 @@ def add_photo_to_animal(request, animal_id):
         form = ImageForm(in_flow=True)
         return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
 
+
 @login_required
 def add_photo_to_animal_bulma(request, animal_id):
     animal = Animal.objects.get(id=animal_id)
@@ -440,7 +441,6 @@ def add_photo_to_animal_bulma(request, animal_id):
         return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
 
 
-
 @login_required
 def add_photo_to_adoption_notice(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
@@ -467,6 +467,7 @@ def add_photo_to_adoption_notice(request, adoption_notice_id):
     else:
         form = ImageForm(in_flow=True)
         return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
+
 
 @login_required
 def add_photo_to_adoption_notice_bulma(request, adoption_notice_id):
@@ -808,16 +809,27 @@ def external_site_warning(request):
     return render(request, 'fellchensammlung/external_site_warning.html', context=context)
 
 
-def list_rescue_organizations(request):
+def list_rescue_organizations(request, template='fellchensammlung/animal-shelters.html'):
     rescue_organizations = RescueOrganization.objects.all()
     context = {"rescue_organizations": rescue_organizations}
-    return render(request, 'fellchensammlung/animal-shelters.html', context=context)
+    return render(request, template, context=context)
 
 
-def detail_view_rescue_organization(request, rescue_organization_id):
+def bulma_list_rescue_organizations(request):
+    return list_rescue_organizations(request, template='fellchensammlung/bulma-animal-shelters.html')
+
+
+def detail_view_rescue_organization(request, rescue_organization_id,
+                                    template='fellchensammlung/details/detail-rescue-organization.html'):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)
-    return render(request, 'fellchensammlung/details/detail-rescue-organization.html',
+    return render(request, template,
                   context={"org": org, "map_center": org.position, "zoom_level": 6, "rescue_organizations": [org]})
+
+
+def bulma_detail_view_rescue_organization(request, rescue_organization_id):
+    return detail_view_rescue_organization(request,
+                                           rescue_organization_id,
+                                           template='fellchensammlung/details/bulma-detail-rescue-organization.html')
 
 
 def export_own_profile(request):

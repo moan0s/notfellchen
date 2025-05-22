@@ -1,0 +1,40 @@
+{% load custom_tags %}
+{% load i18n %}
+
+{% load custom_tags %}
+{% load i18n %}
+
+
+<h2 class="title is-4">
+    <a href="{{ rescue_organization.get_absolute_url_bulma }}"> {{ rescue_organization.name }}</a>
+</h2>
+
+<div class="grid mb-0">
+    <div class="cell">
+        <!--- General Information --->
+        <div class="grid">
+
+            <div class="cell">
+
+                <p>
+                    <b><i class="fa-solid fa-location-dot"></i></b>
+                    {% if rescue_organization.location %}
+                        {{ rescue_organization.location }}
+                    {% else %}
+                        {{ rescue_organization.location_string }}
+                    {% endif %}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if rescue_organization.description_short %}
+    <div class="content">
+        {{ rescue_organization.description_short | render_markdown }}
+
+    </div>
+{% endif %}
+
+
+
+

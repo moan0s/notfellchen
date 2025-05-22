@@ -30,7 +30,8 @@ urlpatterns = [
     path("bulma/tier/<int:animal_id>/add-photo", views.add_photo_to_animal_bulma, name="animal-add-photo-bulma"),
     # ex: /adoption_notice/7/
     path("vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail, name="adoption-notice-detail"),
-    path("bulma/vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail_bulma, name="adoption-notice-detail-bulma"),
+    path("bulma/vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail_bulma,
+         name="adoption-notice-detail-bulma"),
     # ex: /adoption_notice/7/edit
     path("vermittlung/<int:adoption_notice_id>/edit", views.adoption_notice_edit, name="adoption-notice-edit"),
     # ex: /vermittlung/5/add-photo
@@ -43,8 +44,11 @@ urlpatterns = [
          name="adoption-notice-add-animal"),
 
     path("tierschutzorganisationen/", views.list_rescue_organizations, name="rescue-organizations"),
+    path("bulma/tierschutzorganisationen/", views.bulma_list_rescue_organizations, name="bulma-rescue-organizations"),
     path("organisation/<int:rescue_organization_id>/", views.detail_view_rescue_organization,
          name="rescue-organization-detail"),
+    path("bulma/organisation/<int:rescue_organization_id>/", views.bulma_detail_view_rescue_organization,
+         name="bulma-rescue-organization-detail"),
 
     # ex: /search/
     path("suchen/", views.search, name="search"),
