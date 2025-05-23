@@ -82,6 +82,14 @@ def main():
         if "name" not in tierheim["properties"].keys() or "addr:city" not in tierheim["properties"].keys():
             continue
 
+        # Check if rescue organization exits
+        search_data = {"external_source_identifier": "OSM",
+                       "external_object_identifier": f"{tierheim["id"]}"}
+        search_result = requests.get(f"{instance}/api/organizations", json=search_data, headers=h)
+        if search_result.status_code == 200:
+            print(f"{tierheim["properties"]["name"]} already exists.")
+            continue
+
         location_data = {
             "place_id": tierheim["id"],
             "latitude": tierheim["geometry"]["coordinates"][0][0][0],
