@@ -82,7 +82,7 @@ def main():
         if "name" not in tierheim["properties"].keys() or "addr:city" not in tierheim["properties"].keys():
             continue
 
-        locationdata = {
+        location_data = {
             "place_id": tierheim["id"],
             "latitude": tierheim["geometry"]["coordinates"][0][0][0],
             "longitude": tierheim["geometry"]["coordinates"][0][0][1],
@@ -94,10 +94,14 @@ def main():
             "countrycode": get_or_none(tierheim, "addr:country"),
         }
 
-        locationresult = requests.post(f"{instance}/api/locations/", json=locationdata, headers=h)
+        location_result = requests.post(f"{instance}/api/locations/", json=location_data, headers=h)
+
+        if location_result.status_code != 201:
+            print(f"{idx} Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
+            exit()
 
         data = {"name": tierheim["properties"]["name"],
-                "location": json.loads(locationresult.content)["id"],
+                "location": json.loads(location_result.content)["id"],
                 "phone_number": choose(("contact:phone", "phone"), tierheim["properties"], replace=True),
                 "fediverse_profile": get_or_none(tierheim, "contact:mastodon"),
                 "facebook": https(add(get_or_none(tierheim, "contact:facebook"), "facebook")),
