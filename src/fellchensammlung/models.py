@@ -11,6 +11,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL
@@ -131,7 +132,7 @@ class RescueOrganization(models.Model):
                                               default=AllowUseOfMaterialsChices.USE_MATERIALS_NOT_ASKED,
                                               choices=AllowUseOfMaterialsChices.choices,
                                               verbose_name=_('Erlaubt Nutzung von Inhalten'))
-    location_string = models.CharField(max_length=200, verbose_name=_("Ort der Organisation"))
+    location_string = models.CharField(max_length=200, verbose_name=_("Ort der Organisation"), null=True, blank=True, )
     location = models.ForeignKey(Location, on_delete=models.PROTECT, blank=True, null=True)
     instagram = models.URLField(null=True, blank=True, verbose_name=_('Instagram Profil'))
     facebook = models.URLField(null=True, blank=True, verbose_name=_('Facebook Profil'))
@@ -152,6 +153,11 @@ class RescueOrganization(models.Model):
 
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
+
+    def clean(self):
+        super().clean()
+        if self.location is None and self.location_string is None:
+            raise ValidationError(_('Location or Location String must be set'))
 
     def get_absolute_url(self):
         return reverse("rescue-organization-detail", args=[str(self.pk)])
@@ -308,7 +314,8 @@ class AdoptionNotice(models.Model):
                                      verbose_name=_('Organisation'))
     further_information = models.URLField(null=True, blank=True,
                                           verbose_name=_('Link zu mehr Informationen'),
-                                          help_text=_("Verlinke hier die Quelle der Vermittlung (z.B. die Website des Tierheims"))
+                                          help_text=_(
+                                              "Verlinke hier die Quelle der Vermittlung (z.B. die Website des Tierheims"))
     group_only = models.BooleanField(default=False, verbose_name=_('Ausschließlich Gruppenadoption'))
     photos = models.ManyToManyField(Image, blank=True)
     location_string = models.CharField(max_length=200, verbose_name=_("Ortsangabe"))
