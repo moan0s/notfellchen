@@ -60,6 +60,10 @@ LOGGING = {
             'handlers': ['console'],
             'level': APP_LOG_LEVEL,
         },
+        'django_super_deduper': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
     },
 }
 

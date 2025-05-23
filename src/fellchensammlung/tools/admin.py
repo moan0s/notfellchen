@@ -3,6 +3,8 @@ import logging
 from django.utils import timezone
 from datetime import timedelta
 
+from django_super_deduper.merge import MergedModelInstance
+
 from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus, Log, \
     AdoptionNoticeNotification
 from fellchensammlung.tools.misc import is_404
@@ -87,6 +89,26 @@ def deactivate_404_adoption_notices():
                 deactivation_message = f'Die Vermittlung  [{adoption_notice.name}]({adoption_notice.get_absolute_url()}) wurde automatisch deaktiviert, da die Website unter "Mehr Informationen" nicht mehr online ist.'
                 for subscription in adoption_notice.get_subscriptions():
                     AdoptionNoticeNotification.objects.create(user=subscription.owner,
-                                                               title="Vermittlung deaktiviert",
-                                                               adoption_notice=adoption_notice,
-                                                               text=deactivation_message)
+                                                              title="Vermittlung deaktiviert",
+                                                              adoption_notice=adoption_notice,
+                                                              text=deactivation_message)
+
+
+def dedup_location(location: Location, destructive=False):
+    duplicates = Location.objects.filter(place_id=location.place_id).exclude(id=location.id)
+    merged_object = MergedModelInstance.create(location, duplicates)
+    if destructive:
+        duplicates.delete()
+        print("Deleted duplicate locations")
+    return merged_object
+
+
+def dedup_locations():
+    location_ids = list(Location.objects.values_list("id", flat=True))
+    for location_id in location_ids:
+        try:
+            location = Location.objects.get(id=location_id)
+        except Location.DoesNotExist:
+            # Already deleted as a duplicate
+            continue
+        dedup_location(location, destructive=True)
