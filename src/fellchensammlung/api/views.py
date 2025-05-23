@@ -197,6 +197,8 @@ class RescueOrganizationApiView(APIView):
                 Q(location__name__icontains=search_query) |
                 Q(location__city__icontains=search_query)
             )
+        if organizations.count() == 0:
+            return Response({"error": "No organizations found."}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = RescueOrganizationSerializer(organizations, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
