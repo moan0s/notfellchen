@@ -14,7 +14,7 @@ from .serializers import (
     RescueOrganizationSerializer,
     AdoptionNoticeSerializer,
     ImageCreateSerializer,
-    SpeciesSerializer, RescueOrgSerializer,
+    SpeciesSerializer, RescueOrganizationSerializer,
 )
 from fellchensammlung.models import Animal, RescueOrganization, AdoptionNotice, Species, Image
 from drf_spectacular.utils import extend_schema
@@ -203,14 +203,14 @@ class RescueOrganizationApiView(APIView):
 
     @transaction.atomic
     @extend_schema(
-        request=RescueOrgSerializer,
+        request=RescueOrganizationSerializer,
         responses={201: 'Rescue organization created successfully!'}
     )
     def post(self, request, *args, **kwargs):
         """
         Create or update a rescue organization.
         """
-        serializer = RescueOrgSerializer(data=request.data, context={"request": request})
+        serializer = RescueOrganizationSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             rescue_org = serializer.save()
             # Add the location
@@ -224,7 +224,7 @@ class RescueOrganizationApiView(APIView):
 
     @transaction.atomic
     @extend_schema(
-        request=RescueOrgSerializer,
+        request=RescueOrganizationSerializer,
         responses={200: 'Rescue organization updated successfully!'}
     )
     def patch(self, request, *args, **kwargs):
@@ -240,7 +240,7 @@ class RescueOrganizationApiView(APIView):
         except RescueOrganization.DoesNotExist:
             return Response({"error": "Organization not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = RescueOrgSerializer(organization, data=request.data, partial=True, context={"request": request})
+        serializer = RescueOrganizationSerializer(organization, data=request.data, partial=True, context={"request": request})
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "Rescue organization updated successfully!"}, status=status.HTTP_200_OK)
