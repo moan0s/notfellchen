@@ -250,6 +250,7 @@ class RescueOrganizationApiView(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class AddImageApiView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -294,6 +295,7 @@ class SpeciesApiView(APIView):
         species = Species.objects.all()
         serializer = SpeciesSerializer(species, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class LocationApiView(APIView):
     permission_classes = [IsAuthenticated]
@@ -352,5 +354,3 @@ class LocationApiView(APIView):
             {"message": "Location created successfully!", "id": location.pk},
             status=status.HTTP_201_CREATED,
         )
-
-
