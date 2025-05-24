@@ -68,6 +68,50 @@ def https(value):
         return None
 
 
+def get_center_coordinates(geometry):
+    """
+    Given a GeoJSON geometry dict, return (longitude, latitude)
+
+    If a shape, calculate the center, else reurn the point
+    """
+    geom_type = geometry["type"]
+    coordinates = geometry["coordinates"]
+
+    if geom_type == "Point":
+        return coordinates[0], coordinates[1]
+
+    elif geom_type == "LineString":
+        return calc_coordinate_center(coordinates)
+
+    elif geom_type == "Polygon":
+        outer_ring = coordinates[0]
+        return calc_coordinate_center(outer_ring)
+
+    else:
+        raise ValueError(f"Unsupported geometry type: {geom_type}")
+
+
+def calc_coordinate_center(coordinates):
+    """
+    Calculates the center as the arithmetic mean of the list of coordinates.
+
+    Not perfect because earth is a sphere (citation needed) but good enough.
+    """
+    if not coordinates:
+        return None, None
+
+    lon_sum = 0.0
+    lat_sum = 0.0
+    count = 0
+
+    for lon, lat in coordinates:
+        lon_sum += lon
+        lat_sum += lat
+        count += 1
+
+    return lon_sum / count, lat_sum / count
+
+
 def main():
     api_token, instance, data_file = get_config()
     # Set headers and endpoint
@@ -77,23 +121,28 @@ def main():
     with open(data_file, encoding="utf8") as f:
         d = json.load(f)
 
-    for idx, tierheim in tqdm(enumerate(d["features"])):
+    skipped_low_quality = 0
+
+    tierheime = d["features"]
+
+    for idx, tierheim in enumerate(tierheime):
         # Check if data is low quality
         if "name" not in tierheim["properties"].keys() or "addr:city" not in tierheim["properties"].keys():
+            skipped_low_quality = skipped_low_quality + 1
             continue
 
         # Check if rescue organization exits
         search_data = {"external_source_identifier": "OSM",
                        "external_object_identifier": f"{tierheim["id"]}"}
-        search_result = requests.get(f"{instance}/api/organizations", json=search_data, headers=h)
+        search_result = requests.get(f"{instance}/api/organizations", params=search_data, headers=h)
         if search_result.status_code == 200:
             print(f"{tierheim["properties"]["name"]} already exists.")
             continue
 
         location_data = {
             "place_id": tierheim["id"],
-            "latitude": tierheim["geometry"]["coordinates"][0][0][0],
-            "longitude": tierheim["geometry"]["coordinates"][0][0][1],
+            "longitude": get_center_coordinates(tierheim["geometry"])[0],
+            "latitude": get_center_coordinates(tierheim["geometry"])[1],
             "name": tierheim["properties"]["name"],
             "city": tierheim["properties"]["addr:city"],
             "housenumber": get_or_none(tierheim, "addr:housenumber"),
@@ -125,7 +174,12 @@ def main():
         result = requests.post(endpoint, json=data, headers=h)
 
         if result.status_code != 201:
-            print(f"{idx} {tierheim["properties"]["name"]}:{result.status_code} {result.json()}")
+            print(f"{idx} {tierheim["properties"]["name"]} failed:{result.status_code} {result.json()}")
+            exit(1)
+        else:
+            print(f"{idx} - {json.loads(result.content)["id"]} {tierheim["properties"]["name"]} created")
+
+    print(f"{skipped_low_quality} datapoints skipped for low quality ({skipped_low_quality / len(tierheime):.2}%)")
 
 
 if __name__ == "__main__":
