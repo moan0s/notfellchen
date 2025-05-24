@@ -175,6 +175,7 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     'fontawesomefree',
     'crispy_forms',
+    'django.forms',
     "crispy_bootstrap4",
     "rest_framework",
     'rest_framework.authtoken',
@@ -307,3 +308,12 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+
+from django.forms.renderers import TemplatesSetting
+
+
+class CustomFormRenderer(TemplatesSetting):
+    form_template_name = "fellchensammlung/forms/form_snippets.html"
+
+
+FORM_RENDERER = "notfellchen.settings.CustomFormRenderer"
