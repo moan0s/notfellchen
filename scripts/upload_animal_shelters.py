@@ -78,7 +78,7 @@ def main():
         d = json.load(f)
 
     for idx, tierheim in tqdm(enumerate(d["features"])):
-
+        # Check if data is low quality
         if "name" not in tierheim["properties"].keys() or "addr:city" not in tierheim["properties"].keys():
             continue
 
@@ -105,7 +105,8 @@ def main():
         location_result = requests.post(f"{instance}/api/locations/", json=location_data, headers=h)
 
         if location_result.status_code != 201:
-            print(f"{idx} Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
+            print(
+                f"{idx} Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
             exit()
 
         data = {"name": tierheim["properties"]["name"],
