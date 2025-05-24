@@ -18,6 +18,9 @@
                 {{ field|add_class:"input" }}
             {% endif %}
         </div>
+        <div class="help">
+            {{ field.help_text }}
+        </div>
         <div class="help is-danger">
             {{ field.errors }}
         </div>
