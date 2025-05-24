@@ -234,7 +234,7 @@ class RescueOrganizationApiView(APIView):
         """
         Partially update a rescue organization.
         """
-        org_id = kwargs.get("id")
+        org_id = request.data.get("id")
         if not org_id:
             return Response({"error": "ID is required for updating."}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -243,7 +243,7 @@ class RescueOrganizationApiView(APIView):
         except RescueOrganization.DoesNotExist:
             return Response({"error": "Organization not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = RescueOrganizationSerializer(organization, data=request.data, partial=True, context={"request": request})
+        serializer = RescueOrganizationSerializer(organization, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({"message": "Rescue organization updated successfully!"}, status=status.HTTP_200_OK)
