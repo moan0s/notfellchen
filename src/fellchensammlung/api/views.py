@@ -215,8 +215,9 @@ class RescueOrganizationApiView(APIView):
         serializer = RescueOrganizationSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
             rescue_org = serializer.save()
-            # Add the location
-            post_rescue_org_save.delay_on_commit(rescue_org.pk)
+            if rescue_org.location is None:
+                # Add the location
+                post_rescue_org_save.delay_on_commit(rescue_org.pk)
             return Response(
                 {"message": "Rescue organization created successfully!", "id": rescue_org.id},
                 status=status.HTTP_201_CREATED,
