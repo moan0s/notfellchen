@@ -3,6 +3,9 @@
 # Database
 notfellchen
 
+# Geojson from imports
+*.geojson
+
 # Media storage
 /static
 media
