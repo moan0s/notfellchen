@@ -1,12 +1,11 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
 {% block title %}<title>{% translate "Instanz-Check" %}</title> {% endblock %}
 {% block content %}
-    <div class="card">
-        <h1>{% translate "Instanz-Check" %}</h1>
-        {% if missing_texts|length > 0 %}
-            <h2>{% trans "Fehlende Texte" %}</h2>
-            <p>
+    <h1 class="title is-1">{% translate "Instanz-Check" %}</h1>
+    {% if missing_texts|length > 0 %}
+        <h2 class="title is-2">{% trans "Fehlende Texte" %}</h2>
+        <div class="block">
             <table>
                 <tr>
                     <th>{% translate "Text Code" %}</th>
@@ -19,14 +18,14 @@
                     </tr>
                 {% endfor %}
             </table>
-            </p>
-        {% else %}
-            <p>{% translate "Texte scheinen vollständig" %}</p>
-        {% endif %}
+        </div>
+    {% else %}
+        <p>{% translate "Texte scheinen vollständig" %}</p>
+    {% endif %}
 
-        <h2>{% trans "Zeitstempel" %}</h2>
-        {% if timestamps|length > 0 %}
-            <p>
+    <h2 class="title is-2">{% trans "Zeitstempel" %}</h2>
+    {% if timestamps|length > 0 %}
+        <div class="block">
             <table>
                 <tr>
                     <th>{% translate "Key" %}</th>
@@ -41,79 +40,81 @@
                     </tr>
                 {% endfor %}
             </table>
-            </p>
-        {% else %}
-            <p>{% translate "Keine Zeitstempel geloggt." %}</p>
-        {% endif %}
+        </div>
+    {% else %}
+        <p>{% translate "Keine Zeitstempel geloggt." %}</p>
+    {% endif %}
 
-        <h2>{% translate "Nicht-lokalisierte Vermittlungen" %}</h2>
-        {% if number_not_geocoded_adoption_notices > 0 %}
-            <details>
-                <summary>{{ number_not_geocoded_adoption_notices }}/{{ number_of_adoption_notices }}</summary>
-                <ul>
-                    {% for adoption_notice in none_geocoded_adoption_notices %}
-                        <li>
-                            <a href="{{ adoption_notice.get_absolute_url }}">{{ adoption_notice.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </details>
-        {% else %}
-            <p>{{ number_not_geocoded_adoption_notices }}/{{ number_of_adoption_notices }}</p>
-        {% endif %}
+    <h2 class="title is-2">{% translate "Nicht-lokalisierte Vermittlungen" %}</h2>
+    {% if number_not_geocoded_adoption_notices > 0 %}
+        <details>
+            <summary>{{ number_not_geocoded_adoption_notices }}/{{ number_of_adoption_notices }}</summary>
+            <ul>
+                {% for adoption_notice in none_geocoded_adoption_notices %}
+                    <li>
+                        <a href="{{ adoption_notice.get_absolute_url }}">{{ adoption_notice.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </details>
+    {% else %}
+        <p>{{ number_not_geocoded_adoption_notices }}/{{ number_of_adoption_notices }}</p>
+    {% endif %}
 
-        <h2>{% translate "Nicht-lokalisierte Tierschutzorganisationen" %}</h2>
-        {% if number_not_geocoded_rescue_orgs > 0 %}
-            <details>
-                <summary>{{ number_not_geocoded_rescue_orgs }}/{{ number_of_rescue_orgs }}</summary>
-                <ul>
-                    {% for rescue_org in none_geocoded_rescue_orgs %}
-                        <li>
-                            <a href="{{ rescue_org.get_absolute_url }}">{{ rescue_org.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </details>
-        {% else %}
-            <p>{{ number_not_geocoded_rescue_orgs }}/{{ number_of_rescue_orgs }}</p>
-        {% endif %}
+    <h2 class="title is-2">{% translate "Nicht-lokalisierte Tierschutzorganisationen" %}</h2>
+    {% if number_not_geocoded_rescue_orgs > 0 %}
+        <details>
+            <summary>{{ number_not_geocoded_rescue_orgs }}/{{ number_of_rescue_orgs }}</summary>
+            <ul>
+                {% for rescue_org in none_geocoded_rescue_orgs %}
+                    <li>
+                        <a href="{{ rescue_org.get_absolute_url }}">{{ rescue_org.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </details>
+    {% else %}
+        <p>{{ number_not_geocoded_rescue_orgs }}/{{ number_of_rescue_orgs }}</p>
+    {% endif %}
 
-        <h2>{% translate "Nicht-geprüfte Vermittlungen" %}</h2>
-        {% if number_unchecked_ans > 0 %}
-            <details>
-                <summary>{{ number_unchecked_ans }}</summary>
-                <ul>
-                    {% for unchecked_an in unchecked_ans %}
-                        <li>
-                            <a href="{{ unchecked_an.get_absolute_url }}">{{ unchecked_an.name }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </details>
-        {% else %}
-            <p>{{ number_unchecked_ans }}</p>
-        {% endif %}
+    <h2 class="title is-2">{% translate "Nicht-geprüfte Vermittlungen" %}</h2>
+    {% if number_unchecked_ans > 0 %}
+        <details>
+            <summary>{{ number_unchecked_ans }}</summary>
+            <ul>
+                {% for unchecked_an in unchecked_ans %}
+                    <li>
+                        <a href="{{ unchecked_an.get_absolute_url }}">{{ unchecked_an.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </details>
+    {% else %}
+        <p>{{ number_unchecked_ans }}</p>
+    {% endif %}
 
-        <form class="notification-card-mark-read" method="post">
+    <div class="grid">
+
+        <form class="cell" method="post">
             {% csrf_token %}
             <input type="hidden" name="action" value="clean_locations">
-            <button class="btn" type="submit" id="submit">
+            <button class="button is-primary" type="submit" id="submit">
                 <i class="fa-solid fa-broom"></i> {% translate "Erneut lokalisieren" %}
             </button>
         </form>
 
-        <form class="notification-card-mark-read" method="post">
+        <form class="cell" method="post">
             {% csrf_token %}
             <input type="hidden" name="action" value="deactivate_unchecked_adoption_notices">
-            <button class="btn" type="submit" id="submit">
+            <button class="button is-primary" type="submit" id="submit">
                 <i class="fa-solid fa-broom"></i> {% translate "Deaktiviere ungeprüfte Vermittlungen" %}
             </button>
         </form>
 
-        <form class="notification-card-mark-read" method="post">
+        <form class="cell" method="post">
             {% csrf_token %}
             <input type="hidden" name="action" value="deactivate_404">
-            <button class="btn" type="submit" id="submit">
+            <button class="button is-primary" type="submit" id="submit">
                 <i class="fa-solid fa-broom"></i> {% translate "Deaktiviere 404 Vermittlungen" %}
             </button>
         </form>
