@@ -1,33 +1,45 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
 
 {% block content %}
 
     {% if form.errors %}
-        <p>{% translate "Dein Username oder Passwort ist falsch." %}</p>
+        <div class="notification is-warning">
+            <button class="delete"></button>
+            <p>
+                {% translate "Der eingegebene Username oder das Passwort ist falsch." %}
+            </p>
+        </div>
     {% endif %}
 
     {% if user.is_authenticated %}
-        <p>{% translate "Du bist bereits eingeloggt." %}</p>
+        <p class="is-warning">{% translate "Du bist bereits eingeloggt." %}</p>
     {% else %} {% if next %}
-        <p class="card">{% translate "Bitte log dich ein um diese Seite sehen zu können." %}</p>
+
+        <div class="notification is-warning">
+            <button class="delete"></button>
+            <p>
+                {% translate "Bitte log dich ein um diese Seite sehen zu können." %}
+            </p>
+        </div>
     {% endif %}
     {% endif %}
 
     {% if not user.is_authenticated %}
-        <div class="card">
-        <div class="container-edit-buttons">
-            <form method="post" action="{% url 'login' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input class="btn" type="submit" value="{% translate 'Einloggen' %}"/>
-                <input type="hidden" name="next" value="{{ next }}"/>
-            </form>
+        <div class="block">
+            <div class="block">
+                <form class="" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input class="button is-primary" type="submit" value="{% translate 'Einloggen' %}"/>
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                </form>
             </div>
 
-            <div class="container-edit-buttons">
-                <a class="btn btn-small" href="{% url 'password_reset' %}">{% translate "Passwort vergessen?" %}</a>
-                <a class="btn btn-small" href="{% url 'django_registration_register' %}">{% translate "Registrieren" %}</a>
+            <div class="block">
+                <a class="button is-warning" href="{% url 'password_reset' %}">{% translate "Passwort vergessen?" %}</a>
+                <a class="button is-link"
+                   href="{% url 'django_registration_register' %}">{% translate "Registrieren" %}</a>
             </div>
         </div>
     {% endif %}

@@ -1,7 +1,7 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
 
 {% block content %}
-  <p>{% translate "Ausloggen" %}!</p>
-  <a href="{% url 'login'%}">{% translate "Hier klicken um die wieder einzuloggen." %}</a>
+  <h1 class="title is-1">{% translate "Ausgeloggt" %}!</h1>
+  <a class="button is-primary" href="{% url 'login'%}">{% translate "Hier klicken um die wieder einzuloggen." %}</a>
 {% endblock %}
