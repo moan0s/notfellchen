@@ -1,6 +1,8 @@
 import argparse
 import json
 import os
+from types import SimpleNamespace
+
 import requests
 from tqdm import tqdm
 
@@ -112,6 +114,14 @@ def calc_coordinate_center(coordinates):
     return lon_sum / count, lat_sum / count
 
 
+def add_if_available(base_data, keys, result):
+    # Loads the data into the org if available
+    for key in keys:
+        if getattr(base_data, key) is not None:
+            result[key] = getattr(base_data, key)
+    return result
+
+
 def main():
     api_token, instance, data_file = get_config()
     # Set headers and endpoint
@@ -131,12 +141,40 @@ def main():
             skipped_low_quality = skipped_low_quality + 1
             continue
 
+        # Load TH data in for easier accessing
+        th_data = SimpleNamespace(
+            name=tierheim["properties"]["name"],
+            email=choose(("contact:email", "email"), tierheim["properties"]),
+            phone_number=choose(("contact:phone", "phone"), tierheim["properties"], replace=True),
+            fediverse_profile=get_or_none(tierheim, "contact:mastodon"),
+            facebook=https(add(get_or_none(tierheim, "contact:facebook"), "facebook")),
+            instagram=https(add(get_or_none(tierheim, "contact:instagram"), "instagram")),
+            website=https(choose(("contact:website", "website"), tierheim["properties"])),
+            description=get_or_none(tierheim, "opening_hours"),
+            external_object_identifier=tierheim["id"],
+            EXTERNAL_SOURCE_IDENTIFIER="OSM",
+        )
+
+        # Define here for later
+        optional_data = ["email", "phone_number", "website", "description", "fediverse_profile", "facebook",
+                         "instagram"]
+
         # Check if rescue organization exits
         search_data = {"external_source_identifier": "OSM",
                        "external_object_identifier": f"{tierheim["id"]}"}
         search_result = requests.get(f"{instance}/api/organizations", params=search_data, headers=h)
         if search_result.status_code == 200:
-            print(f"{tierheim["properties"]["name"]} already exists.")
+            org_id = search_result.json()[0]["id"]
+            print(f"{th_data.name} already exists as ID {org_id}.")
+            org_patch_data = {"id": org_id,
+                              "name": th_data.name}
+
+            add_if_available(th_data, optional_data, org_patch_data)
+
+            result = requests.patch(endpoint, json=org_patch_data, headers=h)
+            if result.status_code != 200:
+                print(f"Updating {tierheim['properties']['name']} failed:{result.status_code} {result.json()}")
+                exit()
             continue
 
         location_data = {
@@ -158,20 +196,14 @@ def main():
                 f"{idx} Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
             exit()
 
-        data = {"name": tierheim["properties"]["name"],
-                "location": json.loads(location_result.content)["id"],
-                "phone_number": choose(("contact:phone", "phone"), tierheim["properties"], replace=True),
-                "fediverse_profile": get_or_none(tierheim, "contact:mastodon"),
-                "facebook": https(add(get_or_none(tierheim, "contact:facebook"), "facebook")),
-                "instagram": https(add(get_or_none(tierheim, "contact:instagram"), "instagram")),
-                "website": https(choose(("contact:website", "website"), tierheim["properties"])),
-                "email": choose(("contact:email", "email"), tierheim["properties"]),
-                "description": get_or_none(tierheim, "opening_hours"),
-                "external_object_identifier": f"{tierheim["id"]}",
-                "external_source_identifier": "OSM"
-                }
+        org_data = {"name": tierheim["properties"]["name"],
+                    "external_object_identifier": f"{tierheim["id"]}",
+                    "external_source_identifier": "OSM"
+                    }
 
-        result = requests.post(endpoint, json=data, headers=h)
+        add_if_available(th_data, optional_data, org_data)
+
+        result = requests.post(endpoint, json=org_data, headers=h)
 
         if result.status_code != 201:
             print(f"{idx} {tierheim["properties"]["name"]} failed:{result.status_code} {result.json()}")
