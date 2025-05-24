@@ -197,6 +197,7 @@ def main():
             exit()
 
         org_data = {"name": tierheim["properties"]["name"],
+                    "location": location_result.json()["id"],
                     "external_object_identifier": f"{tierheim["id"]}",
                     "external_source_identifier": "OSM"
                     }
@@ -211,7 +212,7 @@ def main():
         else:
             print(f"{idx} - {json.loads(result.content)["id"]} {tierheim["properties"]["name"]} created")
 
-    print(f"{skipped_low_quality} datapoints skipped for low quality ({skipped_low_quality / len(tierheime):.2}%)")
+    print(f"{skipped_low_quality} datapoints skipped for low quality ({100*skipped_low_quality / len(tierheime):.2}%)")
 
 
 if __name__ == "__main__":
