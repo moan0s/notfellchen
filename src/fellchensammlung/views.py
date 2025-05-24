@@ -798,7 +798,7 @@ def instance_health_check(request):
     return render(request, 'fellchensammlung/instance-health-check.html', context=context)
 
 
-def external_site_warning(request):
+def external_site_warning(request, template_name='fellchensammlung/external_site_warning.html'):
     url = request.GET.get("url")
     context = {"url": url}
     language_code = translation.get_language()
@@ -806,7 +806,11 @@ def external_site_warning(request):
     texts = Text.get_texts(["external_site_warning", "good_adoption_practices"], language=lang)
     context.update(texts)
 
-    return render(request, 'fellchensammlung/external_site_warning.html', context=context)
+    return render(request, template_name, context=context)
+
+
+def bulma_external_site_warning(request):
+    return external_site_warning(request, 'fellchensammlung/bulma-external_site_warning.html')
 
 
 def list_rescue_organizations(request, template='fellchensammlung/animal-shelters.html'):

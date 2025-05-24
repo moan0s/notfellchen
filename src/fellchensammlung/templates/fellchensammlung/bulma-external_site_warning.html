@@ -1,0 +1,15 @@
+{% extends "fellchensammlung/base_bulma.html" %}
+{% load i18n %}
+    {% load custom_tags %}
+{% block content %}
+    <div class="content">
+        {% if external_site_warning %}
+            {{ external_site_warning.content | render_markdown }}
+        {% else %}
+            {% blocktranslate %}
+                <p>Achtung du verlässt notfellchen.org</p>
+            {% endblocktranslate %}
+        {% endif %}
+        <a href="{{ url }}" class="button is-primary">{% translate "Weiter" %}</a>
+    </div>
+{% endblock content %}

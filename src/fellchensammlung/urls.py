@@ -125,6 +125,7 @@ urlpatterns = [
     ## External Site ##
     ###################
     path('external-site/', views.external_site_warning, name="external-site"),
+    path('bulma/external-site/', views.bulma_external_site_warning, name="bulma-external-site"),
 
     ###############
     ## TECHNICAL ##

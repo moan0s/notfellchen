@@ -107,7 +107,7 @@
             </div>
             <div class="block">
                 {% if adoption_notice.further_information %}
-                    <form method="get" action="{% url 'external-site' %}">
+                    <form method="get" action="{% url 'bulma-external-site' %}">
                         <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
                         <button class="button is-primary is-fullwidth" type="submit" id="submit">
                             {{ adoption_notice.further_information | domain }} <i
