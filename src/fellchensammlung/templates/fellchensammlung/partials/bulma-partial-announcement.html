@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load custom_tags %}
+<article class="message {{ announcement.type|type_to_bulma_class }}">
+    <div class="message-header">
+        <p>{{ announcement.title }}</p>
+        <button class="delete" aria-label="delete"></button>
+    </div>
+    <div class="message-body content">
+        {{ announcement.content | render_markdown }}
+    </div>
+
+</article>

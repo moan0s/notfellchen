@@ -84,3 +84,15 @@ def add_class(field, css_class):
 @register.filter
 def widget_type(field):
     return field.field.widget.__class__.__name__
+
+
+@register.filter
+def type_to_bulma_class(value):
+    if value == "info":
+        return "is-info"
+    elif value == "warning":
+        return "is-warning"
+    elif value == "important":
+        return "is-danger"
+    else:
+        return value
