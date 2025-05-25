@@ -198,6 +198,14 @@ class RescueOrganization(models.Model):
     def species_urls(self):
         return SpeciesSpecificURL.objects.filter(organization=self)
 
+    @property
+    def has_contact_data(self):
+        """
+        Returns true if at least one type of contact data is available.
+        """
+        return self.instagram or self.facebook or self.website or self.phone_number or self.email or self.fediverse_profile
+
+
 
 # Admins can perform all actions and have the highest trust associated with them
 # Moderators can make moderation decisions regarding the deletion of content

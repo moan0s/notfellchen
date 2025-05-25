@@ -23,34 +23,8 @@
                             <p>{{ org.description | render_markdown }}</p>
                         {% endif %}
                     </div>
-                    <div class="panel block">
-                        <p class="panel-heading">{% trans "Kontaktdaten" %}</p>
-                        {% if org.website %}
-                            <a class="panel-block is-active">
-                            <span class="panel-icon">
-                              <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
-                            </span>
-                                {{ org.website }}
-                            </a>
-                        {% endif %}
-                    {% if org.phone_number %}
-                            <a class="panel-block is-active">
-                            <span class="panel-icon">
-                              <i class="fas fa-phone" aria-label="{% translate "Telefonnummer" %}"></i>
-                            </span>
-                                {{ org.phone_number }}
-                            </a>
-                        {% endif %}
-                    {% if org.email %}
-                            <a class="panel-block is-active">
-                            <span class="panel-icon">
-                              <i class="fas fa-envelope" aria-label="{% translate "E-Mail" %}"></i>
-                            </span>
-                                {{ org.email }}
-                            </a>
-                        {% endif %}
-                    </div>
                 </div>
+                {% include "fellchensammlung/partials/bulma-partial-rescue-organization-contact.html" %}
             </div>
         </div>
         <div class="column">
