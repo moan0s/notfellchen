@@ -1,12 +1,14 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
 {% block content %}
-    <h1>{% translate "Aktualitätscheck" %}</h1>
+    <h1 class="title is-1">{% translate "Aktualitätscheck" %}</h1>
     <p>{% translate "Überprüfe ob im Tierheim neue Vermittlungen ein Zuhause suchen" %}</p>
-    <div class="container-cards spaced">
-        <h1>{% translate 'Organisation zur Überprüfung' %}</h1>
+
+    <div class="grid is-col-min-20">
         {% for rescue_org in rescue_orgs %}
-            {% include "fellchensammlung/partials/partial-check-rescue-org.html" %}
+            <div class="cell">
+                {% include "fellchensammlung/partials/partial-check-rescue-org.html" %}
+            </div>
         {% endfor %}
     </div>
 {% endblock %}
