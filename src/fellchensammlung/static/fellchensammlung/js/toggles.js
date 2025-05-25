@@ -30,3 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.message .delete') || []).forEach(($delete) => {
+    $delete.addEventListener('click', () => {
+      const message = $delete.closest('.message');
+      if (message) {
+        message.remove();
+      }
+    });
+  });
+});
