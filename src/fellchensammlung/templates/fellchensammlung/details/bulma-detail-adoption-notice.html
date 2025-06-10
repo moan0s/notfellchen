@@ -8,103 +8,142 @@
 {% block content %}
     <div class="columns">
         <div class="column is-two-thirds">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="card-header-title title is-2">{{ adoption_notice.name }}</h1>
-                </div>
-                <div class="card-content">
-                    <div class="grid">
-                        <div class="cell">
-                            <!--- General Information --->
-                            <div class="grid">
-
-                                <div class="cell">
-                                    <h2><strong>{% translate "Ort" %}</strong></h2>
-                                    <p>{% if adoption_notice.location %}
-                                        {{ adoption_notice.location }}
-                                    {% else %}
-                                        {{ adoption_notice.location_string }}
-                                    {% endif %}</p>
-                                </div>
-                                <div class="cell">
-                                    {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
-                                </div>
-                            </div>
-                        </div>
+            <!--- Title level (including action dropdown) -->
+            <div class="level is-mobile">
+                <div class="level-left">
+                    <div class="level-item">
+                        <p class="title is-2">{{ adoption_notice.name }}</p>
                     </div>
+                </div>
 
-                    <div class="columns">
-                        <!--- Images --->
-                        <div class="column block">
-                            <div class="card">
-                                <div class="grid card-content">
-                                    <div class="gallery">
-                                        {% with photo=adoption_notice.get_photos.0 %}
-                                            <div class="main-photo">
-                                                <a href="{{ MEDIA_URL }}{{ photo.image }}"
-                                                   data-pswp-width="{{ photo.image.width }}"
-                                                   data-pswp-height="{{ photo.image.height }}"
-                                                   target="_blank">
-                                                    <img src="{{ MEDIA_URL }}{{ photo.image }}"
-                                                         alt="{{ photo.alt_text }}">
-                                                </a>
-                                            </div>
-                                        {% endwith %}
+                <div class="level-right">
+                    <div class="level-item">
+                        <div class="dropdown is-right">
+                            <div class="dropdown-trigger">
+                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                                    <span><i class="fas fa-gear" aria-label="{% trans 'Aktionen' %}"></i></span>
+                                    <span class="icon is-small">
+                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                                </button>
+                            </div>
+                            <!--- Action menu (dropdown) --->
+                            <div class="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
 
-                                        <div class="thumbnail-row">
-                                            {% for photo in adoption_notice.get_photos|slice:"1:4" %}
-                                                <div class="thumbnail">
-                                                    <a href="{{ MEDIA_URL }}{{ photo.image }}"
-                                                       data-pswp-width="{{ photo.image.width }}"
-                                                       data-pswp-height="{{ photo.image.height }}"
-                                                       target="_blank">
-                                                        <img src="{{ MEDIA_URL }}{{ photo.image }}"
-                                                             alt="{{ photo.alt_text }}">
-                                                    </a>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
+                                    <a class="dropdown-item">
+                                        <i class="fas fa-check"
+                                           aria-hidden="true"></i> {% trans 'Als aktiv bestätigen' %}
+                                    </a>
+                                    <a class="dropdown-item">
+                                        Elements
+                                    </a>
+                                    <a class="dropdown-item">
+                                        Components
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <div class="dropdown-item">
+                                        Version 1.0.4
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--- Description --->
-                        <div class="column block">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h1 class="card-header-title title is-2">{% translate "Beschreibung" %}</h1>
-                                </div>
-                                <div class="card-content">
-                                    <p class="expandable">{% if adoption_notice.description %}
-                                        {{ adoption_notice.description | render_markdown }}
-                                    {% else %}
-                                        {% translate "Keine Beschreibung angegeben" %}
-                                    {% endif %}
-                                    </p>
+                    </div>
+                </div>
+            </div>
+            <!--- General Information --->
+            <div class="grid">
+                <div class="cell">
+                    <div class="grid">
+
+                        <div class="cell">
+                            <h2><strong>{% translate "Ort" %}</strong></h2>
+                            <p>{% if adoption_notice.location %}
+                                {{ adoption_notice.location }}
+                            {% else %}
+                                {{ adoption_notice.location_string }}
+                            {% endif %}</p>
+                        </div>
+                        <div class="cell">
+                            {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--- Images and Description --->
+            <div class="columns">
+                <!--- Images --->
+                <div class="column block">
+                    <div class="card">
+                        <div class="grid card-content">
+                            <div class="gallery">
+                                {% with photo=adoption_notice.get_photos.0 %}
+                                    <div class="main-photo">
+                                        <a href="{{ MEDIA_URL }}{{ photo.image }}"
+                                           data-pswp-width="{{ photo.image.width }}"
+                                           data-pswp-height="{{ photo.image.height }}"
+                                           target="_blank">
+                                            <img src="{{ MEDIA_URL }}{{ photo.image }}"
+                                                 alt="{{ photo.alt_text }}">
+                                        </a>
+                                    </div>
+                                {% endwith %}
+
+                                <div class="thumbnail-row">
+                                    {% for photo in adoption_notice.get_photos|slice:"1:4" %}
+                                        <div class="thumbnail">
+                                            <a href="{{ MEDIA_URL }}{{ photo.image }}"
+                                               data-pswp-width="{{ photo.image.width }}"
+                                               data-pswp-height="{{ photo.image.height }}"
+                                               target="_blank">
+                                                <img src="{{ MEDIA_URL }}{{ photo.image }}"
+                                                     alt="{{ photo.alt_text }}">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    {% if has_edit_permission %}
-                        <div class="card-footer-item">
-                            <div class="column">
-                                <a class="button is-primary is-light"
-                                   href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">
-                                    {% translate 'Foto hinzufügen' %}
-                                </a>
-                            </div>
-                            <div class="card-footer-item">
-                                <a class="button is-primary"
-                                   href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
-                                    {% translate 'Bearbeiten' %}
-                                </a>
-                            </div>
+                <!--- Description --->
+                <div class="column block">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1 class="card-header-title title is-2">{% translate "Beschreibung" %}</h1>
                         </div>
-                    {% endif %}
+                        <div class="card-content">
+                            <p class="expandable">{% if adoption_notice.description %}
+                                {{ adoption_notice.description | render_markdown }}
+                            {% else %}
+                                {% translate "Keine Beschreibung angegeben" %}
+                            {% endif %}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!--- Edit buttons -->
+            {% if has_edit_permission %}
+                <div class="level">
+                    <div class="card-footer-item">
+                        <div class="column">
+                            <a class="button is-primary is-light"
+                               href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">
+                                {% translate 'Foto hinzufügen' %}
+                            </a>
+                        </div>
+                        <div class="card-footer-item">
+                            <a class="button is-primary"
+                               href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
+                                {% translate 'Bearbeiten' %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             <div class="block">
                 {% if adoption_notice.further_information %}
                     <form method="get" action="{% url 'bulma-external-site' %}">
