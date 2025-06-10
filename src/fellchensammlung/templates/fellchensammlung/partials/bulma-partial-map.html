@@ -37,7 +37,7 @@
     map.addControl(new maplibregl.FullscreenControl());
     map.addControl(new maplibregl.NavigationControl({showCompass: false}));
 
-    {% for adoption_notice in adoption_notices_map %}
+    {% for adoption_notice in adoption_notices_mapXX %}
         {% if adoption_notice.location %}
             // create the popup
             const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/bulma-partial-adoption-notice-minimal-map.html" %}`);
@@ -76,6 +76,110 @@
     {% endfor %}
 
     map.on('load', async () => {
+
+        // Load adoption notices as geojson
+        map.addSource('adoption-notices', {
+            type: 'geojson',
+            data: '{% static "fellchensammlung/ans.geojson" %}',
+            cluster: true,
+            clusterMaxZoom: 14,
+            clusterRadius: 50
+        });
+
+        // Layer for clusters
+        map.addLayer({
+            id: 'clusters',
+            type: 'circle',
+            source: 'adoption-notices',
+            filter: ['has', 'point_count'],
+            paint: {
+                'circle-color': [
+                    'step',
+                    ['get', 'point_count'],
+                    '#51bbd6',
+                    100,
+                    '#f1f075',
+                    750,
+                    '#f28cb1'
+                ],
+                'circle-radius': [
+                    'step',
+                    ['get', 'point_count'],
+                    20,
+                    100,
+                    30,
+                    750,
+                    40
+                ]
+            }
+        });
+
+        map.addLayer({
+            id: 'cluster-count',
+            type: 'symbol',
+            source: 'adoption-notices',
+            filter: ['has', 'point_count'],
+            layout: {
+                'text-field': '{point_count_abbreviated}',
+                'text-size': 12
+            }
+        });
+
+        // Pins
+        map.addLayer({
+            id: 'unclustered-point',
+            type: 'circle',
+            source: 'adoption-notices',
+            filter: ['!', ['has', 'point_count']],
+            paint: {
+                'circle-color': '#f28cb1',
+                'circle-radius': 15
+            }
+        });
+
+        // inspect a cluster on click
+        map.on('click', 'clusters', async (e) => {
+            const features = map.queryRenderedFeatures(e.point, {
+                layers: ['clusters']
+            });
+            const clusterId = features[0].properties.cluster_id;
+            const zoom = await map.getSource('adoption-notices').getClusterExpansionZoom(clusterId);
+            map.easeTo({
+                center: features[0].geometry.coordinates,
+                zoom
+            });
+        });
+
+        // When a click event occurs on a feature in
+        // the unclustered-point layer, open a popup at
+        // the location of the feature, with
+        // description HTML from its properties.
+        map.on('click', 'unclustered-point', (e) => {
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const title = e.features[0].properties.title;
+
+            // Ensure that if the map is zoomed out such that
+            // multiple copies of the feature are visible, the
+            // popup appears over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            new maplibregl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(
+                    `Title ${title}`
+                )
+                .addTo(map);
+        });
+
+        map.on('mouseenter', 'clusters', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', 'clusters', () => {
+            map.getCanvas().style.cursor = '';
+        });
+
         image = await map.loadImage('{% static "fellchensammlung/img/pin.png" %}');
         map.addImage('pin', image.data);
         {% for map_pin in map_pins %}
