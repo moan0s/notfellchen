@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="column">
-            <form class="block" method="post">
+            <form class="block" method="post" autocomplete="off">
                 {% csrf_token %}
                 <input type="hidden" name="longitude" maxlength="200" id="longitude">
                 <input type="hidden" name="latitude" maxlength="200" id="latitude">
@@ -65,7 +65,8 @@
             }
 
             try {
-                const response = await fetch(`{{ geocoding_api_url }}/?q=${encodeURIComponent(query)}&limit=5&lang={{ LANGUAGE_CODE_CURRENT }}`);
+                // Search with preference to center of germany and only for cities
+                const response = await fetch(`{{ geocoding_api_url }}/?q=${encodeURIComponent(query)}&limit=5&lang={{ LANGUAGE_CODE_CURRENT }}&lat=51.95&lon=10.26&layer=city`);
                 const data = await response.json();
 
                 if (data && data.features) {
