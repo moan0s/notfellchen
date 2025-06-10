@@ -56,7 +56,8 @@
             }
 
             try {
-                const response = await fetch(`{{ geocoding_api_url }}/?q=${encodeURIComponent(query)}&limit=5&lang={{ LANGUAGE_CODE_CURRENT }}`);
+                // Search with preference to center of germany and only for cities
+                const response = await fetch(`{{ geocoding_api_url }}/?q=${encodeURIComponent(query)}&limit=5&lang={{ LANGUAGE_CODE_CURRENT }}&lat=51.95&lon=10.26&layer=city`);
                 const data = await response.json();
 
                 if (data && data.features) {
