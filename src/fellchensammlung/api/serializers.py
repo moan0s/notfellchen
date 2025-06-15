@@ -48,7 +48,7 @@ class AdoptionNoticeGeoJSONSerializer(serializers.ModelSerializer):
                   'image_alt')
 
     def get_species(self, obj):
-        return None
+        return "rat"
 
     def get_url(self, obj):
         return obj.get_absolute_url()

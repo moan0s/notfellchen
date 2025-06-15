@@ -109,15 +109,19 @@
             }
         });
 
-        // Pins
+        const rat_image = await map.loadImage('{% static 'fellchensammlung/img/logo_transparent.png' %}');
+        map.addImage('rat', rat_image.data);
+
+
         map.addLayer({
             id: 'unclustered-point',
-            type: 'circle',
+            type: 'symbol',
             source: 'adoption-notices',
             filter: ['!', ['has', 'point_count']],
-            paint: {
-                'circle-color': '#f28cb1',
-                'circle-radius': 15
+            layout: {
+                'icon-image': ['get', 'species'],
+                'icon-size': 0.07,
+                'icon-allow-overlap': true
             }
         });
 
