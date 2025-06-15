@@ -33,8 +33,8 @@
 
 .map {
     border-radius: 8px;
-    width:100%;
-    height:100%
+    width: 100%;
+    height: 100%
 }
 
 .marker {
@@ -50,14 +50,40 @@
 !important;
 }
 
-.maplibregl-popup {
-    max-width: 600px !important;
-}
-
 .map-in-content #map {
     max-height: 500px;
     width: 90%;
 }
+
+@media only screen and (min-width: 1000px) {
+    .maplibregl-popup {
+        max-width: 280px !important;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .maplibregl-popup {
+        max-width: 150px !important;
+    }
+}
+
+.maplibregl-popup-close-button {
+    all: unset; /* Remove all inherited styles */
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    position: absolute;
+    top: 0.25rem;
+    right: 0.5rem;
+    padding: 0.25rem;
+}
+
+.popup-content {
+    line-height: 1.4;
+}
+
 
 /*****
 IMAGES

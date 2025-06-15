@@ -37,24 +37,7 @@
     map.addControl(new maplibregl.FullscreenControl());
     map.addControl(new maplibregl.NavigationControl({showCompass: false}));
 
-    {% for adoption_notice in adoption_notices_mapXX %}
-        {% if adoption_notice.location %}
-            // create the popup
-            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/bulma-partial-adoption-notice-minimal-map.html" %}`);
 
-            // create DOM element for the marker
-            const el_{{ forloop.counter }} = document.createElement('div');
-            el_{{ forloop.counter }}.id = 'marker_{{ forloop.counter }}';
-            el_{{ forloop.counter }}.classList.add('marker');
-
-            const location_popup_{{ forloop.counter }} = [{{ adoption_notice.location.longitude | pointdecimal }}, {{ adoption_notice.location.latitude | pointdecimal }}];
-            // create the marker
-            new maplibregl.Marker({element: el_{{ forloop.counter }}})
-                .setLngLat(location_popup_{{ forloop.counter }})
-                .setPopup(popup_{{ forloop.counter }}) // sets a popup on this marker
-                .addTo(map);
-        {% endif %}
-    {% endfor %}
 
     {% for rescue_organization in rescue_organizations %}
         {% if rescue_organization.location %}
@@ -158,6 +141,9 @@
         map.on('click', 'unclustered-point', (e) => {
             const coordinates = e.features[0].geometry.coordinates.slice();
             const title = e.features[0].properties.title;
+            const url = e.features[0].properties.url;
+            const description = e.features[0].properties.description;
+            const location_hr = e.features[0].properties.location_hr;
 
             // Ensure that if the map is zoomed out such that
             // multiple copies of the feature are visible, the
@@ -169,7 +155,20 @@
             new maplibregl.Popup()
                 .setLngLat(coordinates)
                 .setHTML(
-                    `Title ${title}`
+                    `<div class="popup-content is-size-7">
+                        <div class="columns  is-centered-mobile">
+                            <div class="column">
+                                <strong><a class="is-size-7" href="${url}">${title}</a></strong><br>
+                                <span><strong>{% translate 'Ort' %}</strong>: ${location_hr}</span><br>
+                                <p class="is-size-7">${description}</p>r
+                            </div>
+                            <div class="column">
+                                <figure class="image is-128x128">
+                                    <img src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                                </figure>
+                            </div>
+                        </div>
+                    </div>`
                 )
                 .addTo(map);
         });
