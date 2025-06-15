@@ -161,7 +161,7 @@
                             <div class="column">
                                 <strong><a class="is-size-7" href="${url}">${title}</a></strong><br>
                                 <span><strong>{% translate 'Ort' %}</strong>: ${location_hr}</span><br>
-                                <p class="is-size-7">${description}</p>r
+                                <p class="is-size-7">${truncate(description, 80, url)}</p>
                             </div>
                             <div class="column">
                                 <figure class="image is-128x128">
