@@ -145,6 +145,8 @@
             const url = e.features[0].properties.url;
             const description = e.features[0].properties.description;
             const location_hr = e.features[0].properties.location_hr;
+            const image_url = e.features[0].properties.image_url;
+            const image_alt = e.features[0].properties.image_alt;
 
             // Ensure that if the map is zoomed out such that
             // multiple copies of the feature are visible, the
@@ -153,21 +155,30 @@
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
 
-            new maplibregl.Popup()
-                .setLngLat(coordinates)
-                .setHTML(
-                    `<div class="popup-content is-size-7">
-                        <div class="columns  is-centered-mobile">
+            const description_column = `
                             <div class="column">
                                 <strong><a class="is-size-7" href="${url}">${title}</a></strong><br>
                                 <span><strong>{% translate 'Ort' %}</strong>: ${location_hr}</span><br>
                                 <p class="is-size-7">${truncate(description, 80, url)}</p>
                             </div>
+                            `;
+            let picture_column = '';
+            if (image_url) {
+                picture_column = `
                             <div class="column">
                                 <figure class="image is-128x128">
-                                    <img src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                                    <img src="${image_url}" alt="${image_alt}"/>
                                 </figure>
-                            </div>
+                            </div>`;
+            }
+
+            new maplibregl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(`
+                    <div class="popup-content is-size-7">
+                        <div class="columns">
+                            ${description_column}
+                            ${picture_column}
                         </div>
                     </div>`
                 )

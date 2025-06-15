@@ -2,6 +2,7 @@ from ..models import Animal, RescueOrganization, AdoptionNotice, Species, Image,
 from rest_framework import serializers
 import math
 
+
 class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
     location = serializers.PrimaryKeyRelatedField(
         queryset=Location.objects.all(),
@@ -38,16 +39,31 @@ class AdoptionNoticeGeoJSONSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
     location_hr = serializers.SerializerMethodField()
     coordinates = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
+    image_alt = serializers.SerializerMethodField()
 
     class Meta:
         model = AdoptionNotice
-        fields = ('id', 'species', 'title', 'description', 'url', 'location_hr', 'coordinates')
+        fields = ('id', 'species', 'title', 'description', 'url', 'location_hr', 'coordinates', 'image_url',
+                  'image_alt')
 
     def get_species(self, obj):
         return None
 
     def get_url(self, obj):
         return obj.get_absolute_url()
+
+    def get_image_url(self, obj):
+        photo = obj.get_photo()
+        if photo is not None:
+            return obj.get_photo().image.url
+        return None
+
+    def get_image_alt(self, obj):
+        photo = obj.get_photo()
+        if photo is not None:
+            return obj.get_photo().alt_text
+        return None
 
     def get_coordinates(self, obj):
         """
@@ -57,9 +73,9 @@ class AdoptionNoticeGeoJSONSerializer(serializers.ModelSerializer):
         It's not exactly a circle, because the earth is round.
         """
         if obj.location:
-            longitude_addition = math.sin(obj.id)/2000
-            latitude_addition = math.cos(obj.id)/2000
-            return [obj.location.longitude+longitude_addition, obj.location.latitude+latitude_addition]
+            longitude_addition = math.sin(obj.id) / 2000
+            latitude_addition = math.cos(obj.id) / 2000
+            return [obj.location.longitude + longitude_addition, obj.location.latitude + latitude_addition]
         return None
 
     def get_location_hr(self, obj):
