@@ -63,7 +63,7 @@
         // Load adoption notices as geojson
         map.addSource('adoption-notices', {
             type: 'geojson',
-            data: '{% static "fellchensammlung/ans.geojson" %}',
+            data: '{% url "api-adoption-notice-list-geojson" %}',
             cluster: true,
             clusterMaxZoom: 14,
             clusterRadius: 50
@@ -120,6 +120,7 @@
                 'circle-radius': 15
             }
         });
+
 
         // inspect a cluster on click
         map.on('click', 'clusters', async (e) => {

@@ -1,6 +1,6 @@
 from ..models import Animal, RescueOrganization, AdoptionNotice, Species, Image, Location
 from rest_framework import serializers
-
+import math
 
 class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
     location = serializers.PrimaryKeyRelatedField(
@@ -30,6 +30,42 @@ class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
         model = AdoptionNotice
         fields = ['created_at', 'last_checked', "searching_since", "name", "description", "further_information",
                   "group_only", "location", "location_details", "organization", "photos"]
+
+
+class AdoptionNoticeGeoJSONSerializer(serializers.ModelSerializer):
+    species = serializers.SerializerMethodField()
+    title = serializers.CharField(source='name')
+    url = serializers.SerializerMethodField()
+    location_hr = serializers.SerializerMethodField()
+    coordinates = serializers.SerializerMethodField()
+
+    class Meta:
+        model = AdoptionNotice
+        fields = ('id', 'species', 'title', 'description', 'url', 'location_hr', 'coordinates')
+
+    def get_species(self, obj):
+        return None
+
+    def get_url(self, obj):
+        return obj.get_absolute_url()
+
+    def get_coordinates(self, obj):
+        """
+        Coordinates are randomly moved around real location, roughly in a circle. The object id is used as angle so that
+        points are always displayed at the same location (as if they were a seed for a random function).
+
+        It's not exactly a circle, because the earth is round.
+        """
+        if obj.location:
+            longitude_addition = math.sin(obj.id)/2000
+            latitude_addition = math.cos(obj.id)/2000
+            return [obj.location.longitude+longitude_addition, obj.location.latitude+latitude_addition]
+        return None
+
+    def get_location_hr(self, obj):
+        if obj.location:
+            return f"{obj.location.city}"
+        return None
 
 
 class AnimalCreateSerializer(serializers.ModelSerializer):

@@ -1,13 +1,16 @@
 from django.db.models import Q
+from rest_framework.generics import ListAPIView
 
-from fellchensammlung.api.serializers import LocationSerializer
+from fellchensammlung.api.serializers import LocationSerializer, AdoptionNoticeGeoJSONSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
-from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel, Location
+from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel, Location, AdoptionNoticeStatus
 from fellchensammlung.tasks import post_adoption_notice_save, post_rescue_org_save
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+
+from .renderers import GeoJSONRenderer
 from .serializers import (
     AnimalGetSerializer,
     AnimalCreateSerializer,
@@ -354,3 +357,10 @@ class LocationApiView(APIView):
             {"message": "Location created successfully!", "id": location.pk},
             status=status.HTTP_201_CREATED,
         )
+
+
+class AdoptionNoticeGeoJSONView(ListAPIView):
+    queryset = AdoptionNotice.objects.select_related('location').filter(location__isnull=False).filter(
+        adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE)
+    serializer_class = AdoptionNoticeGeoJSONSerializer
+    renderer_classes = [GeoJSONRenderer]
