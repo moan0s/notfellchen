@@ -84,19 +84,7 @@ class AdoptionNoticeFormWithDateWidget(AdoptionNoticeForm):
 
 
 class AnimalForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        if 'in_adoption_notice_creation_flow' in kwargs:
-            adding = kwargs.pop('in_adoption_notice_creation_flow')
-        else:
-            adding = False
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_class = 'form-animal card'
-        if adding:
-            self.helper.add_input(Submit('save-and-add-another-animal', _('Speichern und weiteres Tier hinzufügen')))
-            self.helper.add_input(Submit('save-and-finish', _('Speichern und beenden')))
-        else:
-            self.helper.add_input(Submit('submit', _('Speichern'), css_class="btn"))
+    template_name = "fellchensammlung/forms/form_snippets.html"
 
     class Meta:
         model = Animal

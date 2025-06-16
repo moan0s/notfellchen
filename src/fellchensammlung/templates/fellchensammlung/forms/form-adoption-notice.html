@@ -1,8 +1,15 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
-{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
 {% block content %}
-    <h1>{% translate "Vermittlungsanzeige" %}</h1>
-    {% crispy form %}
+    <h1>{{ form.name.data }}</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form }}
+        <input class="button is-primary" type="submit" value="{% translate "Speichern" %}">
+
+        <a class="button is-danger">{% translate "Löschen" %}</a>
+    </form>
 {% endblock %}

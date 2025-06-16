@@ -515,7 +515,8 @@ def animal_edit(request, animal_id):
             """Log"""
             Log.objects.create(user=request.user, action="add_photo_to_animal",
                                text=f"{request.user} hat Tier {animal.pk} zum Tier geändert")
-            return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
+            print(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
+            return redirect(reverse("adoption-notice-detail-bulma", args=[animal.adoption_notice.pk], ))
     else:
         form = AnimalForm(instance=animal)
     return render(request, 'fellchensammlung/forms/form-adoption-notice.html', context={"form": form})
