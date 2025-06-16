@@ -3,7 +3,7 @@
 <div class="card">
     <div class="card-header">
         <h1 class="card-header-title">
-            <a href="{% url 'animal-detail' animal_id=animal.pk %}">{{ animal.name }}</a>
+            {{ animal.name }}
         </h1>
     </div>
     <div class="card-content">
@@ -57,9 +57,9 @@
     <!--- Assume a user does not have edit permissions on animal if they have no other edit permission   --->
     {% if has_edit_permission %}
         <div class="card-footer">
-            <a class="card-footer-item button"
+            <a class="card-footer-item"
                href="{% url 'animal-edit' animal_id=animal.pk %}">{% translate 'Bearbeiten' %}</a>
-            <a class="card-footer-item button"
+            <a class="card-footer-item"
                href="{% url 'animal-add-photo-bulma' animal_id=animal.pk %}">{% translate 'Foto hinzufügen' %}</a>
         </div>
     {% endif %}
