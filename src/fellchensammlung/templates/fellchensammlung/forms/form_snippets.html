@@ -16,7 +16,10 @@
                 </div>
             {% elif field|widget_type == 'dateinput' %}
                 {{ field|add_class:"input"|attr:"type:date" }}
-
+            {% elif field|widget_type == 'textarea' %}
+                {{ field|add_class:"input textarea"|attr:"rows:3" }}
+            {% elif field|widget_type == 'checkboxinput' %}
+                {{ field|add_class:"checkbox" }}
             {% else %}
                 {{ field|add_class:"input" }}
             {% endif %}
