@@ -22,65 +22,29 @@ class DateInput(forms.DateInput):
     input_type = 'date'
 
 
-class BulmaAdoptionNoticeForm(forms.ModelForm):
+class AdoptionNoticeForm(forms.ModelForm):
     template_name = "fellchensammlung/forms/form_snippets.html"
 
     class Meta:
         model = AdoptionNotice
         fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string",
                   "organization"]
-
-
-class AdoptionNoticeForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        if 'in_adoption_notice_creation_flow' in kwargs:
-            in_flow = kwargs.pop('in_adoption_notice_creation_flow')
-        else:
-            in_flow = False
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-
-        self.helper.form_id = 'form-adoption-notice'
-        self.helper.form_class = 'card'
-        self.helper.form_method = 'post'
-
-        if in_flow:
-            submit = Submit('save-and-add-another-animal', _('Speichern'))
-
-        else:
-            submit = Submit('submit', _('Speichern'))
-
-        self.helper.layout = Layout(
-            Fieldset(
-                _('Vermittlungsdetails'),
-                'name',
-                'species',
-                'num_animals',
-                'date_of_birth',
-                'sex',
-                'group_only',
-                'searching_since',
-                'location_string',
-                'organization',
-                'description',
-                'further_information',
-            ),
-            submit)
-
-    class Meta:
-        model = AdoptionNotice
-        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string",
-                  "organization"]
-
-
-class AdoptionNoticeFormWithDateWidget(AdoptionNoticeForm):
-    class Meta:
-        model = AdoptionNotice
-        fields = ['name', "group_only", "further_information", "description", "searching_since", "location_string",
-                  "organization"]
         widgets = {
-            'searching_since': DateInput(),
+            'searching_since': DateInput(format=('%Y-%m-%d')),
         }
+
+
+
+class AdoptionNoticeFormAutoAnimal(AdoptionNoticeForm):
+    def __init__(self, *args, **kwargs):
+        super(AdoptionNoticeFormAutoAnimal, self).__init__(*args, **kwargs)
+        self.fields["num_animals"] = forms.fields.IntegerField(min_value=1, max_value=30, label=_("Zahl der Tiere"))
+        animal_form = AnimalForm()
+        self.fields["species"] = animal_form.fields["species"]
+        self.fields["sex"] = animal_form.fields["sex"]
+        self.fields["date_of_birth"] = animal_form.fields["date_of_birth"]
+        self.fields["date_of_birth"].widget = DateInput(format=('%Y-%m-%d'))
+
 
 
 class AnimalForm(forms.ModelForm):
@@ -93,26 +57,6 @@ class AnimalForm(forms.ModelForm):
         widgets = {
             'date_of_birth': DateInput(format=('%Y-%m-%d'))
         }
-
-
-class AnimalFormWithDateWidget(AnimalForm):
-    class Meta:
-        model = Animal
-        fields = ["name", "date_of_birth", "species", "sex", "description"]
-        widgets = {
-            'date_of_birth': DateInput(),
-        }
-
-
-class AdoptionNoticeFormWithDateWidgetAutoAnimal(AdoptionNoticeFormWithDateWidget):
-    def __init__(self, *args, **kwargs):
-        super(AdoptionNoticeFormWithDateWidgetAutoAnimal, self).__init__(*args, **kwargs)
-        self.fields["num_animals"] = forms.fields.IntegerField(min_value=1, max_value=30, label=_("Zahl der Tiere"))
-        animal_form = AnimalForm()
-        self.fields["species"] = animal_form.fields["species"]
-        self.fields["sex"] = animal_form.fields["sex"]
-        self.fields["date_of_birth"] = animal_form.fields["date_of_birth"]
-        self.fields["date_of_birth"].widget = DateInput()
 
 
 class ImageForm(forms.ModelForm):
@@ -179,7 +123,6 @@ class ModerationActionForm(forms.ModelForm):
 
 
 class CustomRegistrationForm(RegistrationForm):
-
     class Meta(RegistrationForm.Meta):
         model = User
 

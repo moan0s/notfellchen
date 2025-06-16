@@ -1,5 +1,5 @@
 from django.test import TestCase
-from fellchensammlung.forms import AdoptionNoticeFormWithDateWidgetAutoAnimal
+from fellchensammlung.forms import AdoptionNoticeFormAutoAnimal
 from fellchensammlung.models import Species
 from model_bakery import baker
 
@@ -21,5 +21,5 @@ class TestAdoptionNoticeFormWithDateWidgetAutoAnimal(TestCase):
                      "description": "Blaaaa",
                      "further_information": "https://notfellchen.org",
                      "save-and-add-another-animal": "Speichern"}
-        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(data=form_data)
+        form = AdoptionNoticeFormAutoAnimal(data=form_data)
         self.assertTrue(form.is_valid())

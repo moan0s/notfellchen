@@ -20,10 +20,8 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
     Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, AdoptionNoticeNotification, \
     ImportantLocation
-from .forms import AdoptionNoticeForm, AdoptionNoticeFormWithDateWidget, ImageForm, ReportAdoptionNoticeForm, \
-    CommentForm, ReportCommentForm, AnimalForm, \
-    AdoptionNoticeSearchForm, AnimalFormWithDateWidget, AdoptionNoticeFormWithDateWidgetAutoAnimal, \
-    BulmaAdoptionNoticeForm
+from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
+    CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal
 from .models import Language, Announcement
 from .tools import i18n
 from .tools.geo import GeoAPI, zoom_level_for_radius
@@ -272,8 +270,8 @@ def search(request, templatename="fellchensammlung/search.html"):
 @login_required
 def add_adoption_notice(request):
     if request.method == 'POST':
-        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(request.POST, request.FILES,
-                                                          in_adoption_notice_creation_flow=True)
+        form = AdoptionNoticeFormAutoAnimal(request.POST, request.FILES,
+                                            in_adoption_notice_creation_flow=True)
 
         if form.is_valid():
             an_instance = form.save(commit=False)
@@ -307,18 +305,16 @@ def add_adoption_notice(request):
 
             return redirect(reverse("adoption-notice-detail", args=[an_instance.pk]))
     else:
-        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(in_adoption_notice_creation_flow=True)
+        form = AdoptionNoticeFormAutoAnimal(in_adoption_notice_creation_flow=True)
     return render(request, 'fellchensammlung/forms/form_add_adoption.html', {'form': form})
 
 
 @login_required
 def add_adoption_notice_bulma(request):
     if request.method == 'POST':
-        print("dada")
-        form = AdoptionNoticeFormWithDateWidgetAutoAnimal(request.POST)
+        form = AdoptionNoticeFormAutoAnimal(request.POST)
 
         if form.is_valid():
-            print("dodo")
             an_instance = form.save(commit=False)
             an_instance.owner = request.user
 
@@ -352,7 +348,7 @@ def add_adoption_notice_bulma(request):
         else:
             print(form.errors)
     else:
-        form = AdoptionNoticeFormWithDateWidgetAutoAnimal()
+        form = AdoptionNoticeFormAutoAnimal()
     return render(request, 'fellchensammlung/forms/bulma-form-add-adoption.html', {'form': form})
 
 
