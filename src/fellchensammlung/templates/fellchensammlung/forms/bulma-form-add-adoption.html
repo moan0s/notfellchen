@@ -50,6 +50,15 @@
             {{ form.searching_since|add_class:"input"|attr:"id:an-searching-since"|attr:"type:date" }}
         </div>
 
+
+        <div class="field">
+            <label class="label" for="an-further-information">{{ form.further_information.label }}</label>
+            {{ form.further_information|add_class:"input"|attr:"id:an-further-information"|attr:"type:url" }}
+            <div class="help">
+                {{ form.further_information.help_text }}
+            </div>
+        </div>
+
         <div class="notification">
             <button class="delete"></button>
             <p>
