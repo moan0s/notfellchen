@@ -90,6 +90,10 @@ class AnimalForm(forms.ModelForm):
         model = Animal
         fields = ["name", "date_of_birth", "species", "sex", "description"]
 
+        widgets = {
+            'date_of_birth': DateInput(format=('%Y-%m-%d'))
+        }
+
 
 class AnimalFormWithDateWidget(AnimalForm):
     class Meta:
