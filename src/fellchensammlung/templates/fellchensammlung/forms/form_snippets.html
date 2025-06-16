@@ -1,6 +1,8 @@
 <!--- See https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
 
 {% load custom_tags %}
+{% load widget_tweaks %}
+
 {% for field in form %}
     <div class="field">
 
@@ -8,12 +10,13 @@
             {{ field.label }}
         </label>
         <div class="control">
-            {% if field|widget_type == 'TextInput' %}
-                {{ field|add_class:"input" }}
-            {% elif field|widget_type == 'Select' %}
+            {% if field|widget_type == 'Select' %}
                 <div class="select">
                     {{ field }}
                 </div>
+            {% elif field|widget_type == 'dateinput' %}
+                {{ field|add_class:"input"|attr:"type:date" }}
+
             {% else %}
                 {{ field|add_class:"input" }}
             {% endif %}
