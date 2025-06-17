@@ -18,7 +18,6 @@ sitemaps = {
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("bulma/", views.index_bulma, name="index-bulma"),
     path("rss/", LatestAdoptionNoticesFeed(), name="rss"),
     path("metrics/", views.metrics, name="metrics"),
     # ex: /animal/5/

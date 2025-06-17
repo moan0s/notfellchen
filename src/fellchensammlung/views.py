@@ -47,24 +47,7 @@ def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=Trust
     if not user_is_owner_or_trust_level(user, django_object, trust_level):
         raise PermissionDenied
 
-
 def index(request):
-    """View function for home page of site."""
-    latest_adoption_list = AdoptionNotice.objects.filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE).order_by("-created_at")
-    active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
-    language_code = translation.get_language()
-    lang = Language.objects.get(languagecode=language_code)
-    active_announcements = Announcement.get_active_announcements(lang)
-
-    context = {"adoption_notices": active_adoptions[:5], "adoption_notices_map": active_adoptions,
-               "announcements": active_announcements}
-    Text.get_texts(["how_to", "introduction"], lang, context)
-
-    return render(request, 'fellchensammlung/index.html', context=context)
-
-
-def index_bulma(request):
     """View function for home page of site."""
     latest_adoption_list = AdoptionNotice.objects.filter(
         adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE).order_by("-created_at")
