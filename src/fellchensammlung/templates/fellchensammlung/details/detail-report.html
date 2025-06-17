@@ -1,9 +1,9 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
 
 {% block content %}
     {% if form_complete %}
-        <h1>{% translate "Erfolgreich gemeldet" %}</h1>
+        <h1 class="title is-2">{% translate "Erfolgreich gemeldet" %}</h1>
         {% blocktranslate %}
             Wenn du sehen willst welche Moderationsentscheidungen getroffen werden, schau zu einem späteren Zeitpunkt
             wieder auf dieser Seite vorbei.
@@ -11,8 +11,10 @@
             <a href="mailto:info@notfellchen.org">info@notfellchen.org</a> Einspruch einlegen.
         {% endblocktranslate %}
     {% endif %}
+    <hr>
     {% include "fellchensammlung/partials/partial-report.html" %}
-    <h2>{% translate "Moderationsverlauf" %}</h2>
+    <hr>
+    <h1 class="title is-1">{% translate "Moderationsverlauf" %}</h1>
     {% if report.get_moderation_actions %}
         {% include "fellchensammlung/lists/list-moderation-action.html" %}
     {% else %}

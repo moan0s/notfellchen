@@ -1,6 +1,6 @@
 {% load i18n %}
-<div class="report card">
-    <h2>
+<div class="block">
+    <h2 class="title is-3">
         {% translate 'Meldung von ' %} <a href="{{ report.reported_content_url }}"><i>{{ report.reported_content }}</i></a>
     </h2>
     {% if report.reported_broken_rules %}
@@ -19,16 +19,16 @@
         {% endif %}
     </p>
     {% if is_mod_or_above %}
-        <div class="container-edit-buttons">
+        <div class="field is-grouped">
             <form action="allow" class="">
                 {% csrf_token %}
                 <input type="hidden" name="report_id" value="{{ report.pk }}">
-                <button class="btn allow" type="submit">{% translate "Inhalt genehmigen" %}</button>
+                <button class="button is-primary" type="submit">{% translate "Inhalt genehmigen" %}</button>
             </form>
             <form action="disallow" class="">
                 {% csrf_token %}
                 <input type="hidden" name="report_id" value="{{ report.pk }}">
-                <button class="btn allow" type="submit">{% translate "Inhalt als gesperrt kennzeichnen" %}</button>
+                <button class="button is-danger" type="submit">{% translate "Inhalt als gesperrt kennzeichnen" %}</button>
             </form>
         </div>
     {% endif %}

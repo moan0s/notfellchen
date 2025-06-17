@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="card-animal">
-    <div class="tag">{{ moderation_action.action }}</div>
+<div class="block">
+    <h3 class="title is-4">{{ moderation_action.get_action_display }}</h3>
     <p>{{ moderation_action.public_comment }}</p>
 </div>
