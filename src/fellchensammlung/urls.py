@@ -57,8 +57,7 @@ urlpatterns = [
     # ex: /map/
     path("bulma/map/", views.map_bulma, name="map-bulma"),
     # ex: /vermitteln/
-    path("vermitteln/", views.add_adoption_notice, name="add-adoption"),
-    path("bulma/vermitteln/", views.add_adoption_notice_bulma, name="add-adoption-bulma"),
+    path("vermitteln/", views.add_adoption_notice_bulma, name="add-adoption"),
 
     path("ueber-uns/", views.about, name="about"),
     path("bulma/ueber-uns/", views.about_bulma, name="about-bulma"),
