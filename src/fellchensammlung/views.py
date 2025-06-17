@@ -79,10 +79,7 @@ def change_language(request):
             response = HttpResponseRedirect(redirect_path)
             response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language_code)
             return response
-        else:
-            return render(request, 'fellchensammlung/index.html')
-    else:
-        return render(request, 'fellchensammlung/index.html')
+        return render(request, "fellchensammlung/errors/403.html", status=403)
 
 
 def adoption_notice_detail(request, adoption_notice_id):
