@@ -169,12 +169,6 @@ def adoption_notice_edit(request, adoption_notice_id):
     return render(request, 'fellchensammlung/forms/form-animal.html', context={"form": form})
 
 
-def animal_detail(request, animal_id):
-    animal = Animal.objects.get(id=animal_id)
-    context = {"animal": animal}
-    return render(request, 'fellchensammlung/details/detail_animal.html', context=context)
-
-
 def search_important_locations(request, important_location_slug):
     i_location = get_object_or_404(ImportantLocation, slug=important_location_slug)
     search = Search()
