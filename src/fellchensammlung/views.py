@@ -682,16 +682,11 @@ def bulma_list_rescue_organizations(request):
 
 
 def detail_view_rescue_organization(request, rescue_organization_id,
-                                    template='fellchensammlung/details/detail-rescue-organization.html'):
+                                    template='fellchensammlung/details/bulma-detail-rescue-organization.html'):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)
     return render(request, template,
                   context={"org": org, "map_center": org.position, "zoom_level": 6, "rescue_organizations": [org]})
 
-
-def bulma_detail_view_rescue_organization(request, rescue_organization_id):
-    return detail_view_rescue_organization(request,
-                                           rescue_organization_id,
-                                           template='fellchensammlung/details/bulma-detail-rescue-organization.html')
 
 
 def export_own_profile(request):

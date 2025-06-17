@@ -40,10 +40,8 @@ urlpatterns = [
          name="adoption-notice-add-animal"),
 
     path("tierschutzorganisationen/", views.bulma_list_rescue_organizations, name="rescue-organizations"),
-    path("organisation/<int:rescue_organization_id>/", views.detail_view_rescue_organization,
+    path("tierschutzorganisationen/<int:rescue_organization_id>/", views.detail_view_rescue_organization,
          name="rescue-organization-detail"),
-    path("bulma/organisation/<int:rescue_organization_id>/", views.bulma_detail_view_rescue_organization,
-         name="bulma-rescue-organization-detail"),
 
     # ex: /search/
     path("suchen/", views.search, name="search"),
