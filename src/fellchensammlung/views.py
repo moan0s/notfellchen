@@ -176,7 +176,7 @@ def adoption_notice_edit(request, adoption_notice_id):
             return redirect(reverse("adoption-notice-detail-bulma", args=[adoption_notice_instance.pk], ))
     else:
         form = AdoptionNoticeForm(instance=adoption_notice)
-    return render(request, 'fellchensammlung/forms/form-adoption-notice.html', context={"form": form})
+    return render(request, 'fellchensammlung/forms/form-animal.html', context={"form": form})
 
 
 def animal_detail(request, animal_id):
@@ -397,7 +397,7 @@ def animal_edit(request, animal_id):
             return redirect(reverse("adoption-notice-detail-bulma", args=[animal.adoption_notice.pk], ))
     else:
         form = AnimalForm(instance=animal)
-    return render(request, 'fellchensammlung/forms/form-adoption-notice.html', context={"form": form})
+    return render(request, 'fellchensammlung/forms/form-animal.html', context={"form": form})
 
 
 def about(request):
