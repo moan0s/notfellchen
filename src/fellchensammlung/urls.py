@@ -33,10 +33,8 @@ urlpatterns = [
     # ex: /adoption_notice/7/edit
     path("vermittlung/<int:adoption_notice_id>/edit", views.adoption_notice_edit, name="adoption-notice-edit"),
     # ex: /vermittlung/5/add-photo
-    path("vermittlung/<int:adoption_notice_id>/add-photo", views.add_photo_to_adoption_notice,
+    path("vermittlung/<int:adoption_notice_id>/add-photo", views.add_photo_to_adoption_notice_bulma,
          name="adoption-notice-add-photo"),
-    path("bulma/vermittlung/<int:adoption_notice_id>/add-photo", views.add_photo_to_adoption_notice_bulma,
-         name="adoption-notice-add-photo-bulma"),
     # ex: /adoption_notice/2/add-animal
     path("vermittlung/<int:adoption_notice_id>/add-animal", views.adoption_notice_add_animal,
          name="adoption-notice-add-animal"),
