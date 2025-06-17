@@ -21,7 +21,7 @@ class GeoJSONRenderer(BaseRenderer):
                     "properties": {
                         k: v for k, v in item.items()
                     },
-                    "id": f"adoptionnotice/{item['id']}"
+                    "id": f"{item['id']}"
                 }
                 features.append(feature)
 

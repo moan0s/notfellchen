@@ -83,6 +83,38 @@ class AdoptionNoticeGeoJSONSerializer(serializers.ModelSerializer):
             return f"{obj.location.city}"
         return None
 
+class RescueOrgeGeoJSONSerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
+    url = serializers.SerializerMethodField()
+    location_hr = serializers.SerializerMethodField()
+    coordinates = serializers.SerializerMethodField()
+
+    class Meta:
+        model = AdoptionNotice
+        fields = ('id', 'name', 'description', 'url', 'location_hr', 'coordinates')
+
+    def get_url(self, obj):
+        return obj.get_absolute_url()
+
+    def get_coordinates(self, obj):
+        """
+        Coordinates are randomly moved around real location, roughly in a circle. The object id is used as angle so that
+        points are always displayed at the same location (as if they were a seed for a random function).
+
+        It's not exactly a circle, because the earth is round.
+        """
+        if obj.location:
+            return [obj.location.longitude, obj.location.latitude]
+        return None
+
+    def get_location_hr(self, obj):
+        if obj.location.city:
+            return f"{obj.location.city}"
+        elif obj.location:
+            return f"{obj.location}"
+        return None
+
+
 
 class AnimalCreateSerializer(serializers.ModelSerializer):
     class Meta:

@@ -14,7 +14,7 @@ from .renderers import GeoJSONRenderer
 from .serializers import (
     AnimalGetSerializer,
     AnimalCreateSerializer,
-    RescueOrganizationSerializer,
+    RescueOrgeGeoJSONSerializer,
     AdoptionNoticeSerializer,
     ImageCreateSerializer,
     SpeciesSerializer, RescueOrganizationSerializer,
@@ -363,4 +363,10 @@ class AdoptionNoticeGeoJSONView(ListAPIView):
     queryset = AdoptionNotice.objects.select_related('location').filter(location__isnull=False).filter(
         adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE)
     serializer_class = AdoptionNoticeGeoJSONSerializer
+    renderer_classes = [GeoJSONRenderer]
+
+
+class RescueOrgGeoJSONView(ListAPIView):
+    queryset = RescueOrganization.objects.select_related('location').filter(location__isnull=False)
+    serializer_class = RescueOrgeGeoJSONSerializer
     renderer_classes = [GeoJSONRenderer]
