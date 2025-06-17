@@ -31,23 +31,27 @@
                             <div class="dropdown-menu" role="menu">
                                 <div class="dropdown-content">
 
-                                    <a class="dropdown-item">
-                                        <i class="fas fa-check"
-                                           aria-hidden="true"></i> {% trans 'Als aktiv bestätigen' %}
-                                    </a>
-                                    <a class="dropdown-item">
-                                        <i class="fas fa-image"
-                                           aria-hidden="true"></i> {% trans 'Bilder hinzufügen' %}
-                                    </a>
-                                    <a class="dropdown-item" href="{% url 'adoption-notice-add-animal' adoption_notice.pk %}">
-                                        <i class="fas fa-plus"
-                                           aria-hidden="true"></i> {% trans 'Tier hinzufügen' %}
-                                    </a>
-                                    <a class="dropdown-item">
-                                        <i class="fas fa-circle-xmark"
-                                           aria-hidden="true"></i> {% trans 'Deaktivieren' %}
-                                    </a>
-                                    <hr class="dropdown-divider">
+                                    {% if has_edit_permission %}
+
+                                        <a class="dropdown-item">
+                                            <i class="fas fa-check"
+                                               aria-hidden="true"></i> {% trans 'Als aktiv bestätigen' %}
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <i class="fas fa-image"
+                                               aria-hidden="true"></i> {% trans 'Bilder hinzufügen' %}
+                                        </a>
+                                        <a class="dropdown-item"
+                                           href="{% url 'adoption-notice-add-animal' adoption_notice.pk %}">
+                                            <i class="fas fa-plus"
+                                               aria-hidden="true"></i> {% trans 'Tier hinzufügen' %}
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <i class="fas fa-circle-xmark"
+                                               aria-hidden="true"></i> {% trans 'Deaktivieren' %}
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                    {% endif %}
                                     <a class="dropdown-item" href="{{ adoption_notice.get_report_url }}">
                                         <i class="fas fa-flag"
                                            aria-hidden="true"></i> {% trans 'Melden' %}
