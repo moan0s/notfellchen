@@ -5,13 +5,16 @@
 
 {% for field in form %}
     <div class="field">
-
         <label class="label">
             {{ field.label }}
         </label>
         <div class="control">
             {% if field|widget_type == 'Select' %}
                 <div class="select">
+                    {{ field }}
+                </div>
+            {% elif field|widget_type == 'selectmultiple' %}
+                <div class="select is-multiple is-fullwidth">
                     {{ field }}
                 </div>
             {% elif field|widget_type == 'dateinput' %}

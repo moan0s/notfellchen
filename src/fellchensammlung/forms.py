@@ -92,12 +92,14 @@ class ImageForm(forms.ModelForm):
 
 
 class ReportAdoptionNoticeForm(forms.ModelForm):
+    template_name = "fellchensammlung/forms/form_snippets.html"
     class Meta:
         model = ReportAdoptionNotice
         fields = ('reported_broken_rules', 'user_comment')
 
 
 class ReportCommentForm(forms.ModelForm):
+    template_name = "fellchensammlung/forms/form_snippets.html"
     class Meta:
         model = ReportComment
         fields = ('reported_broken_rules', 'user_comment')

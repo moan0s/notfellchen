@@ -1,12 +1,12 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
 
 {% block content %}
-  <h1>{% translate "Melden" %}</h1>
-    Wenn diese Vermittlung nicht unseren <a href='{% url "about" %}'>Regeln</a> entspricht, wähle bitte eine der folgenden Regeln aus und hinterlasse einen Kommentar der es detaillierter erklärt, insbesondere wenn der Regelverstoß nicht offensichtlich ist.
+  <h1 class="title is-1">{% translate "Melden" %}</h1>
+    Wenn dieser Inhalt nicht unseren <a href='{% url "about" %}'>Regeln</a> entspricht, wähle bitte eine der folgenden Regeln aus und hinterlasse einen Kommentar der es detaillierter erklärt, insbesondere wenn der Regelverstoß nicht offensichtlich ist.
     <form method = "post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn2" type="submit">{% translate "Melden" %}</button>
+        {{ form }}
+        <button class="button is-primary" type="submit">{% translate "Melden" %}</button>
     </form>
 {% endblock %}
