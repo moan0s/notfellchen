@@ -173,7 +173,7 @@ def adoption_notice_edit(request, adoption_notice_id):
             """Log"""
             Log.objects.create(user=request.user, action="adoption_notice_edit",
                                text=f"{request.user} hat Vermittlung {adoption_notice.pk} geändert")
-            return redirect(reverse("adoption-notice-detail-bulma", args=[adoption_notice_instance.pk], ))
+            return redirect(reverse("adoption-notice-detail", args=[adoption_notice_instance.pk], ))
     else:
         form = AdoptionNoticeForm(instance=adoption_notice)
     return render(request, 'fellchensammlung/forms/form-animal.html', context={"form": form})
@@ -282,7 +282,7 @@ def add_adoption_notice_bulma(request):
             # Automatically subscribe user that created AN to AN
             Subscriptions.objects.create(owner=request.user, adoption_notice=an_instance)
 
-            return redirect(reverse("adoption-notice-detail-bulma", args=[an_instance.pk]))
+            return redirect(reverse("adoption-notice-detail", args=[an_instance.pk]))
         else:
             print(form.errors)
     else:
@@ -338,7 +338,7 @@ def add_photo_to_animal_bulma(request, animal_id):
                 form = ImageForm(in_flow=True)
                 return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
             else:
-                return redirect(reverse("adoption-notice-detail-bulma", args=[animal.adoption_notice.pk], ))
+                return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
         else:
             return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
 
@@ -393,8 +393,7 @@ def animal_edit(request, animal_id):
             """Log"""
             Log.objects.create(user=request.user, action="add_photo_to_animal",
                                text=f"{request.user} hat Tier {animal.pk} zum Tier geändert")
-            print(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
-            return redirect(reverse("adoption-notice-detail-bulma", args=[animal.adoption_notice.pk], ))
+            return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
     else:
         form = AnimalForm(instance=animal)
     return render(request, 'fellchensammlung/forms/form-animal.html', context={"form": form})
