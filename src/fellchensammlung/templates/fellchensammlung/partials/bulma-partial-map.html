@@ -38,26 +38,6 @@
     map.addControl(new maplibregl.NavigationControl({showCompass: false}));
 
 
-
-    {% for rescue_organization in rescue_organizations %}
-        {% if rescue_organization.location %}
-            // create the popup
-            const popup_{{ forloop.counter }} = new maplibregl.Popup({offset: 25}).setHTML(`{% include "fellchensammlung/partials/bulma-partial-rescue-organization-minimal-map.html" %}`);
-
-            // create DOM element for the marker
-            const el_{{ forloop.counter }} = document.createElement('div');
-            el_{{ forloop.counter }}.id = 'marker_{{ forloop.counter }}';
-            el_{{ forloop.counter }}.classList.add('animal-shelter-marker', 'marker');
-
-            const location_popup_{{ forloop.counter }} = [{{ rescue_organization.location.longitude | pointdecimal }}, {{ rescue_organization.location.latitude | pointdecimal }}];
-            // create the marker
-            new maplibregl.Marker({element: el_{{ forloop.counter }}})
-                .setLngLat(location_popup_{{ forloop.counter }})
-                .setPopup(popup_{{ forloop.counter }}) // sets a popup on this marker
-                .addTo(map);
-        {% endif %}
-    {% endfor %}
-
     map.on('load', async () => {
 
         // Load adoption notices as geojson
@@ -126,13 +106,92 @@
         });
 
 
-        // inspect a cluster on click
+        // Load rescue_orgs as geojson
+        map.addSource('rescue-orgs', {
+            type: 'geojson',
+            data: '{% url "api-organization-list-geojson" %}',
+            cluster: true,
+            clusterMaxZoom: 14,
+            clusterRadius: 50
+        });
+
+        // Layer for clusters
+        map.addLayer({
+            id: 'org-clusters',
+            type: 'circle',
+            source: 'rescue-orgs',
+            filter: ['has', 'point_count'],
+            paint: {
+                'circle-color': [
+                    'step',
+                    ['get', 'point_count'],
+                    '#51bbd6',
+                    100,
+                    '#f1f075',
+                    750,
+                    '#f28cb1'
+                ],
+                'circle-radius': [
+                    'step',
+                    ['get', 'point_count'],
+                    20,
+                    100,
+                    30,
+                    750,
+                    40
+                ]
+            }
+        });
+
+        map.addLayer({
+            id: 'org-cluster-count',
+            type: 'symbol',
+            source: 'rescue-orgs',
+            filter: ['has', 'point_count'],
+            layout: {
+                'text-field': '{point_count_abbreviated}',
+                'text-size': 12,
+                'text-font': ['open_sans_medium'],
+            }
+        });
+
+        const org_image = await map.loadImage('{% static 'fellchensammlung/img/animal_shelter.png' %}');
+        map.addImage('org', org_image.data);
+
+
+        map.addLayer({
+            id: 'org-unclustered-point',
+            type: 'symbol',
+            source: 'rescue-orgs',
+            filter: ['!', ['has', 'point_count']],
+            layout: {
+                'icon-image': 'org',
+                'icon-size': 0.07,
+                'icon-allow-overlap': true
+            }
+        });
+
+
+        // inspect an AN cluster on click
         map.on('click', 'clusters', async (e) => {
             const features = map.queryRenderedFeatures(e.point, {
                 layers: ['clusters']
             });
             const clusterId = features[0].properties.cluster_id;
             const zoom = await map.getSource('adoption-notices').getClusterExpansionZoom(clusterId);
+            map.easeTo({
+                center: features[0].geometry.coordinates,
+                zoom
+            });
+        });
+
+        // inspect an org cluster on click
+        map.on('click', 'org-clusters', async (e) => {
+            const features = map.queryRenderedFeatures(e.point, {
+                layers: ['org-clusters']
+            });
+            const clusterId = features[0].properties.cluster_id;
+            const zoom = await map.getSource('rescue-orgs').getClusterExpansionZoom(clusterId);
             map.easeTo({
                 center: features[0].geometry.coordinates,
                 zoom
@@ -189,10 +248,42 @@
                 .addTo(map);
         });
 
+        // Same for orgs
+        map.on('click', 'org-unclustered-point', (e) => {
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const name = e.features[0].properties.name;
+            const url = e.features[0].properties.url;
+            const description = e.features[0].properties.description;
+            const location_hr = e.features[0].properties.location_hr;
+
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+
+            new maplibregl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(`
+                    <div class="popup-content is-size-7">
+                        <strong><a class="is-size-7" href="${url}">${name}</a></strong> <i class="fa-solid fa-arrow-up-right-from-square"></i><br>
+                            <span><strong>{% translate 'Ort' %}</strong>: ${location_hr}</span><br>
+                            <p class="is-size-7">${truncate(description, 80, url)}</p>
+                    </div>`
+                )
+                .addTo(map);
+        });
+
         map.on('mouseenter', 'clusters', () => {
             map.getCanvas().style.cursor = 'pointer';
         });
         map.on('mouseleave', 'clusters', () => {
+            map.getCanvas().style.cursor = '';
+        });
+
+        map.on('mouseenter', 'org-clusters', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', 'org-clusters', () => {
             map.getCanvas().style.cursor = '';
         });
 
