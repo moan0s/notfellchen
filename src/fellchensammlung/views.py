@@ -400,20 +400,6 @@ def animal_edit(request, animal_id):
     return render(request, 'fellchensammlung/forms/form-animal.html', context={"form": form})
 
 
-def about(request):
-    rules = Rule.objects.all()
-
-    legal = i18n.get_texts_by_language(["terms_of_service", "privacy_statement", "imprint", "about_us", "faq"])
-
-    context = {"rules": rules, }
-    context.update(legal)
-    return render(
-        request,
-        "fellchensammlung/about.html",
-        context=context
-    )
-
-
 def about_bulma(request):
     context = i18n.get_texts_by_language(["about_us", "faq"])
 
