@@ -683,14 +683,10 @@ def bulma_external_site_warning(request):
     return external_site_warning(request, 'fellchensammlung/bulma-external_site_warning.html')
 
 
-def list_rescue_organizations(request, template='fellchensammlung/animal-shelters.html'):
+def list_rescue_organizations(request, template='fellchensammlung/bulma-animal-shelters.html'):
     rescue_organizations = RescueOrganization.objects.all()
     context = {"rescue_organizations": rescue_organizations}
     return render(request, template, context=context)
-
-
-def bulma_list_rescue_organizations(request):
-    return list_rescue_organizations(request, template='fellchensammlung/bulma-animal-shelters.html')
 
 
 def detail_view_rescue_organization(request, rescue_organization_id,
