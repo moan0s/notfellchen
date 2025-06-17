@@ -85,7 +85,7 @@ def change_language(request):
         return render(request, 'fellchensammlung/index.html')
 
 
-def adoption_notice_detail(request, adoption_notice_id, template=None):
+def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
     if request.user.is_authenticated:
         try:
@@ -142,15 +142,8 @@ def adoption_notice_detail(request, adoption_notice_id, template=None):
         comment_form = CommentForm(instance=adoption_notice)
     context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
                "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed}
-    if template is not None:
-        return render(request, template, context=context)
-    else:
-        return render(request, 'fellchensammlung/details/detail_adoption_notice.html', context=context)
+    return render(request, 'fellchensammlung/details/bulma-detail-adoption-notice.html', context=context)
 
-
-def adoption_notice_detail_bulma(request, adoption_notice_id):
-    return adoption_notice_detail(request, adoption_notice_id,
-                                  template='fellchensammlung/details/bulma-detail-adoption-notice.html')
 
 
 @login_required()
