@@ -3,13 +3,13 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <h1>{{ form.name.data }}</h1>
+    <h1>{{ animal }}</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         {{ form }}
         <input class="button is-primary" type="submit" value="{% translate "Speichern" %}">
 
-        <a class="button is-danger">{% translate "Löschen" %}</a>
+        <a class="button is-danger" href="{% url 'animal-delete' animal_id=animal.pk %}">{% translate "Löschen" %}</a>
     </form>
 {% endblock %}

@@ -24,6 +24,8 @@ urlpatterns = [
     path("tier/<int:animal_id>/", views.animal_detail, name="animal-detail"),
     # ex: /animal/5/edit
     path("tier/<int:animal_id>/edit", views.animal_edit, name="animal-edit"),
+    # ex: /animal/5/delete
+    path("tier/<int:animal_id>/delete", views.animal_delete, name="animal-delete"),
     # ex: /animal/5/add-photo
     path("tier/<int:animal_id>/add-photo", views.add_photo_to_animal_bulma, name="animal-add-photo"),
     # ex: /adoption_notice/7/

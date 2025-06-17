@@ -389,7 +389,30 @@ def animal_edit(request, animal_id):
             return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
     else:
         form = AnimalForm(instance=animal)
-    return render(request, 'fellchensammlung/forms/form-animal.html', context={"form": form})
+    return render(request, 'fellchensammlung/forms/form-animal.html',
+                  context={"form": form, "animal": animal})
+
+
+@login_required
+def animal_delete(request, animal_id):
+    """
+    Shows a conformation page from which a user can delete an animal or go back to the adoption notice.
+    """
+    animal = Animal.objects.get(pk=animal_id)
+    # Only users that are mods or owners of the animal are allowed to edit it
+    fail_if_user_not_owner_or_trust_level(request.user, animal)
+    if request.method == 'POST':
+        if "delete" in request.POST:
+            # First delete related images, then animal
+            images = animal.get_photos()
+            for image in images:
+                image.delete()
+            animal.delete()
+            """Log"""
+            Log.objects.create(user=request.user, action="delete_animal",
+                               text=f"{request.user} hat Tier {animal.pk} gelöscht")
+            return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
+    return render(request, 'fellchensammlung/forms/form-delete-animal.html', context={"animal": animal})
 
 
 def about_bulma(request):
