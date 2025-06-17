@@ -289,7 +289,7 @@ def adoption_notice_add_animal(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(pk=adoption_notice_id)
     fail_if_user_not_owner_or_trust_level(request.user, adoption_notice)
     if request.method == 'POST':
-        form = AnimalFormWithDateWidget(request.POST, request.FILES)
+        form = AnimalForm(request.POST, request.FILES)
 
         if form.is_valid():
             instance = form.save(commit=False)
@@ -298,12 +298,12 @@ def adoption_notice_add_animal(request, adoption_notice_id):
             instance.save()
             form.save_m2m()
             if "save-and-add-another-animal" in request.POST:
-                form = AnimalFormWithDateWidget(in_adoption_notice_creation_flow=True)
+                form = AnimalForm()
                 return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
             else:
                 return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
     else:
-        form = AnimalFormWithDateWidget(in_adoption_notice_creation_flow=True)
+        form = AnimalForm()
     return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
 
 

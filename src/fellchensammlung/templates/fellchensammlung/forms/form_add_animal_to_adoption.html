@@ -1,13 +1,17 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
-{% load crispy_forms_tags %}
 
 {% block content %}
-    <h1>{% translate "Vermitteln" %}</h1>
+    <h1>{% translate "Tiere hinzufügen" %}</h1>
     {% blocktranslate %}
-        Hier kannst du jetzt einzelne Tiere zu deiner Vermittlung hinzufügen. Lad auch gerne Fotos hoch. Gruppenfotos
-        kannst
-        du im nächsten Schritt hochladen.
+        Hier kannst du jetzt einzelne Tiere zu deiner Vermittlung hinzufügen.
     {% endblocktranslate %}
-    {% crispy form %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input class="button is-primary is-light" type="submit" value="{% translate "Speichern" %}">
+        <input class="button is-primary" type="submit" name="save-and-add-another-animal" value="{% translate "Speichern und weiteres Tier hinzufügen" %}">
+    </form>
+
 {% endblock %}

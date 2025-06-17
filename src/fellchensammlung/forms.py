@@ -34,7 +34,6 @@ class AdoptionNoticeForm(forms.ModelForm):
         }
 
 
-
 class AdoptionNoticeFormAutoAnimal(AdoptionNoticeForm):
     def __init__(self, *args, **kwargs):
         super(AdoptionNoticeFormAutoAnimal, self).__init__(*args, **kwargs)
@@ -44,7 +43,6 @@ class AdoptionNoticeFormAutoAnimal(AdoptionNoticeForm):
         self.fields["sex"] = animal_form.fields["sex"]
         self.fields["date_of_birth"] = animal_form.fields["date_of_birth"]
         self.fields["date_of_birth"].widget = DateInput(format=('%Y-%m-%d'))
-
 
 
 class AnimalForm(forms.ModelForm):
@@ -93,6 +91,7 @@ class ImageForm(forms.ModelForm):
 
 class ReportAdoptionNoticeForm(forms.ModelForm):
     template_name = "fellchensammlung/forms/form_snippets.html"
+
     class Meta:
         model = ReportAdoptionNotice
         fields = ('reported_broken_rules', 'user_comment')
@@ -100,6 +99,7 @@ class ReportAdoptionNoticeForm(forms.ModelForm):
 
 class ReportCommentForm(forms.ModelForm):
     template_name = "fellchensammlung/forms/form_snippets.html"
+
     class Meta:
         model = ReportComment
         fields = ('reported_broken_rules', 'user_comment')
