@@ -1,11 +1,11 @@
-{% extends "fellchensammlung/base_generic.html" %}
+{% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
 {% load custom_tags %}
 
 {% block title %}<title>{% translate "403 Forbidden" %}</title>{% endblock %}
 
 {% block content %}
-    <h1>403 Forbidden</h1>
+    <h1 class="title is-1">403 Forbidden</h1>
     <p>
     {% blocktranslate %}
     	Diese Aktion ist dir nicht erlaubt. Logge dich ein oder nutze einen anderen Account. Wenn du denkst, dass hier
