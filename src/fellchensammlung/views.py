@@ -705,14 +705,6 @@ def export_own_profile(request):
     return HttpResponse(full_json, content_type="application/json")
 
 
-def styleguide(request):
-    context = {"geocoding_api_url": settings.GEOCODING_API_URL, }
-    return render(request, 'fellchensammlung/styleguide.html', context=context)
-
-
-def styleguide_bulma(request):
-    return render(request, 'fellchensammlung/bulma-styleguide.html')
-
 
 @login_required
 def rescue_organization_check(request):
