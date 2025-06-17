@@ -142,7 +142,6 @@ def adoption_notice_detail(request, adoption_notice_id):
     return render(request, 'fellchensammlung/details/bulma-detail-adoption-notice.html', context=context)
 
 
-
 @login_required()
 def adoption_notice_edit(request, adoption_notice_id):
     """
@@ -178,14 +177,14 @@ def search_important_locations(request, important_location_slug):
                "place_not_found": search.place_not_found,
                "subscribed_search": None,
                "searched": False,
-               "adoption_notices_map": AdoptionNotice.get_active_ANs(),
                "map_center": search.position,
                "search_center": search.position,
                "map_pins": [search],
                "location": search.location,
                "search_radius": search.max_distance,
                "zoom_level": zoom_level_for_radius(search.max_distance),
-               "geocoding_api_url": settings.GEOCODING_API_URL, }
+               "geocoding_api_url": settings.GEOCODING_API_URL,
+               "show_ANs": True}
     return render(request, 'fellchensammlung/bulma-search.html', context=context)
 
 
@@ -220,14 +219,14 @@ def search(request, templatename="fellchensammlung/bulma-search.html"):
                "place_not_found": search.place_not_found,
                "subscribed_search": subscribed_search,
                "searched": searched,
-               "adoption_notices_map": AdoptionNotice.get_active_ANs(),
                "map_center": search.position,
                "search_center": search.position,
                "map_pins": [search],
                "location": search.location,
                "search_radius": search.max_distance,
                "zoom_level": zoom_level_for_radius(search.max_distance),
-               "geocoding_api_url": settings.GEOCODING_API_URL, }
+               "geocoding_api_url": settings.GEOCODING_API_URL,
+               "show_ANs": True}
     return render(request, templatename, context=context)
 
 
@@ -296,7 +295,6 @@ def adoption_notice_add_animal(request, adoption_notice_id):
     else:
         form = AnimalForm()
     return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
-
 
 
 @login_required
@@ -597,8 +595,12 @@ def updatequeue(request):
                "adoption_notices_active": adoption_notices_active}
     return render(request, 'fellchensammlung/updatequeue.html', context=context)
 
+
 def map_bulma(request):
-    return map(request, templatename='fellchensammlung/bulma-map.html')
+    context = {"show_ANs": True,
+               "show_rescue_orgs": True}
+
+    return render(request, 'fellchensammlung/bulma-map.html', context=context)
 
 
 def metrics(request):
@@ -675,7 +677,8 @@ def external_site_warning(request, template_name='fellchensammlung/bulma-externa
 
 def list_rescue_organizations(request, template='fellchensammlung/bulma-animal-shelters.html'):
     rescue_organizations = RescueOrganization.objects.all()
-    context = {"rescue_organizations": rescue_organizations}
+    context = {"rescue_organizations": rescue_organizations,
+               "show_rescue_orgs": True}
     return render(request, template, context=context)
 
 
@@ -683,8 +686,7 @@ def detail_view_rescue_organization(request, rescue_organization_id,
                                     template='fellchensammlung/details/bulma-detail-rescue-organization.html'):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)
     return render(request, template,
-                  context={"org": org, "map_center": org.position, "zoom_level": 6, "rescue_organizations": [org]})
-
+                  context={"org": org, "map_center": org.position, "zoom_level": 6, "map_pins": [org]})
 
 
 def export_own_profile(request):
@@ -697,7 +699,6 @@ def export_own_profile(request):
     ANs_as_json = serialize('json', ANs)
     full_json = f"{user_as_json}, {ANs_as_json}"
     return HttpResponse(full_json, content_type="application/json")
-
 
 
 @login_required

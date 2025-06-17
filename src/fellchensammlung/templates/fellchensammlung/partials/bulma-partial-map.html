@@ -39,253 +39,257 @@
 
 
     map.on('load', async () => {
-
-        // Load adoption notices as geojson
-        map.addSource('adoption-notices', {
-            type: 'geojson',
-            data: '{% url "api-adoption-notice-list-geojson" %}',
-            cluster: true,
-            clusterMaxZoom: 14,
-            clusterRadius: 50
-        });
-
-        // Layer for clusters
-        map.addLayer({
-            id: 'clusters',
-            type: 'circle',
-            source: 'adoption-notices',
-            filter: ['has', 'point_count'],
-            paint: {
-                'circle-color': [
-                    'step',
-                    ['get', 'point_count'],
-                    '#51bbd6',
-                    100,
-                    '#f1f075',
-                    750,
-                    '#f28cb1'
-                ],
-                'circle-radius': [
-                    'step',
-                    ['get', 'point_count'],
-                    20,
-                    100,
-                    30,
-                    750,
-                    40
-                ]
-            }
-        });
-
-        map.addLayer({
-            id: 'cluster-count',
-            type: 'symbol',
-            source: 'adoption-notices',
-            filter: ['has', 'point_count'],
-            layout: {
-                'text-field': '{point_count_abbreviated}',
-                'text-size': 12,
-                'text-font': ['open_sans_medium'],
-            }
-        });
-
-        const rat_image = await map.loadImage('{% static 'fellchensammlung/img/logo_transparent.png' %}');
-        map.addImage('rat', rat_image.data);
-
-
-        map.addLayer({
-            id: 'unclustered-point',
-            type: 'symbol',
-            source: 'adoption-notices',
-            filter: ['!', ['has', 'point_count']],
-            layout: {
-                'icon-image': ['get', 'species'],
-                'icon-size': 0.07,
-                'icon-allow-overlap': true
-            }
-        });
-
-
-        // Load rescue_orgs as geojson
-        map.addSource('rescue-orgs', {
-            type: 'geojson',
-            data: '{% url "api-organization-list-geojson" %}',
-            cluster: true,
-            clusterMaxZoom: 14,
-            clusterRadius: 50
-        });
-
-        // Layer for clusters
-        map.addLayer({
-            id: 'org-clusters',
-            type: 'circle',
-            source: 'rescue-orgs',
-            filter: ['has', 'point_count'],
-            paint: {
-                'circle-color': [
-                    'step',
-                    ['get', 'point_count'],
-                    '#51bbd6',
-                    100,
-                    '#f1f075',
-                    750,
-                    '#f28cb1'
-                ],
-                'circle-radius': [
-                    'step',
-                    ['get', 'point_count'],
-                    20,
-                    100,
-                    30,
-                    750,
-                    40
-                ]
-            }
-        });
-
-        map.addLayer({
-            id: 'org-cluster-count',
-            type: 'symbol',
-            source: 'rescue-orgs',
-            filter: ['has', 'point_count'],
-            layout: {
-                'text-field': '{point_count_abbreviated}',
-                'text-size': 12,
-                'text-font': ['open_sans_medium'],
-            }
-        });
-
-        const org_image = await map.loadImage('{% static 'fellchensammlung/img/animal_shelter.png' %}');
-        map.addImage('org', org_image.data);
-
-
-        map.addLayer({
-            id: 'org-unclustered-point',
-            type: 'symbol',
-            source: 'rescue-orgs',
-            filter: ['!', ['has', 'point_count']],
-            layout: {
-                'icon-image': 'org',
-                'icon-size': 0.07,
-                'icon-allow-overlap': true
-            }
-        });
-
-
-        // inspect an AN cluster on click
-        map.on('click', 'clusters', async (e) => {
-            const features = map.queryRenderedFeatures(e.point, {
-                layers: ['clusters']
+        {% if show_ANs %}
+            // Load adoption notices as geojson
+            map.addSource('adoption-notices', {
+                type: 'geojson',
+                data: '{% url "api-adoption-notice-list-geojson" %}',
+                cluster: true,
+                clusterMaxZoom: 14,
+                clusterRadius: 50
             });
-            const clusterId = features[0].properties.cluster_id;
-            const zoom = await map.getSource('adoption-notices').getClusterExpansionZoom(clusterId);
-            map.easeTo({
-                center: features[0].geometry.coordinates,
-                zoom
+
+            // Layer for clusters
+            map.addLayer({
+                id: 'clusters',
+                type: 'circle',
+                source: 'adoption-notices',
+                filter: ['has', 'point_count'],
+                paint: {
+                    'circle-color': [
+                        'step',
+                        ['get', 'point_count'],
+                        '#51bbd6',
+                        100,
+                        '#f1f075',
+                        750,
+                        '#f28cb1'
+                    ],
+                    'circle-radius': [
+                        'step',
+                        ['get', 'point_count'],
+                        20,
+                        100,
+                        30,
+                        750,
+                        40
+                    ]
+                }
             });
-        });
 
-        // inspect an org cluster on click
-        map.on('click', 'org-clusters', async (e) => {
-            const features = map.queryRenderedFeatures(e.point, {
-                layers: ['org-clusters']
+            map.addLayer({
+                id: 'cluster-count',
+                type: 'symbol',
+                source: 'adoption-notices',
+                filter: ['has', 'point_count'],
+                layout: {
+                    'text-field': '{point_count_abbreviated}',
+                    'text-size': 12,
+                    'text-font': ['open_sans_medium'],
+                }
             });
-            const clusterId = features[0].properties.cluster_id;
-            const zoom = await map.getSource('rescue-orgs').getClusterExpansionZoom(clusterId);
-            map.easeTo({
-                center: features[0].geometry.coordinates,
-                zoom
+
+            const rat_image = await map.loadImage('{% static 'fellchensammlung/img/logo_transparent.png' %}');
+            map.addImage('rat', rat_image.data);
+
+
+            map.addLayer({
+                id: 'unclustered-point',
+                type: 'symbol',
+                source: 'adoption-notices',
+                filter: ['!', ['has', 'point_count']],
+                layout: {
+                    'icon-image': ['get', 'species'],
+                    'icon-size': 0.07,
+                    'icon-allow-overlap': true
+                }
             });
-        });
 
-        // When a click event occurs on a feature in
-        // the unclustered-point layer, open a popup at
-        // the location of the feature, with
-        // description HTML from its properties.
-        map.on('click', 'unclustered-point', (e) => {
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const title = e.features[0].properties.title;
-            const url = e.features[0].properties.url;
-            const description = e.features[0].properties.description;
-            const location_hr = e.features[0].properties.location_hr;
-            const image_url = e.features[0].properties.image_url;
-            const image_alt = e.features[0].properties.image_alt;
 
-            // Ensure that if the map is zoomed out such that
-            // multiple copies of the feature are visible, the
-            // popup appears over the copy being pointed to.
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
 
-            const description_column = `
+            // inspect an AN cluster on click
+            map.on('click', 'clusters', async (e) => {
+                const features = map.queryRenderedFeatures(e.point, {
+                    layers: ['clusters']
+                });
+                const clusterId = features[0].properties.cluster_id;
+                const zoom = await map.getSource('adoption-notices').getClusterExpansionZoom(clusterId);
+                map.easeTo({
+                    center: features[0].geometry.coordinates,
+                    zoom
+                });
+            });
+
+            // When a click event occurs on a feature in
+            // the unclustered-point layer, open a popup at
+            // the location of the feature, with
+            // description HTML from its properties.
+            map.on('click', 'unclustered-point', (e) => {
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const title = e.features[0].properties.title;
+                const url = e.features[0].properties.url;
+                const description = e.features[0].properties.description;
+                const location_hr = e.features[0].properties.location_hr;
+                const image_url = e.features[0].properties.image_url;
+                const image_alt = e.features[0].properties.image_alt;
+
+                // Ensure that if the map is zoomed out such that
+                // multiple copies of the feature are visible, the
+                // popup appears over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                const description_column = `
                             <div class="column">
                                 <strong><a class="is-size-7" href="${url}">${title}</a></strong> <i class="fa-solid fa-arrow-up-right-from-square"></i><br>
                                 <span><strong>{% translate 'Ort' %}</strong>: ${location_hr}</span><br>
                                 <p class="is-size-7">${truncate(description, 80, url)}</p>
                             </div>
                             `;
-            let picture_column = '';
-            if (image_url) {
-                picture_column = `
+                let picture_column = '';
+                if (image_url) {
+                    picture_column = `
                             <div class="column">
                                 <figure class="image is-128x128">
                                     <img src="${image_url}" alt="${image_alt}"/>
                                 </figure>
                             </div>`;
-            }
+                }
 
-            new maplibregl.Popup()
-                .setLngLat(coordinates)
-                .setHTML(`
+                new maplibregl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(`
                     <div class="popup-content is-size-7">
                         <div class="columns">
                             ${description_column}
                             ${picture_column}
                         </div>
                     </div>`
-                )
-                .addTo(map);
-        });
+                    )
+                    .addTo(map);
+            });
 
-        // Same for orgs
-        map.on('click', 'org-unclustered-point', (e) => {
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const name = e.features[0].properties.name;
-            const url = e.features[0].properties.url;
-            const description = e.features[0].properties.description;
-            const location_hr = e.features[0].properties.location_hr;
+            map.on('mouseenter', 'clusters', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', 'clusters', () => {
+                map.getCanvas().style.cursor = '';
+            });
+        {% endif %}
 
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
+        {% if show_rescue_orgs %}
+            // Load rescue_orgs as geojson
+            map.addSource('rescue-orgs', {
+                type: 'geojson',
+                data: '{% url "api-organization-list-geojson" %}',
+                cluster: true,
+                clusterMaxZoom: 14,
+                clusterRadius: 50
+            });
+
+            // Layer for clusters
+            map.addLayer({
+                id: 'org-clusters',
+                type: 'circle',
+                source: 'rescue-orgs',
+                filter: ['has', 'point_count'],
+                paint: {
+                    'circle-color': [
+                        'step',
+                        ['get', 'point_count'],
+                        '#51bbd6',
+                        100,
+                        '#f1f075',
+                        750,
+                        '#f28cb1'
+                    ],
+                    'circle-radius': [
+                        'step',
+                        ['get', 'point_count'],
+                        20,
+                        100,
+                        30,
+                        750,
+                        40
+                    ]
+                }
+            });
+
+            map.addLayer({
+                id: 'org-cluster-count',
+                type: 'symbol',
+                source: 'rescue-orgs',
+                filter: ['has', 'point_count'],
+                layout: {
+                    'text-field': '{point_count_abbreviated}',
+                    'text-size': 12,
+                    'text-font': ['open_sans_medium'],
+                }
+            });
+
+            const org_image = await map.loadImage('{% static 'fellchensammlung/img/animal_shelter.png' %}');
+            map.addImage('org', org_image.data);
 
 
-            new maplibregl.Popup()
-                .setLngLat(coordinates)
-                .setHTML(`
+            map.addLayer({
+                id: 'org-unclustered-point',
+                type: 'symbol',
+                source: 'rescue-orgs',
+                filter: ['!', ['has', 'point_count']],
+                layout: {
+                    'icon-image': 'org',
+                    'icon-size': 0.07,
+                    'icon-allow-overlap': true
+                }
+            });
+
+            // inspect an org cluster on click
+            map.on('click', 'org-clusters', async (e) => {
+                const features = map.queryRenderedFeatures(e.point, {
+                    layers: ['org-clusters']
+                });
+                const clusterId = features[0].properties.cluster_id;
+                const zoom = await map.getSource('rescue-orgs').getClusterExpansionZoom(clusterId);
+                map.easeTo({
+                    center: features[0].geometry.coordinates,
+                    zoom
+                });
+            });
+
+            // Same for orgs
+            map.on('click', 'org-unclustered-point', (e) => {
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const name = e.features[0].properties.name;
+                const url = e.features[0].properties.url;
+                const description = e.features[0].properties.description;
+                const location_hr = e.features[0].properties.location_hr;
+
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+
+                new maplibregl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(`
                     <div class="popup-content is-size-7">
                         <strong><a class="is-size-7" href="${url}">${name}</a></strong> <i class="fa-solid fa-arrow-up-right-from-square"></i><br>
                             <span><strong>{% translate 'Ort' %}</strong>: ${location_hr}</span><br>
                             <p class="is-size-7">${truncate(description, 80, url)}</p>
                     </div>`
-                )
-                .addTo(map);
-        });
+                    )
+                    .addTo(map);
+            });
 
-        map.on('mouseenter', 'clusters', () => {
-            map.getCanvas().style.cursor = 'pointer';
-        });
-        map.on('mouseleave', 'clusters', () => {
-            map.getCanvas().style.cursor = '';
-        });
 
-        map.on('mouseenter', 'org-clusters', () => {
-            map.getCanvas().style.cursor = 'pointer';
-        });
-        map.on('mouseleave', 'org-clusters', () => {
-            map.getCanvas().style.cursor = '';
-        });
+            map.on('mouseenter', 'org-clusters', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', 'org-clusters', () => {
+                map.getCanvas().style.cursor = '';
+            });
+        {% endif %}
 
         image = await map.loadImage('{% static "fellchensammlung/img/pin.png" %}');
         map.addImage('pin', image.data);
