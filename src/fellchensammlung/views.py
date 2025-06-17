@@ -591,13 +591,6 @@ def updatequeue(request):
                "adoption_notices_active": adoption_notices_active}
     return render(request, 'fellchensammlung/updatequeue.html', context=context)
 
-
-def map(request, templatename='fellchensammlung/map.html'):
-    adoption_notices = AdoptionNotice.get_active_ANs()
-    context = {"adoption_notices_map": adoption_notices}
-    return render(request, templatename, context=context)
-
-
 def map_bulma(request):
     return map(request, templatename='fellchensammlung/bulma-map.html')
 
