@@ -12,7 +12,7 @@
             <div class="level is-mobile">
                 <div class="level-left">
                     <div class="level-item">
-                        <p class="title is-2">{{ adoption_notice.name }}</p>
+                        <p class="title is-3">{{ adoption_notice.name }}</p>
                     </div>
                 </div>
 
@@ -68,12 +68,14 @@
                     <div class="grid">
 
                         <div class="cell">
-                            <h2><strong>{% translate "Ort" %}</strong></h2>
-                            <p>{% if adoption_notice.location %}
+                        <span>
+                            <strong>{% translate "Ort" %}:</strong>
+                            {% if adoption_notice.location %}
                                 {{ adoption_notice.location }}
                             {% else %}
                                 {{ adoption_notice.location_string }}
-                            {% endif %}</p>
+                            {% endif %}
+                        </span>
                         </div>
                         <div class="cell">
                             {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
@@ -124,7 +126,7 @@
                 <div class="column block">
                     <div class="card">
                         <div class="card-header">
-                            <h1 class="card-header-title title is-2">{% translate "Beschreibung" %}</h1>
+                            <h1 class="card-header-title title is-4">{% translate "Beschreibung" %}</h1>
                         </div>
                         <div class="card-content">
                             <p class="expandable">{% if adoption_notice.description %}
