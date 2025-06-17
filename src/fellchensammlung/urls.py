@@ -52,7 +52,6 @@ urlpatterns = [
 
     # ex: /search/
     path("suchen/", views.search, name="search"),
-    path("bulma/suchen/", views.search_bulma, name="search-bulma"),
     path("suchen/<slug:important_location_slug>", views.search_important_locations, name="search-by-location"),
     # ex: /map/
     path("map/", views.map, name="map"),
