@@ -1,11 +1,13 @@
 {% extends "fellchensammlung/base_bulma.html" %}
 {% load i18n %}
-{% load crispy_forms_tags %}
 
 {% block content %}
     {% if not user.is_authenticated %}
-        {{ form }}
-        <input class="button is-primary" type="submit" value="{% translate "Jetzt registrieren!" %}">
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="button is-primary" type="submit" value="{% translate "Jetzt registrieren!" %}">
+        </form>
     {% else %}
         <p>{% translate "Du bist bereits eingeloggt." %}</p>
     {% endif %}
