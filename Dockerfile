@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 # Use 3.11 to avoid django.core.exceptions.ImproperlyConfigured: Error loading psycopg2 or psycopg module
-MAINTAINER Julian-Samuel Gebühr
+LABEL org.opencontainers.image.authors="Julian-Samuel Gebühr"
 
 ENV DOCKER_BUILD=true
 
