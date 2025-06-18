@@ -1,4 +1,5 @@
 import argparse
+import json
 import os
 import requests
 # TODO: consider using OSMPythonTools instead of requests or overpass library
@@ -76,7 +77,7 @@ def https(value):
 
 
 # TODO: take note of new get_overpass_result function which does the bulk of the new overpass query work
-def get_overpass_result(area):
+def get_overpass_result(area, data_file):
     """Build the Overpass query for fetching animal shelters in the specified area."""
     overpass_endpoint = "https://overpass-api.de/api/interpreter"
     overpass_query = f"""
@@ -89,14 +90,17 @@ def get_overpass_result(area):
         """
     r = requests.get(overpass_endpoint, params={'data': overpass_query})
     if r.status_code == 200:
-        result = osmtogeojson.process_osm_json(r.json())
+        rjson = r.json()
+        with open(data_file, 'w', encoding='utf-8') as f:
+            json.dump(rjson, f, ensure_ascii=False)
+        result = osmtogeojson.process_osm_json(rjson)
         return result
 
 
 def main():
     api_token, area, instance, data_file = get_config()
     # Query shelters
-    overpass_result = get_overpass_result(area)
+    overpass_result = get_overpass_result(area, data_file)
     if overpass_result is None:
         print("Error: get_overpass_result returned None")
         return
