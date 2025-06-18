@@ -37,7 +37,13 @@
                                             <i class="fas fa-check"
                                                aria-hidden="true"></i> {% trans 'Als aktiv bestätigen' %}
                                         </a>
-                                        <a class="dropdown-item">
+                                        <a class="dropdown-item"
+                                           href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
+                                            <i class="fas fa-pencil"
+                                               aria-hidden="true"></i> {% translate 'Bearbeiten' %}
+                                        </a>
+                                        <a class="dropdown-item"
+                                           href="{% url 'adoption-notice-add-photo' adoption_notice.pk %}">
                                             <i class="fas fa-image"
                                                aria-hidden="true"></i> {% trans 'Bilder hinzufügen' %}
                                         </a>
@@ -139,26 +145,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--- Edit buttons -->
-            {% if has_edit_permission %}
-                <div class="level">
-                    <div class="card-footer-item">
-                        <div class="column">
-                            <a class="button is-primary is-light"
-                               href="{% url 'adoption-notice-add-photo' adoption_notice_id=adoption_notice.pk %}">
-                                {% translate 'Foto hinzufügen' %}
-                            </a>
-                        </div>
-                        <div class="card-footer-item">
-                            <a class="button is-primary"
-                               href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
-                                {% translate 'Bearbeiten' %}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
             <div class="block">
                 {% if adoption_notice.further_information %}
                     <form method="get" action="{% url 'bulma-external-site' %}">
