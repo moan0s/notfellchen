@@ -1,8 +1,8 @@
 import argparse
 import os
 import requests
-# TODO: consider using OSMPythonTools instead of overpass
-import overpass
+# TODO: consider using OSMPythonTools instead of requests or overpass library
+from osmtogeojson import osmtogeojson
 from tqdm import tqdm
 
 DEFAULT_OSM_DATA_FILE = "export.geojson"
@@ -78,15 +78,19 @@ def https(value):
 # TODO: take note of new get_overpass_result function which does the bulk of the new overpass query work
 def get_overpass_result(area):
     """Build the Overpass query for fetching animal shelters in the specified area."""
-    api = overpass.API()
-    result = api.get(f"""
-                     // fetch area to search within
-                     area[name="{area}"]->.searchArea;
-                     // gather results
-                     nwr["amenity"="animal_shelter"](area.searchArea);
-                     """, verbosity="geom"
-                    )
-    return result
+    overpass_endpoint = "https://overpass-api.de/api/interpreter"
+    overpass_query = f"""
+        [out:json][timeout:25];
+        area[name="{area}"]->.searchArea;
+        nwr["amenity"="animal_shelter"](area.searchArea);
+        out body;
+        >;
+        out skel qt;
+        """
+    r = requests.get(overpass_endpoint, params={'data': overpass_query})
+    if r.status_code == 200:
+        result = osmtogeojson.process_osm_json(r.json())
+        return result
 
 
 def main():
