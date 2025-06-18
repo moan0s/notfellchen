@@ -1,20 +1,77 @@
-// Set your brand colors
-$purple: #8a4d76;
-$pink: #4f8e1b;
-$brown: #757763;
-$beige-light: #d0d1cd;
-$beige-lighter: #eff0eb;
+$primary: #6CD4FF;
+$link: #292a2c;
+$grey-light: #c4c6ce;
+$grey-dark: #262728;
+
 
 // Path to Bulma's sass folder
 @use "bulma/sass" with (
   $family-primary: '"Nunito", sans-serif',
-  $grey-dark: $brown,
-  $grey-light: $beige-light,
-  $primary: $purple,
-  $link: $pink,
+  $grey-dark: $grey-dark,
+  $grey-light: $grey-light,
+  $primary: $primary,
+  $link: $link,
   $control-border-width: 2px,
   $input-shadow: none
 );
+
+.card-header {
+  background-color: $primary;
+}
+
+
+
+.toggle-switch {
+    display: inline-block;
+    background: #ccc;
+    border-radius: 16px;
+    width: 58px;
+    height: 32px;
+    position: relative;
+    vertical-align: middle;
+    transition: background 0.25s;
+}
+
+.toggle-switch:before, .toggle-switch:after {
+    content: "";
+}
+
+.toggle-switch:before {
+    display: block;
+    background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    transition: left 0.25s;
+}
+
+.toggle:hover .toggle-switch:before {
+    background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.checked + .toggle-switch {
+    background: #56c080;
+}
+
+.checked + .toggle-switch:before {
+    left: 30px;
+}
+
+.toggle-checkbox {
+    position: absolute;
+    visibility: hidden;
+}
+
+.slider-label {
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
+}
 
 
 
