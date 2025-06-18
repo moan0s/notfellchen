@@ -1,4 +1,4 @@
-import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js';
+import PhotoSwipeLightbox from './photoswipe-lightbox.esm.js';
 
 const lightbox = new PhotoSwipeLightbox({
   gallery: '.gallery',
