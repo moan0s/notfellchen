@@ -165,7 +165,7 @@ def adoption_notice_edit(request, adoption_notice_id):
             return redirect(reverse("adoption-notice-detail", args=[adoption_notice_instance.pk], ))
     else:
         form = AdoptionNoticeForm(instance=adoption_notice)
-    return render(request, 'fellchensammlung/forms/form-animal.html', context={"form": form})
+    return render(request, 'fellchensammlung/forms/form-adoption-notice-basic.html', context={"form": form})
 
 
 def search_important_locations(request, important_location_slug):
@@ -683,7 +683,7 @@ def list_rescue_organizations(request, template='fellchensammlung/bulma-animal-s
 
 
 def detail_view_rescue_organization(request, rescue_organization_id,
-                                    template='fellchensammlung/details/bulma-detail-rescue-organization.html'):
+                                    template='fellchensammlung/details/detail-rescue-organization.html'):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)
     return render(request, template,
                   context={"org": org, "map_center": org.position, "zoom_level": 6, "map_pins": [org]})
