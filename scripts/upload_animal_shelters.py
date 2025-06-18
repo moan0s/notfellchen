@@ -1,16 +1,21 @@
 import argparse
-import json
 import os
 import requests
+# TODO: consider using OSMPythonTools instead of overpass
+import overpass
 from tqdm import tqdm
 
 DEFAULT_OSM_DATA_FILE = "export.geojson"
+# Search area must be the official name, e.g. "Germany" is not a valid area name in Overpass API
+# Consider instead finding & using the code within the query itself, e.g. "ISO3166-1"="DE"
+DEFAULT_OVERPASS_SEARCH_AREA = "Deutschland" 
 
 
 def parse_args():
     """Parse command-line arguments."""
-    parser = argparse.ArgumentParser(description="Upload animal shelter data to the Notfellchen API.")
+    parser = argparse.ArgumentParser(description="Download animal shelter data from the Overpass API to the Notfellchen API.")
     parser.add_argument("--api-token", type=str, help="API token for authentication.")
+    parser.add_argument("--area", type=str, help="Area to search for animal shelters (default: Deutschland).")
     parser.add_argument("--instance", type=str, help="API instance URL.")
     parser.add_argument("--data-file", type=str, help="Path to the GeoJSON file containing (only) animal shelters.")
     return parser.parse_args()
@@ -21,13 +26,15 @@ def get_config():
     args = parse_args()
 
     api_token = args.api_token or os.getenv("NOTFELLCHEN_API_TOKEN")
+    # TODO: document new environment variable NOTFELLCHEN_AREA
+    area = args.area or os.getenv("NOTFELLCHEN_AREA", DEFAULT_OVERPASS_SEARCH_AREA)
     instance = args.instance or os.getenv("NOTFELLCHEN_INSTANCE")
     data_file = args.data_file or os.getenv("NOTFELLCHEN_DATA_FILE", DEFAULT_OSM_DATA_FILE)
 
     if not api_token or not instance:
         raise ValueError("API token and instance URL must be provided via environment variables or CLI arguments.")
 
-    return api_token, instance, data_file
+    return api_token, area, instance, data_file
 
 
 def get_or_none(data, key):
@@ -68,16 +75,35 @@ def https(value):
         return None
 
 
+# TODO: take note of new get_overpass_result function which does the bulk of the new overpass query work
+def get_overpass_result(area):
+    """Build the Overpass query for fetching animal shelters in the specified area."""
+    api = overpass.API()
+    result = api.get(f"""
+                     // fetch area to search within
+                     area[name="{area}"]->.searchArea;
+                     // gather results
+                     nwr["amenity"="animal_shelter"](area.searchArea);
+                     """, verbosity="geom"
+                    )
+    return result
+
+
 def main():
-    api_token, instance, data_file = get_config()
+    api_token, area, instance, data_file = get_config()
+    # Query shelters
+    overpass_result = get_overpass_result(area)
+    if overpass_result is None:
+        print("Error: get_overpass_result returned None")
+        return
+    print(f"Response type: {type(overpass_result)}")
+    print(f"Response content: {overpass_result}")
+
     # Set headers and endpoint
     endpoint = f"{instance}/api/organizations/"
     h = {'Authorization': f'Token {api_token}', "content-type": "application/json"}
 
-    with open(data_file, encoding="utf8") as f:
-        d = json.load(f)
-
-    for idx, tierheim in tqdm(enumerate(d["features"])):
+    for idx, tierheim in tqdm(enumerate(overpass_result["features"])):
 
         if "name" not in tierheim["properties"].keys() or "addr:city" not in tierheim["properties"].keys():
             continue
