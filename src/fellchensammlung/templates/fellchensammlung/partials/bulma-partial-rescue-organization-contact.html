@@ -4,57 +4,62 @@
 <div class="panel block">
     <p class="panel-heading">{% trans "Kontaktdaten" %}</p>
     {% if org.hast_contact_data %}
-    {% if org.website %}
-        <a class="panel-block is-active" href="{{ org.website }}" target="_blank">
+        {% if org.website %}
+            <a class="panel-block is-active" href="{{ org.website }}" target="_blank">
             <span class="panel-icon">
               <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
             </span>
-            {{ org.website }}
-        </a>
-    {% endif %}
-    {% if org.phone_number %}
-        <a class="panel-block is-active" href="tel:{{ org.phone_number }}">
+                {{ org.website }}
+            </a>
+        {% endif %}
+        {% if org.phone_number %}
+            <a class="panel-block is-active" href="tel:{{ org.phone_number }}">
             <span class="panel-icon">
               <i class="fas fa-phone" aria-label="{% translate "Telefonnummer" %}"></i>
             </span>
-            {{ org.phone_number }}
-        </a>
-    {% endif %}
-    {% if org.email %}
-        <a class="panel-block is-active" href="mailto:{{ org.email }}">
+                {{ org.phone_number }}
+            </a>
+        {% endif %}
+        {% if org.email %}
+            <a class="panel-block is-active" href="mailto:{{ org.email }}">
             <span class="panel-icon">
               <i class="fas fa-envelope" aria-label="{% translate "E-Mail" %}"></i>
             </span>
-            {{ org.email }}
-        </a>
-    {% endif %}
+                {{ org.email }}
+            </a>
+        {% endif %}
 
-    {% if org.fediverse_profile %}
-        <a class="panel-block is-active" href="{{ org.fediverse_profile }}" target="_blank">
+        {% if org.fediverse_profile %}
+            <a class="panel-block is-active" href="{{ org.fediverse_profile }}" target="_blank">
             <span class="panel-icon">
               <i class="fas fa-hashtag" aria-label="{% translate "Fediverse Profil" %}"></i>
             </span>
-            {{ org.fediverse_profile }}
-        </a>
-    {% endif %}
-    {% if org.instagram %}
-        <a class="panel-block is-active" href="{{ org.instagram }}" target="_blank">
+                {{ org.fediverse_profile }}
+            </a>
+        {% endif %}
+        {% if org.instagram %}
+            <a class="panel-block is-active" href="{{ org.instagram }}" target="_blank">
             <span class="panel-icon">
               <i class="fa-brands fa-instagram" aria-label="{% translate "Instagram Profil" %}"></i>
             </span>
-            {{ org.instagram }}
-        </a>
-    {% endif %}
+                {{ org.instagram }}
+            </a>
+        {% endif %}
 
-    {% if org.facebook %}
-        <a class="panel-block is-active" href="{{ org.facebook }}" target="_blank">
+        {% if org.facebook %}
+            <a class="panel-block is-active" href="{{ org.facebook }}" target="_blank">
             <span class="panel-icon">
               <i class="fa-brands fa-facebook" aria-label="{% translate "Facebook Profil" %}"></i>
             </span>
-            {{ org.facebook }}
-        </a>
-    {% endif %}
-        {% else %}
-        <p>{% translate 'Keine Kontaktdaten hinterlegt' %}</p>
+                {{ org.facebook }}
+            </a>
+        {% endif %}
+    {% else %}
+    <div class="panel-block is-active">
+            <span class="panel-icon">
+              <i class="fas fa-x" aria-label="{% translate "E-Mail" %}"></i>
+            </span>
+            {% translate 'Keine Kontaktdaten hinterlegt' %}
+        </div>
     {% endif %}
 </div>
