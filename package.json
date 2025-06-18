@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "bulma": "^1.0.4",
+    "sass": "^1.89.2"
+  },
+  "scripts": {
+    "build-bulma": "sass --load-path=node_modules src/fellchensammlung/static/fellchensammlung/css/main.scss src/fellchensammlung/static/fellchensammlung/css/main.css",
+    "start": "npm run build-bulma -- --watch"
+  }
+}
