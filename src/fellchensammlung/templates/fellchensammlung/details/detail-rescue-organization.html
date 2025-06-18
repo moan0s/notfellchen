@@ -7,23 +7,27 @@
 {% block content %}
     <div class="columns">
         <div class="column">
-            <div class="card">
-                <div class="card-header">
-                    <h1 class="card-header-title">{{ org.name }}</h1>
-                </div>
-                <div class="card-content">
-                    <div class="block">
-                        <b><i class="fa-solid fa-location-dot"></i></b>
-                        {% if org.location %}
-                            {{ org.location }}
-                        {% else %}
-                            {{ org.location_string }}
-                        {% endif %}
-                        {% if org.description %}
-                            <p>{{ org.description | render_markdown }}</p>
-                        {% endif %}
+            <div class="block">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="card-header-title">{{ org.name }}</h1>
+                    </div>
+                    <div class="card-content">
+                        <div class="block">
+                            <b><i class="fa-solid fa-location-dot"></i></b>
+                            {% if org.location %}
+                                {{ org.location }}
+                            {% else %}
+                                {{ org.location_string }}
+                            {% endif %}
+                            {% if org.description %}
+                                <p>{{ org.description | render_markdown }}</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="block">
                 {% include "fellchensammlung/partials/bulma-partial-rescue-organization-contact.html" %}
             </div>
         </div>
