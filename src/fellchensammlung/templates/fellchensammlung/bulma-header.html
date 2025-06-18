@@ -29,16 +29,25 @@
 
         </div>
         <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <a class="button is-primary" href="{% url "django_registration_register" %}">
-                        <strong>{% translate "Registrieren" %}</strong>
-                    </a>
-                    <a class="button is-light" href="{% url "login" %}">
-                        <strong>{% translate "Login" %}</strong>
+            {% if user.is_authenticated %}
+
+                <div class="navbar-item">
+                    <a href="{% url 'user-me' %}">
+                        <i class="fas fa-user"></i> {{ user }}
                     </a>
                 </div>
-            </div>
+            {% else %}
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary" href="{% url "django_registration_register" %}">
+                            <strong>{% translate "Registrieren" %}</strong>
+                        </a>
+                        <a class="button is-light" href="{% url "login" %}">
+                            <strong>{% translate "Login" %}</strong>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </nav>
