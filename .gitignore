@@ -11,8 +11,8 @@ notfellchen
 media
 
 # Compiled CSS
-*/main.css
-*/main.css.map
+/src/fellchensammlung/static/fellchensammlung/css/main.css
+/src/fellchensammlung/static/fellchensammlung/css/main.css.map
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
