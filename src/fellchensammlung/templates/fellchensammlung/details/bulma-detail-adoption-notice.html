@@ -84,7 +84,7 @@
                         </span>
                         </div>
                         <div class="cell">
-                            {% include "fellchensammlung/partials/bulma-sex-overview.html" %}
+                            {% include "fellchensammlung/partials/sex-overview.html" %}
                         </div>
                     </div>
                 </div>
@@ -160,7 +160,7 @@
         <div class="column">
             {% for animal in adoption_notice.animals %}
                 <div class="block">
-                    {% include "fellchensammlung/partials/bulma-partial-animal-card.html" %}
+                    {% include "fellchensammlung/partials/partial-animal-card.html" %}
                 </div>
             {% endfor %}
         </div>
@@ -169,6 +169,6 @@
 
 
     <div class="block">
-        {% include "fellchensammlung/partials/bulma-partial-comment-section.html" %}
+        {% include "fellchensammlung/partials/partial-comment-section.html" %}
     </div>
 {% endblock %}

@@ -6,7 +6,7 @@
 
 {% block content %}
     {% for announcement in announcements %}
-        {% include "fellchensammlung/partials/bulma-partial-announcement.html" %}
+        {% include "fellchensammlung/partials/partial-announcement.html" %}
     {% endfor %}
     {% if introduction %}
         <h1>{{ introduction.title }}</h1>
@@ -21,7 +21,7 @@
     </div>
 
     <div class="block" style="height: 50vh">
-        {% include "fellchensammlung/partials/bulma-partial-map.html" %}
+        {% include "fellchensammlung/partials/partial-map.html" %}
     </div>
 
     {% if how_to %}
