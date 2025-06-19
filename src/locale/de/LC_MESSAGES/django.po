@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-19 14:27+0000\n"
+"POT-Creation-Date: 2025-06-19 15:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,12 +81,11 @@ msgstr ""
 #: src/fellchensammlung/forms.py:140
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:12
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:90
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-search-subscription.html:15
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-search-subscription.html:18
 msgid "Geschlecht"
 msgstr ""
 
 #: src/fellchensammlung/forms.py:143
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-search-subscription.html:17
 msgid "Suchradius"
 msgstr ""
 
@@ -215,7 +214,7 @@ msgid "Interner Kommentar"
 msgstr ""
 
 #: src/fellchensammlung/models.py:147 src/fellchensammlung/models.py:317
-#: src/fellchensammlung/models.py:603
+#: src/fellchensammlung/models.py:604
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:135
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:33
 msgid "Beschreibung"
@@ -257,9 +256,9 @@ msgstr ""
 msgid "Benachrichtigung per E-Mail"
 msgstr ""
 
-#: src/fellchensammlung/models.py:240 src/fellchensammlung/models.py:890
-#: src/fellchensammlung/models.py:914 src/fellchensammlung/models.py:946
-#: src/fellchensammlung/models.py:959
+#: src/fellchensammlung/models.py:240 src/fellchensammlung/models.py:891
+#: src/fellchensammlung/models.py:915 src/fellchensammlung/models.py:947
+#: src/fellchensammlung/models.py:960
 msgid "Nutzer*in"
 msgstr ""
 
@@ -279,8 +278,8 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: src/fellchensammlung/models.py:297 src/fellchensammlung/models.py:604
-#: src/fellchensammlung/models.py:985
+#: src/fellchensammlung/models.py:297 src/fellchensammlung/models.py:605
+#: src/fellchensammlung/models.py:986
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:77
 msgid "Tierart"
 msgstr ""
@@ -311,127 +310,127 @@ msgstr ""
 
 #: src/fellchensammlung/models.py:323
 msgid ""
-"Verlinke hier die Quelle der Vermittlung (z.B. die Website des Tierheims"
+"Verlinke hier die Quelle der Vermittlung (z.B. die Website des Tierheims)"
 msgstr ""
 
-#: src/fellchensammlung/models.py:324
+#: src/fellchensammlung/models.py:325
 msgid "Ausschließlich Gruppenadoption"
 msgstr ""
 
-#: src/fellchensammlung/models.py:326
+#: src/fellchensammlung/models.py:327
 msgid "Ortsangabe"
 msgstr ""
 
-#: src/fellchensammlung/models.py:328
+#: src/fellchensammlung/models.py:329
 msgid "Creator"
 msgstr ""
 
-#: src/fellchensammlung/models.py:483
+#: src/fellchensammlung/models.py:484
 msgid "Vermittlung deaktiviert:"
 msgstr ""
 
-#: src/fellchensammlung/models.py:484
+#: src/fellchensammlung/models.py:485
 msgid "Die folgende Vermittlung wurde deaktiviert: "
 msgstr ""
 
-#: src/fellchensammlung/models.py:584 src/fellchensammlung/models.py:592
-msgid "Weiblich"
-msgstr ""
-
 #: src/fellchensammlung/models.py:585 src/fellchensammlung/models.py:593
-#: src/fellchensammlung/models.py:803
-msgid "Männlich"
+msgid "Weiblich"
 msgstr ""
 
 #: src/fellchensammlung/models.py:586 src/fellchensammlung/models.py:594
 #: src/fellchensammlung/models.py:804
+msgid "Männlich"
+msgstr ""
+
+#: src/fellchensammlung/models.py:587 src/fellchensammlung/models.py:595
+#: src/fellchensammlung/models.py:805
 msgid "Männlich, kastriert"
 msgstr ""
 
-#: src/fellchensammlung/models.py:587 src/fellchensammlung/models.py:805
+#: src/fellchensammlung/models.py:588 src/fellchensammlung/models.py:806
 msgid "Weiblich, kastriert"
 msgstr ""
 
-#: src/fellchensammlung/models.py:588 src/fellchensammlung/models.py:596
-#: src/fellchensammlung/models.py:806
+#: src/fellchensammlung/models.py:589 src/fellchensammlung/models.py:597
+#: src/fellchensammlung/models.py:807
 msgid "Intergeschlechtlich"
 msgstr ""
 
-#: src/fellchensammlung/models.py:595
+#: src/fellchensammlung/models.py:596
 msgid "Weiblich Kastriert"
 msgstr ""
 
-#: src/fellchensammlung/models.py:597
+#: src/fellchensammlung/models.py:598
 msgid "Alle"
 msgstr ""
 
-#: src/fellchensammlung/models.py:601
+#: src/fellchensammlung/models.py:602
 msgid "Geburtsdatum"
 msgstr ""
 
-#: src/fellchensammlung/models.py:710
+#: src/fellchensammlung/models.py:711
 msgid "ID dieses reports"
 msgstr ""
 
-#: src/fellchensammlung/models.py:711
+#: src/fellchensammlung/models.py:712
 msgid "ID"
 msgstr ""
 
-#: src/fellchensammlung/models.py:713
+#: src/fellchensammlung/models.py:714
 msgid "Regeln gegen die verstoßen wurde"
 msgstr ""
 
-#: src/fellchensammlung/models.py:714
+#: src/fellchensammlung/models.py:715
 msgid "Kommentar/Zusätzliche Information"
 msgstr ""
 
-#: src/fellchensammlung/models.py:802
+#: src/fellchensammlung/models.py:803
 msgid "Fest zugeordnet"
 msgstr ""
 
-#: src/fellchensammlung/models.py:893 src/fellchensammlung/models.py:947
+#: src/fellchensammlung/models.py:894 src/fellchensammlung/models.py:948
 msgid "AdoptionNotice"
 msgstr ""
 
-#: src/fellchensammlung/models.py:911
+#: src/fellchensammlung/models.py:912
 msgid "Gelesen am"
 msgstr ""
 
-#: src/fellchensammlung/models.py:912
+#: src/fellchensammlung/models.py:913
 msgid "Titel"
 msgstr ""
 
-#: src/fellchensammlung/models.py:930
+#: src/fellchensammlung/models.py:931
 msgid "Antwort"
 msgstr ""
 
-#: src/fellchensammlung/models.py:938
+#: src/fellchensammlung/models.py:939
 msgid "Vermittlung"
 msgstr ""
 
-#: src/fellchensammlung/models.py:960
+#: src/fellchensammlung/models.py:961
 msgid "Aktion"
 msgstr ""
 
-#: src/fellchensammlung/models.py:961
+#: src/fellchensammlung/models.py:962
 msgid "Log text"
 msgstr ""
 
-#: src/fellchensammlung/models.py:973
+#: src/fellchensammlung/models.py:974
 msgid "Schlüssel"
 msgstr ""
 
-#: src/fellchensammlung/models.py:974
+#: src/fellchensammlung/models.py:975
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:26
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:32
 msgid "Zeitstempel"
 msgstr ""
 
-#: src/fellchensammlung/models.py:987
+#: src/fellchensammlung/models.py:988
 msgid "Tierschutzorganisation"
 msgstr ""
 
-#: src/fellchensammlung/models.py:988
+#: src/fellchensammlung/models.py:989
 msgid "Tierartspezifische URL"
 msgstr ""
 
@@ -681,7 +680,7 @@ msgid "Vermitteln"
 msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:14
-#: src/fellchensammlung/templates/fellchensammlung/terms-of-service.html:8
+#: src/fellchensammlung/templates/fellchensammlung/terms-of-service.html:9
 msgid "Regeln"
 msgstr ""
 
@@ -886,20 +885,20 @@ msgstr ""
 msgid "Foto hinzufügen"
 msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:7
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:10
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-rescue-org.html:9
 msgid "Zuletzt geprüft:"
 msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:9
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:12
 msgid "Externe Quelle"
 msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:18
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:22
 msgid "Vermittlung noch aktuell"
 msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:26
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:32
 msgid "Vermittlung inaktiv"
 msgstr ""
 
@@ -949,10 +948,6 @@ msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:62
 msgid "Keine Kontaktdaten hinterlegt"
-msgstr ""
-
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-search-subscription.html:16
-msgid "Suchort"
 msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:9
