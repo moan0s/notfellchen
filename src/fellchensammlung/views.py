@@ -664,7 +664,7 @@ def instance_health_check(request):
     return render(request, 'fellchensammlung/instance-health-check.html', context=context)
 
 
-def external_site_warning(request, template_name='fellchensammlung/bulma-external_site_warning.html'):
+def external_site_warning(request, template_name='fellchensammlung/external-site-warning.html'):
     url = request.GET.get("url")
     context = {"url": url}
     language_code = translation.get_language()
