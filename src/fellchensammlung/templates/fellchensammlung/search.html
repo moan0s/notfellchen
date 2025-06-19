@@ -23,22 +23,31 @@
                     <!--- https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
                     {{ search_form }}
                     <ul id="results"></ul>
-                    <button class="button is-primary" type="submit" value="search" name="search">
-                        <i class="fas fa-search"></i> {% trans 'Suchen' %}
-                    </button>
                     {% if searched %}
-                        {% if subscribed_search %}
-                                <button class="button" type="submit" value="{{ subscribed_search.pk }}"
-                                        name="unsubscribe_to_search">
-                                    <i class="fas fa-bell-slash"></i> {% trans 'Suche nicht mehr abonnieren' %}
-                                </button>
-                                {% else %}
+                        <div class="field is-grouped">
+                            <button class="button is-primary" type="submit" value="search" name="search">
+                                <i class="fas fa-search"></i> {% trans 'Suchen' %}
+                            </button>
+                            {% if not subscribed_search %}
                                 <button class="button" type="submit" name="subscribe_to_search">
                                     <i class="fas fa-bell"></i> {% trans 'Suche abonnieren' %}
                                 </button>
+                            {% else %}
+                                <button class="button" type="submit" value="{{ subscribed_search.pk }}"
+                                        name="unsubscribe_to_search">
+                                    <i class="fas fa-bell-slash"></i>  {% trans 'Suche nicht mehr abonnieren' %}
+                                </button>
+                            {% endif %}
+                        </div>
+                        {% if not subscribed_search %}
                             <div class="block">{% translate 'Wenn du die Suche abbonierst, wirst du für neue Vermittlungen, die den Kriterien entsprechen, benachrichtigt.' %}</div>
                         {% endif %}
+                    {% else %}
+                        <button class="button is-primary is-fullwidth" type="submit" value="search" name="search">
+                            <i class="fas fa-search"></i> {% trans 'Suchen' %}
+                        </button>
                     {% endif %}
+
                 </form>
             </div>
             {% if place_not_found %}
