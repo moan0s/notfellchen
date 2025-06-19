@@ -61,7 +61,7 @@ def index(request):
                "announcements": active_announcements}
     Text.get_texts(["how_to", "introduction"], lang, context)
 
-    return render(request, 'fellchensammlung/bulma-index.html', context=context)
+    return render(request, 'fellchensammlung/index.html', context=context)
 
 
 def change_language(request):
@@ -409,7 +409,7 @@ def about_bulma(request):
 
     return render(
         request,
-        "fellchensammlung/bulma-about.html",
+        "fellchensammlung/about.html",
         context=context
     )
 
@@ -419,7 +419,7 @@ def render_text(request, text):
 
     return render(
         request,
-        "fellchensammlung/bulma-one-text.html",
+        "fellchensammlung/one-text.html",
         context=context
     )
 
@@ -440,7 +440,7 @@ def terms_of_service(request):
     context = {"rules": rules, "text": text}
     return render(
         request,
-        "fellchensammlung/bulma-terms-of-service.html",
+        "fellchensammlung/terms-of-service.html",
         context=context
     )
 
@@ -600,7 +600,7 @@ def map_bulma(request):
     context = {"show_ANs": True,
                "show_rescue_orgs": True}
 
-    return render(request, 'fellchensammlung/bulma-map.html', context=context)
+    return render(request, 'fellchensammlung/map.html', context=context)
 
 
 def metrics(request):
