@@ -185,10 +185,10 @@ def search_important_locations(request, important_location_slug):
                "zoom_level": zoom_level_for_radius(search.max_distance),
                "geocoding_api_url": settings.GEOCODING_API_URL,
                "show_ANs": True}
-    return render(request, 'fellchensammlung/bulma-search.html', context=context)
+    return render(request, 'fellchensammlung/search.html', context=context)
 
 
-def search(request, templatename="fellchensammlung/bulma-search.html"):
+def search(request, templatename="fellchensammlung/search.html"):
     # A user just visiting the search site did not search, only upon completing the search form a user has really
     # searched. This will toggle the "subscribe" button
     searched = False
