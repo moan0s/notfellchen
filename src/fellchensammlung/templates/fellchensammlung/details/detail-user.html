@@ -5,7 +5,23 @@
 
 
 {% block content %}
-    <h1 class="title is-1"><i class="fas fa-user"></i> {{ user.get_full_name }}</h1>
+    <div class="level is-mobile">
+        <div class="level-left">
+            <div class="level-item">
+                <h1 class="title is-1"><i class="fas fa-user"></i> {{ user.get_full_name }}</h1>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item">
+                <form class="" action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="button" type="submit">
+                        <i aria-hidden="true" class="fas fa-sign-out fa-fw"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="block">
         <h2>{% trans 'Profil verwalten' %}</h2>
