@@ -1,25 +1,34 @@
 {% load i18n %}
 {% load custom_tags %}
 <div class="block">
-    <div class="level">
-        <h3>{{ search_subscription }}</h3>
-        <form class="" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="action" value="search_subscription_delete">
-            <input type="hidden" name="search_subscription_id" value="{{ search_subscription.pk }}">
-            <button class="btn3" type="submit" id="submit"><i class="fa-solid fa-close"></i></button>
-        </form>
-    </div>
-    <table>
-        <tr>
-            <th>{% trans 'Geschlecht' %}</th>
-            <th>{% trans 'Suchort' %}</th>
-            <th>{% trans 'Suchradius' %}</th>
-        </tr>
-        <tr>
-            <td>{{ search_subscription.get_sex_display }}</td>
-            <td>{{ search_subscription.location }}</td>
-            <td>{{ search_subscription.max_distance }}km</td>
-        </tr>
-    </table>
+    <nav class="panel">
+        <div class="panel-heading">
+            <div class="level">
+                {{ search_subscription }}
+                <form class="" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="search_subscription_delete">
+                    <input type="hidden" name="search_subscription_id" value="{{ search_subscription.pk }}">
+                    <button class="btn3" type="submit" id="submit"><i class="fa-solid fa-close"></i></button>
+                </form>
+            </div>
+        </div>
+        <div class="panel-block is-active">
+            <p>
+                <strong>{% translate 'Geschlecht' %}:</strong> {{ search_subscription.get_sex_display }}
+            </p>
+        </div>
+        <div class="panel-block is-active">
+            <span class="panel-icon">
+              <i class="fas fa-city" aria-hidden="true"></i>
+            </span>
+            {{ search_subscription.location }}
+        </div>
+        <div class="panel-block is-active">
+            <span class="panel-icon">
+              <i class="fas fa-ruler-horizontal" aria-hidden="true"></i>
+            </span>
+            {{ search_subscription.max_distance }} kmr
+        </div>
+    </nav>
 </div>
