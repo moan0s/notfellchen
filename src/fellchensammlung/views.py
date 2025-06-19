@@ -139,7 +139,7 @@ def adoption_notice_detail(request, adoption_notice_id):
         comment_form = CommentForm(instance=adoption_notice)
     context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
                "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed}
-    return render(request, 'fellchensammlung/details/bulma-detail-adoption-notice.html', context=context)
+    return render(request, 'fellchensammlung/details/detail-adoption-notice.html', context=context)
 
 
 @login_required()
