@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Notfellchen\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-19 14:29+0000\n"
-"PO-Revision-Date: 2025-06-19 16:43+0200\n"
+"PO-Revision-Date: 2025-06-19 16:52+0200\n"
 "Last-Translator: Julian-Samuel <Gebühr>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -446,69 +446,67 @@ msgstr "Species-specific URL"
 
 #: src/fellchensammlung/receivers.py:35
 msgid "Neuer User"
-msgstr ""
+msgstr "New user"
 
 #: src/fellchensammlung/receivers.py:36
 msgid "Es hat sich eine neue Person registriert."
-msgstr ""
+msgstr "A new person registered."
 
 #: src/fellchensammlung/receivers.py:37
 msgid "Username"
-msgstr ""
+msgstr "Username"
 
 #: src/fellchensammlung/templates/fellchensammlung/about.html:5
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:29
 #: src/fellchensammlung/templates/fellchensammlung/terms-of-service.html:5
 msgid "Über uns"
-msgstr ""
+msgstr "About us"
 
 #: src/fellchensammlung/templates/fellchensammlung/animal-shelters.html:4
-#, fuzzy
-#| msgid "Organisation"
 msgid "Tierschutzorganisationen"
 msgstr "Organization"
 
 #: src/fellchensammlung/templates/fellchensammlung/base.html:11
 msgid "Farbratten aus dem Tierschutz finden und adoptieren"
-msgstr ""
+msgstr "Find and adopt rats that need a loving home"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:24
 msgid "Aktionen"
-msgstr ""
+msgstr "Actions"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:38
 msgid "Als aktiv bestätigen"
-msgstr ""
+msgstr "Confirm as active"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:43
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:60
 msgid "Bearbeiten"
-msgstr ""
+msgstr "Edit"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:48
 msgid "Bilder hinzufügen"
-msgstr ""
+msgstr "Add photos"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:53
 msgid "Tier hinzufügen"
-msgstr ""
+msgstr "Add animal"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:57
 msgid "Deaktivieren"
-msgstr ""
+msgstr "Deactivate"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:63
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:5
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:10
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment.html:21
 msgid "Melden"
-msgstr ""
+msgstr "Report"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:78
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-map.html:146
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-map.html:278
 msgid "Ort"
-msgstr ""
+msgstr "Location"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:141
 msgid "Keine Beschreibung angegeben"
@@ -731,10 +729,14 @@ msgid ""
 "                    kannst du das im nächsten Schritt tun.\n"
 "                "
 msgstr ""
+"\n"
+"Please add first details about the animals.\n"
+"If you want do add animal details and photos or change the sex and date of "
+"birth  you can do so in the next step."
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-animal-to-adoption.html:5
 msgid "Tiere hinzufügen"
-msgstr ""
+msgstr "Add animal"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-animal-to-adoption.html:6
 msgid ""
@@ -743,17 +745,17 @@ msgid ""
 "hinzufügen.\n"
 "    "
 msgstr ""
+"\n"
+"Now you can add animals to your adoption notice."
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-animal-to-adoption.html:14
-#, fuzzy
-#| msgid "Speichern und weiteres Foto hinzufügen"
 msgid "Speichern und weiteres Tier hinzufügen"
-msgstr "Save and add another photo"
+msgstr "Save and add another animal"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-animal.html:13
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-delete-animal.html:15
 msgid "Löschen"
-msgstr ""
+msgstr "Delete"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-comment.html:7
 #, python-format
@@ -762,10 +764,12 @@ msgid ""
 "                Als %(user)s kommentieren\n"
 "            "
 msgstr ""
+"\n"
+"Comment as %(user)s "
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-delete-animal.html:14
 msgid "Zurück (nicht löschen)"
-msgstr ""
+msgstr "Back (do not delete)"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-image.html:8
 msgid ""
@@ -776,123 +780,122 @@ msgid ""
 "zugänglich sind.\n"
 "        "
 msgstr ""
+"\n"
+"Add an image. Please add an image description to make it accessible to blind "
+"people."
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-image.html:13
 msgid "Anleitung für Bildbeschreibungen"
-msgstr ""
+msgstr "Instructions for image descriptions"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form_change_language.html:13
 msgid "change"
-msgstr ""
+msgstr "change"
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:8
 msgid "Notfellchen Logo"
-msgstr ""
+msgstr "Notfellchen Logo"
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:22
 #: src/fellchensammlung/templates/fellchensammlung/search.html:28
 #: src/fellchensammlung/templates/fellchensammlung/search.html:46
-#, fuzzy
-#| msgid "Sprachen"
 msgid "Suchen"
-msgstr "Languages"
+msgstr "Search"
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:43
 #: src/templates/registration/login.html:42
 msgid "Registrieren"
-msgstr ""
+msgstr "Register"
 
 #: src/fellchensammlung/templates/fellchensammlung/header.html:46
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: src/fellchensammlung/templates/fellchensammlung/index.html:5
 msgid "Notfellchen - Farbratten aus dem Tierschutz adoptieren"
-msgstr ""
+msgstr "Notfellchen - adopt rats in need"
 
 #: src/fellchensammlung/templates/fellchensammlung/index.html:16
-#, fuzzy
-#| msgid "Ausgewählte Vermittlungen aktivieren"
 msgid "Aktuelle Vermittlungen"
-msgstr "Activate Selected Adoption Notices"
+msgstr "Active adoption notices"
 
 #: src/fellchensammlung/templates/fellchensammlung/index.html:20
 msgid "Mehr Vermittlungen"
-msgstr ""
+msgstr "More adoption notices"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:3
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:5
 msgid "Instanz-Check"
-msgstr ""
+msgstr "Instance-Check"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:7
 msgid "Fehlende Texte"
-msgstr ""
+msgstr "Missing texts"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:11
 msgid "Text Code"
-msgstr ""
+msgstr "Text Code"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:23
 msgid "Texte scheinen vollständig"
-msgstr ""
+msgstr "Texts seem complete"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:31
 msgid "Key"
-msgstr ""
+msgstr "Key"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:33
 msgid "Daten"
-msgstr ""
+msgstr "Data"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:45
 msgid "Keine Zeitstempel geloggt."
-msgstr ""
+msgstr "No timstamps logged."
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:48
 msgid "Nicht-lokalisierte Vermittlungen"
-msgstr ""
+msgstr "Non-localized adoption notices"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:64
 msgid "Nicht-lokalisierte Tierschutzorganisationen"
-msgstr ""
+msgstr "Non-localized organizations"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:80
 msgid "Nicht-geprüfte Vermittlungen"
-msgstr ""
+msgstr "Unchecked adoption notices"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:102
 msgid "Erneut lokalisieren"
-msgstr ""
+msgstr "Re-geocode"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:110
 msgid "Deaktiviere ungeprüfte Vermittlungen"
-msgstr ""
+msgstr "Deactivate unchecked adoption notices"
 
 #: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:118
 msgid "Deaktiviere 404 Vermittlungen"
-msgstr ""
+msgstr "Deactivate 404 adoption notices"
 
 #: src/fellchensammlung/templates/fellchensammlung/lists/list-animal-shelters.html:10
 msgid "Keine Tierschutzorganisationen gefunden."
-msgstr ""
+msgstr "No rescue organization found"
 
 #: src/fellchensammlung/templates/fellchensammlung/lists/list-notifications.html:8
 msgid "Keine ungelesenen Benachrichtigungen"
-msgstr ""
+msgstr "No unread notifications"
 
 #: src/fellchensammlung/templates/fellchensammlung/lists/list-search-subscriptions.html:8
 msgid "Keine abonnierten Suchen"
-msgstr ""
+msgstr "No subscribed searches"
 
 #: src/fellchensammlung/templates/fellchensammlung/map.html:3
 msgid "Karte"
-msgstr ""
+msgstr "Map"
 
 #: src/fellchensammlung/templates/fellchensammlung/modqueue.html:3
 #: src/fellchensammlung/templates/fellchensammlung/modqueue.html:6
 msgid "Modqueue"
-msgstr ""
+msgstr "Modqueue"
 
 #: src/fellchensammlung/templates/fellchensammlung/modqueue.html:7
 msgid ""
@@ -902,17 +905,15 @@ msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:12
 msgid "Notfellchen"
-msgstr ""
+msgstr "Notfellchen"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:26
-#, fuzzy
-#| msgid "Beschreibung"
 msgid "Keine Beschreibung"
-msgstr "Description"
+msgstr "No description"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:35
 msgid "Keine Foto"
-msgstr ""
+msgstr "No photo"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:62
 msgid "Foto hinzufügen"
@@ -1250,4 +1251,4 @@ msgstr ""
 
 #: src/templates/registration/password_reset_form.html:13
 msgid "Zurücksetzen"
-msgstr "reset"
+msgstr "Reset"
