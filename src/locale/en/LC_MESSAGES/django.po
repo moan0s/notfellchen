@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Notfellchen\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-19 14:29+0000\n"
-"PO-Revision-Date: 2025-06-19 16:52+0200\n"
+"PO-Revision-Date: 2025-06-19 16:56+0200\n"
 "Last-Translator: Julian-Samuel <Gebühr>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -917,149 +917,141 @@ msgstr "No photo"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:62
 msgid "Foto hinzufügen"
-msgstr ""
+msgstr "Add photo"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:7
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-rescue-org.html:9
 msgid "Zuletzt geprüft:"
-msgstr ""
+msgstr "Last checked:"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:9
 msgid "Externe Quelle"
-msgstr ""
+msgstr "External Source"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:18
 msgid "Vermittlung noch aktuell"
-msgstr ""
+msgstr "Adoption notice up-to-date"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:26
-#, fuzzy
-#| msgid "Ausgewählte Vermittlungen aktivieren"
 msgid "Vermittlung inaktiv"
-msgstr "Activate Selected Adoption Notices"
+msgstr "Adoption Notices inactive"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-rescue-org.html:29
-#, fuzzy
-#| msgid "Organisation"
 msgid "Organisation geprüft"
-msgstr "Organization"
+msgstr "Organization checked"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:5
-#, fuzzy
-#| msgid "Kommentieren"
 msgid "Kommentare"
-msgstr "Comment"
+msgstr "Comments"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:13
-#, fuzzy
-#| msgid "Interner Kommentar"
 msgid "Noch keine Kommentare"
-msgstr "Internal Comment"
+msgstr "No comments yet"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:22
 msgid "Du musst dich einloggen um Kommentare zu hinterlassen"
-msgstr ""
+msgstr "You need to log in to comment"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:4
 msgid "Meldung von "
-msgstr ""
+msgstr "Report of"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:7
 msgid "Regeln gegen die Verstoßen wurde"
-msgstr ""
+msgstr "Rules that were broken"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:16
-#, fuzzy
-#| msgid "Neue Meldung"
 msgid "Kommentar zur Meldung"
-msgstr "New report"
+msgstr "Comment"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:18
 msgid "Es wurde kein Kommentar zur Meldung hinzugefügt."
-msgstr ""
+msgstr "No comment was added to the report."
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:26
 msgid "Inhalt genehmigen"
-msgstr ""
+msgstr "Allow content"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:31
 msgid "Inhalt als gesperrt kennzeichnen"
-msgstr ""
+msgstr "Mark content as restricted"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:5
 msgid "Kontaktdaten"
-msgstr ""
+msgstr "Contact data"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:62
 msgid "Keine Kontaktdaten hinterlegt"
-msgstr ""
+msgstr "No contact data added"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-search-subscription.html:16
 msgid "Suchort"
-msgstr ""
+msgstr "Search Location"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:9
 msgid "weibliche Tiere"
-msgstr ""
+msgstr "female animals"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:21
 msgid "intersexuelle Tiere"
-msgstr ""
+msgstr "intersex animals"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:30
 msgid "männliche Tiere"
-msgstr ""
+msgstr "male animals"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:40
 msgid "männlich, kastrierte Tiere"
-msgstr ""
+msgstr "neutered male animals"
 
 #: src/fellchensammlung/templates/fellchensammlung/rescue-organization-check.html:4
 #: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:4
 msgid "Aktualitätscheck"
-msgstr ""
+msgstr "Up-to-Date check"
 
 #: src/fellchensammlung/templates/fellchensammlung/rescue-organization-check.html:5
 msgid "Überprüfe ob im Tierheim neue Vermittlungen ein Zuhause suchen"
-msgstr ""
+msgstr "Check if there are new rescues"
 
 #: src/fellchensammlung/templates/fellchensammlung/search.html:4
 msgid "Suche"
-msgstr ""
+msgstr "Search"
 
 #: src/fellchensammlung/templates/fellchensammlung/search.html:32
 msgid "Suche abonnieren"
-msgstr ""
+msgstr "Subscribe to search"
 
 #: src/fellchensammlung/templates/fellchensammlung/search.html:37
 msgid "Suche nicht mehr abonnieren"
-msgstr ""
+msgstr "Unsubscribe from search"
 
 #: src/fellchensammlung/templates/fellchensammlung/search.html:42
 msgid ""
 "Wenn du die Suche abbonierst, wirst du für neue Vermittlungen, die den "
 "Kriterien entsprechen, benachrichtigt."
 msgstr ""
+"Subscribe to the search to get notified if new animals are added that match "
+"your criteria."
 
 #: src/fellchensammlung/templates/fellchensammlung/search.html:55
 msgid "Ort nicht gefunden"
-msgstr ""
+msgstr "Location not found"
 
 #: src/fellchensammlung/templates/fellchensammlung/search.html:120
 msgid "Error fetching data. Please try again."
-msgstr ""
+msgstr "Error fetching data. Please try again."
 
 #: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:5
 msgid "Überprüfe ob Vermittlungen noch aktuell sind"
-msgstr ""
+msgstr "Check if adoption notices are up-to-date"
 
 #: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:7
 msgid "Deaktivierte Vermittlungen zur Überprüfung"
-msgstr ""
+msgstr "Deactivated adoption notices to check"
 
 #: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:13
 msgid "Aktive Vermittlungen zur Überprüfung"
-msgstr ""
+msgstr "Active "
 
 #: src/fellchensammlung/tools/misc.py:42
 #, python-format
