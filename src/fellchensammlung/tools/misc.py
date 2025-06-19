@@ -40,7 +40,7 @@ def time_since_as_hr_string(age: datetime.timedelta) -> str:
     if years >= 1:
         text = ngettext(
             "vor einem Jahr",
-            "vor %(years)d Tagen",
+            "vor %(years)d Jahren",
             years,
         ) % {
                    "years": years,

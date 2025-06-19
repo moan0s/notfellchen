@@ -6,98 +6,115 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: unnamed project\n"
+"Project-Id-Version: Notfellchen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-06 11:43+0000\n"
-"PO-Revision-Date: 2024-06-06 13:44+0200\n"
-"Last-Translator: moanos <>\n"
+"POT-Creation-Date: 2025-06-19 14:29+0000\n"
+"PO-Revision-Date: 2025-06-19 16:36+0200\n"
+"Last-Translator: Julian-Samuel <Gebühr>\n"
 "Language-Team: English\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 46.1\n"
+"X-Generator: Poedit 3.6\n"
+"X-Source-Language: de\n"
 
-#: build/lib/notfellchen/settings.py:214 src/notfellchen/settings.py:248
-msgid "English"
-msgstr ""
+#: docs/_build/html/_sources/dev/translation.rst.txt:7
+msgid "String"
+msgstr "String"
 
-#: build/lib/notfellchen/settings.py:215 src/notfellchen/settings.py:249
-msgid "German"
-msgstr ""
+#: src/fellchensammlung/admin.py:34
+msgid "Ausgewählte Vermittlungen aktivieren"
+msgstr "Activate Selected Adoption Notices"
 
-#: src/fellchensammlung/forms.py:32
-#, fuzzy
-#| msgid "Speichern und nächstes Tier hinzufügen"
-msgid "Speichern und Tiere hinzufügen"
-msgstr "Save and add another animal."
+#: src/fellchensammlung/admin.py:68
+msgid "Ausgewählte User exportieren"
+msgstr "Export Selected Users"
 
-#: src/fellchensammlung/forms.py:35 src/fellchensammlung/forms.py:89
-msgid "Submit"
-msgstr ""
+#: src/fellchensammlung/admin.py:139
+msgid "Is Important Location?"
+msgstr "Is Important Location?"
 
-#: src/fellchensammlung/forms.py:39
-#, fuzzy
-#| msgid "Vermitteln"
-msgid "Vermittlungsdetails"
-msgstr "Create adoption notice"
+#: src/fellchensammlung/admin.py:145
+msgid "Important Location"
+msgstr "Important Location"
 
-#: src/fellchensammlung/forms.py:64
-#, fuzzy
-#| msgid "Speichern und nächstes Tier hinzufügen"
-msgid "Speichern und weiteres Tier hinzufügen"
-msgstr "Save and add another animal."
+#: src/fellchensammlung/admin.py:146
+msgid "Normal Location"
+msgstr "Normal Location"
 
-#: src/fellchensammlung/forms.py:65
-#, fuzzy
-#| msgid "Speichern und weiter"
-msgid "Speichern und beenden"
-msgstr "Save and continue"
+#: src/fellchensammlung/forms.py:18
+msgid "Dieses Tier kenne ich nicht. Probier ein anderes"
+msgstr "I don't know this animal. Try another one"
 
-#: src/fellchensammlung/forms.py:67 src/fellchensammlung/forms.py:87
-#, fuzzy
-#| msgid "Speichern und weiter"
+#: src/fellchensammlung/forms.py:40
+msgid "Zahl der Tiere"
+msgstr "Number of animals"
+
+#: src/fellchensammlung/forms.py:73 src/fellchensammlung/forms.py:77
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:102
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-animal-to-adoption.html:13
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-adoption-notice-basic.html:11
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-animal.html:11
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-image.html:27
 msgid "Speichern"
-msgstr "Save and continue"
+msgstr "Save"
 
-#: src/fellchensammlung/forms.py:86
-#, fuzzy
-#| msgid "Speichern und nächstes Tier hinzufügen"
+#: src/fellchensammlung/forms.py:74
 msgid "Speichern und weiteres Foto hinzufügen"
-msgstr "Save and add another animal."
+msgstr "Save and add another photo"
 
-#: src/fellchensammlung/forms.py:113
-#, fuzzy
-#| msgid "Kommentar zur Meldung"
+#: src/fellchensammlung/forms.py:114
 msgid "Kommentieren"
 msgstr "Comment"
 
-#: src/fellchensammlung/forms.py:136
-msgid "Postleitzahl"
-msgstr "Postcode"
+#: src/fellchensammlung/forms.py:133
+msgid "Nenne eine bekannte Tierart"
+msgstr "Name any well-known species"
 
-#: src/fellchensammlung/forms.py:137
-msgid "Max. Distanz"
-msgstr "Max. Distance"
+#: src/fellchensammlung/forms.py:134
+msgid ""
+"Bitte nenne hier eine bekannte Tierart (z.B. ein Tier das an der Leine "
+"geführt wird). Das Fragen wir dich um sicherzustellen, dass du kein Roboter "
+"bist."
+msgstr ""
+"Please name a well known species e.g. an animal that likes to be walked on a "
+"leash. We ask this to ensure you are not a robot."
 
-#: src/fellchensammlung/mail.py:13
+#: src/fellchensammlung/forms.py:140
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:12
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:90
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-search-subscription.html:15
+msgid "Geschlecht"
+msgstr "Sex"
+
+#: src/fellchensammlung/forms.py:143
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-search-subscription.html:17
+msgid "Suchradius"
+msgstr "Search radius"
+
+#: src/fellchensammlung/forms.py:144
+msgid "Stadt"
+msgstr "City"
+
+#: src/fellchensammlung/mail.py:14
 msgid "Neue Meldung"
 msgstr "New report"
 
-#: src/fellchensammlung/mail.py:15
+#: src/fellchensammlung/mail.py:16
 msgid "Moin,"
 msgstr "Howdy,"
 
-#: src/fellchensammlung/mail.py:16
-msgid "es wurde eine Vermittlung gemeldet."
-msgstr "an adoption notice was reported."
+#: src/fellchensammlung/mail.py:17
+msgid "es wurde ein Regelverstoß gemeldet."
+msgstr "there was a report created."
 
-#: src/fellchensammlung/models.py:20
+#: src/fellchensammlung/models.py:25
 msgid "Der Name einer natürliche Sprache wie Deutsch, Englisch oder Arabisch."
 msgstr "Name of a natural language like English, Arabic or German."
 
-#: src/fellchensammlung/models.py:26
+#: src/fellchensammlung/models.py:31
 msgid ""
 "Der standartisierte Sprachcode. Mehr Informationen: http://www.i18nguy.com/"
 "unicode/language-identifiers.html"
@@ -105,147 +122,416 @@ msgstr ""
 "Standardized language code. More information: http://www.i18nguy.com/unicode/"
 "language-identifiers.html"
 
-#: src/fellchensammlung/models.py:27
+#: src/fellchensammlung/models.py:32
 msgid "Sprachcode"
 msgstr "Language code"
 
-#: src/fellchensammlung/models.py:34
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:11
+#: src/fellchensammlung/models.py:39
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:12
 msgid "Sprache"
 msgstr "Language"
 
-#: src/fellchensammlung/models.py:35
+#: src/fellchensammlung/models.py:40
 msgid "Sprachen"
 msgstr "Languages"
 
-#: src/fellchensammlung/models.py:52
-msgid "Name der Tierart"
-msgstr "Species name"
+#: src/fellchensammlung/models.py:55
+msgid "Ländercode"
+msgstr "Country Code"
 
-#: src/fellchensammlung/models.py:53
-msgid "Name"
-msgstr "Name"
+#: src/fellchensammlung/models.py:56
+msgid "Standardisierter Ländercode nach ISO 3166-1 ALPHA-2"
+msgstr "Standard Country Code as per ISO 3166-1 ALPHA-2"
 
-#: src/fellchensammlung/models.py:60
-msgid "Tierart"
-msgstr "Species"
+#: src/fellchensammlung/models.py:114
+msgid "Open Street Map"
+msgstr "Open Street Map"
 
-#: src/fellchensammlung/models.py:61
-msgid "Tierarten"
-msgstr "Species"
+#: src/fellchensammlung/models.py:118
+msgid "Usage allowed"
+msgstr "Usage allowed"
 
-#: src/fellchensammlung/models.py:99
+#: src/fellchensammlung/models.py:119
+msgid "Usage requested"
+msgstr "Usage requested"
+
+#: src/fellchensammlung/models.py:120
+msgid "Usage denied"
+msgstr "Usage denied"
+
+#: src/fellchensammlung/models.py:121
+msgid "It's complicated"
+msgstr "It's complicated"
+
+#: src/fellchensammlung/models.py:122
+msgid "Not asked"
+msgstr "Not asked"
+
+#: src/fellchensammlung/models.py:130
 msgid "Vertrauenswürdig"
 msgstr "Trusted"
 
-#: src/fellchensammlung/models.py:100
+#: src/fellchensammlung/models.py:134
+msgid "Erlaubt Nutzung von Inhalten"
+msgstr "Allows usage of materials"
+
+#: src/fellchensammlung/models.py:135
 msgid "Ort der Organisation"
 msgstr "Location of Organization"
 
-#: src/fellchensammlung/models.py:102
+#: src/fellchensammlung/models.py:137
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:43
 msgid "Instagram Profil"
 msgstr "Instagram profile"
 
-#: src/fellchensammlung/models.py:103
+#: src/fellchensammlung/models.py:138
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:52
 msgid "Facebook Profil"
 msgstr "Facebook profile"
 
-#: src/fellchensammlung/models.py:104
+#: src/fellchensammlung/models.py:139
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:35
 msgid "Fediverse Profil"
 msgstr "Fediverse profile"
 
-#: src/fellchensammlung/models.py:105
-msgid "Website"
-msgstr "Website"
-
-#: src/fellchensammlung/models.py:117
-msgid "Erstellt am"
-msgstr "Created at"
-
-#: src/fellchensammlung/models.py:118
-msgid "Sucht nach einem Zuhause seit"
-msgstr "In search for a home since"
-
-#: src/fellchensammlung/models.py:120 src/fellchensammlung/models.py:218
-msgid "Beschreibung"
-msgstr "Description"
-
-#: src/fellchensammlung/models.py:122
-msgid "Organisation"
-msgstr "Organization"
-
-#: src/fellchensammlung/models.py:123
-msgid "Link zu mehr Informationen"
-msgstr "Link to more information"
-
-#: src/fellchensammlung/models.py:124
-msgid "Ausschließlich Gruppenadoption"
-msgstr "Only group adption"
-
-#: src/fellchensammlung/models.py:126
-msgid "Ortsangabe"
-msgstr "Location"
-
-#: src/fellchensammlung/models.py:216
-msgid "Geburtsdatum"
-msgstr "Date of birth"
-
-#: src/fellchensammlung/models.py:283
-msgid "ID dieses reports"
-msgstr "ID of report"
-
-#: src/fellchensammlung/models.py:284
-msgid "ID"
-msgstr "IT"
-
-#: src/fellchensammlung/models.py:378 src/fellchensammlung/models.py:384
-#: src/fellchensammlung/models.py:469
-msgid "Nutzer*in"
-msgstr "User"
-
-#: src/fellchensammlung/models.py:380
-msgid "Bevorzugte Sprache"
-msgstr "Preffered language"
-
-#: src/fellchensammlung/models.py:385
-msgid "Nutzer*innen"
-msgstr "Users"
-
-#: src/fellchensammlung/models.py:471
-msgid "AdoptionNotice"
-msgstr "AdoptionNotice"
-
-#: src/fellchensammlung/templates/fellchensammlung/about.html:6
-msgid "Regeln"
-msgstr "Rules"
-
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:11
-msgid "Alter"
-msgstr "Age"
-
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:12
-msgid "Geschlecht"
-msgstr "Sex"
-
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:21
-msgid "Bilder"
-msgstr "Photos"
-
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:7
-msgid "Username"
-msgstr "Username"
-
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:8
+#: src/fellchensammlung/models.py:140 src/fellchensammlung/receivers.py:38
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:12
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:26
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:60
 msgid "E-Mail"
 msgstr "E-Mail"
 
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-member.html:13
-msgid "Keine bevorzugte Sprache gesetzt."
-msgstr "No preffered language set."
+#: src/fellchensammlung/models.py:141
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:18
+msgid "Telefonnummer"
+msgstr "Phone Number"
+
+#: src/fellchensammlung/models.py:142
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-rescue-org.html:16
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:10
+msgid "Website"
+msgstr "Website"
+
+#: src/fellchensammlung/models.py:145
+msgid "Datum der letzten Prüfung"
+msgstr "Date of last check"
+
+#: src/fellchensammlung/models.py:146
+msgid "Interner Kommentar"
+msgstr "Internal Comment"
+
+#: src/fellchensammlung/models.py:147 src/fellchensammlung/models.py:317
+#: src/fellchensammlung/models.py:603
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:135
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:33
+msgid "Beschreibung"
+msgstr "Description"
+
+#: src/fellchensammlung/models.py:149
+msgid "External Object Identifier"
+msgstr "External Object Identifier"
+
+#: src/fellchensammlung/models.py:152
+msgid "External Source Identifier"
+msgstr "External Source Identifier"
+
+#: src/fellchensammlung/models.py:160
+msgid "Location or Location String must be set"
+msgstr "Location or Location String must be set"
+
+#: src/fellchensammlung/models.py:230
+msgid "Bevorzugte Sprache"
+msgstr "Preffered language"
+
+#: src/fellchensammlung/models.py:233 src/fellchensammlung/models.py:319
+msgid "Organisation"
+msgstr "Organization"
+
+#: src/fellchensammlung/models.py:234
+msgid "Grund für die Registrierung"
+msgstr "Reason for registration"
+
+#: src/fellchensammlung/models.py:235
+msgid ""
+"Wir würden gerne wissen warum du dich registriertst, ob du dich z.B. Tiere "
+"eines bestimmten Tierheim einstellen willst 'nur mal gucken' willst. Beides "
+"ist toll! Wenn du für ein Tierheim/eine Pflegestelle arbeitest kontaktieren "
+"wir dich ggf. um dir erweiterte Rechte zu geben."
+msgstr ""
+"Please tell us why you want to create an account. \"just looking\" is "
+"totally valid! However if you work for a rescue and want to add animals we "
+"might contact you to give you additional permissions."
+
+#: src/fellchensammlung/models.py:236
+msgid "Benachrichtigung per E-Mail"
+msgstr "Notifications via E-Mail"
+
+#: src/fellchensammlung/models.py:240 src/fellchensammlung/models.py:890
+#: src/fellchensammlung/models.py:914 src/fellchensammlung/models.py:946
+#: src/fellchensammlung/models.py:959
+msgid "Nutzer*in"
+msgstr "User"
+
+#: src/fellchensammlung/models.py:241
+msgid "Nutzer*innen"
+msgstr "Users"
+
+#: src/fellchensammlung/models.py:272
+msgid "Alternativtext"
+msgstr "Alt-Text"
+
+#: src/fellchensammlung/models.py:287
+msgid "Name der Tierart"
+msgstr "Number of animals"
+
+#: src/fellchensammlung/models.py:288
+msgid "Name"
+msgstr "Name"
+
+#: src/fellchensammlung/models.py:297 src/fellchensammlung/models.py:604
+#: src/fellchensammlung/models.py:985
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:77
+msgid "Tierart"
+msgstr "Species"
+
+#: src/fellchensammlung/models.py:298
+msgid "Tierarten"
+msgstr "Species"
+
+#: src/fellchensammlung/models.py:312
+msgid "Erstellt am"
+msgstr "Created at"
+
+#: src/fellchensammlung/models.py:314
+msgid "Zuletzt überprüft am"
+msgstr "Last checked at"
+
+#: src/fellchensammlung/models.py:315
+msgid "Sucht nach einem Zuhause seit"
+msgstr "Searching for a home since"
+
+#: src/fellchensammlung/models.py:316
+msgid "Titel der Vermittlung"
+msgstr "Title"
+
+#: src/fellchensammlung/models.py:321
+msgid "Link zu mehr Informationen"
+msgstr "Link to more information"
+
+#: src/fellchensammlung/models.py:323
+msgid ""
+"Verlinke hier die Quelle der Vermittlung (z.B. die Website des Tierheims"
+msgstr "Link the source of the information here (e.g. website of a rescue)"
+
+#: src/fellchensammlung/models.py:324
+msgid "Ausschließlich Gruppenadoption"
+msgstr "Only group adoption"
+
+#: src/fellchensammlung/models.py:326
+msgid "Ortsangabe"
+msgstr "Location"
+
+#: src/fellchensammlung/models.py:328
+msgid "Creator"
+msgstr "Creator"
+
+#: src/fellchensammlung/models.py:483
+msgid "Vermittlung deaktiviert:"
+msgstr "Adoption Notice deactivated:"
+
+#: src/fellchensammlung/models.py:484
+msgid "Die folgende Vermittlung wurde deaktiviert: "
+msgstr "The following adoption notice was deactivated:"
+
+#: src/fellchensammlung/models.py:584 src/fellchensammlung/models.py:592
+msgid "Weiblich"
+msgstr "Femal"
+
+#: src/fellchensammlung/models.py:585 src/fellchensammlung/models.py:593
+#: src/fellchensammlung/models.py:803
+msgid "Männlich"
+msgstr "Male"
+
+#: src/fellchensammlung/models.py:586 src/fellchensammlung/models.py:594
+#: src/fellchensammlung/models.py:804
+msgid "Männlich, kastriert"
+msgstr "Male, neutered"
+
+#: src/fellchensammlung/models.py:587 src/fellchensammlung/models.py:805
+msgid "Weiblich, kastriert"
+msgstr "Female, neutered"
+
+#: src/fellchensammlung/models.py:588 src/fellchensammlung/models.py:596
+#: src/fellchensammlung/models.py:806
+msgid "Intergeschlechtlich"
+msgstr "Intersex"
+
+#: src/fellchensammlung/models.py:595
+msgid "Weiblich Kastriert"
+msgstr "Female, neutered"
+
+#: src/fellchensammlung/models.py:597
+msgid "Alle"
+msgstr "All"
+
+#: src/fellchensammlung/models.py:601
+msgid "Geburtsdatum"
+msgstr "Date of Birth"
+
+#: src/fellchensammlung/models.py:710
+msgid "ID dieses reports"
+msgstr "ID of this report"
+
+#: src/fellchensammlung/models.py:711
+msgid "ID"
+msgstr "ID"
+
+#: src/fellchensammlung/models.py:713
+msgid "Regeln gegen die verstoßen wurde"
+msgstr "Rules that were broken"
+
+#: src/fellchensammlung/models.py:714
+msgid "Kommentar/Zusätzliche Information"
+msgstr "Comment and additional information"
+
+#: src/fellchensammlung/models.py:802
+msgid "Fest zugeordnet"
+msgstr "Related to"
+
+#: src/fellchensammlung/models.py:893 src/fellchensammlung/models.py:947
+msgid "AdoptionNotice"
+msgstr "AdoptionNotice"
+
+#: src/fellchensammlung/models.py:911
+msgid "Gelesen am"
+msgstr "Read at"
+
+#: src/fellchensammlung/models.py:912
+msgid "Titel"
+msgstr "Title"
+
+#: src/fellchensammlung/models.py:930
+msgid "Antwort"
+msgstr "Response"
+
+#: src/fellchensammlung/models.py:938
+msgid "Vermittlung"
+msgstr "Adoption Notice"
+
+#: src/fellchensammlung/models.py:960
+msgid "Aktion"
+msgstr "Action"
+
+#: src/fellchensammlung/models.py:961
+msgid "Log text"
+msgstr "Log text"
+
+#: src/fellchensammlung/models.py:973
+msgid "Schlüssel"
+msgstr "Key"
+
+#: src/fellchensammlung/models.py:974
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:26
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:32
+msgid "Zeitstempel"
+msgstr "Timestamp"
+
+#: src/fellchensammlung/models.py:987
+msgid "Tierschutzorganisation"
+msgstr "Organization"
+
+#: src/fellchensammlung/models.py:988
+msgid "Tierartspezifische URL"
+msgstr "Species-specific URL"
+
+#: src/fellchensammlung/receivers.py:35
+msgid "Neuer User"
+msgstr ""
+
+#: src/fellchensammlung/receivers.py:36
+msgid "Es hat sich eine neue Person registriert."
+msgstr ""
+
+#: src/fellchensammlung/receivers.py:37
+msgid "Username"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/about.html:5
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:29
+#: src/fellchensammlung/templates/fellchensammlung/terms-of-service.html:5
+msgid "Über uns"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/animal-shelters.html:4
+#, fuzzy
+#| msgid "Organisation"
+msgid "Tierschutzorganisationen"
+msgstr "Organization"
+
+#: src/fellchensammlung/templates/fellchensammlung/base.html:11
+msgid "Farbratten aus dem Tierschutz finden und adoptieren"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:24
+msgid "Aktionen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:38
+msgid "Als aktiv bestätigen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:43
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:60
+msgid "Bearbeiten"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:48
+msgid "Bilder hinzufügen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:53
+msgid "Tier hinzufügen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:57
+msgid "Deaktivieren"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:63
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:5
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:10
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment.html:21
+msgid "Melden"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:78
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-map.html:146
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-map.html:278
+msgid "Ort"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:141
+#, fuzzy
+#| msgid "Beschreibung"
+msgid "Keine Beschreibung angegeben"
+msgstr "Description"
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:11
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:15
+msgid "Alter"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:21
+msgid "Bilder"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:29
+msgid "Keine Bilder"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:6
 msgid "Erfolgreich gemeldet"
-msgstr "Reported successfully"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:7
 msgid ""
@@ -259,60 +545,223 @@ msgid ""
 "Einspruch einlegen.\n"
 "        "
 msgstr ""
-"\n"
-"If you want to check which moderation action was taken, viesit this page at "
-"a later time.\n"
-"If you are unsatisfied with the decision you can appeal it by sending a mail "
-"to <a href=\"mailto:info@notfellchen.org\">info@notfellchen.org</a>"
 
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:15
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:17
 msgid "Moderationsverlauf"
-msgstr "Moderation actions"
+msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:19
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:21
 msgid "Bisher wurden keine Maßnahmen vorgenommen"
-msgstr "No actions have yet been taken"
+msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:8
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:14
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-rescue-organization.html:40
 #, fuzzy
-#| msgid "Bild hinzufügen"
-msgid "Foto hinzufügen"
-msgstr "Add picture"
+#| msgid "Ort der Organisation"
+msgid "Vermittlungen der Organisation"
+msgstr "Location of Organization"
 
-#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:10
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:13
-msgid "Bearbeiten"
-msgstr "Edit"
-
-#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:15
-msgid "Ort"
-msgstr "Location"
-
-#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:16
-msgid "Suchen seit"
-msgstr "Searches since"
-
-#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:17
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-rescue-organization.html:47
+#: src/fellchensammlung/templates/fellchensammlung/lists/list-adoption-notices.html:11
 #, fuzzy
-#| msgid "Link zu mehr Informationen"
-msgid "Weitere Informationen"
-msgstr "Link to more information"
+#| msgid "Ausgewählte Vermittlungen aktivieren"
+msgid "Keine Vermittlungen gefunden."
+msgstr "Activate Selected Adoption Notices"
 
-#: src/fellchensammlung/templates/fellchensammlung/details/detail_adoption_notice.html:41
-msgid "Keine Beschreibung angegeben"
-msgstr "No description given"
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:11
+msgid "Profil verwalten"
+msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/forms/form-adoption-notice.html:6
-msgid "Vermittlungsanzeige"
-msgstr "Adoption notice"
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:15
+msgid "Change password"
+msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/forms/form-comment.html:6
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:16
+#, fuzzy
+#| msgid "Ausgewählte User exportieren"
+msgid "Daten exportieren"
+msgstr "Export Selected Users"
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:23
+msgid "Einstellungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:31
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:39
+msgid "E-Mail Benachrichtigungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:45
+msgid "Erweiterte Einstellungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:50
+msgid "API token:"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:52
+msgid "Delete API token"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:55
+msgid "Kein API-Token vorhanden."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:59
+msgid "Create API token"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:67
+msgid "Benachrichtigungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:70
+msgid "Abonnierte Suchen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:73
+msgid "Meine Vermittlungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/errors/403.html:5
+msgid "403 Forbidden"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/errors/403.html:10
+msgid ""
+"\n"
+"    \tDiese Aktion ist dir nicht erlaubt. Logge dich ein oder nutze einen "
+"anderen Account. Wenn du denkst, dass hier\n"
+"        ein Fehler vorliegt, kontaktiere das Team!\n"
+"    "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/external-site-warning.html:9
+msgid ""
+"\n"
+"                <p>Achtung du verlässt notfellchen.org</p>\n"
+"            "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/external-site-warning.html:13
+msgid "Weiter"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:20
+#, fuzzy
+#| msgid "Sprachen"
+msgid "Sprache ändern"
+msgstr "Languages"
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:33
+msgid "Das Notfellchen Projekt"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:37
+msgid "Nutzungsbedingungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:42
+msgid "Datenschutz"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:46
+msgid "Impressum"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:58
+msgid "RSS"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:64
+msgid "Dokumentation"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:71
+msgid "Probleme melden"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:77
+msgid "Code"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:84
+msgid "Hilfreiche Links"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/footer.html:89
+msgid "Tierheime in der Nähe"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:6
+#: src/fellchensammlung/templates/fellchensammlung/header.html:26
+msgid "Vermittlung hinzufügen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:9
+msgid "Vermitteln"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:14
+#: src/fellchensammlung/templates/fellchensammlung/terms-of-service.html:8
+msgid "Regeln"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:15
 #, python-format
 msgid ""
 "\n"
-"                Als <i>%(user)s</i> kommentieren\n"
+"                Bitte mach dich zunächst mit unseren %(rules_link)s "
+"vertraut. Dann trage hier die ersten Informationen\n"
+"                ein.\n"
+"                Fotos kannst du im nächsten Schritt hinzufügen.\n"
 "            "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:66
+msgid ""
+"\n"
+"                    Gibt hier schonmal erste Details zu den Tieren an.\n"
+"                    Wenn du Details und Fotos zu den Tieren hinzufügen "
+"willst oder ihr Geschlecht und Geburtsdatum\n"
+"                    anpassen\n"
+"                    willst,\n"
+"                    kannst du das im nächsten Schritt tun.\n"
+"                "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-animal-to-adoption.html:5
+msgid "Tiere hinzufügen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-animal-to-adoption.html:6
+msgid ""
+"\n"
+"        Hier kannst du jetzt einzelne Tiere zu deiner Vermittlung "
+"hinzufügen.\n"
+"    "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-add-animal-to-adoption.html:14
+#, fuzzy
+#| msgid "Speichern und weiteres Foto hinzufügen"
+msgid "Speichern und weiteres Tier hinzufügen"
+msgstr "Save and add another photo"
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-animal.html:13
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-delete-animal.html:15
+msgid "Löschen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-comment.html:7
+#, python-format
+msgid ""
+"\n"
+"                Als %(user)s kommentieren\n"
+"            "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-delete-animal.html:14
+msgid "Zurück (nicht löschen)"
 msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-image.html:8
@@ -325,261 +774,455 @@ msgid ""
 "        "
 msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/forms/form-image.html:12
+#: src/fellchensammlung/templates/fellchensammlung/forms/form-image.html:13
 msgid "Anleitung für Bildbeschreibungen"
-msgstr "Introduction into alt-text"
-
-#: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:5
-#: src/fellchensammlung/templates/fellchensammlung/forms/form-report.html:10
-msgid "Melden"
-msgstr "Report"
-
-#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_adoption.html:6
-#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:6
-msgid "Vermitteln"
-msgstr "Create adoption notice"
-
-#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_adoption.html:8
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "    Bitte mach dich zunächst mit unseren Regeln vertraut. Dann trage hier "
-#| "die ersten Informationen ein.\n"
-#| "    Du bekommst in einem weiteren Schritt die Möglichkeit einzelne Tiere "
-#| "zu deiner Vermittlung hinzuzufügen und Fotos hochzuladen.\n"
-#| "    "
-msgid ""
-"\n"
-"            Bitte mach dich zunächst mit unseren Regeln vertraut. Dann trage "
-"hier die ersten Informationen ein.\n"
-"            Du bekommst in einem weiteren Schritt die Möglichkeit einzelne "
-"Tiere zu deiner Vermittlung hinzuzufügen und\n"
-"            Fotos hochzuladen.\n"
-"        "
 msgstr ""
-"\n"
-"Please first read our rules. Then add information here.\n"
-"You will get the chance to add animals in the next step and add photos."
 
-#: src/fellchensammlung/templates/fellchensammlung/forms/form_add_animal_to_adoption.html:7
-msgid ""
-"\n"
-"        Hier kannst du jetzt einzelne Tiere zu deiner Vermittlung "
-"hinzufügen. Lad auch gerne Fotos hoch. Gruppenfotos\n"
-"        kannst\n"
-"        du im nächsten Schritt hochladen.\n"
-"    "
+#: src/fellchensammlung/templates/fellchensammlung/forms/form_change_language.html:13
+msgid "change"
 msgstr ""
-"\n"
-"You can now add Anmials to your Adoption notice. Add photos to get more "
-"attention. Group photos can be added in the next step."
 
-#: src/fellchensammlung/templates/fellchensammlung/header.html:10
+#: src/fellchensammlung/templates/fellchensammlung/header.html:8
+msgid "Notfellchen Logo"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/header.html:22
+#: src/fellchensammlung/templates/fellchensammlung/search.html:28
+#: src/fellchensammlung/templates/fellchensammlung/search.html:46
 #, fuzzy
 #| msgid "Sprachen"
 msgid "Suchen"
 msgstr "Languages"
 
-#: src/fellchensammlung/templates/fellchensammlung/header.html:11
-#, fuzzy
-#| msgid "Vermittlungsanzeige"
-msgid "Vermittlung hinzufügen"
-msgstr "Adoption notice"
-
-#: src/fellchensammlung/templates/fellchensammlung/header.html:12
-msgid "Über uns"
-msgstr "About"
-
-#: src/fellchensammlung/templates/fellchensammlung/header.html:13
-msgid "RSS"
-msgstr "RSS"
-
-#: src/fellchensammlung/templates/fellchensammlung/header.html:22
-#: src/templates/registration/logged_out.html:5
-msgid "Ausloggen"
-msgstr "Log out"
-
-#: src/fellchensammlung/templates/fellchensammlung/header.html:26
-#: src/templates/django_registration/registration_form.html:10
+#: src/fellchensammlung/templates/fellchensammlung/header.html:43
+#: src/templates/registration/login.html:42
 msgid "Registrieren"
-msgstr "Register now"
-
-#: src/fellchensammlung/templates/fellchensammlung/header.html:27
-#: src/templates/registration/login.html:30
-msgid "Einloggen"
-msgstr "Login"
-
-#: src/fellchensammlung/templates/fellchensammlung/header.html:44
-msgid "change"
-msgstr "change"
-
-#: src/fellchensammlung/templates/fellchensammlung/index.html:8
-msgid "Notfellchen - Vermittlungen finden"
-msgstr "Notfellchen - organize adoptions"
-
-#: src/fellchensammlung/templates/fellchensammlung/index.html:9
-msgid ""
-"Alle Tiere brauchen ein liebendes Zuhause. Damit keins vergessen wird gibt "
-"es diese Seite. Entwickelt und betreut von "
 msgstr ""
-"All animals need a loving home. This page exists so that noone is forgotten. "
-"Developed and maintained by"
 
-#: src/fellchensammlung/templates/fellchensammlung/index.html:11
+#: src/fellchensammlung/templates/fellchensammlung/header.html:46
+msgid "Login"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/index.html:5
+msgid "Notfellchen - Farbratten aus dem Tierschutz adoptieren"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/index.html:16
+#, fuzzy
+#| msgid "Ausgewählte Vermittlungen aktivieren"
 msgid "Aktuelle Vermittlungen"
-msgstr "Current adoptions notices"
+msgstr "Activate Selected Adoption Notices"
 
-#: src/fellchensammlung/templates/fellchensammlung/modqueue.html:5
-msgid "Modqueue"
-msgstr "Modqueue"
+#: src/fellchensammlung/templates/fellchensammlung/index.html:20
+msgid "Mehr Vermittlungen"
+msgstr ""
 
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:3
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:5
+msgid "Instanz-Check"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:7
+msgid "Fehlende Texte"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:11
+msgid "Text Code"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:23
+msgid "Texte scheinen vollständig"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:31
+msgid "Key"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:33
+msgid "Daten"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:45
+msgid "Keine Zeitstempel geloggt."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:48
+msgid "Nicht-lokalisierte Vermittlungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:64
+msgid "Nicht-lokalisierte Tierschutzorganisationen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:80
+msgid "Nicht-geprüfte Vermittlungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:102
+msgid "Erneut lokalisieren"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:110
+msgid "Deaktiviere ungeprüfte Vermittlungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/instance-health-check.html:118
+msgid "Deaktiviere 404 Vermittlungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/lists/list-animal-shelters.html:10
+msgid "Keine Tierschutzorganisationen gefunden."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/lists/list-notifications.html:8
+msgid "Keine ungelesenen Benachrichtigungen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/lists/list-search-subscriptions.html:8
+msgid "Keine abonnierten Suchen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/map.html:3
+msgid "Karte"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/modqueue.html:3
 #: src/fellchensammlung/templates/fellchensammlung/modqueue.html:6
+msgid "Modqueue"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/modqueue.html:7
 msgid ""
-"Erlaube oder blockiere Vermittlungsanzeigen die bisher noch zurückgehaltemn "
+"Erlaube oder blockiere Vermittlungsanzeigen die bisher noch zurückgehalten "
 "werden "
-msgstr "Allow or block adtoption notices that are currently filtered out"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:12
 msgid "Notfellchen"
-msgstr "Notfellchen"
-
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:26
-msgid "Keine Beschreibung"
-msgstr "No description"
-
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:36
-msgid "Keine Foto"
-msgstr "No picture"
-
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:4
-msgid "Comments"
-msgstr "Comments"
-
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:11
-msgid "Noch keine Kommentare"
-msgstr "No comments yet"
-
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:18
-msgid "Du musst dich einloggen um Kommentare zu hinterlassen"
-msgstr "You have to login to leave a comment"
-
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:4
-#, python-format
-msgid ""
-"\n"
-"            Meldung von %(report.reported_content)s\n"
-"        "
 msgstr ""
 
-#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:9
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:26
+#, fuzzy
+#| msgid "Beschreibung"
+msgid "Keine Beschreibung"
+msgstr "Description"
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:35
+msgid "Keine Foto"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:62
+msgid "Foto hinzufügen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:7
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-rescue-org.html:9
+msgid "Zuletzt geprüft:"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:9
+msgid "Externe Quelle"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:18
+msgid "Vermittlung noch aktuell"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-adoption-notice.html:26
+#, fuzzy
+#| msgid "Ausgewählte Vermittlungen aktivieren"
+msgid "Vermittlung inaktiv"
+msgstr "Activate Selected Adoption Notices"
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-check-rescue-org.html:29
+#, fuzzy
+#| msgid "Organisation"
+msgid "Organisation geprüft"
+msgstr "Organization"
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:5
+#, fuzzy
+#| msgid "Kommentieren"
+msgid "Kommentare"
+msgstr "Comment"
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:13
+#, fuzzy
+#| msgid "Interner Kommentar"
+msgid "Noch keine Kommentare"
+msgstr "Internal Comment"
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-comment-section.html:22
+msgid "Du musst dich einloggen um Kommentare zu hinterlassen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:4
+msgid "Meldung von "
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:7
 msgid "Regeln gegen die Verstoßen wurde"
-msgstr "Rules that were broken"
+msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:16
+#, fuzzy
+#| msgid "Neue Meldung"
 msgid "Kommentar zur Meldung"
-msgstr "Comment"
+msgstr "New report"
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:18
+msgid "Es wurde kein Kommentar zur Meldung hinzugefügt."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:26
+msgid "Inhalt genehmigen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:31
+msgid "Inhalt als gesperrt kennzeichnen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:5
+msgid "Kontaktdaten"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-rescue-organization-contact.html:62
+msgid "Keine Kontaktdaten hinterlegt"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/partial-search-subscription.html:16
+msgid "Suchort"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:9
+msgid "weibliche Tiere"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:21
+msgid "intersexuelle Tiere"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:30
+msgid "männliche Tiere"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/partials/sex-overview.html:40
+msgid "männlich, kastrierte Tiere"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/rescue-organization-check.html:4
+#: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:4
+msgid "Aktualitätscheck"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/rescue-organization-check.html:5
+msgid "Überprüfe ob im Tierheim neue Vermittlungen ein Zuhause suchen"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/search.html:4
+msgid "Suche"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/search.html:32
+msgid "Suche abonnieren"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/search.html:37
+msgid "Suche nicht mehr abonnieren"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/search.html:42
+msgid ""
+"Wenn du die Suche abbonierst, wirst du für neue Vermittlungen, die den "
+"Kriterien entsprechen, benachrichtigt."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/search.html:55
+msgid "Ort nicht gefunden"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/search.html:120
+msgid "Error fetching data. Please try again."
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:5
+msgid "Überprüfe ob Vermittlungen noch aktuell sind"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:7
+msgid "Deaktivierte Vermittlungen zur Überprüfung"
+msgstr ""
+
+#: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:13
+msgid "Aktive Vermittlungen zur Überprüfung"
+msgstr ""
+
+#: src/fellchensammlung/tools/misc.py:42
+#, python-format
+msgid "vor einem Jahr"
+msgid_plural "vor %(years)d Jahren"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/fellchensammlung/tools/misc.py:49
+#, python-format
+msgid "vor %(month)d Monaten"
+msgstr ""
+
+#: src/fellchensammlung/tools/misc.py:51
+#, python-format
+msgid "vor %(weeks)d Wochen"
+msgstr ""
+
+#: src/fellchensammlung/tools/misc.py:54
+msgid "Heute"
+msgstr ""
+
+#: src/fellchensammlung/tools/misc.py:56
+#, python-format
+msgid "vor einem Tag"
+msgid_plural "vor %(count)d Tagen"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/fellchensammlung/tools/search.py:22
+msgid "Zu deiner Suche"
+msgstr ""
+
+#: src/fellchensammlung/tools/search.py:24
+#, fuzzy
+#| msgid "Neue Meldung"
+msgid "Neue Vermittlung"
+msgstr "New report"
+
+#: src/notfellchen/settings.py:279
+msgid "English"
+msgstr "English"
+
+#: src/notfellchen/settings.py:280
+msgid "German"
+msgstr "German"
 
 #: src/templates/django_registration/activate.html:6
 msgid "Account aktivierung fehlgeschlagen"
-msgstr "Account activiation failed"
+msgstr ""
 
-#: src/templates/django_registration/activation_complete.html:5
+#: src/templates/django_registration/activation_complete.html:6
 msgid "Dein Account ist nun aktiviert. Viel Spaß!"
-msgstr "The account is now activated. Have fun!"
+msgstr ""
 
 #: src/templates/django_registration/activation_email_body.txt:2
 #: src/templates/django_registration/activation_email_subject.txt:1
 msgid "Account aktivieren"
-msgstr "Activate account"
+msgstr ""
 
 #: src/templates/django_registration/activation_email_body.txt:4
-msgid "Activate by clicking this link"
-msgstr "Aktiviere den Account indem du auf den Link klickst"
+msgid ""
+"Hier ist dein Aktivierungs-Key. Mit diesem kannst du deinen Account "
+"freischalten."
+msgstr ""
 
-#: src/templates/django_registration/activation_email_body.txt:5
-msgid "oder öffne den folgenden link im Browser"
-msgstr "or open the following link in your browser"
+#: src/templates/django_registration/activation_email_body.txt:7
+msgid ""
+"Öffne den folgenden link im Browser und gib den Aktivierungs-Key dort ein"
+msgstr ""
 
-#: src/templates/django_registration/activation_email_body.txt:8
+#: src/templates/django_registration/activation_email_body.txt:10
 #, python-format
-msgid "Der link ist gültig für %(expiration_days)s tage."
-msgstr "The link is valid for %(expiration_days)s days."
+msgid "Der Link ist für %(expiration_days)s Tage gültig."
+msgstr ""
 
 #: src/templates/django_registration/activation_failed.html:5
 msgid ""
 "Aktivierung fehlgeschlagen. Sende eine E-Mail an info@notfellchen.org für "
 "einen Account."
 msgstr ""
-"Activation failed. Send a e-mail to info@notfellchen.org to get an account."
+
+#: src/templates/django_registration/activation_form.html:11
+msgid "Absenden"
+msgstr ""
+
+#: src/templates/django_registration/activation_form.html:14
+#: src/templates/django_registration/registration_form.html:12
+#: src/templates/registration/login.html:16
+msgid "Du bist bereits eingeloggt."
+msgstr ""
 
 #: src/templates/django_registration/registration_closed.html:5
 msgid "Registrierung ist fehlgeschlagen."
-msgstr "Account activiation failed."
-
-#: src/templates/django_registration/registration_complete.html:5
-msgid ""
-"Du bist nun registriert. Du hast eine E-Mail mit einem Link zur aktivierung "
-"bekommen."
 msgstr ""
-"You are now registered. We sent you an e-mail with a link to activate your "
-"account."
 
-#: src/templates/django_registration/registration_form.html:13
-#: src/templates/registration/login.html:11
-msgid "Du bist bereits eingeloggt."
-msgstr "You're already logged in."
+#: src/templates/django_registration/registration_complete.html:6
+msgid ""
+"\n"
+"            Du bist nun registriert und hast eine E-Mail mit einem Link zur "
+"Aktivierung deines Kontos bekommen. Solltest\n"
+"            du die E-Mail nicht erhalten haben oder andere Fragen haben, "
+"schreib uns an info@notfellchen.org\n"
+"        "
+msgstr ""
+
+#: src/templates/django_registration/registration_form.html:9
+msgid "Jetzt registrieren!"
+msgstr ""
+
+#: src/templates/registration/logged_out.html:5
+msgid "Ausgeloggt"
+msgstr ""
 
 #: src/templates/registration/logged_out.html:6
 msgid "Hier klicken um die wieder einzuloggen."
-msgstr "Click here to log in again."
+msgstr ""
 
-#: src/templates/registration/login.html:7
-msgid "Dein Username oder Passwort ist falsch."
-msgstr "Your username or password is wrong."
+#: src/templates/registration/login.html:10
+msgid "Der eingegebene Username oder das Passwort ist falsch."
+msgstr ""
 
-#: src/templates/registration/login.html:13
+#: src/templates/registration/login.html:22
 msgid "Bitte log dich ein um diese Seite sehen zu können."
-msgstr "Please log in to see this site."
+msgstr ""
 
 #: src/templates/registration/login.html:34
+msgid "Einloggen"
+msgstr ""
+
+#: src/templates/registration/login.html:40
 msgid "Passwort vergessen?"
-msgstr "Reset password?"
+msgstr ""
 
 #: src/templates/registration/password_reset_complete.html:5
 msgid "Dein Passwort wurde erfolgreich geändert!"
-msgstr "Your password was successfully changed!"
+msgstr ""
 
 #: src/templates/registration/password_reset_complete.html:6
 msgid "Wieder einloggen?"
-msgstr "Login again?"
+msgstr ""
 
 #: src/templates/registration/password_reset_confirmation.html:6
 msgid "Bitte änder und bestätige dein neues Passwort."
-msgstr "Please Change"
+msgstr ""
 
 #: src/templates/registration/password_reset_confirmation.html:12
 msgid "Neues Passwort"
-msgstr "New Password"
+msgstr ""
 
 #: src/templates/registration/password_reset_confirmation.html:17
 msgid "Passwort bestätigen"
-msgstr "Confirm password"
+msgstr ""
 
 #: src/templates/registration/password_reset_confirmation.html:22
 msgid "Passwort ändern"
-msgstr "Change password"
+msgstr ""
 
 #: src/templates/registration/password_reset_confirmation.html:27
 msgid "Zurücksetzen vom Passwort fehlgeschlagen"
-msgstr "Reset of you password failed"
+msgstr ""
 
 #: src/templates/registration/password_reset_confirmation.html:28
 msgid ""
 "Der Link zum Zurücksetzen vom Passwort ist ungültig, vielleicht weil er "
 "bereits benutzt wurde. Bitte beantrage die Zurücksetzung erneut."
 msgstr ""
-"The link to reset you password is invalid, maybe because it was already "
-"used. Please request a new reset link."
 
 #: src/templates/registration/password_reset_done.html:5
 msgid ""
@@ -587,1269 +1230,21 @@ msgid ""
 "Passworts zugesendet. Wenn du die E-Mail nicht in wenigen Minuten bekommst "
 "schau bitte in deinem Spam-Ordner."
 msgstr ""
-"We seint you an e-mail with information regarding your password reset. If "
-"the e-mail does not arrive you in the next few minutes please check your "
-"spam folder."
 
 #: src/templates/registration/password_reset_email.html:2
 msgid ""
 "Jemand hat um versucht dein Passwort zurückzusetzen. Wenn du das warst "
 "kannst du das unter folgendem Link tun:"
 msgstr ""
-"Someone tried to reset you password. If this was you, you can do this by "
-"using the following link:"
 
 #: src/templates/registration/password_reset_form.html:10
 msgid "Passwort zurücksetzen"
-msgstr "Reset password"
+msgstr ""
 
 #: src/templates/registration/password_reset_form.html:11
 msgid "Bitte gib die E-Mail ein die mit deinem Account verknüpft ist."
-msgstr "Please provide the e-mail address that is linked to your account."
+msgstr ""
 
 #: src/templates/registration/password_reset_form.html:13
 msgid "Zurücksetzen"
-msgstr "Reset"
-
-#: venv/lib/python3.12/site-packages/alabaster/layout.html:99
-msgid "Page source"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/alabaster/navigation.html:1
-#, fuzzy
-#| msgid "Organisation"
-msgid "Navigation"
-msgstr "Organization"
-
-#: venv/lib/python3.12/site-packages/django/contrib/messages/apps.py:16
-msgid "Messages"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/contrib/sitemaps/apps.py:8
-msgid "Site Maps"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/contrib/staticfiles/apps.py:9
-msgid "Static Files"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/contrib/syndication/apps.py:7
-#, fuzzy
-#| msgid "Organisation"
-msgid "Syndication"
-msgstr "Organization"
-
-#. Translators: String used to replace omitted page numbers in elided page
-#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
-#: venv/lib/python3.12/site-packages/django/core/paginator.py:30
-msgid "…"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/paginator.py:32
-msgid "That page number is not an integer"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/paginator.py:33
-msgid "That page number is less than 1"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/paginator.py:34
-msgid "That page contains no results"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:22
-msgid "Enter a valid value."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:104
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:760
-msgid "Enter a valid URL."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:165
-msgid "Enter a valid integer."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:176
-msgid "Enter a valid email address."
-msgstr ""
-
-#. Translators: "letters" means latin letters: a-z and A-Z.
-#: venv/lib/python3.12/site-packages/django/core/validators.py:259
-msgid ""
-"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:267
-msgid ""
-"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
-"hyphens."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:279
-#: venv/lib/python3.12/site-packages/django/core/validators.py:306
-msgid "Enter a valid IPv4 address."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:286
-#: venv/lib/python3.12/site-packages/django/core/validators.py:307
-msgid "Enter a valid IPv6 address."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:298
-#: venv/lib/python3.12/site-packages/django/core/validators.py:305
-msgid "Enter a valid IPv4 or IPv6 address."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:341
-msgid "Enter only digits separated by commas."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:347
-#, python-format
-msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:382
-#, python-format
-msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:391
-#, python-format
-msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:400
-#, python-format
-msgid "Ensure this value is a multiple of step size %(limit_value)s."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:407
-#, python-format
-msgid ""
-"Ensure this value is a multiple of step size %(limit_value)s, starting from "
-"%(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:439
-#, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at least %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:457
-#, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at most %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:480
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:355
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:394
-msgid "Enter a number."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:482
-#, python-format
-msgid "Ensure that there are no more than %(max)s digit in total."
-msgid_plural "Ensure that there are no more than %(max)s digits in total."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:487
-#, python-format
-msgid "Ensure that there are no more than %(max)s decimal place."
-msgid_plural "Ensure that there are no more than %(max)s decimal places."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:492
-#, python-format
-msgid ""
-"Ensure that there are no more than %(max)s digit before the decimal point."
-msgid_plural ""
-"Ensure that there are no more than %(max)s digits before the decimal point."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:563
-#, python-format
-msgid ""
-"File extension “%(extension)s” is not allowed. Allowed extensions are: "
-"%(allowed_extensions)s."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/core/validators.py:624
-msgid "Null characters are not allowed."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/base.py:1477
-#: venv/lib/python3.12/site-packages/django/forms/models.py:906
-msgid "and"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/base.py:1479
-#, python-format
-msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/constraints.py:20
-#, python-format
-msgid "Constraint “%(name)s” is violated."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:133
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:134
-msgid "This field cannot be null."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:135
-msgid "This field cannot be blank."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:136
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or
-#. 'month'. Eg: "Title must be unique for pub_date year"
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:140
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:179
-#, python-format
-msgid "Field of type: %(field_type)s"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1155
-#, python-format
-msgid "“%(value)s” value must be either True or False."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1156
-#, python-format
-msgid "“%(value)s” value must be either True, False, or None."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1158
-msgid "Boolean (Either True or False)"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1208
-#, python-format
-msgid "String (up to %(max_length)s)"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1210
-msgid "String (unlimited)"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1314
-msgid "Comma-separated integers"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1415
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
-"format."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1419
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1554
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
-"date."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1423
-msgid "Date (without time)"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1550
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1558
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1563
-msgid "Date (with time)"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1690
-#, python-format
-msgid "“%(value)s” value must be a decimal number."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1692
-msgid "Decimal number"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1853
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
-"uuuuuu] format."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1857
-#, fuzzy
-#| msgid "Organisation"
-msgid "Duration"
-msgstr "Organization"
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1909
-msgid "Email address"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:1934
-msgid "File path"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2012
-#, python-format
-msgid "“%(value)s” value must be a float."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2014
-msgid "Floating point number"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2054
-#, python-format
-msgid "“%(value)s” value must be an integer."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2056
-msgid "Integer"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2152
-msgid "Big (8 byte) integer"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2169
-msgid "Small integer"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2177
-msgid "IPv4 address"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2208
-msgid "IP address"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2301
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2302
-#, python-format
-msgid "“%(value)s” value must be either None, True or False."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2304
-msgid "Boolean (Either True, False or None)"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2355
-msgid "Positive big integer"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2370
-msgid "Positive integer"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2385
-msgid "Positive small integer"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2401
-#, python-format
-msgid "Slug (up to %(max_length)s)"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2437
-msgid "Text"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2512
-#, python-format
-msgid ""
-"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-"format."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2516
-#, python-format
-msgid ""
-"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-"invalid time."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2520
-msgid "Time"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2628
-msgid "URL"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2652
-msgid "Raw binary data"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2717
-#, python-format
-msgid "“%(value)s” is not a valid UUID."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/__init__.py:2719
-msgid "Universally unique identifier"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/files.py:232
-msgid "File"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/files.py:393
-msgid "Image"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/json.py:26
-msgid "A JSON object"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/json.py:28
-msgid "Value must be valid JSON."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/related.py:939
-#, python-format
-msgid "%(model)s instance with %(field)s %(value)r does not exist."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/related.py:941
-msgid "Foreign Key (type determined by related field)"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/related.py:1235
-msgid "One-to-one relationship"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/related.py:1292
-#, python-format
-msgid "%(from)s-%(to)s relationship"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/related.py:1294
-#, python-format
-msgid "%(from)s-%(to)s relationships"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/db/models/fields/related.py:1342
-msgid "Many-to-many relationship"
-msgstr ""
-
-#. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
-#: venv/lib/python3.12/site-packages/django/forms/boundfield.py:185
-msgid ":?.!"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:95
-msgid "This field is required."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:304
-msgid "Enter a whole number."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:475
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:1252
-msgid "Enter a valid date."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:498
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:1253
-msgid "Enter a valid time."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:525
-msgid "Enter a valid date/time."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:559
-msgid "Enter a valid duration."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:560
-#, python-brace-format
-msgid "The number of days must be between {min_days} and {max_days}."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:629
-msgid "No file was submitted. Check the encoding type on the form."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:630
-msgid "No file was submitted."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:631
-msgid "The submitted file is empty."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:633
-#, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
-msgid_plural ""
-"Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:638
-msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:702
-msgid ""
-"Upload a valid image. The file you uploaded was either not an image or a "
-"corrupted image."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:874
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:960
-#: venv/lib/python3.12/site-packages/django/forms/models.py:1585
-#, python-format
-msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:962
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:1081
-#: venv/lib/python3.12/site-packages/django/forms/models.py:1583
-msgid "Enter a list of values."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:1082
-msgid "Enter a complete value."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:1321
-msgid "Enter a valid UUID."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/fields.py:1351
-msgid "Enter a valid JSON."
-msgstr ""
-
-#. Translators: This is the default suffix added to form field labels
-#: venv/lib/python3.12/site-packages/django/forms/forms.py:94
-msgid ":"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/forms.py:231
-#, python-format
-msgid "(Hidden field %(name)s) %(error)s"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/formsets.py:61
-#, python-format
-msgid ""
-"ManagementForm data is missing or has been tampered with. Missing fields: "
-"%(field_names)s. You may need to file a bug report if the issue persists."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/formsets.py:65
-#, python-format
-msgid "Please submit at most %(num)d form."
-msgid_plural "Please submit at most %(num)d forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/forms/formsets.py:70
-#, python-format
-msgid "Please submit at least %(num)d form."
-msgid_plural "Please submit at least %(num)d forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/forms/formsets.py:484
-#: venv/lib/python3.12/site-packages/django/forms/formsets.py:491
-msgid "Order"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/formsets.py:499
-msgid "Delete"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/models.py:899
-#, python-format
-msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/models.py:904
-#, python-format
-msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/models.py:911
-#, python-format
-msgid ""
-"Please correct the duplicate data for %(field_name)s which must be unique "
-"for the %(lookup)s in %(date_field)s."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/models.py:920
-msgid "Please correct the duplicate values below."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/models.py:1357
-msgid "The inline value did not match the parent instance."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/models.py:1448
-msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/models.py:1587
-#, python-format
-msgid "“%(pk)s” is not a valid value."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/utils.py:227
-#, python-format
-msgid ""
-"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
-"may be ambiguous or it may not exist."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/widgets.py:461
-msgid "Clear"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/widgets.py:462
-msgid "Currently"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/widgets.py:463
-msgid "Change"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/widgets.py:800
-msgid "Unknown"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/widgets.py:801
-msgid "Yes"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/forms/widgets.py:802
-msgid "No"
-msgstr ""
-
-#. Translators: Please do not add spaces around commas.
-#: venv/lib/python3.12/site-packages/django/template/defaultfilters.py:876
-msgid "yes,no,maybe"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/template/defaultfilters.py:906
-#: venv/lib/python3.12/site-packages/django/template/defaultfilters.py:923
-#, python-format
-msgid "%(size)d byte"
-msgid_plural "%(size)d bytes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/template/defaultfilters.py:925
-#, python-format
-msgid "%s KB"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/template/defaultfilters.py:927
-#, python-format
-msgid "%s MB"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/template/defaultfilters.py:929
-#, python-format
-msgid "%s GB"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/template/defaultfilters.py:931
-#, python-format
-msgid "%s TB"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/template/defaultfilters.py:933
-#, python-format
-msgid "%s PB"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dateformat.py:74
-msgid "p.m."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dateformat.py:75
-msgid "a.m."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dateformat.py:80
-msgid "PM"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dateformat.py:81
-msgid "AM"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dateformat.py:153
-msgid "midnight"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dateformat.py:155
-msgid "noon"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:7
-msgid "Monday"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:8
-msgid "Tuesday"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:9
-msgid "Wednesday"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:10
-msgid "Thursday"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:11
-msgid "Friday"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:12
-msgid "Saturday"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:13
-msgid "Sunday"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:16
-#, fuzzy
-#| msgid "Moin,"
-msgid "Mon"
-msgstr "Howdy,"
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:17
-msgid "Tue"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:18
-msgid "Wed"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:19
-msgid "Thu"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:20
-msgid "Fri"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:21
-msgid "Sat"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:22
-msgid "Sun"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:25
-msgid "January"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:26
-msgid "February"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:27
-msgid "March"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:28
-msgid "April"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:29
-msgid "May"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:30
-msgid "June"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:31
-msgid "July"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:32
-msgid "August"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:33
-msgid "September"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:34
-msgid "October"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:35
-msgid "November"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:36
-msgid "December"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:39
-msgid "jan"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:40
-msgid "feb"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:41
-msgid "mar"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:42
-msgid "apr"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:43
-msgid "may"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:44
-msgid "jun"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:45
-msgid "jul"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:46
-msgid "aug"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:47
-msgid "sep"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:48
-msgid "oct"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:49
-msgid "nov"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:50
-msgid "dec"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:53
-msgctxt "abbrev. month"
-msgid "Jan."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:54
-msgctxt "abbrev. month"
-msgid "Feb."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:55
-msgctxt "abbrev. month"
-msgid "March"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:56
-msgctxt "abbrev. month"
-msgid "April"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:57
-msgctxt "abbrev. month"
-msgid "May"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:58
-msgctxt "abbrev. month"
-msgid "June"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:59
-msgctxt "abbrev. month"
-msgid "July"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:60
-msgctxt "abbrev. month"
-msgid "Aug."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:61
-msgctxt "abbrev. month"
-msgid "Sept."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:62
-msgctxt "abbrev. month"
-msgid "Oct."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:63
-msgctxt "abbrev. month"
-msgid "Nov."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:64
-msgctxt "abbrev. month"
-msgid "Dec."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:67
-msgctxt "alt. month"
-msgid "January"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:68
-msgctxt "alt. month"
-msgid "February"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:69
-msgctxt "alt. month"
-msgid "March"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:70
-msgctxt "alt. month"
-msgid "April"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:71
-msgctxt "alt. month"
-msgid "May"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:72
-msgctxt "alt. month"
-msgid "June"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:73
-msgctxt "alt. month"
-msgid "July"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:74
-msgctxt "alt. month"
-msgid "August"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:75
-msgctxt "alt. month"
-msgid "September"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:76
-msgctxt "alt. month"
-msgid "October"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:77
-msgctxt "alt. month"
-msgid "November"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/dates.py:78
-msgctxt "alt. month"
-msgid "December"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/ipv6.py:8
-msgid "This is not a valid IPv6 address."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/text.py:123
-#, python-format
-msgctxt "String to return when truncating text"
-msgid "%(truncated_text)s…"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/text.py:323
-msgid "or"
-msgstr ""
-
-#. Translators: This string is used as a separator between list elements
-#: venv/lib/python3.12/site-packages/django/utils/text.py:342
-#: venv/lib/python3.12/site-packages/django/utils/timesince.py:135
-msgid ", "
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/utils/timesince.py:8
-#, python-format
-msgid "%(num)d year"
-msgid_plural "%(num)d years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/utils/timesince.py:9
-#, python-format
-msgid "%(num)d month"
-msgid_plural "%(num)d months"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/utils/timesince.py:10
-#, python-format
-msgid "%(num)d week"
-msgid_plural "%(num)d weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/utils/timesince.py:11
-#, python-format
-msgid "%(num)d day"
-msgid_plural "%(num)d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/utils/timesince.py:12
-#, python-format
-msgid "%(num)d hour"
-msgid_plural "%(num)d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/utils/timesince.py:13
-#, python-format
-msgid "%(num)d minute"
-msgid_plural "%(num)d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: venv/lib/python3.12/site-packages/django/views/csrf.py:29
-msgid "Forbidden"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/csrf.py:30
-msgid "CSRF verification failed. Request aborted."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/csrf.py:34
-msgid ""
-"You are seeing this message because this HTTPS site requires a “Referer "
-"header” to be sent by your web browser, but none was sent. This header is "
-"required for security reasons, to ensure that your browser is not being "
-"hijacked by third parties."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/csrf.py:40
-msgid ""
-"If you have configured your browser to disable “Referer” headers, please re-"
-"enable them, at least for this site, or for HTTPS connections, or for “same-"
-"origin” requests."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/csrf.py:45
-msgid ""
-"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
-"including the “Referrer-Policy: no-referrer” header, please remove them. The "
-"CSRF protection requires the “Referer” header to do strict referer checking. "
-"If you’re concerned about privacy, use alternatives like <a "
-"rel=\"noreferrer\" …> for links to third-party sites."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/csrf.py:54
-msgid ""
-"You are seeing this message because this site requires a CSRF cookie when "
-"submitting forms. This cookie is required for security reasons, to ensure "
-"that your browser is not being hijacked by third parties."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/csrf.py:60
-msgid ""
-"If you have configured your browser to disable cookies, please re-enable "
-"them, at least for this site, or for “same-origin” requests."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/csrf.py:66
-msgid "More information is available with DEBUG=True."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:44
-msgid "No year specified"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:64
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:115
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:214
-msgid "Date out of range"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:94
-msgid "No month specified"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:147
-msgid "No day specified"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:194
-msgid "No week specified"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:349
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:380
-#, python-format
-msgid "No %(verbose_name_plural)s available"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:652
-#, python-format
-msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/dates.py:692
-#, python-format
-msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/detail.py:56
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/list.py:70
-msgid "Page is not “last”, nor can it be converted to an int."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/list.py:77
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/generic/list.py:169
-#, python-format
-msgid "Empty list and “%(class_name)s.allow_empty” is False."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/static.py:49
-msgid "Directory indexes are not allowed here."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/static.py:51
-#, python-format
-msgid "“%(path)s” does not exist"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/static.py:68
-#: venv/lib/python3.12/site-packages/django/views/templates/directory_index.html:8
-#: venv/lib/python3.12/site-packages/django/views/templates/directory_index.html:11
-#, python-format
-msgid "Index of %(directory)s"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:7
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:220
-msgid "The install worked successfully! Congratulations!"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:206
-#, python-format
-msgid ""
-"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
-"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:221
-#, python-format
-msgid ""
-"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
-"%(version)s/ref/settings/#debug\" target=\"_blank\" "
-"rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not "
-"configured any URLs."
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:229
-msgid "Django Documentation"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:230
-msgid "Topics, references, &amp; how-to’s"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:238
-msgid "Tutorial: A Polling App"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:239
-msgid "Get started with Django"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:247
-msgid "Django Community"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/django/views/templates/default_urlconf.html:248
-msgid "Connect, get help, or contribute"
-msgstr ""
-
-#: venv/lib/python3.12/site-packages/sphinxcontrib/jsmath/__init__.py:51
-msgid "Permalink to this equation"
-msgstr ""
-
-#~ msgid "Kein Ort angegeben"
-#~ msgstr "No location given"
-
-#~ msgid "Weiter"
-#~ msgstr "Next"
-
-#~ msgid "Keine Ort angegeben"
-#~ msgstr "No location given"
+msgstr "reset"
