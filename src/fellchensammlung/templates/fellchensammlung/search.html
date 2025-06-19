@@ -22,7 +22,6 @@
                     <input type="hidden" id="place_id" name="place_id">
                     <!--- https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
                     {{ search_form }}
-                    <ul id="results"></ul>
                     {% if searched %}
                         <div class="field is-grouped">
                             <button class="button is-primary" type="submit" value="search" name="search">
@@ -35,7 +34,7 @@
                             {% else %}
                                 <button class="button" type="submit" value="{{ subscribed_search.pk }}"
                                         name="unsubscribe_to_search">
-                                    <i class="fas fa-bell-slash"></i>  {% trans 'Suche nicht mehr abonnieren' %}
+                                    <i class="fas fa-bell-slash"></i> {% trans 'Suche nicht mehr abonnieren' %}
                                 </button>
                             {% endif %}
                         </div>
@@ -64,47 +63,65 @@
     </div>
 
     <script>
-        const locationInput = document.getElementById('id_location_string');
-        const resultsList = document.getElementById('results');
-        const placeIdInput = document.getElementById('place_id');
+        $(document).ready(function () {
+            const $locationInput = $("#id_location_string");
 
-        locationInput.addEventListener('input', async function () {
-            const query = locationInput.value.trim();
+            $locationInput.wrap("<div class='dropdown' id='location-result-list'></div>");
+            const dropdown = $("#location-result-list");
+            $locationInput.wrap("<div class='dropdown-trigger'></div>");
+            $("<div class='dropdown-content' id='results'></div>").insertAfter($locationInput);
+            const $resultsList = $("#results");
+            $resultsList.wrap("<div class='dropdown-menu'></div>");
 
-            if (query.length < 3) {
-                resultsList.innerHTML = ''; // Don't search for or show results if input is less than 3 characters
-                return;
-            }
 
-            try {
-                // Search with preference to center of germany and only for cities
-                const response = await fetch(`{{ geocoding_api_url }}/?q=${encodeURIComponent(query)}&limit=5&lang={{ LANGUAGE_CODE_CURRENT }}&lat=51.95&lon=10.26&layer=city`);
-                const data = await response.json();
+            $locationInput.on("input", function () {
+                const query = $.trim($locationInput.val());
 
-                if (data && data.features) {
-                    resultsList.innerHTML = ''; // Clear previous results
-
-                    const locations = data.features.slice(0, 5); // Show only the first 5 results
-
-                    locations.forEach(location => {
-                        const listItem = document.createElement('li');
-                        listItem.classList.add('result-item');
-                        listItem.textContent = geojson_to_summary(location);
-
-                        // Add event when user clicks on a result location
-                        listItem.addEventListener('click', () => {
-
-                            locationInput.value = geojson_to_searchable_string(location); // Set input field to selected location
-                            resultsList.innerHTML = ''; // Clear the results after selecting a location
-                        });
-
-                        resultsList.appendChild(listItem);
-                    });
+                if (query.length < 3) {
+                    dropdown.removeClass("is-active");
+                    return;
                 }
-            } catch (error) {
-                console.error('Error fetching location data:', error);
-                resultsList.innerHTML = '<li class="result-item">Error fetching data. Please try again.</li>';
-            }
+
+                $.ajax({
+                    url: "{{ geocoding_api_url }}/",
+                    data: {
+                        q: query,
+                        limit: 5,
+                        lang: "{{ LANGUAGE_CODE_CURRENT }}",
+                        lat: 51.95,
+                        lon: 10.26,
+                        layer: "city"
+                    },
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $resultsList.empty();
+                        dropdown.addClass("is-active");
+
+                        if (data && data.features) {
+                            const locations = data.features.slice(0, 5);
+
+                            $.each(locations, function (index, location) {
+                                const $listItem = $("<div>")
+                                    .addClass("dropdown-item")
+                                    .addClass("result-item")
+                                    .text(geojson_to_summary(location))
+                                    .on("click", function () {
+                                        $locationInput.val(geojson_to_searchable_string(location));
+                                        $resultsList.empty()
+                                        dropdown.removeClass("is-active");
+                                    });
+
+                                $resultsList.append($listItem);
+                            });
+                        }
+                    },
+                    error: function () {
+                        $resultsList.html('<li class="result-item">{%  trans 'Error fetching data. Please try again.' %}</li>');
+                    }
+                });
+            });
         });
+
     </script>
 {% endblock %}

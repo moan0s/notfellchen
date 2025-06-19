@@ -20,6 +20,22 @@ $grey-dark: #262728;
 }
 
 
+// Search form suggestion dropdown
+
+#location-result-list {
+    display: inline; //ensures that the dropdown is not restricted in width WTF
+}
+
+.result-item {
+    cursor: pointer;
+}
+
+.result-item:hover {
+    background-color: #b2aaaa;
+}
+
+
+// Toggle switch
 
 .toggle-switch {
     display: inline-block;
