@@ -712,7 +712,7 @@ def rescue_organization_check(request):
         if action == "checked":
             rescue_org.set_checked()
 
-    last_checked_rescue_orgs = RescueOrganization.objects.order_by("last_checked")
+    last_checked_rescue_orgs = RescueOrganization.objects.filter(exclude_from_check=False).order_by("last_checked")
     context = {"rescue_orgs": last_checked_rescue_orgs, }
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
 

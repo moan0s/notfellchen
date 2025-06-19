@@ -150,6 +150,9 @@ class RescueOrganization(models.Model):
     external_source_identifier = models.CharField(max_length=200, null=True, blank=True,
                                                   choices=ExternalSourceChoices.choices,
                                                   verbose_name=_('External Source Identifier'))
+    exclude_from_check = models.BooleanField(default=False, verbose_name=_('Von Prüfung ausschließen'),
+                                             help_text=_("Organisation von der manuellen Überprüfung ausschließen, "
+                                                         "z.B. weil Tiere nicht online geführt werden"))
 
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
