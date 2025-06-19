@@ -25,13 +25,13 @@ urlpatterns = [
     # ex: /animal/5/delete
     path("tier/<int:animal_id>/delete", views.animal_delete, name="animal-delete"),
     # ex: /animal/5/add-photo
-    path("tier/<int:animal_id>/add-photo", views.add_photo_to_animal_bulma, name="animal-add-photo"),
+    path("tier/<int:animal_id>/add-photo", views.add_photo_to_animal, name="animal-add-photo"),
     # ex: /adoption_notice/7/
     path("vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail, name="adoption-notice-detail"),
     # ex: /adoption_notice/7/edit
     path("vermittlung/<int:adoption_notice_id>/edit", views.adoption_notice_edit, name="adoption-notice-edit"),
     # ex: /vermittlung/5/add-photo
-    path("vermittlung/<int:adoption_notice_id>/add-photo", views.add_photo_to_adoption_notice_bulma,
+    path("vermittlung/<int:adoption_notice_id>/add-photo", views.add_photo_to_adoption_notice,
          name="adoption-notice-add-photo"),
     # ex: /adoption_notice/2/add-animal
     path("vermittlung/<int:adoption_notice_id>/add-animal", views.adoption_notice_add_animal,
@@ -45,11 +45,11 @@ urlpatterns = [
     path("suchen/", views.search, name="search"),
     path("suchen/<slug:important_location_slug>", views.search_important_locations, name="search-by-location"),
     # ex: /map/
-    path("map/", views.map_bulma, name="map"),
+    path("map/", views.map, name="map"),
     # ex: /vermitteln/
-    path("vermitteln/", views.add_adoption_notice_bulma, name="add-adoption"),
+    path("vermitteln/", views.add_adoption_notice, name="add-adoption"),
 
-    path("ueber-uns/", views.about_bulma, name="about"),
+    path("ueber-uns/", views.about, name="about"),
     path("impressum/", views.imprint, name="imprint"),
     path("terms-of-service/", views.terms_of_service, name="terms-of-service"),
     path("datenschutz/", views.privacy, name="privacy"),

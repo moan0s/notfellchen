@@ -231,7 +231,7 @@ def search(request, templatename="fellchensammlung/search.html"):
 
 
 @login_required
-def add_adoption_notice_bulma(request):
+def add_adoption_notice(request):
     if request.method == 'POST':
         form = AdoptionNoticeFormAutoAnimal(request.POST)
 
@@ -298,7 +298,7 @@ def adoption_notice_add_animal(request, adoption_notice_id):
 
 
 @login_required
-def add_photo_to_animal_bulma(request, animal_id):
+def add_photo_to_animal(request, animal_id):
     animal = Animal.objects.get(id=animal_id)
     # Only users that are mods or owners of the animal are allowed to add to it
     fail_if_user_not_owner_or_trust_level(request.user, animal)
@@ -330,7 +330,7 @@ def add_photo_to_animal_bulma(request, animal_id):
 
 
 @login_required
-def add_photo_to_adoption_notice_bulma(request, adoption_notice_id):
+def add_photo_to_adoption_notice(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
     # Only users that are mods or owners of the adoption notice are allowed to add to it
     fail_if_user_not_owner_or_trust_level(request.user, adoption_notice)
@@ -404,7 +404,7 @@ def animal_delete(request, animal_id):
     return render(request, 'fellchensammlung/forms/form-delete-animal.html', context={"animal": animal})
 
 
-def about_bulma(request):
+def about(request):
     context = i18n.get_texts_by_language(["about_us", "faq"])
 
     return render(
@@ -596,7 +596,7 @@ def updatequeue(request):
     return render(request, 'fellchensammlung/updatequeue.html', context=context)
 
 
-def map_bulma(request):
+def map(request):
     context = {"show_ANs": True,
                "show_rescue_orgs": True}
 
