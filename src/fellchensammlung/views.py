@@ -57,7 +57,7 @@ def index(request):
     lang = Language.objects.get(languagecode=language_code)
     active_announcements = Announcement.get_active_announcements(lang)
 
-    context = {"adoption_notices": active_adoptions[:5], "show_ANs": True,
+    context = {"adoption_notices": active_adoptions[:4], "show_ANs": True,
                "announcements": active_announcements}
     Text.get_texts(["how_to", "introduction"], lang, context)
 
