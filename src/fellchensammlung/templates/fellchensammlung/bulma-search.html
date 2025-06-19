@@ -6,49 +6,52 @@
 {% block content %}
     {% get_current_language as LANGUAGE_CODE_CURRENT %}
     <div class="columns">
+        <!--- Map -->
         <div class="column is-two-thirds">
             <div style="height: 75vh">
                 {% include "fellchensammlung/partials/bulma-partial-map.html" %}
             </div>
         </div>
+        <!--- Search Form -->
         <div class="column">
-            <form class="block" method="post" autocomplete="off">
-                {% csrf_token %}
-                <input type="hidden" name="longitude" maxlength="200" id="longitude">
-                <input type="hidden" name="latitude" maxlength="200" id="latitude">
-                <input type="hidden" id="place_id" name="place_id">
-                <!--- https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
-                {{ search_form }}
-                <ul id="results"></ul>
-                <button class="button is-primary" type="submit" value="search" name="search">
-                    <i class="fas fa-search"></i> {% trans 'Suchen' %}
-                </button>
-                {% if searched %}
-                    {% if subscribed_search %}
-                        <button class="button" type="submit" value="{{ subscribed_search.pk }}"
-                                name="unsubscribe_to_search">
-                            <i class="fas fa-bell-slash"></i> {% trans 'Suche nicht mehr abonnieren' %}
-                        </button>
-                    {% else %}
-                        <button class="button" type="submit" name="subscribe_to_search">
-                            <i class="fas fa-bell"></i> {% trans 'Suche abonnieren' %}
-                        </button>
-                    {% endif %}
-                {% endif %}
-            </form>
             <div class="block">
-                {% if place_not_found %}
-                    <div class="block notification is-warning">
-                        <p>
-                            {% trans 'Ort nicht gefunden' %}
-                        </p>
-                    </div>
-                {% endif %}
+                <form method="post" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="hidden" name="longitude" maxlength="200" id="longitude">
+                    <input type="hidden" name="latitude" maxlength="200" id="latitude">
+                    <input type="hidden" id="place_id" name="place_id">
+                    <!--- https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
+                    {{ search_form }}
+                    <ul id="results"></ul>
+                    <button class="button is-primary" type="submit" value="search" name="search">
+                        <i class="fas fa-search"></i> {% trans 'Suchen' %}
+                    </button>
+                    {% if searched %}
+                        {% if subscribed_search %}
+                                <button class="button" type="submit" value="{{ subscribed_search.pk }}"
+                                        name="unsubscribe_to_search">
+                                    <i class="fas fa-bell-slash"></i> {% trans 'Suche nicht mehr abonnieren' %}
+                                </button>
+                                {% else %}
+                                <button class="button" type="submit" name="subscribe_to_search">
+                                    <i class="fas fa-bell"></i> {% trans 'Suche abonnieren' %}
+                                </button>
+                            <div class="block">{% translate 'Wenn du die Suche abbonierst, wirst du für neue Vermittlungen, die den Kriterien entsprechen, benachrichtigt.' %}</div>
+                        {% endif %}
+                    {% endif %}
+                </form>
             </div>
+            {% if place_not_found %}
+                <div class="block notification is-warning">
+                    <p>
+                        {% trans 'Ort nicht gefunden' %}
+                    </p>
+                </div>
+            {% endif %}
         </div>
     </div>
     <div class="">
-    {% include "fellchensammlung/lists/bulma-list-adoption-notices.html" %}
+        {% include "fellchensammlung/lists/bulma-list-adoption-notices.html" %}
     </div>
 
     <script>
