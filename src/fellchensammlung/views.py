@@ -675,7 +675,7 @@ def external_site_warning(request, template_name='fellchensammlung/external-site
     return render(request, template_name, context=context)
 
 
-def list_rescue_organizations(request, template='fellchensammlung/bulma-animal-shelters.html'):
+def list_rescue_organizations(request, template='fellchensammlung/animal-shelters.html'):
     rescue_organizations = RescueOrganization.objects.all()
     context = {"rescue_organizations": rescue_organizations,
                "show_rescue_orgs": True}
