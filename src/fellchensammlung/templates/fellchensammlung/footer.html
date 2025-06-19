@@ -4,19 +4,18 @@
     <div class="columns">
         <div class="column">
             <div class="block">
-                <h3 class="bd-footer-title title is-3 has-text-left">
+                <h3 class="title is-3 has-text-left">
                     Notfellchen
                 </h3>
 
                 <!-- footer content -->
-                <p class="bd-footer-link
-                has-text-left">
+                <p class="has-text-left">
                     Für Menschen die Ratten aus dem Tierschutz ein liebendes Zuhause geben wollen.
                 </p>
             </div>
 
             <div class="block">
-                <h3 class="bd-footer-title title is-5">
+                <h3 class="title is-5">
                     {% trans 'Sprache ändern' %}
                 </h3>
                 {% include "fellchensammlung/forms/form_change_language.html" %}
@@ -25,35 +24,35 @@
         </div>
 
         <div class="column">
-            <h4 class="bd-footer-title title is-4 has-text-justify">
+            <h4 class="title is-4 has-text-justify">
                 {% translate 'Über uns' %}
             </h4>
 
-            <a class="bd-footer-link" href="{% url "about" %}">
+            <a href="{% url "about" %}">
                 {% translate 'Das Notfellchen Projekt' %}
             </a>
             <br/>
-            <a class="bd-footer-link" href="{% url "terms-of-service" %}">
+            <a href="{% url "terms-of-service" %}">
                 {% translate 'Nutzungsbedingungen' %}
             </a>
             <br/>
 
-            <a class="bd-footer-link" href="{% url "privacy" %}">
+            <a href="{% url "privacy" %}">
                 {% translate 'Datenschutz' %}
             </a>
             <br/>
-            <a class="bd-footer-link" href="{% url "imprint" %}">
+            <a href="{% url "imprint" %}">
                 {% translate 'Impressum' %}
             </a>
             <br/>
         </div>
 
         <div class="column">
-            <h4 class="bd-footer-title title is-4 has-text-justify">
+            <h4 class="title is-4 has-text-justify">
                 Technisches
             </h4>
 
-            <p class="bd-footer-link">
+            <div >
                 <a class="nav-link " href="{% url "rss" %}">
                     <i class="fa-solid fa-rss"></i> {% translate 'RSS' %}
                 </a>
@@ -77,19 +76,19 @@
                     <span>{% trans 'Code' %}</span>
                   </span>
                 </a>
-            </p>
+            </div>
         </div>
          <div class="column">
-            <h4 class="bd-footer-title title is-4 has-text-justify">
+            <h4 class="title is-4 has-text-justify">
                 {% trans 'Hilfreiche Links' %}
             </h4>
 
-            <p class="bd-footer-link">
+            <div >
                 <a class="nav-link " href="{% url "rescue-organizations" %}">
                     {% translate 'Tierheime in der Nähe' %}
                 </a>
                 <br/>
-            </p>
+            </div>
         </div>
     </div>
 </footer>
