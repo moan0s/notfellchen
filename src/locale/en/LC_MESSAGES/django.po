@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Notfellchen\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-19 14:29+0000\n"
-"PO-Revision-Date: 2025-06-19 16:56+0200\n"
+"PO-Revision-Date: 2025-06-19 17:06+0200\n"
 "Last-Translator: Julian-Samuel <Gebühr>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -1057,39 +1057,37 @@ msgstr "Active "
 #, python-format
 msgid "vor einem Jahr"
 msgid_plural "vor %(years)d Jahren"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "one year ago"
+msgstr[1] " %(years)d years ago"
 
 #: src/fellchensammlung/tools/misc.py:49
 #, python-format
 msgid "vor %(month)d Monaten"
-msgstr ""
+msgstr "%(month)d months ago"
 
 #: src/fellchensammlung/tools/misc.py:51
 #, python-format
 msgid "vor %(weeks)d Wochen"
-msgstr ""
+msgstr "%(weeks)d weeks ago"
 
 #: src/fellchensammlung/tools/misc.py:54
 msgid "Heute"
-msgstr ""
+msgstr "Today"
 
 #: src/fellchensammlung/tools/misc.py:56
 #, python-format
 msgid "vor einem Tag"
 msgid_plural "vor %(count)d Tagen"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "one day ago"
+msgstr[1] "%(count)d days ago"
 
 #: src/fellchensammlung/tools/search.py:22
 msgid "Zu deiner Suche"
-msgstr ""
+msgstr "For your search"
 
 #: src/fellchensammlung/tools/search.py:24
-#, fuzzy
-#| msgid "Neue Meldung"
 msgid "Neue Vermittlung"
-msgstr "New report"
+msgstr "New adoption notice"
 
 #: src/notfellchen/settings.py:279
 msgid "English"
@@ -1101,52 +1099,52 @@ msgstr "German"
 
 #: src/templates/django_registration/activate.html:6
 msgid "Account aktivierung fehlgeschlagen"
-msgstr ""
+msgstr "Account activation failed"
 
 #: src/templates/django_registration/activation_complete.html:6
 msgid "Dein Account ist nun aktiviert. Viel Spaß!"
-msgstr ""
+msgstr "Your account is now active. Have fun!"
 
 #: src/templates/django_registration/activation_email_body.txt:2
 #: src/templates/django_registration/activation_email_subject.txt:1
 msgid "Account aktivieren"
-msgstr ""
+msgstr "Activate account"
 
 #: src/templates/django_registration/activation_email_body.txt:4
 msgid ""
 "Hier ist dein Aktivierungs-Key. Mit diesem kannst du deinen Account "
 "freischalten."
-msgstr ""
+msgstr "This is your activation key. You need this to activate your account."
 
 #: src/templates/django_registration/activation_email_body.txt:7
 msgid ""
 "Öffne den folgenden link im Browser und gib den Aktivierungs-Key dort ein"
-msgstr ""
+msgstr "Open the following link and enter the activation key there"
 
 #: src/templates/django_registration/activation_email_body.txt:10
 #, python-format
 msgid "Der Link ist für %(expiration_days)s Tage gültig."
-msgstr ""
+msgstr "The link is valid for %(expiration_days)s days."
 
 #: src/templates/django_registration/activation_failed.html:5
 msgid ""
 "Aktivierung fehlgeschlagen. Sende eine E-Mail an info@notfellchen.org für "
 "einen Account."
-msgstr ""
+msgstr "Activation failed. Send an E-Mail to info@notfellchen.org for help."
 
 #: src/templates/django_registration/activation_form.html:11
 msgid "Absenden"
-msgstr ""
+msgstr "Submit"
 
 #: src/templates/django_registration/activation_form.html:14
 #: src/templates/django_registration/registration_form.html:12
 #: src/templates/registration/login.html:16
 msgid "Du bist bereits eingeloggt."
-msgstr ""
+msgstr "You are now logged in."
 
 #: src/templates/django_registration/registration_closed.html:5
 msgid "Registrierung ist fehlgeschlagen."
-msgstr ""
+msgstr "Registration failed."
 
 #: src/templates/django_registration/registration_complete.html:6
 msgid ""
@@ -1157,89 +1155,97 @@ msgid ""
 "schreib uns an info@notfellchen.org\n"
 "        "
 msgstr ""
+"\n"
+"You are now registered and should receive an e-mail with a Link to activate "
+"your Account. If you don't receive the e-mail please message "
+"info@notfellchen.org"
 
 #: src/templates/django_registration/registration_form.html:9
 msgid "Jetzt registrieren!"
-msgstr ""
+msgstr "Register Now!"
 
 #: src/templates/registration/logged_out.html:5
 msgid "Ausgeloggt"
-msgstr ""
+msgstr "Logged out"
 
 #: src/templates/registration/logged_out.html:6
 msgid "Hier klicken um die wieder einzuloggen."
-msgstr ""
+msgstr "Click here to log in again."
 
 #: src/templates/registration/login.html:10
 msgid "Der eingegebene Username oder das Passwort ist falsch."
-msgstr ""
+msgstr "The username or password is wrong."
 
 #: src/templates/registration/login.html:22
 msgid "Bitte log dich ein um diese Seite sehen zu können."
-msgstr ""
+msgstr "Please log in to see this site"
 
 #: src/templates/registration/login.html:34
 msgid "Einloggen"
-msgstr ""
+msgstr "Log in"
 
 #: src/templates/registration/login.html:40
 msgid "Passwort vergessen?"
-msgstr ""
+msgstr "Forgot password?"
 
 #: src/templates/registration/password_reset_complete.html:5
 msgid "Dein Passwort wurde erfolgreich geändert!"
-msgstr ""
+msgstr "Your password was changed successfully!"
 
 #: src/templates/registration/password_reset_complete.html:6
 msgid "Wieder einloggen?"
-msgstr ""
+msgstr "Log in again?"
 
 #: src/templates/registration/password_reset_confirmation.html:6
 msgid "Bitte änder und bestätige dein neues Passwort."
-msgstr ""
+msgstr "Please change and confirm your password"
 
 #: src/templates/registration/password_reset_confirmation.html:12
 msgid "Neues Passwort"
-msgstr ""
+msgstr "New password"
 
 #: src/templates/registration/password_reset_confirmation.html:17
 msgid "Passwort bestätigen"
-msgstr ""
+msgstr "Confirm password"
 
 #: src/templates/registration/password_reset_confirmation.html:22
 msgid "Passwort ändern"
-msgstr ""
+msgstr "Change password"
 
 #: src/templates/registration/password_reset_confirmation.html:27
 msgid "Zurücksetzen vom Passwort fehlgeschlagen"
-msgstr ""
+msgstr "Resetting the password failed"
 
 #: src/templates/registration/password_reset_confirmation.html:28
 msgid ""
 "Der Link zum Zurücksetzen vom Passwort ist ungültig, vielleicht weil er "
 "bereits benutzt wurde. Bitte beantrage die Zurücksetzung erneut."
 msgstr ""
+"The link to reset the password is invalid, maybe because it was used "
+"already. Please restart the password reset."
 
 #: src/templates/registration/password_reset_done.html:5
 msgid ""
 "Wir haben dir eine E-Mail mit Informationen zum Zurücksetzen deines "
 "Passworts zugesendet. Wenn du die E-Mail nicht in wenigen Minuten bekommst "
 "schau bitte in deinem Spam-Ordner."
-msgstr ""
+msgstr "We have sent you and E-Mail with information to reset your password."
 
 #: src/templates/registration/password_reset_email.html:2
 msgid ""
 "Jemand hat um versucht dein Passwort zurückzusetzen. Wenn du das warst "
 "kannst du das unter folgendem Link tun:"
 msgstr ""
+"someone tried to reset your password. If this was you, you can do so by "
+"using the following Link:"
 
 #: src/templates/registration/password_reset_form.html:10
 msgid "Passwort zurücksetzen"
-msgstr ""
+msgstr "Reset password"
 
 #: src/templates/registration/password_reset_form.html:11
 msgid "Bitte gib die E-Mail ein die mit deinem Account verknüpft ist."
-msgstr ""
+msgstr "Please add the e-mail that you used for your account."
 
 #: src/templates/registration/password_reset_form.html:13
 msgid "Zurücksetzen"
