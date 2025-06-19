@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load custom_tags %}
-<div class="search-subscription">
-    <div class="search-subscription-header">
+<div class="block">
+    <div class="level">
         <h3>{{ search_subscription }}</h3>
         <form class="" method="POST">
             {% csrf_token %}
@@ -17,7 +17,7 @@
             <th>{% trans 'Suchradius' %}</th>
         </tr>
         <tr>
-            <td>{{ search_subscription.sex }}</td>
+            <td>{{ search_subscription.get_sex_display }}</td>
             <td>{{ search_subscription.location }}</td>
             <td>{{ search_subscription.max_distance }}km</td>
         </tr>
