@@ -270,7 +270,7 @@ def add_adoption_notice_bulma(request):
             print(form.errors)
     else:
         form = AdoptionNoticeFormAutoAnimal()
-    return render(request, 'fellchensammlung/forms/bulma-form-add-adoption.html', {'form': form})
+    return render(request, 'fellchensammlung/forms/form-add-adoption.html', {'form': form})
 
 
 @login_required
@@ -289,12 +289,12 @@ def adoption_notice_add_animal(request, adoption_notice_id):
             form.save_m2m()
             if "save-and-add-another-animal" in request.POST:
                 form = AnimalForm()
-                return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
+                return render(request, 'fellchensammlung/forms/form-add-animal-to-adoption.html', {'form': form})
             else:
                 return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
     else:
         form = AnimalForm()
-    return render(request, 'fellchensammlung/forms/form_add_animal_to_adoption.html', {'form': form})
+    return render(request, 'fellchensammlung/forms/form-add-animal-to-adoption.html', {'form': form})
 
 
 @login_required
@@ -318,15 +318,15 @@ def add_photo_to_animal_bulma(request, animal_id):
 
             if "save-and-add-another" in request.POST:
                 form = ImageForm(in_flow=True)
-                return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+                return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
             else:
                 return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
         else:
-            return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+            return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
 
     else:
         form = ImageForm(in_flow=True)
-        return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+        return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
 
 
 @login_required
@@ -347,14 +347,14 @@ def add_photo_to_adoption_notice_bulma(request, adoption_notice_id):
                                text=f"{request.user} hat Foto {instance.pk} zur Vermittlung {adoption_notice.pk} hinzugefügt")
             if "save-and-add-another" in request.POST:
                 form = ImageForm(in_flow=True)
-                return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+                return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
             else:
                 return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
         else:
-            return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+            return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
     else:
         form = ImageForm(in_flow=True)
-        return render(request, 'fellchensammlung/forms/bulma-form-image.html', {'form': form})
+        return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
 
 
 @login_required
