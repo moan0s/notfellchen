@@ -2,7 +2,7 @@
 
 [notfellchen.org](https://notfellchen.org) ist eine Sammelstelle für Tier-Vermittlungen. Die Idee entstand, da in der
 deutschsprachigen Rattencommunity ein wilder Mix aus Websites, Foren und Facebookgruppen besteht die Ratten vermitteln.
-Diese Website soll die bestehende Communities NICHT ersetzten, jedoch ermöglichen, dass Menschen die Ratten aufnehmen
+Diese Website soll die bestehende Communitys NICHT ersetzten, jedoch ermöglichen, dass Menschen die Ratten aufnehmen
 wollen Informationen einfach finden und nicht bereits in jeder Gruppe sein müssen.
 
 Wir nehmen Angebote auf die
@@ -60,6 +60,14 @@ Therefore, a solution is used where a number of predefined texts per site are su
 Because of a wired bug the initial migrations must run two times as the first time the permissions
 for `create_active_adoption_notice` are created but can not yet be accessed and on the second time this permission will
 be added to groups.
+
+## Styling
+
+Bulma is used for styling, including related SCSS. All styles should eventually be migrated to SCSS.
+
+Use `npm run build-bulma` to generate the css file from SCSS.
+You can use `npm start` during development so that the file is re-generated upon change.
+
 
 ## Docker
 
@@ -154,7 +162,7 @@ and shared responsibilities. Some ideas where you can look for contributing firs
 I'm also very happy for all other contributions. Before you do large refactoring efforts or features, best write a short
 issue for it before you spend a lot of work.
 
-Send PRs either to [codeberg](https://codeberg.org/moanos/notfellchen) (preferred) or [Github](https://github.com/moan0s/notfellchen).
+Send PRs either to [codeberg](https://codeberg.org/moanos/notfellchen) (preferred) or [GitHub](https://github.com/moan0s/notfellchen).
 CI (currently only for dcumentation) runs via [git.hyteck.de](https://git.hyteck.de), you can also ask moanos for an account there.
 
 Also welcome are new issues with suggestions or bugs and additions to the documentation.
