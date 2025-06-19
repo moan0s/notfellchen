@@ -1,0 +1,20 @@
+{% extends "fellchensammlung/base.html" %}
+{% load i18n %}
+
+{% block title %}<title>{% translate 'Moderationstools' %}</title>{% endblock %}
+
+{% block content %}
+    <div class="block">
+        <h1 class="title is-1">{% translate 'Moderationstools' %}</h1>
+        <div class="block">
+            <a class="button is-primary is-fullwidth" href="{% url 'modqueue' %}">{% translate 'Moderationswarteschlange' %}</a>
+        </div>
+        <div class="block">
+            <a class="button is-primary is-fullwidth" href="{% url 'updatequeue' %}">{% translate 'Up-To-Date Check' %}</a>
+        </div>
+        <div class="block">
+            <a class="button is-primary is-fullwidth" href="{% url 'organization-check' %}">{% translate 'Organisations Check' %}</a>
+        </div>
+    </div>
+
+{% endblock %}

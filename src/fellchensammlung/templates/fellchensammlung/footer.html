@@ -1,5 +1,7 @@
 {% load static %}
 {% load i18n %}
+{% load custom_tags %}
+
 <footer class="footer">
     <div class="columns">
         <div class="column">
@@ -52,7 +54,7 @@
                 Technisches
             </h4>
 
-            <div >
+            <div>
                 <a class="nav-link " href="{% url "rss" %}">
                     <i class="fa-solid fa-rss"></i> {% translate 'RSS' %}
                 </a>
@@ -78,17 +80,20 @@
                 </a>
             </div>
         </div>
-         <div class="column">
+        <div class="column">
             <h4 class="title is-4 has-text-justify">
                 {% trans 'Hilfreiche Links' %}
             </h4>
-
-            <div >
-                <a class="nav-link " href="{% url "rescue-organizations" %}">
-                    {% translate 'Tierheime in der Nähe' %}
+            <a class="nav-link " href="{% url "rescue-organizations" %}">
+                {% translate 'Tierheime in der Nähe' %}
+            </a>
+            <br/>
+            {% trust_level "MODERATOR" as coordinator_trust_level %}
+            {% if request.user.trust_level >= coordinator_trust_level %}
+                <a class="nav-link " href="{% url "modtools" %}">
+                    {% translate 'Moderationstools' %}
                 </a>
-                <br/>
-            </div>
+            {% endif %}
         </div>
     </div>
 </footer>

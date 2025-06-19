@@ -3,8 +3,10 @@ import markdown
 from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
-from notfellchen import settings
 from urllib.parse import urlparse
+
+from notfellchen import settings
+from fellchensammlung.models import TrustLevel
 
 register = template.Library()
 
@@ -96,3 +98,8 @@ def type_to_bulma_class(value):
         return "is-danger"
     else:
         return value
+
+
+@register.simple_tag
+def trust_level(level_string):
+    return getattr(TrustLevel, level_string)

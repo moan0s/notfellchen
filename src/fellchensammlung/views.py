@@ -715,3 +715,8 @@ def rescue_organization_check(request):
     last_checked_rescue_orgs = RescueOrganization.objects.order_by("last_checked")
     context = {"rescue_orgs": last_checked_rescue_orgs, }
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
+
+
+@user_passes_test(user_is_trust_level_or_above)
+def moderation_tools_overview(request):
+    return render(request, 'fellchensammlung/mod-tool-overview.html')
