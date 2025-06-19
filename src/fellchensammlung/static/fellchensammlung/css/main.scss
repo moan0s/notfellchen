@@ -15,6 +15,15 @@ $grey-dark: #262728;
   $input-shadow: none
 );
 
+
+// General Styles
+
+p > a {
+    text-decoration: underline;
+}
+
+// Cards
+
 .card-header {
   background-color: $primary;
 }
