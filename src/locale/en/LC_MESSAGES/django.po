@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Notfellchen\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-19 14:29+0000\n"
-"PO-Revision-Date: 2025-06-19 16:36+0200\n"
+"PO-Revision-Date: 2025-06-19 16:43+0200\n"
 "Last-Translator: Julian-Samuel <Gebühr>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -511,27 +511,25 @@ msgid "Ort"
 msgstr ""
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-adoption-notice.html:141
-#, fuzzy
-#| msgid "Beschreibung"
 msgid "Keine Beschreibung angegeben"
-msgstr "Description"
+msgstr "No Description given"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:11
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:15
 msgid "Alter"
-msgstr ""
+msgstr "Age"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:21
 msgid "Bilder"
-msgstr ""
+msgstr "Photos"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-animal-partial.html:29
 msgid "Keine Bilder"
-msgstr ""
+msgstr "No photos"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:6
 msgid "Erfolgreich gemeldet"
-msgstr ""
+msgstr "Reported sucessfully"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:7
 msgid ""
@@ -545,86 +543,83 @@ msgid ""
 "Einspruch einlegen.\n"
 "        "
 msgstr ""
+"\n"
+"If you want to see the moderation action that was taken, visit this site at "
+"a later time."
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:17
 msgid "Moderationsverlauf"
-msgstr ""
+msgstr "Moderation actions"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-report.html:21
 msgid "Bisher wurden keine Maßnahmen vorgenommen"
-msgstr ""
+msgstr "No moderation actions yet"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-rescue-organization.html:40
-#, fuzzy
-#| msgid "Ort der Organisation"
 msgid "Vermittlungen der Organisation"
-msgstr "Location of Organization"
+msgstr "Adoption notices of Organization"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-rescue-organization.html:47
 #: src/fellchensammlung/templates/fellchensammlung/lists/list-adoption-notices.html:11
-#, fuzzy
-#| msgid "Ausgewählte Vermittlungen aktivieren"
 msgid "Keine Vermittlungen gefunden."
-msgstr "Activate Selected Adoption Notices"
+msgstr "No adoption notices found"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:11
 msgid "Profil verwalten"
-msgstr ""
+msgstr "Manage profile"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:15
 msgid "Change password"
-msgstr ""
+msgstr "Change password"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:16
-#, fuzzy
-#| msgid "Ausgewählte User exportieren"
 msgid "Daten exportieren"
-msgstr "Export Selected Users"
+msgstr "Export data"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:23
 msgid "Einstellungen"
-msgstr ""
+msgstr "Settings"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:31
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:39
 msgid "E-Mail Benachrichtigungen"
-msgstr ""
+msgstr "E-Mail notifications"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:45
 msgid "Erweiterte Einstellungen"
-msgstr ""
+msgstr "Additional settings"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:50
 msgid "API token:"
-msgstr ""
+msgstr "API token:"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:52
 msgid "Delete API token"
-msgstr ""
+msgstr "Delete API token"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:55
 msgid "Kein API-Token vorhanden."
-msgstr ""
+msgstr "No API-Token found."
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:59
 msgid "Create API token"
-msgstr ""
+msgstr "Create API token"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:67
 msgid "Benachrichtigungen"
-msgstr ""
+msgstr "Notifications"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:70
 msgid "Abonnierte Suchen"
-msgstr ""
+msgstr "Subscribed searches"
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:73
 msgid "Meine Vermittlungen"
-msgstr ""
+msgstr "My adoption notices"
 
 #: src/fellchensammlung/templates/fellchensammlung/errors/403.html:5
 msgid "403 Forbidden"
-msgstr ""
+msgstr "403 Forbidden"
 
 #: src/fellchensammlung/templates/fellchensammlung/errors/403.html:10
 msgid ""
@@ -634,6 +629,9 @@ msgid ""
 "        ein Fehler vorliegt, kontaktiere das Team!\n"
 "    "
 msgstr ""
+"\n"
+"You are not allowed to do this. Please log in or change the account. If you "
+"believe this is an error, contact the team."
 
 #: src/fellchensammlung/templates/fellchensammlung/external-site-warning.html:9
 msgid ""
@@ -641,70 +639,70 @@ msgid ""
 "                <p>Achtung du verlässt notfellchen.org</p>\n"
 "            "
 msgstr ""
+"\n"
+"Attention: you are leaving the site"
 
 #: src/fellchensammlung/templates/fellchensammlung/external-site-warning.html:13
 msgid "Weiter"
-msgstr ""
+msgstr "Next"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:20
-#, fuzzy
-#| msgid "Sprachen"
 msgid "Sprache ändern"
-msgstr "Languages"
+msgstr "Change Language"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:33
 msgid "Das Notfellchen Projekt"
-msgstr ""
+msgstr "Notfellchen"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:37
 msgid "Nutzungsbedingungen"
-msgstr ""
+msgstr "Terms of Service"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:42
 msgid "Datenschutz"
-msgstr ""
+msgstr "Data privacy"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:46
 msgid "Impressum"
-msgstr ""
+msgstr "Imprint"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:58
 msgid "RSS"
-msgstr ""
+msgstr "RSS"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:64
 msgid "Dokumentation"
-msgstr ""
+msgstr "Documentation"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:71
 msgid "Probleme melden"
-msgstr ""
+msgstr "Report problems"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:77
 msgid "Code"
-msgstr ""
+msgstr "code"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:84
 msgid "Hilfreiche Links"
-msgstr ""
+msgstr "Helpful links"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:89
 msgid "Tierheime in der Nähe"
-msgstr ""
+msgstr "Rescue Organizations in your area"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:6
 #: src/fellchensammlung/templates/fellchensammlung/header.html:26
 msgid "Vermittlung hinzufügen"
-msgstr ""
+msgstr "Add Adoption Notice"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:9
 msgid "Vermitteln"
-msgstr ""
+msgstr "Rehome"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:14
 #: src/fellchensammlung/templates/fellchensammlung/terms-of-service.html:8
 msgid "Regeln"
-msgstr ""
+msgstr "Rules"
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:15
 #, python-format
@@ -716,6 +714,11 @@ msgid ""
 "                Fotos kannst du im nächsten Schritt hinzufügen.\n"
 "            "
 msgstr ""
+"\n"
+"                Please check out our %(rules_link)s. Then add initial "
+"information.\n"
+"                Photos can be added later\n"
+"            "
 
 #: src/fellchensammlung/templates/fellchensammlung/forms/form-add-adoption.html:66
 msgid ""
