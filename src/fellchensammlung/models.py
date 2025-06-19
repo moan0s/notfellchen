@@ -320,7 +320,8 @@ class AdoptionNotice(models.Model):
     further_information = models.URLField(null=True, blank=True,
                                           verbose_name=_('Link zu mehr Informationen'),
                                           help_text=_(
-                                              "Verlinke hier die Quelle der Vermittlung (z.B. die Website des Tierheims"))
+                                              "Verlinke hier die Quelle der Vermittlung (z.B. die Website des "
+                                              "Tierheims)"))
     group_only = models.BooleanField(default=False, verbose_name=_('Ausschließlich Gruppenadoption'))
     photos = models.ManyToManyField(Image, blank=True)
     location_string = models.CharField(max_length=200, verbose_name=_("Ortsangabe"))
