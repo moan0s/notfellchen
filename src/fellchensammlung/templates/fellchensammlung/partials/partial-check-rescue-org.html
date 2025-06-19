@@ -3,20 +3,22 @@
 <div class="card">
     <div class="card-header">
         <div class="card-header-title">
-            <h2 class="title is-2">
+            <h2 class="title is-4">
                 <a href="{{ rescue_org.get_absolute_url_bulma }}">{{ rescue_org.name }}</a>
             </h2>
-            <i>{% translate 'Zuletzt geprüft:' %} {{ rescue_org.last_checked_hr }}</i>
         </div>
     </div>
 
     <div class="card-content">
+        <p>
+            <strong>{% translate 'Zuletzt geprüft:' %}</strong> {{ rescue_org.last_checked_hr }}
+        </p>
         {% if rescue_org.website %}
-        <a href="{{ rescue_org.website }}" target="_blank">
-              <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
-            {{ rescue_org.website|domain }}
-        </a>
-    {% endif %}
+            <a href="{{ rescue_org.website }}" target="_blank">
+                <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
+                {{ rescue_org.website|domain }}
+            </a>
+        {% endif %}
     </div>
     <div class="card-footer">
         <div class="card-footer-item is-paddingless">
