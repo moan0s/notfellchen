@@ -205,6 +205,9 @@ class RescueOrganization(models.Model):
         """
         return self.instagram or self.facebook or self.website or self.phone_number or self.email or self.fediverse_profile
 
+    def set_exclusion_from_checks(self):
+        self.exclude_from_check = True
+        self.save()
 
 
 # Admins can perform all actions and have the highest trust associated with them

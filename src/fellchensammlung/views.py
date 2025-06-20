@@ -713,12 +713,14 @@ def rescue_organization_check(request, context=None):
         action = request.POST.get("action")
         if action == "checked":
             rescue_org.set_checked()
+        if action == "exclude":
+            rescue_org.set_exclusion_from_checks()
         if action == "set_species_url":
             species_url_form = SpeciesURLForm(request.POST)
 
             if species_url_form.is_valid():
                 species_url_instance = species_url_form.save(commit=False)
-                species_url_instance.rescues_organization_id = rescue_org.id
+                species_url_instance.rescue_organization_id = rescue_org.id
                 species_url_instance.save()
 
     last_checked_rescue_orgs = RescueOrganization.objects.filter(exclude_from_check=False).order_by("last_checked")
