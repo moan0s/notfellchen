@@ -196,7 +196,7 @@ class RescueOrganization(models.Model):
 
     @property
     def species_urls(self):
-        return SpeciesSpecificURL.objects.filter(organization=self)
+        return SpeciesSpecificURL.objects.filter(rescue_organization=self)
 
     @property
     def has_contact_data(self):
