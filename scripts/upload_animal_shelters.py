@@ -44,6 +44,13 @@ def get_or_none(data, key):
     if key in data["properties"].keys():
         return data["properties"][key]
     else:
+        return None
+
+
+def get_or_empty(data, key):
+    if key in data["properties"].keys():
+        return data["properties"][key]
+    else:
         return ""
 
 
@@ -78,6 +85,50 @@ def https(value):
         return None
 
 
+def calc_coordinate_center(coordinates):
+    """
+    Calculates the center as the arithmetic mean of the list of coordinates.
+
+    Not perfect because earth is a sphere (citation needed) but good enough.
+    """
+    if not coordinates:
+        return None, None
+
+    lon_sum = 0.0
+    lat_sum = 0.0
+    count = 0
+
+    for lon, lat in coordinates:
+        lon_sum += lon
+        lat_sum += lat
+        count += 1
+
+    return lon_sum / count, lat_sum / count
+
+
+def get_center_coordinates(geometry):
+    """
+    Given a GeoJSON geometry dict, return (longitude, latitude)
+
+    If a shape, calculate the center, else reurn the point
+    """
+    geom_type = geometry["type"]
+    coordinates = geometry["coordinates"]
+
+    if geom_type == "Point":
+        return coordinates[0], coordinates[1]
+
+    elif geom_type == "LineString":
+        return calc_coordinate_center(coordinates)
+
+    elif geom_type == "Polygon":
+        outer_ring = coordinates[0]
+        return calc_coordinate_center(outer_ring)
+
+    else:
+        raise ValueError(f"Unsupported geometry type: {geom_type}")
+
+
 # TODO: take note of new get_overpass_result function which does the bulk of the new overpass query work
 def get_overpass_result(area, data_file):
     """Build the Overpass query for fetching animal shelters in the specified area."""
@@ -107,6 +158,28 @@ def add_if_available(base_data, keys, result):
     return result
 
 
+def create_location(tierheim, instance, headers):
+    location_data = {
+        "place_id": tierheim["id"],
+        "longitude": get_center_coordinates(tierheim["geometry"])[0],
+        "latitude": get_center_coordinates(tierheim["geometry"])[1],
+        "name": tierheim["properties"]["name"],
+        "city": tierheim["properties"]["addr:city"],
+        "housenumber": get_or_empty(tierheim, "addr:housenumber"),
+        "postcode": get_or_empty(tierheim, "addr:postcode"),
+        "street": get_or_empty(tierheim, "addr:street"),
+        "countrycode": get_or_empty(tierheim, "addr:country"),
+    }
+
+    location_result = requests.post(f"{instance}/api/locations/", json=location_data, headers=headers)
+
+    if location_result.status_code != 201:
+        print(
+            f"Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
+        exit()
+    return location_result.json()
+
+
 def main():
     api_token, area, instance, data_file = get_config()
     # Query shelters
@@ -134,8 +207,8 @@ def main():
             email=choose(("contact:email", "email"), tierheim["properties"]),
             phone_number=choose(("contact:phone", "phone"), tierheim["properties"], replace=True),
             fediverse_profile=get_or_none(tierheim, "contact:mastodon"),
-            facebook=https(add(get_or_none(tierheim, "contact:facebook"), "facebook")),
-            instagram=https(add(get_or_none(tierheim, "contact:instagram"), "instagram")),
+            facebook=https(add(get_or_empty(tierheim, "contact:facebook"), "facebook")),
+            instagram=https(add(get_or_empty(tierheim, "contact:instagram"), "instagram")),
             website=https(choose(("contact:website", "website"), tierheim["properties"])),
             description=get_or_none(tierheim, "opening_hours"),
             external_object_identifier=tierheim["id"],
@@ -155,45 +228,31 @@ def main():
             print(f"{th_data.name} already exists as ID {org_id}.")
             org_patch_data = {"id": org_id,
                               "name": th_data.name}
+            if search_result.json()[0]["location"] is None:
+                location = create_location(tierheim, instance, h)
+                org_patch_data["location"] = location["id"]
 
-            add_if_available(th_data, optional_data, org_patch_data)
+            org_patch_data = add_if_available(th_data, optional_data, org_patch_data)
 
             result = requests.patch(endpoint, json=org_patch_data, headers=h)
             if result.status_code != 200:
                 print(f"Updating {tierheim['properties']['name']} failed:{result.status_code} {result.json()}")
                 exit()
             continue
+        else:
+            location = create_location(tierheim, instance, h)
+            org_data = {"name": tierheim["properties"]["name"],
+                        "external_object_identifier": f"{tierheim["id"]}",
+                        "external_source_identifier": "OSM",
+                        "location": location["id"]
+                        }
 
-        location_data = {
-            "place_id": tierheim["id"],
-            "latitude": tierheim["geometry"]["coordinates"][0][0][0],
-            "longitude": tierheim["geometry"]["coordinates"][0][0][1],
-            "name": tierheim["properties"]["name"],
-            "city": tierheim["properties"]["addr:city"],
-            "housenumber": get_or_none(tierheim, "addr:housenumber"),
-            "postcode": get_or_none(tierheim, "addr:postcode"),
-            "street": get_or_none(tierheim, "addr:street"),
-            "countrycode": get_or_none(tierheim, "addr:country"),
-        }
+            org_data = add_if_available(th_data, optional_data, org_data)
 
-        location_result = requests.post(f"{instance}/api/locations/", json=location_data, headers=h)
+            result = requests.post(endpoint, json=org_data, headers=h)
 
-        if location_result.status_code != 201:
-            print(f"{idx} Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
-            exit()
-
-        org_data = {"name": tierheim["properties"]["name"],
-                    "external_object_identifier": f"{tierheim["id"]}",
-                    "external_source_identifier": "OSM"
-                    }
-
-        add_if_available(th_data, optional_data, org_data)
-
-        result = requests.post(endpoint, json=org_data, headers=h)
-
-        if result.status_code != 201:
-            print(f"{idx} {tierheim["properties"]["name"]}:{result.status_code} {result.json()}")
-
+            if result.status_code != 201:
+                print(f"{idx} {tierheim["properties"]["name"]}:{result.status_code} {result.json()}")
 
 
 if __name__ == "__main__":
