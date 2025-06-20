@@ -6,14 +6,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "notfellchen"
-description = "A tool to help."
+description = "A website to help animals to find a loving home. It features organized input of adoption notices and related animals including automated lifecycle, location-based search, roles, and support for easy checking of rescue organizations."
 authors = [
     { name = "moanos", email = "julian-samuel@gebuehr.net" },
 ]
 maintainers = [
     { name = "moanos", email = "julian-samuel@gebuehr.net" },
 ]
-keywords = ["animal", "adoption", "django", "rescue", ]
+keywords = ["animal", "adoption", "django", "rescue", "rats" ]
 license = { text = "AGPL-3.0-or-later" }
 classifiers = [
     "Environment :: Web",
