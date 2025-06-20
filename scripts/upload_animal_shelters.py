@@ -21,6 +21,7 @@ def parse_args():
     parser.add_argument("--area", type=str, help="Area to search for animal shelters (default: Deutschland).")
     parser.add_argument("--instance", type=str, help="API instance URL.")
     parser.add_argument("--data-file", type=str, help="Path to the GeoJSON file containing (only) animal shelters.")
+    parser.add_argument("--use-cached", action='store_true', help="Use the stored GeoJSON file")
     return parser.parse_args()
 
 
@@ -33,11 +34,12 @@ def get_config():
     area = args.area or os.getenv("NOTFELLCHEN_AREA", DEFAULT_OVERPASS_SEARCH_AREA)
     instance = args.instance or os.getenv("NOTFELLCHEN_INSTANCE")
     data_file = args.data_file or os.getenv("NOTFELLCHEN_DATA_FILE", DEFAULT_OSM_DATA_FILE)
+    use_cached = args.use_cached or os.getenv("NOTFELLCHEN_USE_CACHED", False)
 
     if not api_token or not instance:
         raise ValueError("API token and instance URL must be provided via environment variables or CLI arguments.")
 
-    return api_token, area, instance, data_file
+    return api_token, area, instance, data_file, use_cached
 
 
 def get_or_none(data, key):
@@ -181,14 +183,18 @@ def create_location(tierheim, instance, headers):
 
 
 def main():
-    api_token, area, instance, data_file = get_config()
-    # Query shelters
-    overpass_result = get_overpass_result(area, data_file)
-    if overpass_result is None:
-        print("Error: get_overpass_result returned None")
-        return
-    print(f"Response type: {type(overpass_result)}")
-    print(f"Response content: {overpass_result}")
+    api_token, area, instance, data_file, use_cached = get_config()
+    if not use_cached:
+        # Query shelters
+        overpass_result = get_overpass_result(area, data_file)
+        if overpass_result is None:
+            print("Error: get_overpass_result returned None")
+            return
+        print(f"Response type: {type(overpass_result)}")
+        print(f"Response content: {overpass_result}")
+    else:
+        with open(data_file, 'r', encoding='utf-8') as f:
+            overpass_result = json.load(f)
 
     # Set headers and endpoint
     endpoint = f"{instance}/api/organizations/"
