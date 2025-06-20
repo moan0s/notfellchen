@@ -987,6 +987,6 @@ class SpeciesSpecificURL(models.Model):
     Model that allows to specify a URL for a rescue organization where a certain species can be found
     """
     species = models.ForeignKey(Species, on_delete=models.CASCADE, verbose_name=_("Tierart"))
-    rescues_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
-                                             verbose_name=_("Tierschutzorganisation"))
+    rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
+                                            verbose_name=_("Tierschutzorganisation"))
     url = models.URLField(verbose_name=_("Tierartspezifische URL"))
