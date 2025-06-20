@@ -19,9 +19,9 @@ from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
     Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, AdoptionNoticeNotification, \
-    ImportantLocation
+    ImportantLocation, SpeciesSpecificURL
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
-    CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal
+    CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm
 from .models import Language, Announcement
 from .tools import i18n
 from .tools.geo import GeoAPI, zoom_level_for_radius
@@ -702,7 +702,9 @@ def export_own_profile(request):
 
 
 @login_required
-def rescue_organization_check(request):
+def rescue_organization_check(request, context=None):
+    if context is None:
+        context = {}
     if request.method == "POST":
         rescue_org = RescueOrganization.objects.get(id=request.POST.get("rescue_organization_id"))
         edit_permission = user_is_trust_level_or_above(request.user, TrustLevel.MODERATOR)
@@ -711,10 +713,28 @@ def rescue_organization_check(request):
         action = request.POST.get("action")
         if action == "checked":
             rescue_org.set_checked()
+        if action == "set_species_url":
+            species_url_form = SpeciesURLForm(request.POST)
+
+            if species_url_form.is_valid():
+                species_url_instance = species_url_form.save(commit=False)
+                species_url_instance.rescues_organization_id = rescue_org.id
+                species_url_instance.save()
 
     last_checked_rescue_orgs = RescueOrganization.objects.filter(exclude_from_check=False).order_by("last_checked")
-    context = {"rescue_orgs": last_checked_rescue_orgs, }
+    context["rescue_orgs"] = last_checked_rescue_orgs
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
+
+
+@login_required
+def rescue_organization_check_dq(request):
+    """
+    Modified view to allow setting species specific urls
+    DQ = data quality
+    """
+    context = {"set_species_url_available": True,
+               "species_url_form": SpeciesURLForm}
+    return rescue_organization_check(request, context)
 
 
 @user_passes_test(user_is_trust_level_or_above)

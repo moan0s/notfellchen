@@ -67,6 +67,7 @@ urlpatterns = [
     path("updatequeue/", views.updatequeue, name="updatequeue"),
 
     path("organization-check/", views.rescue_organization_check, name="organization-check"),
+    path("organization-check/dq", views.rescue_organization_check_dq, name="organization-check-dq"),
     path("modtools/", views.moderation_tools_overview, name="modtools"),
 
     ###########

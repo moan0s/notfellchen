@@ -19,6 +19,19 @@
                 {{ rescue_org.website|domain }}
             </a>
         {% endif %}
+        {% for species_url in rescue_org.species_urls %}
+            <p>{{ species_url.species }}: <a href="{{ species_url.url }}" target="_blank">{{ species_url.url }}</a></p>
+        {% endfor %}
+        {% if set_species_url_available %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="set_species_url">
+                <input type="hidden" name="rescue_organization_id" value={{ rescue_org.id }}>
+                {{ species_url_form }}
+                <input type="submit" class="button is-primary" value="{% trans 'Speichern' %}">
+            </form>
+        {% endif %}
     </div>
     <div class="card-footer">
         <div class="card-footer-item is-paddingless">
