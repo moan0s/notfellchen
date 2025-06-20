@@ -228,7 +228,7 @@ def main():
         # Check if rescue organization exits
         search_data = {"external_source_identifier": "OSM",
                        "external_object_identifier": f"{tierheim["id"]}"}
-        search_result = requests.get(f"{instance}/api/organizations", json=search_data, headers=h)
+        search_result = requests.get(f"{instance}/api/organizations", params=search_data, headers=h)
         if search_result.status_code == 200:
             org_id = search_result.json()[0]["id"]
             print(f"{th_data.name} already exists as ID {org_id}.")
