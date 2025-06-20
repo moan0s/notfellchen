@@ -2,7 +2,7 @@ $primary: #6CD4FF;
 $link: #292a2c;
 $grey-light: #c4c6ce;
 $grey-dark: #262728;
-
+$confirm: hsl(133deg ,100%,calc(41% + 0%));
 
 // Path to Bulma's sass folder
 @use "bulma/sass" with (
@@ -96,6 +96,25 @@ p > a {
     margin-left: 5px;
     position: relative;
     top: 2px;
+}
+
+
+// Button in card footer
+.card-footer {
+  overflow: hidden;
+}
+.card-footer .card-footer-item.is-confirm {
+    background-color: $confirm;
+}
+.card-footer .card-footer-item.is-confirm:hover {
+    filter: brightness(0.9);
+}
+
+.card-footer .card-footer-item.is-danger {
+    background-color: sass.$danger;
+}
+.card-footer .card-footer-item.is-danger:hover {
+    filter: brightness(0.9);
 }
 
 

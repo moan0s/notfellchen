@@ -34,25 +34,25 @@
         {% endif %}
     </div>
     <div class="card-footer">
-        <div class="card-footer-item is-paddingless">
+        <div class="card-footer-item is-confirm">
             <form method="post">
                 {% csrf_token %}
                 <input type="hidden"
                        name="rescue_organization_id"
                        value="{{ rescue_org.pk }}">
                 <input type="hidden" name="action" value="checked">
-                <button class="is-primary is-fullwidth" type="submit">{% translate "Organisation geprüft" %}</button>
+                <button class="" type="submit">{% translate "Organisation geprüft" %}</button>
 
             </form>
         </div>
-        <div class="card-footer-item is-paddingless">
+        <div class="card-footer-item is-danger">
             <form method="post">
                 {% csrf_token %}
                 <input type="hidden"
                        name="rescue_organization_id"
                        value="{{ rescue_org.pk }}">
                 <input type="hidden" name="action" value="exclude">
-                <button class="is-primary is-fullwidth" type="submit">{% translate "Von Check exkludieren" %}</button>
+                <button class="" type="submit">{% translate "Von Check exkludieren" %}</button>
 
             </form>
         </div>
