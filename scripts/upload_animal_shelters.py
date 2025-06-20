@@ -144,9 +144,9 @@ def get_overpass_result(area, data_file):
     r = requests.get(overpass_endpoint, params={'data': overpass_query})
     if r.status_code == 200:
         rjson = r.json()
-        with open(data_file, 'w', encoding='utf-8') as f:
-            json.dump(rjson, f, ensure_ascii=False)
         result = osmtogeojson.process_osm_json(rjson)
+        with open(data_file, 'w', encoding='utf-8') as f:
+            json.dump(result, f, ensure_ascii=False)
         return result
 
 
