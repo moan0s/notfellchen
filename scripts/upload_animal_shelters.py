@@ -1,6 +1,8 @@
 import argparse
 import json
 import os
+from types import SimpleNamespace
+
 import requests
 # TODO: consider using OSMPythonTools instead of requests or overpass library
 from osmtogeojson import osmtogeojson
@@ -97,6 +99,14 @@ def get_overpass_result(area, data_file):
         return result
 
 
+def add_if_available(base_data, keys, result):
+    # Loads the data into the org if available
+    for key in keys:
+        if getattr(base_data, key) is not None:
+            result[key] = getattr(base_data, key)
+    return result
+
+
 def main():
     api_token, area, instance, data_file = get_config()
     # Query shelters
@@ -111,28 +121,79 @@ def main():
     endpoint = f"{instance}/api/organizations/"
     h = {'Authorization': f'Token {api_token}', "content-type": "application/json"}
 
-    for idx, tierheim in tqdm(enumerate(overpass_result["features"])):
+    tierheime = overpass_result["features"]
 
+    for idx, tierheim in enumerate(tqdm(tierheime)):
+        # Check if data is low quality
         if "name" not in tierheim["properties"].keys() or "addr:city" not in tierheim["properties"].keys():
             continue
 
-        data = {"name": tierheim["properties"]["name"],
-                "location_string": f"{get_or_none(tierheim, "addr:street")} {get_or_none(tierheim, "addr:housenumber")}, {get_or_none(tierheim, "addr:postcode")} {tierheim["properties"]["addr:city"]}",
-                "phone_number": choose(("contact:phone", "phone"), tierheim["properties"], replace=True),
-                "fediverse_profile": get_or_none(tierheim, "contact:mastodon"),
-                "facebook": https(add(get_or_none(tierheim, "contact:facebook"), "facebook")),
-                "instagram": https(add(get_or_none(tierheim, "contact:instagram"), "instagram")),
-                "website": https(choose(("contact:website", "website"), tierheim["properties"])),
-                "email": choose(("contact:email", "email"), tierheim["properties"]),
-                "description": get_or_none(tierheim, "opening_hours"),
-                "external_object_identifier": f"{tierheim["id"]}",
-                "external_source_identifier": "OSM"
-                }
+        # Load TH data in for easier accessing
+        th_data = SimpleNamespace(
+            name=tierheim["properties"]["name"],
+            email=choose(("contact:email", "email"), tierheim["properties"]),
+            phone_number=choose(("contact:phone", "phone"), tierheim["properties"], replace=True),
+            fediverse_profile=get_or_none(tierheim, "contact:mastodon"),
+            facebook=https(add(get_or_none(tierheim, "contact:facebook"), "facebook")),
+            instagram=https(add(get_or_none(tierheim, "contact:instagram"), "instagram")),
+            website=https(choose(("contact:website", "website"), tierheim["properties"])),
+            description=get_or_none(tierheim, "opening_hours"),
+            external_object_identifier=tierheim["id"],
+            EXTERNAL_SOURCE_IDENTIFIER="OSM",
+        )
 
-        result = requests.post(endpoint, json=data, headers=h)
+        # Define here for later
+        optional_data = ["email", "phone_number", "website", "description", "fediverse_profile", "facebook",
+                         "instagram"]
+
+        # Check if rescue organization exits
+        search_data = {"external_source_identifier": "OSM",
+                       "external_object_identifier": f"{tierheim["id"]}"}
+        search_result = requests.get(f"{instance}/api/organizations", json=search_data, headers=h)
+        if search_result.status_code == 200:
+            org_id = search_result.json()[0]["id"]
+            print(f"{th_data.name} already exists as ID {org_id}.")
+            org_patch_data = {"id": org_id,
+                              "name": th_data.name}
+
+            add_if_available(th_data, optional_data, org_patch_data)
+
+            result = requests.patch(endpoint, json=org_patch_data, headers=h)
+            if result.status_code != 200:
+                print(f"Updating {tierheim['properties']['name']} failed:{result.status_code} {result.json()}")
+                exit()
+            continue
+
+        location_data = {
+            "place_id": tierheim["id"],
+            "latitude": tierheim["geometry"]["coordinates"][0][0][0],
+            "longitude": tierheim["geometry"]["coordinates"][0][0][1],
+            "name": tierheim["properties"]["name"],
+            "city": tierheim["properties"]["addr:city"],
+            "housenumber": get_or_none(tierheim, "addr:housenumber"),
+            "postcode": get_or_none(tierheim, "addr:postcode"),
+            "street": get_or_none(tierheim, "addr:street"),
+            "countrycode": get_or_none(tierheim, "addr:country"),
+        }
+
+        location_result = requests.post(f"{instance}/api/locations/", json=location_data, headers=h)
+
+        if location_result.status_code != 201:
+            print(f"{idx} Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
+            exit()
+
+        org_data = {"name": tierheim["properties"]["name"],
+                    "external_object_identifier": f"{tierheim["id"]}",
+                    "external_source_identifier": "OSM"
+                    }
+
+        add_if_available(th_data, optional_data, org_data)
+
+        result = requests.post(endpoint, json=org_data, headers=h)
 
         if result.status_code != 201:
             print(f"{idx} {tierheim["properties"]["name"]}:{result.status_code} {result.json()}")
+
 
 
 if __name__ == "__main__":
