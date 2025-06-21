@@ -1,6 +1,7 @@
 import csv
 
 from django.contrib import admin
+from django.contrib.admin import EmptyFieldListFilter
 from django.http import HttpResponse
 from django.utils.html import format_html
 from django.urls import reverse
@@ -103,7 +104,7 @@ class SpeciesSpecificURLInline(admin.StackedInline):
 class RescueOrganizationAdmin(admin.ModelAdmin):
     search_fields = ("name", "description", "internal_comment", "location_string","location__city")
     list_display = ("name", "trusted", "allows_using_materials", "website")
-    list_filter = ("allows_using_materials", "trusted",)
+    list_filter = ("allows_using_materials", "trusted",("external_source_identifier", EmptyFieldListFilter))
 
     inlines = [
         SpeciesSpecificURLInline,
