@@ -80,8 +80,9 @@ class AdoptionNoticeGeoJSONSerializer(serializers.ModelSerializer):
 
     def get_location_hr(self, obj):
         if obj.location:
-            return f"{obj.location.city}"
+            return f"{obj.location}"
         return None
+
 
 class RescueOrgeGeoJSONSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
