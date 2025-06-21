@@ -62,15 +62,12 @@ class Location(models.Model):
         if self.city and self.postcode:
             return f"{self.city} ({self.postcode})"
         else:
-            return f"{self.name} ({self.latitude:.5}, {self.longitude:.5})"
+            return f"{self.name}"
 
     @property
     def position(self):
         return (self.latitude, self.longitude)
 
-    @property
-    def str_hr(self):
-        return f"{self.name.split(',')[0]}"
 
     @staticmethod
     def get_location_from_string(location_string):
