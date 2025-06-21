@@ -28,8 +28,8 @@
         <p><strong>{% translate "E-Mail" %}:</strong> {{ user.email }}</p>
         <div class="">
             <p>
-                <a class="button" href="{% url 'password_change' %}">{% translate "Change password" %}</a>
-                <a class="button" href="{% url 'user-me-export' %}">{% translate "Daten exportieren" %}</a>
+                <a class="button is-warning" href="{% url 'password_change' %}">{% translate "Change password" %}</a>
+                <a class="button is-info" href="{% url 'user-me-export' %}">{% translate "Daten exportieren" %}</a>
             </p>
         </div>
     </div>
