@@ -22,6 +22,10 @@ p > a {
     text-decoration: underline;
 }
 
+p > a.button {
+    text-decoration: none;
+}
+
 // Cards
 
 .card-header {
