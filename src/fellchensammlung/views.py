@@ -685,6 +685,7 @@ def list_rescue_organizations(request, template='fellchensammlung/animal-shelter
 def detail_view_rescue_organization(request, rescue_organization_id,
                                     template='fellchensammlung/details/detail-rescue-organization.html'):
     org = RescueOrganization.objects.get(pk=rescue_organization_id)
+    url = reverse("fellchensammlung_rescueorganization_change", args={"rescue_organization_id": rescue_organization_id})
     return render(request, template,
                   context={"org": org, "map_center": org.position, "zoom_level": 6, "map_pins": [org]})
 
