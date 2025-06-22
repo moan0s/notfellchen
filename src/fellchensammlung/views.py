@@ -1,4 +1,5 @@
 import logging
+from datetime import timedelta
 
 from django.contrib.auth.views import redirect_to_login
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
@@ -6,7 +7,7 @@ from django.http.response import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.utils import translation
+from django.utils import translation, timezone
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import user_passes_test
 from django.core.serializers import serialize
@@ -733,9 +734,18 @@ def rescue_organization_check(request, context=None):
         org.id: RescueOrgInternalComment(instance=org) for org in rescue_orgs_to_check
     }
     rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
+    timeframe = timezone.now().date() - timedelta(days=14)
+    num_rescue_orgs_to_check = RescueOrganization.objects.filter(last_checked__lt=timeframe).count()
+    num_rescue_orgs_checked = RescueOrganization.objects.filter(last_checked__gte=timeframe).count()
+
+    percentage_checked = num_rescue_orgs_checked/(num_rescue_orgs_to_check+num_rescue_orgs_checked)
+
     context["rescue_orgs_to_check"] = rescue_orgs_to_check
     context["rescue_orgs_last_checked"] = rescue_orgs_last_checked
     context["comment_forms"] = comment_forms
+    context["num_rescue_orgs_to_check"] = num_rescue_orgs_to_check
+    context["percentage_checked"] = percentage_checked
+    context["num_rescue_orgs_checked"] = num_rescue_orgs_checked
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
 
 

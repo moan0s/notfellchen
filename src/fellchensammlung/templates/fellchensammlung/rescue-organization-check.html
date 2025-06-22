@@ -5,6 +5,20 @@
     <p class="subtitle is-2">{% translate "Überprüfe ob es in Tierheimen neue Tiere gibt die ein Zuhause suchen" %}</p>
 
     <div class="block">
+        <div class="columns">
+            <div class="column">
+                <strong>{% translate 'Geprüfte Tierheime' %}:</strong> {{ num_rescue_orgs_checked }}
+            </div>
+            <div class="column">
+                <strong>{% translate 'Tierheime zur Prüfung' %}:</strong> {{ num_rescue_orgs_to_check }}
+            </div>
+            <div class="column">
+                <strong>Geprüft sind {{ percentage_checked|stringformat:"0.2f" }}%</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
         <h2 class="title is-3">{% translate "Am längsten nicht geprüft" %}</h2>
         <div class="grid is-col-min-15">
             {% for rescue_org in rescue_orgs_to_check %}
