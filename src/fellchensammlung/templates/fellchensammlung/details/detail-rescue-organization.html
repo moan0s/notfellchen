@@ -1,6 +1,7 @@
 {% extends "fellchensammlung/base.html" %}
 {% load custom_tags %}
 {% load i18n %}
+{% load admin_urls %}
 
 {% block title %}<title>{{ org.name }}</title>{% endblock %}
 
@@ -29,6 +30,9 @@
             </div>
             <div class="block">
                 {% include "fellchensammlung/partials/partial-rescue-organization-contact.html" %}
+            </div>
+            <div class="block">
+                <a href="{% url org|admin_urlname:'change' org.pk %}">Admin interface</a>
             </div>
         </div>
         <div class="column">
