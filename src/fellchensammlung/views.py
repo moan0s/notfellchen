@@ -723,8 +723,10 @@ def rescue_organization_check(request, context=None):
                 species_url_instance.rescue_organization_id = rescue_org.id
                 species_url_instance.save()
 
-    last_checked_rescue_orgs = RescueOrganization.objects.filter(exclude_from_check=False).order_by("last_checked")
-    context["rescue_orgs"] = last_checked_rescue_orgs
+    rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).order_by("last_checked")[:10]
+    rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
+    context["rescue_orgs_to_check"] = rescue_orgs_to_check
+    context["rescue_orgs_last_checked"] = rescue_orgs_last_checked
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
 
 

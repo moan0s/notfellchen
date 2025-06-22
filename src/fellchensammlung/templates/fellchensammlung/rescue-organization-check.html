@@ -2,13 +2,28 @@
 {% load i18n %}
 {% block content %}
     <h1 class="title is-1">{% translate "Aktualitätscheck" %}</h1>
-    <p>{% translate "Überprüfe ob im Tierheim neue Vermittlungen ein Zuhause suchen" %}</p>
+    <p class="subtitle is-2">{% translate "Überprüfe ob es in Tierheimen neue Tiere gibt die ein Zuhause suchen" %}</p>
 
-    <div class="grid is-col-min-15">
-        {% for rescue_org in rescue_orgs %}
-            <div class="cell">
-                {% include "fellchensammlung/partials/partial-check-rescue-org.html" %}
-            </div>
-        {% endfor %}
+    <div class="block">
+        <h2 class="title is-3">{% translate "Am längsten nicht geprüft" %}</h2>
+        <div class="grid is-col-min-15">
+            {% for rescue_org in rescue_orgs_to_check %}
+                <div class="cell">
+                    {% include "fellchensammlung/partials/partial-check-rescue-org.html" %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+
+    <div class="block">
+        <h2 class="title is-3">{% translate "Zuletzt geprüft" %}</h2>
+        <div class="grid is-col-min-15">
+            {% for rescue_org in rescue_orgs_last_checked %}
+                <div class="cell">
+                    {% include "fellchensammlung/partials/partial-check-rescue-org.html" %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
