@@ -14,6 +14,9 @@
             <p>
                 <strong>{% translate 'Zuletzt geprüft:' %}</strong> {{ rescue_org.last_checked_hr }}
             </p>
+            <p>
+                <i class="fas fa-images" aria-label="{% translate "Material verwenden?" %}"></i> {{ rescue_org.get_allows_using_materials_display }}
+            </p>
             {% if rescue_org.website %}
                 <a href="{{ rescue_org.website }}" target="_blank">
                     <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
