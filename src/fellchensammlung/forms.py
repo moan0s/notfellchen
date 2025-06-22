@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import AdoptionNotice, Animal, Image, ReportAdoptionNotice, ReportComment, ModerationAction, User, Species, \
-    Comment, SexChoicesWithAll, DistanceChoices, SpeciesSpecificURL
+    Comment, SexChoicesWithAll, DistanceChoices, SpeciesSpecificURL, RescueOrganization
 from django_registration.forms import RegistrationForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field, Hidden
@@ -115,6 +115,12 @@ class SpeciesURLForm(forms.ModelForm):
     class Meta:
         model = SpeciesSpecificURL
         fields = ('species', 'url')
+
+
+class RescueOrgInternalComment(forms.ModelForm):
+    class Meta:
+        model = RescueOrganization
+        fields = ('internal_comment',)
 
 
 class ModerationActionForm(forms.ModelForm):

@@ -10,28 +10,45 @@
     </div>
 
     <div class="card-content">
-        <p>
-            <strong>{% translate 'Zuletzt geprüft:' %}</strong> {{ rescue_org.last_checked_hr }}
-        </p>
-        {% if rescue_org.website %}
-            <a href="{{ rescue_org.website }}" target="_blank">
-                <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
-                {{ rescue_org.website|domain }}
-            </a>
+        <div class="block">
+            <p>
+                <strong>{% translate 'Zuletzt geprüft:' %}</strong> {{ rescue_org.last_checked_hr }}
+            </p>
+            {% if rescue_org.website %}
+                <a href="{{ rescue_org.website }}" target="_blank">
+                    <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
+                    {{ rescue_org.website|domain }}
+                </a>
+            {% endif %}
+            {% for species_url in rescue_org.species_urls %}
+                <p>{{ species_url.species }}: <a href="{{ species_url.url }}" target="_blank">{{ species_url.url }}</a>
+                </p>
+            {% endfor %}
+        </div>
+        {% if set_internal_comment_avilable %}
+            <div class="block">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_forms|dictkey:rescue_org.id }}
+                    <input type="hidden" name="rescue_organization_id" value="{{ rescue_org.id }}">
+                    <input type="hidden" name="action" value="update_internal_comment">
+                    <button class="button is-primary" type="submit">{% trans 'Kommentar speichern' %}</button>
+                </form>
+            </div>
         {% endif %}
-        {% for species_url in rescue_org.species_urls %}
-            <p>{{ species_url.species }}: <a href="{{ species_url.url }}" target="_blank">{{ species_url.url }}</a></p>
-        {% endfor %}
-        {% if set_species_url_available %}
+        <div class="block">
 
-            <form method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="action" value="set_species_url">
-                <input type="hidden" name="rescue_organization_id" value={{ rescue_org.id }}>
-                {{ species_url_form }}
-                <input type="submit" class="button is-primary" value="{% trans 'Speichern' %}">
-            </form>
-        {% endif %}
+            {% if set_species_url_available %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="set_species_url">
+                    <input type="hidden" name="rescue_organization_id" value={{ rescue_org.id }}>
+                    {{ species_url_form }}
+                    <input type="submit" class="button is-primary" value="{% trans 'Speichern' %}">
+                </form>
+            {% endif %}
+        </div>
     </div>
     <div class="card-footer">
         <div class="card-footer-item is-confirm">

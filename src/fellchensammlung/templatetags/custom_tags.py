@@ -103,3 +103,8 @@ def type_to_bulma_class(value):
 @register.simple_tag
 def trust_level(level_string):
     return getattr(TrustLevel, level_string)
+
+
+@register.filter
+def dictkey(d, key):
+    return d.get(key)

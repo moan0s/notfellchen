@@ -21,7 +21,7 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
     Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, AdoptionNoticeNotification, \
     ImportantLocation, SpeciesSpecificURL
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
-    CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm
+    CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment
 from .models import Language, Announcement
 from .tools import i18n
 from .tools.geo import GeoAPI, zoom_level_for_radius
@@ -713,20 +713,29 @@ def rescue_organization_check(request, context=None):
         action = request.POST.get("action")
         if action == "checked":
             rescue_org.set_checked()
-        if action == "exclude":
+        elif action == "exclude":
             rescue_org.set_exclusion_from_checks()
-        if action == "set_species_url":
+        elif action == "set_species_url":
             species_url_form = SpeciesURLForm(request.POST)
 
             if species_url_form.is_valid():
                 species_url_instance = species_url_form.save(commit=False)
                 species_url_instance.rescue_organization_id = rescue_org.id
                 species_url_instance.save()
+        elif action == "update_internal_comment":
+            comment_form = RescueOrgInternalComment(request.POST, instance=rescue_org)
+            if comment_form.is_valid():
+                comment_form.save()
 
     rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).order_by("last_checked")[:10]
+    # Prepare a form for each organization
+    comment_forms = {
+        org.id: RescueOrgInternalComment(instance=org) for org in rescue_orgs_to_check
+    }
     rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
     context["rescue_orgs_to_check"] = rescue_orgs_to_check
     context["rescue_orgs_last_checked"] = rescue_orgs_last_checked
+    context["comment_forms"] = comment_forms
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
 
 
@@ -737,7 +746,9 @@ def rescue_organization_check_dq(request):
     DQ = data quality
     """
     context = {"set_species_url_available": True,
-               "species_url_form": SpeciesURLForm}
+               "set_internal_comment_avilable": True,
+               "species_url_form": SpeciesURLForm,
+               "internal_comment_form": RescueOrgInternalComment}
     return rescue_organization_check(request, context)
 
 
