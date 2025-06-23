@@ -116,7 +116,6 @@ class RescueOrgeGeoJSONSerializer(serializers.ModelSerializer):
         return None
 
 
-
 class AnimalCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Animal

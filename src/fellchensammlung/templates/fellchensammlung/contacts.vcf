@@ -1,0 +1,9 @@
+{% for contact in contacts %}
+BEGIN:VCARD
+VERSION:4.0
+N:{{contact.name}};;;;
+TEL;TYPE=work:{{ contact.phone_number }}
+{% if contact.email %}EMAIL:{{ contact.email }}
+{% endif %}REV:{{ current_time|date:'Ymd' }}T{{ current_time|date:'His' }}T
+END:VCARD
+{% endfor %}
