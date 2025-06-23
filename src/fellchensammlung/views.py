@@ -737,8 +737,8 @@ def rescue_organization_check(request, context=None):
     }
     rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
     timeframe = timezone.now().date() - timedelta(days=14)
-    num_rescue_orgs_to_check = RescueOrganization.objects.filter(last_checked__lt=timeframe).count()
-    num_rescue_orgs_checked = RescueOrganization.objects.filter(last_checked__gte=timeframe).count()
+    num_rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).filter(last_checked__lt=timeframe).count()
+    num_rescue_orgs_checked = RescueOrganization.objects.filter(exclude_from_check=False).filter(last_checked__gte=timeframe).count()
 
     try:
         percentage_checked = 100*num_rescue_orgs_checked/(num_rescue_orgs_to_check+num_rescue_orgs_checked)
