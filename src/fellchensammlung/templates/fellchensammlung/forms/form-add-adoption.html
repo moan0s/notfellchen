@@ -30,29 +30,44 @@
         </div>
 
         <div class="field">
-            <label class="label" for="an-description">{% translate 'Beschreibung' %}</label>
+            <label class="label" for="an-description">
+                {% translate 'Beschreibung' %}
+                {% if form.description.field.required %}<span class="special_class">*</span>{% endif %}
+            </label>
             {{ form.description|add_class:"input textarea"|attr:"rows:3"|attr:"id:an-description" }}
         </div>
 
 
         <div class="field">
-            <label class="label" for="an-location">{{ form.location_string.label }}</label>
+            <label class="label" for="an-location">
+                {{ form.location_string.label }}
+                {% if form.location_string.field.required %}<span class="special_class">*</span>{% endif %}
+            </label>
             {{ form.location_string|add_class:"input"|attr:"id:an-location" }}
         </div>
 
         <div class="field">
-            <label class="checkbox" for="an-group-only">{{ form.group_only.label }}</label>
+            <label class="checkbox" for="an-group-only">
+                {{ form.group_only.label }}
+                {% if form.group_only.field.required %}<span class="special_class">*</span>{% endif %}
+            </label>
             {{ form.group_only|add_class:"checkbox"|attr:"id:an-group-only" }}
         </div>
 
         <div class="field">
-            <label class="label" for="an-searching-since">{{ form.searching_since.label }}</label>
+            <label class="label" for="an-searching-since">
+                {{ form.searching_since.label }}
+                {% if form.searching_since.field.required %}<span class="special_class">*</span>{% endif %}
+            </label>
             {{ form.searching_since|add_class:"input"|attr:"id:an-searching-since"|attr:"type:date" }}
         </div>
 
 
         <div class="field">
-            <label class="label" for="an-further-information">{{ form.further_information.label }}</label>
+            <label class="label" for="an-further-information">
+                {{ form.further_information.label }}
+                {% if form.further_information.field.required %}<span class="special_class">*</span>{% endif %}
+            </label>
             {{ form.further_information|add_class:"input"|attr:"id:an-further-information"|attr:"type:url" }}
             <div class="help">
                 {{ form.further_information.help_text }}
@@ -74,7 +89,10 @@
         </div>
 
         <div class="field">
-            <label class="label" for="an-species">{% translate 'Tierart' %}</label>
+            <label class="label" for="an-species">
+                {% translate 'Tierart' %}
+                {% if form.species.field.required %}<span class="special_class">*</span>{% endif %}
+            </label>
             <div class="select">
                 {{ form.species|attr:"id:an-species" }}
             </div>
@@ -82,19 +100,28 @@
 
 
         <div class="field">
-            <label class="label" for="an-num-animals">{{ form.num_animals.label }}</label>
-            {{ form.num_animals|add_class:"input"|attr:"id:an-num-animals" }}
+            <label class="label" for="an-num-animals">
+                {{ form.num_animals.label }}
+            {% if form.num_animals.field.required %}<span class="special_class">*</span>
+            </label>
+            {{ form.num_animals|add_class:"input"|attr:"id:an-num-animals" }}{% endif %}
         </div>
 
         <div class="field">
-            <label class="label" for="an-sex">{% translate 'Geschlecht' %}</label>
+            <label class="label" for="an-sex">
+                {% translate 'Geschlecht' %}
+                {% if form.sex.field.required %}<span class="special_class">*</span>{% endif %}
+            </label>
             <div class="select">
                 {{ form.sex|attr:"id:an-sex" }}
             </div>
         </div>
 
         <div class="field">
-            <label class="label" for="an-date-of-birth">{{ form.date_of_birth.label }}</label>
+            <label class="label" for="an-date-of-birth">
+                {{ form.date_of_birth.label }}
+                {% if form.date_of_birth.field.required %}<span class="special_class">*</span>{% endif %}
+            </label>
             {{ form.date_of_birth|add_class:"input"|attr:"id:an-date-of-birth"|attr:"type:date" }}
         </div>
 
