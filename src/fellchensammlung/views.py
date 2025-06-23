@@ -738,7 +738,7 @@ def rescue_organization_check(request, context=None):
     num_rescue_orgs_to_check = RescueOrganization.objects.filter(last_checked__lt=timeframe).count()
     num_rescue_orgs_checked = RescueOrganization.objects.filter(last_checked__gte=timeframe).count()
 
-    percentage_checked = num_rescue_orgs_checked/(num_rescue_orgs_to_check+num_rescue_orgs_checked)
+    percentage_checked = 100*num_rescue_orgs_checked/(num_rescue_orgs_to_check+num_rescue_orgs_checked)
 
     context["rescue_orgs_to_check"] = rescue_orgs_to_check
     context["rescue_orgs_last_checked"] = rescue_orgs_last_checked
