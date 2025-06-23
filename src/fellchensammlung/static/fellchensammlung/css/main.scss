@@ -21,6 +21,7 @@ $confirm: hsl(133deg ,100%,calc(41% + 0%));
 .content {
     margin: auto;
     max-width: 80em;
+    padding: 10px;
 }
 
 p > a {
@@ -126,6 +127,105 @@ p > a.button {
     filter: brightness(0.9);
 }
 
+/*******/
+/* MAP */
+/*******/
+
+.map {
+    border-radius: 8px;
+    width: 100%;
+    height: 100%
+}
+
+.marker {
+    background-image: url('../img/logo_transparent.png');
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+.animal-shelter-marker {
+    background-image: url('../img/animal_shelter.png');
+!important;
+}
+
+.map-in-content #map {
+    max-height: 500px;
+    width: 90%;
+}
+
+@media only screen and (min-width: 768px) {
+    .maplibregl-popup {
+        max-width: 280px !important;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .maplibregl-popup {
+        max-width: 150px !important;
+    }
+}
+
+.maplibregl-popup-close-button {
+    all: unset; /* Remove all inherited styles */
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    position: absolute;
+    top: 0.25rem;
+    right: 0.5rem;
+    padding: 0.25rem;
+}
+
+.popup-content {
+    line-height: 1.4;
+}
+
+
+/*****
+IMAGES
+ *****/
+
+.gallery .main-photo img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover; /* Crops the images */
+    border-radius: 6px;
+}
+
+.thumbnail-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 50px;
+    object-fit: cover; /* Crops the images */
+    border-radius: 4px;
+}
+
+/* Ensure each thumbnail takes equal width */
+.thumbnail {
+    flex: 1;
+}
+
+
+/**
+AN Cards
+ */
+
+.an-card {
+    width: 100%;
+    height: 100%;
+}
+
+
+// Fonts
 
 @font-face {
   font-family: 'Nunito';
