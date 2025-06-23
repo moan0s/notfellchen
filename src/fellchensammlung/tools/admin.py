@@ -118,9 +118,10 @@ def dedup_locations():
 def export_orgs_as_vcf():
     rescue_orgs = RescueOrganization.objects.filter(phone_number__isnull=False)
     result = render_to_string(template_name="fellchensammlung/contacts.vcf",
-                     context={"contacts": rescue_orgs, "current_time": timezone.now()})
+                              context={"contacts": rescue_orgs,
+                                       "current_time": timezone.now(),
+                                       "categories": "Tierheim"})
     filename = "contacts.vcf"
     with open(filename, "w") as f:
         f.write(result)
     print(f"Wrote {len(rescue_orgs)} contacts to {filename}")
-

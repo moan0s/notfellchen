@@ -1,9 +1,13 @@
 {% for contact in contacts %}
 BEGIN:VCARD
 VERSION:4.0
-N:{{contact.name}};;;;
-TEL;TYPE=work:{{ contact.phone_number }}
+N:{{contact.name|safe}};;;;
+FN:{{contact.name|safe}}
+{% if contact.location %}GEO:geo:{{contact.location.latitude}},{{contact.location.longitude}}
+{% endif %}TEL;TYPE=work:{{ contact.phone_number }}
 {% if contact.email %}EMAIL:{{ contact.email }}
-{% endif %}REV:{{ current_time|date:'Ymd' }}T{{ current_time|date:'His' }}T
-END:VCARD
+{% endif %}REV:{{ current_time|date:'Ymd' }}T{{ current_time|date:'His' }}Z
+CATEGORIES:{{ categories }}
+{% if contact.website %}URL:{{ contact.website }}
+{% endif %}END:VCARD
 {% endfor %}
