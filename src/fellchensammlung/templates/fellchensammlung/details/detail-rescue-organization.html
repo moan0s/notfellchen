@@ -32,7 +32,7 @@
                 {% include "fellchensammlung/partials/partial-rescue-organization-contact.html" %}
             </div>
             <div class="block">
-                <a href="{% url org|admin_urlname:'change' org.pk %}">Admin interface</a>
+                <a class="button is-warning is-fullwidth" href="{% url org_meta|admin_urlname:'change' org.pk %}"><i class="fa-solid fa-tools fa-fw"></i> Admin interface</a>
             </div>
         </div>
         <div class="column">
