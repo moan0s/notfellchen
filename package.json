@@ -4,7 +4,7 @@
     "sass": "^1.89.2"
   },
   "scripts": {
-    "build-bulma": "sass --load-path=node_modules src/fellchensammlung/static/fellchensammlung/css/main.scss src/fellchensammlung/static/fellchensammlung/css/main.css",
+    "build-bulma": "sass --load-path=node_modules src/fellchensammlung/static/fellchensammlung/css/main.scss src/fellchensammlung/static/fellchensammlung/css/main.css --style compressed",
     "start": "npm run build-bulma -- --watch"
   }
 }
