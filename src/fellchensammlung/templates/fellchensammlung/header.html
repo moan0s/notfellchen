@@ -19,11 +19,11 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="{% url 'search' %}">
-                <i class="fas fa-search"></i> {% translate 'Suchen' %}
+                <i class="fas fa-search fa-fw"></i> {% translate 'Suchen' %}
             </a>
 
             <a class="navbar-item" href="{% url "add-adoption" %}">
-                <i class="fas fa-feather"></i> {% translate 'Vermittlung hinzufügen' %}
+                <i class="fas fa-feather fa-fw"></i> {% translate 'Vermittlung hinzufügen' %}
             </a>
 
 
@@ -33,7 +33,7 @@
 
                 <div class="navbar-item">
                     <a href="{% url 'user-me' %}">
-                        <i class="fas fa-user"></i> {{ user }}
+                        <i class="fas fa-user fa-fw"></i> {{ user }}
                     </a>
                 </div>
             {% else %}
