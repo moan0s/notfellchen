@@ -112,3 +112,8 @@ def dedup_locations():
             # Already deleted as a duplicate
             continue
         dedup_location(location, destructive=True)
+
+
+def export_orgs_as_vcf():
+    rescue_orgs = RescueOrganization.objects.filter(phone_number__isnull=False)
+
