@@ -2,7 +2,7 @@ $primary: #6CD4FF;
 $link: #292a2c;
 $grey-light: #c4c6ce;
 $grey-dark: #262728;
-$confirm: hsl(133deg ,100%,calc(41% + 0%));
+$confirm: hsl(133deg, 100%, calc(41% + 0%));
 
 // Path to Bulma's sass folder
 @use "bulma/sass" with (
@@ -15,21 +15,37 @@ $confirm: hsl(133deg ,100%,calc(41% + 0%));
   $input-shadow: none
 );
 
+@use "bulma/sass/utilities/css-variables" as cv;
+
+@include cv.system-theme($name: "dark") {
+  .navbar-item > img {
+    background-color: $grey-light !important;
+    border-radius: 5px;
+  }
+  .card-header {
+    background-color: $grey-dark;
+  }
+  .tag {
+    color: $grey-dark;
+    background-color: $grey-light;
+  }
+}
+
 
 // General Styles
 
 .content {
-    margin: auto;
-    max-width: 80em;
-    padding: 10px;
+  margin: auto;
+  max-width: 80em;
+  padding: 10px;
 }
 
 p > a {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 p > a.button {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 // Cards
@@ -42,70 +58,70 @@ p > a.button {
 // Search form suggestion dropdown
 
 #location-result-list {
-    display: inline; //ensures that the dropdown is not restricted in width WTF
+  display: inline; //ensures that the dropdown is not restricted in width WTF
 }
 
 .result-item {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .result-item:hover {
-    background-color: #b2aaaa;
+  background-color: #b2aaaa;
 }
 
 
 // Toggle switch
 
 .toggle-switch {
-    display: inline-block;
-    background: #ccc;
-    border-radius: 16px;
-    width: 58px;
-    height: 32px;
-    position: relative;
-    vertical-align: middle;
-    transition: background 0.25s;
+  display: inline-block;
+  background: #ccc;
+  border-radius: 16px;
+  width: 58px;
+  height: 32px;
+  position: relative;
+  vertical-align: middle;
+  transition: background 0.25s;
 }
 
 .toggle-switch:before, .toggle-switch:after {
-    content: "";
+  content: "";
 }
 
 .toggle-switch:before {
-    display: block;
-    background: linear-gradient(to bottom, #fff 0%, #eee 100%);
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    transition: left 0.25s;
+  display: block;
+  background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  transition: left 0.25s;
 }
 
 .toggle:hover .toggle-switch:before {
-    background: linear-gradient(to bottom, #fff 0%, #fff 100%);
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .checked + .toggle-switch {
-    background: #56c080;
+  background: #56c080;
 }
 
 .checked + .toggle-switch:before {
-    left: 30px;
+  left: 30px;
 }
 
 .toggle-checkbox {
-    position: absolute;
-    visibility: hidden;
+  position: absolute;
+  visibility: hidden;
 }
 
 .slider-label {
-    margin-left: 5px;
-    position: relative;
-    top: 2px;
+  margin-left: 5px;
+  position: relative;
+  top: 2px;
 }
 
 
@@ -113,18 +129,21 @@ p > a.button {
 .card-footer {
   overflow: hidden;
 }
+
 .card-footer .card-footer-item.is-confirm {
-    background-color: $confirm;
+  background-color: $confirm;
 }
+
 .card-footer .card-footer-item.is-confirm:hover {
-    filter: brightness(0.9);
+  filter: brightness(0.9);
 }
 
 .card-footer .card-footer-item.is-danger {
-    background-color: sass.$danger;
+  background-color: sass.$danger;
 }
+
 .card-footer .card-footer-item.is-danger:hover {
-    filter: brightness(0.9);
+  filter: brightness(0.9);
 }
 
 /*******/
@@ -132,55 +151,55 @@ p > a.button {
 /*******/
 
 .map {
-    border-radius: 8px;
-    width: 100%;
-    height: 100%
+  border-radius: 8px;
+  width: 100%;
+  height: 100%
 }
 
 .marker {
-    background-image: url('../img/logo_transparent.png');
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
+  background-image: url('../img/logo_transparent.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
 }
 
 .animal-shelter-marker {
-    background-image: url('../img/animal_shelter.png');
+  background-image: url('../img/animal_shelter.png');
 }
 
 .map-in-content #map {
-    max-height: 500px;
-    width: 90%;
+  max-height: 500px;
+  width: 90%;
 }
 
 @media only screen and (min-width: 768px) {
-    .maplibregl-popup {
-        max-width: 280px !important;
-    }
+  .maplibregl-popup {
+    max-width: 280px !important;
+  }
 }
 
 @media only screen and (max-width: 768px) {
-    .maplibregl-popup {
-        max-width: 150px !important;
-    }
+  .maplibregl-popup {
+    max-width: 150px !important;
+  }
 }
 
 .maplibregl-popup-close-button {
-    all: unset; /* Remove all inherited styles */
-    font-size: 1.2rem;
-    background: none;
-    border: none;
-    color: black;
-    cursor: pointer;
-    position: absolute;
-    top: 0.25rem;
-    right: 0.5rem;
-    padding: 0.25rem;
+  all: unset; /* Remove all inherited styles */
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+  padding: 0.25rem;
 }
 
 .popup-content {
-    line-height: 1.4;
+  line-height: 1.4;
 }
 
 
@@ -189,28 +208,28 @@ IMAGES
  *****/
 
 .gallery .main-photo img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover; /* Crops the images */
-    border-radius: 6px;
+  width: 100%;
+  height: 150px;
+  object-fit: cover; /* Crops the images */
+  border-radius: 6px;
 }
 
 .thumbnail-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .thumbnail img {
-    width: 100%;
-    height: 50px;
-    object-fit: cover; /* Crops the images */
-    border-radius: 4px;
+  width: 100%;
+  height: 50px;
+  object-fit: cover; /* Crops the images */
+  border-radius: 4px;
 }
 
 /* Ensure each thumbnail takes equal width */
 .thumbnail {
-    flex: 1;
+  flex: 1;
 }
 
 
@@ -219,8 +238,8 @@ AN Cards
  */
 
 .an-card {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 
