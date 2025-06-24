@@ -25,6 +25,9 @@ $confirm: hsl(133deg, 100%, calc(41% + 0%));
   .card-header {
     background-color: $grey-dark;
   }
+  a.card-footer-item.is-danger {
+    color: black;
+  }
   .tag {
     color: $grey-dark;
     background-color: $grey-light;
