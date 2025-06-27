@@ -1,5 +1,6 @@
 import argparse
 import json
+import logging
 import os
 from types import SimpleNamespace
 
@@ -179,7 +180,6 @@ def create_location(tierheim, instance, headers):
     if location_result.status_code != 201:
         print(
             f"Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
-        exit()
     return location_result.json()
 
 
@@ -191,8 +191,6 @@ def main():
         if overpass_result is None:
             print("Error: get_overpass_result returned None")
             return
-        print(f"Response type: {type(overpass_result)}")
-        print(f"Response content: {overpass_result}")
     else:
         with open(data_file, 'r', encoding='utf-8') as f:
             overpass_result = json.load(f)
@@ -232,7 +230,7 @@ def main():
         search_result = requests.get(f"{instance}/api/organizations", params=search_data, headers=h)
         if search_result.status_code == 200:
             org_id = search_result.json()[0]["id"]
-            print(f"{th_data.name} already exists as ID {org_id}.")
+            logging.debug(f"{th_data.name} already exists as ID {org_id}.")
             org_patch_data = {"id": org_id,
                               "name": th_data.name}
             if search_result.json()[0]["location"] is None:
@@ -243,8 +241,7 @@ def main():
 
             result = requests.patch(endpoint, json=org_patch_data, headers=h)
             if result.status_code != 200:
-                print(f"Updating {tierheim['properties']['name']} failed:{result.status_code} {result.json()}")
-                exit()
+                logging.warning(f"Updating {tierheim['properties']['name']} failed:{result.status_code} {result.json()}")
             continue
         else:
             location = create_location(tierheim, instance, h)
