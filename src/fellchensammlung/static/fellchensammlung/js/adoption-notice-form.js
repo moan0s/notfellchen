@@ -1,0 +1,1 @@
+console.log("Search script loaded");
