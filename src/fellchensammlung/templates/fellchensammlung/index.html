@@ -3,6 +3,11 @@
 {% load custom_tags %}
 
 {% block title %}<title>{% translate "Notfellchen - Farbratten aus dem Tierschutz adoptieren" %}</title>{% endblock %}
+{% block og_title %}<meta property="og:title" content="{% translate "Notfellchen - Farbratten aus dem Tierschutz adoptieren" %}"/>{% endblock %}
+{% block description %}<meta name="description" content="{% translate "notfellchen.org listet Farbratten in Tierheimen und Pflegestellen die ein Zuhause suchen. Adoptieren statt kaufen!" %}">{% endblock %}
+{% block og_description %}<meta name="og:description" content="{% translate "notfellchen.org listet Farbratten in Tierheimen und Pflegestellen die ein Zuhause suchen. Adoptieren statt kaufen!" %}">{% endblock %}
+{% block og_image %}<meta property="og:image" content="{% static 'fellchensammlung/img/link_preview.png' %}" />{% endblock %}
+
 
 {% block content %}
     {% for announcement in announcements %}
