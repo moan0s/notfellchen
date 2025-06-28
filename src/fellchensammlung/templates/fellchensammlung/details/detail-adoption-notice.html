@@ -4,6 +4,20 @@
 {% load static %}
 
 {% block title %}<title>{{ adoption_notice.name }}</title>{% endblock %}
+{% block og_title %}
+    <meta property="og:title" content="{{ adoption_notice.name }} - Notfellchen"/>{% endblock %}
+{% block description %}
+    <meta name="description" content="{{ adoption_notice.description }}">{% endblock %}
+{% block og_description %}
+    <meta name="og:description" content="{{ adoption_notice.description }}">{% endblock %}
+
+{% block og_image %}
+    {% if adoption_notice.get_photos %}
+        <meta property="og:image" content="{{ MEDIA_URL }}{{ adoption_notice.get_photos.0.image }}"/>
+    {% else %}
+        <meta property="og:image" content="{% static 'fellchensammlung/img/link_preview.png' %}"/>
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <div class="columns">
