@@ -112,4 +112,5 @@ def dictkey(d, key):
 
 @register.simple_tag
 def host():
-    return settings.host
+    # Will not work for localhost or deployments without https
+    return f"https://{settings.host}"
