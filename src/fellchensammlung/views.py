@@ -58,7 +58,6 @@ def index(request):
     language_code = translation.get_language()
     lang = Language.objects.get(languagecode=language_code)
     active_announcements = Announcement.get_active_announcements(lang)
-    print(settings.host)
 
     context = {"adoption_notices": active_adoptions[:4], "show_ANs": True,
                "announcements": active_announcements}
