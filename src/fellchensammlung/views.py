@@ -11,6 +11,7 @@ from django.utils import translation, timezone
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import user_passes_test
 from django.core.serializers import serialize
+from django.utils.translation import gettext_lazy as _
 import json
 
 from .mail import mail_admins_new_report
@@ -174,6 +175,11 @@ def search_important_locations(request, important_location_slug):
     i_location = get_object_or_404(ImportantLocation, slug=important_location_slug)
     search = Search()
     search.search_from_predefined_i_location(i_location)
+
+    site_title = _("Ratten in %(location_name)s") % {"location_name": i_location.name}
+    site_description = _("Ratten in Tierheimen und Rattenhilfen in der Nähe von %(location_name)s suchen.") % {"location_name": i_location.name}
+    canonical_url = reverse("search")
+
     context = {"adoption_notices": search.get_adoption_notices(),
                "search_form": search.search_form,
                "place_not_found": search.place_not_found,
@@ -186,7 +192,10 @@ def search_important_locations(request, important_location_slug):
                "search_radius": search.max_distance,
                "zoom_level": zoom_level_for_radius(search.max_distance),
                "geocoding_api_url": settings.GEOCODING_API_URL,
-               "show_ANs": True}
+               "show_ANs": True,
+               "site_title": site_title,
+               "site_description": site_description,
+               "canonical_url": canonical_url}
     return render(request, 'fellchensammlung/search.html', context=context)
 
 
@@ -215,6 +224,9 @@ def search(request, templatename="fellchensammlung/search.html"):
         subscribed_search = search.get_subscription_or_none(request.user)
     else:
         subscribed_search = None
+    site_title = _("Suche")
+    site_description = _("Ratten in Tierheimen und Rattenhilfen in der Nähe suchen.")
+    canonical_url = reverse("search")
 
     context = {"adoption_notices": search.get_adoption_notices(),
                "search_form": search.search_form,
@@ -228,7 +240,10 @@ def search(request, templatename="fellchensammlung/search.html"):
                "search_radius": search.max_distance,
                "zoom_level": zoom_level_for_radius(search.max_distance),
                "geocoding_api_url": settings.GEOCODING_API_URL,
-               "show_ANs": True}
+               "show_ANs": True,
+               "site_title": site_title,
+               "site_description": site_description,
+               "canonical_url": canonical_url}
     return render(request, templatename, context=context)
 
 
