@@ -1,5 +1,6 @@
 {% extends "fellchensammlung/base.html" %}
 {% load i18n %}
+{% load custom_tags %}
 
 {% block title %}
     <title>{{ site_title }}</title>
@@ -14,7 +15,7 @@
 {% block og_description %}
     <meta name="og:description" content="{{ site_description }}">
 {% endblock %}
-{% block canonical_url %}{{ canonical_url }}{% endblock %}
+{% block canonical_url %}{% host %}{{ canonical_url }}{% endblock %}
 
 
 

@@ -178,7 +178,7 @@ def search_important_locations(request, important_location_slug):
 
     site_title = _("Ratten in %(location_name)s") % {"location_name": i_location.name}
     site_description = _("Ratten in Tierheimen und Rattenhilfen in der Nähe von %(location_name)s suchen.") % {"location_name": i_location.name}
-    canonical_url = reverse("search")
+    canonical_url = reverse("search-by-location", args=[i_location.slug])
 
     context = {"adoption_notices": search.get_adoption_notices(),
                "search_form": search.search_form,
