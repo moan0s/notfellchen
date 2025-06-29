@@ -4,6 +4,16 @@
 {% load admin_urls %}
 
 {% block title %}<title>{{ org.name }}</title>{% endblock %}
+{% block og_title %}
+    <meta property="og:title" content="{{ org.name }} - Notfellchen"/>
+{% endblock %}
+{% block description %}
+    <meta name="description" content="{{ org.name }}: {% translate 'Kontaktdaten und Tiere zur Adoption' %}">
+{% endblock %}
+{% block og_description %}
+    <meta name="og:description" content="{{ org.name }}: {% translate 'Kontaktdaten und Tiere zur Adoption' %}">
+{% endblock %}
+{% block canonical_url %}{% host %}{% url 'rescue-organization-detail' rescue_organization_id=org.id %}{% endblock %}
 
 {% block content %}
     <div class="columns">

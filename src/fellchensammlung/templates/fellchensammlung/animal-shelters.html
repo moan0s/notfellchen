@@ -1,7 +1,19 @@
 {% extends "fellchensammlung/base.html" %}
 {% load i18n %}
+{% load custom_tags %}
 
 {% block title %}<title>{% translate "Tierschutzorganisationen" %}</title>{% endblock %}
+
+{% block og_title %}
+    <meta property="og:title" content="{% translate "Tierschutzorganisationen" %} - Notfellchen"/>
+{% endblock %}
+{% block description %}
+    <meta name="description" content="{% translate 'Finde Tierschutzorganisationen in deiner Gegend.' %}">
+{% endblock %}
+{% block og_description %}
+    <meta name="og:description" content="{% translate 'Finde Tierschutzorganisationen in deiner Gegend.' %}">
+{% endblock %}
+{% block canonical_url %}{% host %}{% url 'rescue-organizations' %}{% endblock %}
 
 {% block content %}
     <div class="block">

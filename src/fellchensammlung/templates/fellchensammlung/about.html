@@ -3,6 +3,17 @@
 {% load custom_tags %}
 
 {% block title %}<title>{% translate "Über uns" %}</title>{% endblock %}
+{% block og_title %}
+    <meta property="og:title" content="{% translate "Über uns" %} - Notfellchen"/>
+{% endblock %}
+{% block description %}
+    <meta name="description" content="{% translate 'Erfahre mehr über das Notfellchen-Projekt. Im FAQ werden häufige Fragen beantwortet.' %}">
+{% endblock %}
+{% block og_description %}
+    <meta name="og:description" content="{% translate 'Erfahre mehr über das Notfellchen-Projekt. Im FAQ werden häufige Fragen beantwortet.' %}">
+{% endblock %}
+{% block canonical_url %}{% host %}{% url 'about' %}{% endblock %}
+
 
 {% block content %}
     {% if about_us %}
