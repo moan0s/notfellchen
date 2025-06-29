@@ -5,11 +5,14 @@
 
 {% block title %}<title>{{ adoption_notice.name }}</title>{% endblock %}
 {% block og_title %}
-    <meta property="og:title" content="{{ adoption_notice.name }} - Notfellchen"/>{% endblock %}
+    <meta property="og:title" content="{{ adoption_notice.name }} - Notfellchen"/>
+{% endblock %}
 {% block description %}
-    <meta name="description" content="{{ adoption_notice.description }}">{% endblock %}
+    <meta name="description" content="{{ adoption_notice.description }}">
+{% endblock %}
 {% block og_description %}
-    <meta name="og:description" content="{{ adoption_notice.description }}">{% endblock %}
+    <meta name="og:description" content="{{ adoption_notice.description }}">
+{% endblock %}
 
 {% block og_image %}
     {% if adoption_notice.get_photos %}
