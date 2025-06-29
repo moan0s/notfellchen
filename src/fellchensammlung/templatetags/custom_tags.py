@@ -108,3 +108,8 @@ def trust_level(level_string):
 @register.filter
 def dictkey(d, key):
     return d.get(key)
+
+
+@register.simple_tag
+def host():
+    return settings.host

@@ -12,6 +12,7 @@
     {% block description %}{% endblock %}
     {% block og_description %}{% endblock %}
     {% block og_image %}{% endblock %}
+    <link rel="canonical" href="{% block canonical_url %}{% endblock %}">
 
     <!-- Add additional CSS in static file -->
     <link rel="stylesheet" href="{% static 'fellchensammlung/css/main.css' %}">

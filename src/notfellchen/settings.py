@@ -141,6 +141,8 @@ STATIC_ROOT = config.get("locations", "static", fallback="/notfellchen/static")
 MEDIA_ROOT = config.get("locations", "media", fallback="/notfellchen/static")
 MEDIA_URL = config.get("urls", "media", fallback="/media/")
 
+# Host will be used for allowed hosts but also for canonical URLs and CSRF settings!
+# Take all three into account when modifying
 host = config.get("notfellchen", "host", fallback='*')
 
 # see https://docs.djangoproject.com/en/3.2/ref/settings/#std-setting-ALLOWED_HOSTS
