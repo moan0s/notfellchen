@@ -149,6 +149,15 @@ p > a.button {
   filter: brightness(0.9);
 }
 
+
+.card-footer .card-footer-item.is-warning {
+  background-color: sass.$warning;
+}
+
+.card-footer .card-footer-item.is-warning:hover {
+  filter: brightness(0.9);
+}
+
 /*******/
 /* MAP */
 /*******/
