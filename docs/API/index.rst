@@ -14,7 +14,8 @@ Via browser
 -----------
 
 When a user is logged in, they can easily access the API in their browser, authenticated by their session.
-The API endpoint can be found at http://notfellchen.org/api/adoption_notices
+
+For example: You can check all current adoption notices here: https://notfellchen.org/api/adoption_notice
 
 Via token
 ---------
@@ -28,9 +29,9 @@ An application can then send this token in the request header for authorization.
 
 
 .. warning::
-    Usage or creation of content still has to follow the terms of Notfellchen.org
+    Usage or creation of content still has to follow the terms of notfellchen.org.
     Copyright of content is often held by rescue organizations, so you are not allowed to simply mirror content.
-    Talk to the Notfellchen-Team if you want develop such things.
+    Talk to the notfellchen team if you want develop such things.
 
 
 Endpoints
@@ -45,7 +46,8 @@ Get Adoption Notices
 ++++++++++++++++++++
 
 .. code-block::
-    curl --request GET \
+
+  curl --request GET \
   --url https://notfellchen.org/api/adoption_notice \
   --header 'Authorization: {{token}}'
 
@@ -53,7 +55,8 @@ Create Adoption Notice
 ++++++++++++++++++++++
 
 .. code-block::
-    curl --request POST \
+
+  curl --request POST \
   --url https://notfellchen.org/api/adoption_notice \
   --header 'Authorization: {{token}}' \
   --header 'content-type: multipart/form-data' \
@@ -68,6 +71,7 @@ Add Animal to Adoption Notice
 +++++++++++++++++++++++++++++
 
 .. code-block::
+
     curl --request POST \
       --url https://notfellchen.org/api/animals/ \
       --header 'Authorization: {{token}}' \
@@ -83,6 +87,7 @@ Add picture to Animal or Adoption Notice
 ++++++++++++++++++++++++++++++++++++++++
 
 .. code-block::
+
     curl -X POST https://notfellchen.org/api/images/ \
     -H "Authorization: Token {{token}}" \
     -F "image=@256-256-crop.jpg" \
@@ -96,6 +101,7 @@ Species
 Getting available species is mainly important when creating animals
 
 .. code-block::
+
     curl --request GET \
       --url https://notfellchen.org/api/species \
       --header 'Authorization: {{token}}'
