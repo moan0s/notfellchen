@@ -1,3 +1,19 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     // ------------------------------------------------ functions
     var show = function (elem) {
@@ -366,12 +382,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-            if (xhttp.status == 200) {
+            if (xhttp.status === 201) {
                 console.log(this.responseText);
             } else {
                 console.log("Error while posting data!");
             }
         }
+        const csrftoken = getCookie('csrftoken');
         let data = JSON.stringify({
             "created_at": postDate,
             "searching_since": an_searching_since.value,
@@ -382,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
             "location_string": an_location_string.value,
         });
         xhttp.open("POST", path + "/api/adoption_notice");
-        xhttp.setRequestHeader('Authorization', 'Token b1269a0185a6306b64c01d9f19153bfda312e540');
+        xhttp.setRequestHeader("X-CSRFToken", csrftoken);
         xhttp.setRequestHeader('content-type', 'application/json');
         xhttp.send(data);
 
