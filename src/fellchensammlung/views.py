@@ -694,7 +694,7 @@ def external_site_warning(request, template_name='fellchensammlung/external-site
 
 def list_rescue_organizations(request, template='fellchensammlung/animal-shelters.html'):
     rescue_organizations = RescueOrganization.objects.all()
-    paginator = Paginator(rescue_organizations, 25)
+    paginator = Paginator(rescue_organizations, 10)
 
     page_number = request.GET.get("page")
     rescue_organizations_to_list = paginator.get_page(page_number)
