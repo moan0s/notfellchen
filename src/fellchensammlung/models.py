@@ -68,7 +68,6 @@ class Location(models.Model):
     def position(self):
         return (self.latitude, self.longitude)
 
-
     @staticmethod
     def get_location_from_string(location_string):
         try:
@@ -150,6 +149,7 @@ class RescueOrganization(models.Model):
     exclude_from_check = models.BooleanField(default=False, verbose_name=_('Von Prüfung ausschließen'),
                                              help_text=_("Organisation von der manuellen Überprüfung ausschließen, "
                                                          "z.B. weil Tiere nicht online geführt werden"))
+    parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True)
 
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
@@ -990,3 +990,15 @@ class SpeciesSpecificURL(models.Model):
     rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
                                             verbose_name=_("Tierschutzorganisation"))
     url = models.URLField(verbose_name=_("Tierartspezifische URL"))
+
+
+class SpeciesSpecialization(models.Model):
+    """
+    Model that allows to specify if a rescue organization has a specialization for dedicated species
+    """
+    species = models.ForeignKey(Species, on_delete=models.CASCADE, verbose_name=_("Tierart"))
+    rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
+                                            verbose_name=_("Tierschutzorganisation"))
+
+    def ___str__(self):
+        return f"[{self.rescue_organization}] - {self.species}"
