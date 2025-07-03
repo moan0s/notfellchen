@@ -978,7 +978,7 @@ class Timestamp(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name=_("Zeitstempel"))
     data = models.CharField(max_length=2000, blank=True, null=True)
 
-    def ___str__(self):
+    def __str__(self):
         return f"[{self.key}] - {self.timestamp.strftime('%H:%M:%S %d-%m-%Y ')} - {self.data}"
 
 
@@ -1000,5 +1000,5 @@ class SpeciesSpecialization(models.Model):
     rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
                                             verbose_name=_("Tierschutzorganisation"))
 
-    def ___str__(self):
-        return f"[{self.rescue_organization}] - {self.species}"
+    def __str__(self):
+        return f"{_('Spezialisierung')} {self.species}"
