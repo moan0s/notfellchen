@@ -782,7 +782,7 @@ def rescue_organization_check_dq(request):
     DQ = data quality
     """
     context = {"set_species_url_available": True,
-               "set_internal_comment_avilable": True,
+               "set_internal_comment_available": True,
                "species_url_form": SpeciesURLForm,
                "internal_comment_form": RescueOrgInternalComment}
     return rescue_organization_check(request, context)
