@@ -57,9 +57,41 @@ Therefore, a solution is used where a number of predefined texts per site are su
 
 # Developer Notes
 
+## Getting started
+
+### Clone the project
+
+```
+git clone https://codeberg.org/moanos/notfellchen.git
+```
+
+### Install dependencies
+```
+pip install -e '.[all]'
+```
+
+### Create the database
+
+```
+nf migrate
+```
+
 Because of a wired bug the initial migrations must run two times as the first time the permissions
 for `create_active_adoption_notice` are created but can not yet be accessed and on the second time this permission will
 be added to groups.
+
+### Start the server
+
+```
+nf runserver
+```
+
+### Build the docs
+
+```
+sphinx-autobuild ./docs ./docs/_build/html
+```
+
 
 ## Styling
 
@@ -84,6 +116,7 @@ docker push moanos/notfellchen:latest
 ```
 docker run -p8000:7345 moanos/notfellchen:latest
 ```
+
 
 ## Testing
 
@@ -152,10 +185,10 @@ Start beat
 
 # Contributing
 
-This project is currently solely developed by me, moanos. I'd like that to change and will be very happy for contributions
+This project is currently mainly developed by me, moanos. I'd like that to change and will be very happy for contributions
 and shared responsibilities. Some ideas where you can look for contributing first
 
-* CSS structure: It's a hot mess right now, and I'm happy it somehow works. As you might see, there is much room for improvement. Refactoring this and streamlining the look across the app would be amazing.
+* UI improvements: Since a major redesign I'm much happier but the UI could use many, many little tweaks
 * Docker: If you know how to build a docker container that is a) smaller or b) utilizes staged builds this would be amazing. Any improvement welcome
 * Testing: Writing tests is always welcome, and it's likely you discover a few bugs
 
@@ -163,6 +196,6 @@ I'm also very happy for all other contributions. Before you do large refactoring
 issue for it before you spend a lot of work.
 
 Send PRs either to [codeberg](https://codeberg.org/moanos/notfellchen) (preferred) or [GitHub](https://github.com/moan0s/notfellchen).
-CI (currently only for dcumentation) runs via [git.hyteck.de](https://git.hyteck.de), you can also ask moanos for an account there.
+CI (currently only for documentation) runs via [git.hyteck.de](https://git.hyteck.de), you can also ask moanos for an account there.
 
 Also welcome are new issues with suggestions or bugs and additions to the documentation.
