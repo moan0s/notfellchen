@@ -699,7 +699,8 @@ def list_rescue_organizations(request, template='fellchensammlung/animal-shelter
     page_number = request.GET.get("page")
     rescue_organizations_to_list = paginator.get_page(page_number)
     context = {"rescue_organizations_to_list": rescue_organizations_to_list,
-               "show_rescue_orgs": True}
+               "show_rescue_orgs": True,
+               "elided_page_range": paginator.get_elided_page_range(page_number, on_each_side=2, on_ends=1)}
     return render(request, template, context=context)
 
 

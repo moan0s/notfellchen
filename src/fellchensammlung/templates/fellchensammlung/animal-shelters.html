@@ -29,50 +29,28 @@
     <nav class="pagination" role="navigation" aria-label="pagination">
 
         {% if rescue_organizations_to_list.has_previous %}
-            <a class="pagination-previous" href="?page=1">&laquo; first</a>
-            <a href="?page={{ rescue_organizations_to_list.previous_page_number }}">previous</a>
+            <a class="pagination-previous"
+               href="?page={{ rescue_organizations_to_list.previous_page_number }}">previous</a>
         {% endif %}
         {% if rescue_organizations_to_list.has_next %}
             <a class="pagination-next" href="?page={{ rescue_organizations_to_list.next_page_number }}">next</a>
         {% endif %}
         <ul class="pagination-list">
-            {% if rescue_organizations_to_list.has_previous %}
-                <li>
-                    <a href="?page={{ rescue_organizations_to_list.previous_page_number }}"
-                       class="pagination-link"
-                       aria-label="Goto page {{ rescue_organizations_to_list.previous_page_number }}">
-                        {{ rescue_organizations_to_list.previous_page_number }}
-                    </a>
-                </li>
-                <li>
-                    <span class="pagination-ellipsis">&hellip;</span>
-                </li>
-            {% endif %}
-            <li>
-                <a
-                        class="pagination-link is-current"
-                        aria-label="Page {{ rescue_organizations_to_list.number }}"
-                        aria-current="page"
-                >{{ rescue_organizations_to_list.number }}</a
-                >
-            </li>
-            {% if rescue_organizations_to_list.has_next %}
-                <li>
-                    <a href="?page={{ rescue_organizations_to_list.next_page_number }}"
-                       class="pagination-link"
-                       aria-label="Goto page {{ rescue_organizations_to_list.next_page_number }}">{{ rescue_organizations_to_list.next_page_number }}</a>
-                </li>
-                <li>
-                    <span class="pagination-ellipsis">&hellip;</span>
-                </li>
-                <li>
-                    <a href="?page={{ rescue_organizations_to_list.paginator.num_pages }}"
-                       class="pagination-link"
-                       aria-label="Goto page {{ rescue_organizations_to_list.paginator.num_pages }}">
-                        {{ rescue_organizations_to_list.paginator.num_pages }}
-                    </a>
-                </li>
-            {% endif %}
+            {% for page in elided_page_range %}
+                {% if page != "…" %}
+                    <li>
+                        <a href="?page={{ page }}"
+                           class="pagination-link {% if page == rescue_organizations_to_list.number %} is-current{% endif %}"
+                           aria-label="Goto page {{ page }}">
+                            {{ page }}
+                        </a>
+                    </li>
+                {% else %}
+                    <li>
+                        <span class="pagination-ellipsis">&hellip;</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
         </ul>
     </nav>
 {% endblock %}
