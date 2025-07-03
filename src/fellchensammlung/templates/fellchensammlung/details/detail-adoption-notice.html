@@ -13,7 +13,8 @@
 {% block og_description %}
     <meta name="og:description" content="{{ adoption_notice.description }}">
 {% endblock %}
-{% block canonical_url %}{% host %}{% url 'adoption-notice-detail' adoption_notice_id=adoption_notice.id %}{% endblock %}
+{% block canonical_url %}{% host %}
+    {% url 'adoption-notice-detail' adoption_notice_id=adoption_notice.id %}{% endblock %}
 
 {% block og_image %}
     {% if adoption_notice.get_photos %}
@@ -90,16 +91,25 @@
             <div class="grid">
                 <div class="cell">
                     <div class="grid">
+                        {% if adoption_notice.organization %}
+                            <div class="cell">
+                        <span>
+                            <i class="fa-solid fa-building fa-fw" aria-label="{% trans 'Tierschutzorganisation' %}"></i>
+                                <a href="{{ adoption_notice.organization.get_absolute_url }}"> {{ adoption_notice.organization }}</a>
+                        </span>
+
+                            </div>
+                        {% endif %}
 
                         <div class="cell">
-                        <span>
-                            <strong>{% translate "Ort" %}:</strong>
-                            {% if adoption_notice.location %}
-                                {{ adoption_notice.location }}
-                            {% else %}
-                                {{ adoption_notice.location_string }}
-                            {% endif %}
-                        </span>
+                            <span>
+                                <i class="fa-solid fa-location-dot fa-fw" aria-label="{% trans 'Ort' %}"></i>
+                                {% if adoption_notice.location %}
+                                    {{ adoption_notice.location }}
+                                {% else %}
+                                    {{ adoption_notice.location_string }}
+                                {% endif %}
+                            </span>
                         </div>
                         <div class="cell">
                             {% include "fellchensammlung/partials/sex-overview.html" %}
