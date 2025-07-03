@@ -446,13 +446,6 @@ class AdoptionNotice(models.Model):
         return distance < max_distance
 
     @property
-    def link_to_more_information(self):
-        from urllib.parse import urlparse
-
-        domain = urlparse(self.further_information).netloc
-        return f"<a href='{self.further_information}'>{domain}</a>"
-
-    @property
     def is_active(self):
         if not hasattr(self, 'adoptionnoticestatus'):
             return False

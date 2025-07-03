@@ -9,7 +9,11 @@
     <div class="card-content">
         <i>{% translate 'Zuletzt geprüft:' %} {{ adoption_notice.last_checked_hr }}</i>
         {% if adoption_notice.further_information %}
-            <p>{% translate "Externe Quelle" %}: {{ adoption_notice.link_to_more_information | safe }}</p>
+            <p>{% translate "Externe Quelle" %}:
+                <a href="{{ adoption_notice.further_information }}" target="_blank">
+                    {{ adoption_notice.further_information | domain}}
+                </a>
+            </p>
         {% endif %}
         <div class="card-footer">
             <div class="card-footer-item">
