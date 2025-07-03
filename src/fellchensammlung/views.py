@@ -2,6 +2,7 @@ import logging
 from datetime import timedelta
 
 from django.contrib.auth.views import redirect_to_login
+from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.http.response import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
@@ -693,7 +694,11 @@ def external_site_warning(request, template_name='fellchensammlung/external-site
 
 def list_rescue_organizations(request, template='fellchensammlung/animal-shelters.html'):
     rescue_organizations = RescueOrganization.objects.all()
-    context = {"rescue_organizations": rescue_organizations,
+    paginator = Paginator(rescue_organizations, 25)
+
+    page_number = request.GET.get("page")
+    rescue_organizations_to_list = paginator.get_page(page_number)
+    context = {"rescue_organizations_to_list": rescue_organizations_to_list,
                "show_rescue_orgs": True}
     return render(request, template, context=context)
 
