@@ -2,7 +2,7 @@
 {% load i18n %}
 <div class="detail-animal"></div>
 <div class="detail-animal-header">
-    <h1>{{ animal.name }}</h1>
+    <h1 class="title is-1">{{ animal.name }}</h1>
     <div class="tag">{{ animal.species }}</div>
 </div>
 <div>
@@ -18,7 +18,7 @@
     </table>
 </div>
 <p>{{ animal.description }}</p>
-<h2>{% translate "Bilder" %}</h2>
+<h2 class="title is-2">{% translate "Bilder" %}</h2>
 <div class="photos">
     {% for image in animal.get_photos %}
         <div class="card-photo">
@@ -28,5 +28,4 @@
     {% if not animal.get_photos %}
         {% translate "Keine Bilder" %}
     {% endif %}
-</div>
 </div>
