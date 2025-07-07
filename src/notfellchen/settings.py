@@ -107,13 +107,13 @@ OXITRAFFIC_BASE_URL = config.get("tracking", "oxitraffic_base_url", fallback="")
 """ E-MAIL  """
 console_only = config.getboolean("mail", "console_only", fallback="true")
 EMAIL_SUBJECT_PREFIX = config.get("mail", "prefix", fallback="[notfellchen]]")
+DEFAULT_FROM_EMAIL = config.get('mail', 'from', fallback='notfellchen@localhost')
 if console_only:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 else:
     EMAIL_HOST = config.get('mail', 'host', fallback='localhost')
     EMAIL_PORT = config.getint('mail', 'port', fallback=25)
     EMAIL_HOST_USER = config.get('mail', 'user', fallback='')
-    DEFAULT_FROM_EMAIL = config.get('mail', 'from', fallback='notfellchen@localhost')
     EMAIL_HOST_PASSWORD = config.get('mail', 'password', fallback='')
     EMAIL_USE_TLS = config.getboolean('mail', 'tls', fallback=False)
     EMAIL_USE_SSL = config.getboolean('mail', 'ssl', fallback=False)
