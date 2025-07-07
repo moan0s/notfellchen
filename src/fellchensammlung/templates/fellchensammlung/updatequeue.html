@@ -1,16 +1,19 @@
 {% extends "fellchensammlung/base.html" %}
 {% load i18n %}
 {% block content %}
-    <h1>{% translate "Aktualitätscheck" %}</h1>
-    <p>{% translate "Überprüfe ob Vermittlungen noch aktuell sind" %}</p>
+    <h1 class="title is-1">{% translate "Aktualitätscheck" %}</h1>
     <div class="block">
-        <h1>{% translate 'Deaktivierte Vermittlungen zur Überprüfung' %}</h1>
+        <p>{% translate "Überprüfe ob Vermittlungen noch aktuell sind" %}</p>
+    </div>
+
+    <div class="block">
+        <h2 class="title is-2">{% translate 'Deaktivierte Vermittlungen zur Überprüfung' %}</h2>
         {% for adoption_notice in adoption_notices_disabled %}
             {% include "fellchensammlung/partials/partial-check-adoption-notice.html" %}
         {% endfor %}
     </div>
     <div class="block">
-        <h1>{% translate 'Aktive Vermittlungen zur Überprüfung' %}</h1>
+        <h2 class="title is-2">{% translate 'Aktive Vermittlungen zur Überprüfung' %}</h2>
         {% for adoption_notice in adoption_notices_active %}
             {% include "fellchensammlung/partials/partial-check-adoption-notice.html" %}
         {% endfor %}
