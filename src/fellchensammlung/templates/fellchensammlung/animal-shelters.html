@@ -26,14 +26,13 @@
             {% include "fellchensammlung/lists/list-animal-shelters.html" %}
         {% endwith %}
     </div>
-    <nav class="pagination" role="navigation" aria-label="pagination">
-
+    <nav class="pagination" role="navigation" aria-label="{% trans 'Paginierung' %}">
         {% if rescue_organizations_to_list.has_previous %}
             <a class="pagination-previous"
-               href="?page={{ rescue_organizations_to_list.previous_page_number }}">previous</a>
+               href="?page={{ rescue_organizations_to_list.previous_page_number }}">{% trans 'Vorherige' %}</a>
         {% endif %}
         {% if rescue_organizations_to_list.has_next %}
-            <a class="pagination-next" href="?page={{ rescue_organizations_to_list.next_page_number }}">next</a>
+            <a class="pagination-next" href="?page={{ rescue_organizations_to_list.next_page_number }}">{% trans 'Nächste' %}</a>
         {% endif %}
         <ul class="pagination-list">
             {% for page in elided_page_range %}
@@ -41,13 +40,13 @@
                     <li>
                         <a href="?page={{ page }}"
                            class="pagination-link {% if page == rescue_organizations_to_list.number %} is-current{% endif %}"
-                           aria-label="Goto page {{ page }}">
+                           aria-label="{% blocktranslate %}Gehe zu Seite {{ page }}.{% endblocktranslate %}">
                             {{ page }}
                         </a>
                     </li>
                 {% else %}
                     <li>
-                        <span class="pagination-ellipsis">&hellip;</span>
+                        <span aria-hidden="true" class="pagination-ellipsis">&hellip;</span>
                     </li>
                 {% endif %}
             {% endfor %}
