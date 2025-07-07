@@ -476,6 +476,7 @@ def report_adoption(request, adoption_notice_id):
             report_instance.save()
             form.save_m2m()
             mail_admins_new_report(report_instance)
+            print("dada")
             return redirect(reverse("report-detail-success", args=[report_instance.pk], ))
     else:
         form = ReportAdoptionNoticeForm()

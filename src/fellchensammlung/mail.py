@@ -1,5 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
@@ -11,25 +13,23 @@ NEWLINE = "\r\n"
 
 
 def mail_admins_new_report(report):
-    subject = _("Neue Meldung")
+    """
+    Sends an e-mail to all users that should handle the report.
+    """
     for moderator in User.objects.filter(trust_level__gt=TrustLevel.MODERATOR):
-        greeting = _("Moin,") + "{NEWLINE}"
-        new_report_text = _("es wurde ein Regelverstoß gemeldet.") + "{NEWLINE}"
-        if len(report.reported_broken_rules.all()) > 0:
-            reported_rules_text = (f"Ein Verstoß gegen die folgenden Regeln wurde gemeldet:{NEWLINE}"
-                                   f"- {f'{NEWLINE} - '.join([str(r) for r in report.reported_broken_rules.all()])}{NEWLINE}")
-        else:
-            reported_rules_text = f"Es wurden keine Regeln angegeben gegen die Verstoßen wurde.{NEWLINE}"
-        if report.user_comment:
-            comment_text = f'Kommentar zum Report: "{report.user_comment}"{NEWLINE}'
-        else:
-            comment_text = f"Es wurde kein Kommentar hinzugefügt.{NEWLINE}"
-
         report_url = "https://" + host + report.get_absolute_url()
-        link_text = f"Um alle Details zu sehen, geh bitte auf: {report_url}"
-        body_text = greeting + new_report_text + reported_rules_text + comment_text + link_text
-        message = mail.EmailMessage(subject, body_text, settings.DEFAULT_FROM_EMAIL, [moderator.email])
-        message.send()
+        context = {"report_url": report_url,
+                   "user_comment": report.user_comment,}
+
+        subject = _("Neue Meldung")
+        html_message = render_to_string('fellchensammlung/mail/report.html', context)
+        plain_message = strip_tags(html_message)
+
+        mail.send_mail(subject,
+                       plain_message,
+                       from_email="info@notfellchen.org",
+                       recipient_list=[moderator.email],
+                       html_message=html_message)
 
 
 def send_notification_email(notification_pk):

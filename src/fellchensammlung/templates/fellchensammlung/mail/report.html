@@ -1,0 +1,25 @@
+{% extends "fellchensammlung/mail/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% translate 'Neue Meldung' %}
+{% endblock %}
+
+{% block content %}
+    <p>Moin,</p>
+    <p>
+        es gibt eine neue Meldung. Folgende Nachricht wurde zur Meldung hinzugefügt.
+
+    </p>
+    <p>
+        <i>
+            {{ user_comment }}
+        </i>
+    </p>
+    <p>
+
+        Bitte bearbeite die Meldung möglichst bald
+    </p>
+    <p>
+        <a href="{{ report_url }}" class="cta-button">{% translate 'Report bearbeiten' %}</a>
+    </p>
+{% endblock %}
