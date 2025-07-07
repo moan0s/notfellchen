@@ -267,23 +267,56 @@ AN Cards
 
 
 .new-animal-ad fieldset {
-    border-top: 4px solid var(--bulma-text-weak);
-    margin-top: 2em;
-    padding-top: 1em;
+  border-top: 4px solid var(--bulma-text-weak);
+  margin-top: 2em;
+  padding-top: 1em;
 }
+
 .new-animal-ad * {
-    transition: all ease 0.5s;
+  transition: all ease 0.5s;
 }
+
 .new-animal-ad .open {
-    display: block;
+  display: block;
 }
+
 .new-animal-ad .closed {
-    display: none;
-    overflow: hidden;
+  display: none;
+  overflow: hidden;
 }
+
 .new-animal-ad legend {
-    font-weight: bold;
-    padding-right: 0.2em;
-    color: var(--bulma-label-color);
-    font-size: 130%;
+  font-weight: bold;
+  padding-right: 0.2em;
+  color: var(--bulma-label-color);
+  font-size: 130%;
 }
+
+.feedback-backdrop {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-add-new {
+  width: 40ch;
+  min-height: 40ch;
+  padding: 1.5em;
+  background-color: var(--bulma-info-on-scheme);
+  color: black;
+}
+
+.feedback-add-new.error {
+  background-color: var(--bulma-danger-on-scheme);
+}
+
+.feedback-add-new.success {
+  background-color: var(--bulma-success-on-scheme);
+}
+

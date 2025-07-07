@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function () {
     div.appendChild(animals);
     div.appendChild(sButton);
     new_form.appendChild(div);
-    document.querySelector('.content').appendChild(new_form);
+    document.querySelector('.main-content').appendChild(new_form);
 
     // ------------------------------------------------ listeners
     // number of animals
@@ -380,15 +380,13 @@ document.addEventListener('DOMContentLoaded', function () {
         let postDate = date.toISOString().slice(0, 10);
         const path = '';
 
-        const xhttp = new XMLHttpRequest();
-        xhttp.onload = function () {
-            if (xhttp.status === 201) {
-                console.log(this.responseText);
-            } else {
-                console.log("Error while posting data!");
-            }
-        }
-        const csrftoken = getCookie('csrftoken');
+        let elResultsBd = document.createElement('div');
+        elResultsBd.classList.add('feedback-backdrop');
+        let elResults = document.createElement('div');
+        elResults.classList.add('feedback-add-new');
+        elResultsBd.appendChild(elResults);
+        document.querySelector('body').appendChild(elResultsBd);
+
         let data = JSON.stringify({
             "created_at": postDate,
             "searching_since": an_searching_since.value,
@@ -398,10 +396,28 @@ document.addEventListener('DOMContentLoaded', function () {
             "group_only": an_group_only.value,
             "location_string": an_location_string.value,
         });
-        xhttp.open("POST", path + "/api/adoption_notice");
-        xhttp.setRequestHeader("X-CSRFToken", csrftoken);
-        xhttp.setRequestHeader('content-type', 'application/json');
-        xhttp.send(data);
 
+        async function submitAN() {
+            const csrftoken = getCookie('csrftoken');
+            let response = await fetch('http://localhost:8000/api/adoption_notice', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: data,
+            });
+            console.log(response.status);
+            if (response.status === 201) {
+                let result = await response.json();
+                elResults.textContent = result.message + '<br>neue Id: ' + result.id;
+                elResults.classList.add('success');
+            } else {
+                elResults.textContent = 'Fehler! Status Code: ' + response.status;
+                elResults.classList.add('error');
+            }
+        }
+
+        submitAN();
     });
 });
