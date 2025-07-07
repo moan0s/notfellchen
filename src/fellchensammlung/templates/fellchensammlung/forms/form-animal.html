@@ -3,7 +3,7 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <h1>{{ animal }}</h1>
+    <h1 class="title is-1">{{ animal }}</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
