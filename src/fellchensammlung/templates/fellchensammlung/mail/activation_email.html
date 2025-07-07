@@ -1,0 +1,24 @@
+{% extends "fellchensammlung/mail/base.html" %}
+{% load i18n %}
+{% block title %}
+    {{ site.name }}: {% trans "Account aktivieren" %}
+{% endblock %}
+
+{% block content %}
+    <p>
+        {% trans 'Hier ist dein Aktivierungs-Key. Mit diesem kannst du deinen Account freischalten.' %}
+    </p>
+    <code>
+        {{ activation_key }}
+    </code>
+
+    <p>
+        {% trans "Öffne den folgenden link im Browser und gib den Aktivierungs-Key dort ein" %}
+    </p>
+    <a href="https://{{ site.domain }}{% url 'django_registration_activate' %}"
+       class="cta-button">{% translate 'Jetzt aktivieren' %}</a>
+
+    <p>
+        {% blocktrans %}Der Link ist für {{ expiration_days }} Tage gültig.{% endblocktrans %}
+    </p>
+{% endblock %}

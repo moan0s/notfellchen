@@ -1,10 +1,9 @@
 from django.urls import path, include
-from django_registration.backends.activation.views import RegistrationView
 
 from .forms import CustomRegistrationForm
 from .feeds import LatestAdoptionNoticesFeed
 
-from . import views
+from . import views, registration_views
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from django.contrib.sitemaps.views import sitemap
@@ -79,8 +78,9 @@ urlpatterns = [
     path('user/me/export/', views.export_own_profile, name='user-me-export'),
 
     path('accounts/register/',
-         RegistrationView.as_view(
-             form_class=CustomRegistrationForm
+         registration_views.HTMLMailRegistrationView.as_view(
+             form_class=CustomRegistrationForm,
+             email_body_template="fellchensammlung/mail/activation_email.html",
          ),
          name='django_registration_register',
          ),
