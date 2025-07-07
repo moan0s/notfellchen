@@ -4,10 +4,17 @@
 {% load static %}
 
 {% block title %}<title>{% translate "Notfellchen - Farbratten aus dem Tierschutz adoptieren" %}</title>{% endblock %}
-{% block og_title %}<meta property="og:title" content="{% translate "Notfellchen - Farbratten aus dem Tierschutz adoptieren" %}"/>{% endblock %}
-{% block description %}<meta name="description" content="{% translate "notfellchen.org listet Farbratten in Tierheimen und Pflegestellen die ein Zuhause suchen. Adoptieren statt kaufen!" %}">{% endblock %}
-{% block og_description %}<meta name="og:description" content="{% translate "notfellchen.org listet Farbratten in Tierheimen und Pflegestellen die ein Zuhause suchen. Adoptieren statt kaufen!" %}">{% endblock %}
-{% block og_image %}<meta property="og:image" content="{% host %}{% static 'fellchensammlung/img/link_preview.png' %}" />{% endblock %}
+{% block og_title %}
+    <meta property="og:title"
+          content="{% translate "Notfellchen - Farbratten aus dem Tierschutz adoptieren" %}"/>{% endblock %}
+{% block description %}
+    <meta name="description"
+          content="{% translate "notfellchen.org listet Farbratten in Tierheimen und Pflegestellen die ein Zuhause suchen. Adoptieren statt kaufen!" %}">{% endblock %}
+{% block og_description %}
+    <meta name="og:description"
+          content="{% translate "notfellchen.org listet Farbratten in Tierheimen und Pflegestellen die ein Zuhause suchen. Adoptieren statt kaufen!" %}">{% endblock %}
+{% block og_image %}
+    <meta property="og:image" content="{% host %}{% static 'fellchensammlung/img/link_preview.png' %}"/>{% endblock %}
 {% block canonical_url %}{% host %}{% url 'index' %}{% endblock %}
 
 {% block content %}
@@ -32,8 +39,14 @@
 
     {% if how_to %}
         <div class="card">
-            <h1>{{ how_to.title }}</h1>
-            {{ how_to.content | render_markdown }}
+            <div class="card-header">
+                <div class="card-header-title">
+                    <h2 class="title is-1">{{ how_to.title }}</h2>
+                </div>
+            </div>
+            <div class="card-content">
+                {{ how_to.content | render_markdown }}
+            </div>
         </div>
     {% endif %}
 
