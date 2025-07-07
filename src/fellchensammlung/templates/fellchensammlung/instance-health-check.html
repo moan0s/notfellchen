@@ -99,7 +99,7 @@
             {% csrf_token %}
             <input type="hidden" name="action" value="clean_locations">
             <button class="button is-primary" type="submit" id="submit">
-                <i class="fa-solid fa-broom"></i> {% translate "Erneut lokalisieren" %}
+                <i class="fa-solid fa-location fa-fw"></i> {% translate "Erneut lokalisieren" %}
             </button>
         </form>
 
@@ -107,7 +107,7 @@
             {% csrf_token %}
             <input type="hidden" name="action" value="deactivate_unchecked_adoption_notices">
             <button class="button is-primary" type="submit" id="submit">
-                <i class="fa-solid fa-broom"></i> {% translate "Deaktiviere ungeprüfte Vermittlungen" %}
+                <i class="fa-solid fa-broom fa-fw"></i> {% translate "Deaktiviere ungeprüfte Vermittlungen" %}
             </button>
         </form>
 
@@ -115,7 +115,7 @@
             {% csrf_token %}
             <input type="hidden" name="action" value="deactivate_404">
             <button class="button is-primary" type="submit" id="submit">
-                <i class="fa-solid fa-broom"></i> {% translate "Deaktiviere 404 Vermittlungen" %}
+                <i class="fa-solid fa-broom fa-fw"></i> {% translate "Deaktiviere 404 Vermittlungen" %}
             </button>
         </form>
     </div>
