@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+            font-family: Nunito, Arial, sans-serif;
+        }
+
+        .email-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+        }
+
+        .header {
+            background-color: #6CD4FF; /* $primary */
+            color: #292a2c; /* $link */
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 30px 20px;
+            color: #262728; /* $grey-dark */
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: hsl(133deg, 100%, 41%); /* $confirm */
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #c4c6ce; /* $grey-light */
+            color: #292a2c;
+            text-align: center;
+            padding: 15px 10px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .content, .header, .footer {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="email-wrapper">
+
+{% block header %}
+    {% include "fellchensammlung/mail/header.html" %}
+{% endblock %}
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+{% include "fellchensammlung/mail/footer.html" %}
+</div>
+</body>
+</html>

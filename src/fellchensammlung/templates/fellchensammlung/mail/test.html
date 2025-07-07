@@ -1,0 +1,18 @@
+{% extends "fellchensammlung/mail/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% translate 'Test-E-Mail' %}
+{% endblock %}
+
+{% block content %}
+    <p>Moin,</p>
+    <p>
+        das ist eine Test-E-Mail.
+    </p>
+    <p>
+        Hier ist ein total wichtiger Button. Klick den mal!
+    </p>
+    <p>
+        <a href="https://notfellchen.org" class="cta-button">{% translate 'Zur Website' %}</a>
+    </p>
+{% endblock %}

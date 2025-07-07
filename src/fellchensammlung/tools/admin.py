@@ -1,10 +1,13 @@
 import logging
 
+from notfellchen import settings
 from django.utils import timezone
 from datetime import timedelta
 
 from django_super_deduper.merge import MergedModelInstance
 from django.template.loader import render_to_string
+from django.core import mail
+from django.utils.html import strip_tags
 
 from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus, Log, \
     AdoptionNoticeNotification
@@ -125,3 +128,13 @@ def export_orgs_as_vcf():
     with open(filename, "w") as f:
         f.write(result)
     print(f"Wrote {len(rescue_orgs)} contacts to {filename}")
+
+
+def send_test_email(email):
+    subject = 'Test E-Mail'
+    html_message = render_to_string('fellchensammlung/mail/test.html', {'context': 'values'})
+    plain_message = strip_tags(html_message)
+    from_email = f'From <{settings.DEFAULT_FROM_EMAIL}>'
+    to = email
+
+    mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)

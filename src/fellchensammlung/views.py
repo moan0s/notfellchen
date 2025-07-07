@@ -30,7 +30,7 @@ from .tools import i18n
 from .tools.geo import GeoAPI, zoom_level_for_radius
 from .tools.metrics import gather_metrics_data
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
-    deactivate_404_adoption_notices
+    deactivate_404_adoption_notices, send_test_email
 from .tasks import post_adoption_notice_save
 from rest_framework.authtoken.models import Token
 
@@ -638,6 +638,9 @@ def instance_health_check(request):
             deactivate_unchecked_adoption_notices()
         elif action == "deactivate_404":
             deactivate_404_adoption_notices()
+        elif action == "send_test_email":
+            target_email = request.POST.get("test_email_address")
+            send_test_email(target_email)
 
     number_of_adoption_notices = AdoptionNotice.objects.all().count()
     none_geocoded_adoption_notices = AdoptionNotice.objects.filter(location__isnull=True)
