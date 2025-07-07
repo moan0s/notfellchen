@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from django.db import transaction
 from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel, Location, AdoptionNoticeStatus
 from fellchensammlung.tasks import post_adoption_notice_save, post_rescue_org_save
-from rest_framework import status
+from rest_framework import status, serializers
 from rest_framework.permissions import IsAuthenticated
 
 from .renderers import GeoJSONRenderer
@@ -20,7 +20,7 @@ from .serializers import (
     SpeciesSerializer, RescueOrganizationSerializer,
 )
 from fellchensammlung.models import Animal, RescueOrganization, AdoptionNotice, Species, Image
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, inline_serializer
 
 
 class AdoptionNoticeApiView(APIView):
@@ -94,6 +94,9 @@ class AdoptionNoticeApiView(APIView):
 class AnimalApiView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        responses=AnimalGetSerializer
+    )
     def get(self, request, *args, **kwargs):
         """
         Get list of animals or a specific animal by ID.
@@ -110,6 +113,16 @@ class AnimalApiView(APIView):
         serializer = AnimalGetSerializer(animals, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @transaction.atomic
+    @extend_schema(
+        request=AnimalCreateSerializer,
+        responses={201: inline_serializer(
+            name='Animal',
+            fields={
+                'id': serializers.IntegerField(),
+                "message": serializers.Field()}),
+            400: "json"}
+    )
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         """
