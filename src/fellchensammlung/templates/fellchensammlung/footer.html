@@ -94,6 +94,12 @@
                     {% translate 'Moderationstools' %}
                 </a>
             {% endif %}
+            <br/>
+            {% if request.user.is_superuser %}
+                <a class="nav-link " href="{% url "admin:index" %}">
+                    <i class="fa-solid fa-screwdriver-wrench fa-fw"></i>{% translate 'Admin-Bereich' %}
+                </a>
+            {% endif %}
         </div>
     </div>
 </footer>
