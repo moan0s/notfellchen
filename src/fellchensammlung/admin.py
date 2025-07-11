@@ -11,7 +11,7 @@ from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, L
     SpeciesSpecificURL, ImportantLocation, SpeciesSpecialization
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
-    Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, BaseNotification
+    Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, Notification
 from django.utils.translation import gettext_lazy as _
 
 
@@ -127,9 +127,9 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ("user",)
 
 
-@admin.register(BaseNotification)
+@admin.register(Notification)
 class BaseNotificationAdmin(admin.ModelAdmin):
-    list_filter = ("user", "read")
+    list_filter = ("user_to_notify", "read")
 
 
 @admin.register(SearchSubscription)

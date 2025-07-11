@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.test import TestCase
 from model_bakery import baker
 
-from fellchensammlung.models import Announcement, Language, User, TrustLevel, BaseNotification
+from fellchensammlung.models import Announcement, Language, User, TrustLevel, Notification
 
 
 class UserTest(TestCase):
@@ -85,9 +85,9 @@ class TestNotifications(TestCase):
         cls.test_user_1 = User.objects.create(username="Testuser1", password="SUPERSECRET", email="test@example.org")
 
     def test_mark_read(self):
-        not1 = BaseNotification.objects.create(user=self.test_user_1, text="New rats to adopt", title="🔔 New Rat alert")
-        not2 = BaseNotification.objects.create(user=self.test_user_1,
-                                               text="New wombat to adopt", title="🔔 New Wombat alert")
+        not1 = Notification.objects.create(user=self.test_user_1, text="New rats to adopt", title="🔔 New Rat alert")
+        not2 = Notification.objects.create(user=self.test_user_1,
+                                           text="New wombat to adopt", title="🔔 New Wombat alert")
         not1.mark_read()
 
         self.assertTrue(not1.read)

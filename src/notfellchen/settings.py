@@ -145,6 +145,10 @@ MEDIA_URL = config.get("urls", "media", fallback="/media/")
 # Take all three into account when modifying
 host = config.get("notfellchen", "host", fallback='*')
 
+# The base URL will be used to build URLS
+# See https://forum.djangoproject.com/t/putting-full-url-link-on-email-how-to-get-current-domain-name-to-put-on-url/13806/3
+base_url = config.get("notfellchen", "base_url", fallback=f"https://{host}")
+
 # see https://docs.djangoproject.com/en/3.2/ref/settings/#std-setting-ALLOWED_HOSTS
 ALLOWED_HOSTS = [host]
 CSRF_TRUSTED_ORIGINS = [f"https://{host}"]

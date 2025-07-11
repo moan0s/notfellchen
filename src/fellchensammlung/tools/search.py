@@ -3,7 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from .geo import LocationProxy, Position
 from ..forms import AdoptionNoticeSearchForm
-from ..models import SearchSubscription, AdoptionNotice, AdoptionNoticeNotification, SexChoicesWithAll, Location
+from ..models import SearchSubscription, AdoptionNotice, SexChoicesWithAll, Location, \
+    Notification, NotificationTypeChoices
 
 
 def notify_search_subscribers(adoption_notice: AdoptionNotice, only_if_active: bool = True):
@@ -20,10 +21,11 @@ def notify_search_subscribers(adoption_notice: AdoptionNotice, only_if_active: b
         search = Search(search_subscription=search_subscription)
         if search.adoption_notice_fits_search(adoption_notice):
             notification_text = f"{_('Zu deiner Suche')} {search_subscription} wurde eine neue Vermittlung gefunden"
-            AdoptionNoticeNotification.objects.create(user=search_subscription.owner,
-                                                      title=f"{_('Neue Vermittlung')}: {adoption_notice}",
-                                                      adoption_notice=adoption_notice,
-                                                      text=notification_text)
+            Notification.objects.create(user_to_notify=search_subscription.owner,
+                                        notification_type=NotificationTypeChoices.AN_FOR_SEARCH_FOUND,
+                                        title=f"{_('Neue Vermittlung')}: {adoption_notice}",
+                                        adoption_notice=adoption_notice,
+                                        text=notification_text)
             logging.debug(f"Notification for search subscription {search_subscription} was sent.")
         else:
             logging.debug(f"Adoption notice {adoption_notice} was not fitting the search subscription.")

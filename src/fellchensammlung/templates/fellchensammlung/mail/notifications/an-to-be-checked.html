@@ -1,0 +1,15 @@
+{% extends "fellchensammlung/mail/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% translate 'Vermittlung muss überprüft werden' %}
+{% endblock %}
+
+{% block content %}
+    <p>Moin,</p>
+    <p>
+        die Vermittlung {{ notification.adoption_notice }} muss überprüft werden.
+    </p>
+    <p>
+        <a href="{{ notification.adoption_notice.get_full_url }}" class="cta-button">{% translate 'Vermittlung anzeigen' %}</a>
+    </p>
+{% endblock %}

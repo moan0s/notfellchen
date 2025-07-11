@@ -66,22 +66,22 @@ class AdoptionNoticeApiView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        adoption_notice = serializer.save(owner=request.user)
+        adoption_notice = serializer.save(owner=request.user_to_notify)
 
         # Add the location
         post_adoption_notice_save.delay_on_commit(adoption_notice.pk)
 
         # Only set active when user has trust level moderator or higher
-        if request.user.trust_level >= TrustLevel.MODERATOR:
+        if request.user_to_notify.trust_level >= TrustLevel.MODERATOR:
             adoption_notice.set_active()
         else:
             adoption_notice.set_unchecked()
 
         # Log the action
         Log.objects.create(
-            user=request.user,
+            user=request.user_to_notify,
             action="add_adoption_notice",
-            text=f"{request.user} added adoption notice {adoption_notice.pk} via API",
+            text=f"{request.user_to_notify} added adoption notice {adoption_notice.pk} via API",
         )
 
         # Return success response with new adoption notice details
@@ -130,7 +130,7 @@ class AnimalApiView(APIView):
         """
         serializer = AnimalCreateSerializer(data=request.data, context={"request": request})
         if serializer.is_valid():
-            animal = serializer.save(owner=request.user)
+            animal = serializer.save(owner=request.user_to_notify)
             return Response(
                 {"message": "Animal created successfully!", "id": animal.id},
                 status=status.HTTP_201_CREATED,
@@ -289,7 +289,7 @@ class AddImageApiView(APIView):
                 raise ValueError("Unknown attach_to_type given, should not happen. Check serializer")
             serializer.validated_data.pop('attach_to_type', None)
             serializer.validated_data.pop('attach_to', None)
-            image = serializer.save(owner=request.user)
+            image = serializer.save(owner=request.user_to_notify)
             object_to_attach_to.photos.add(image)
             return Response(
                 {"message": "Image added successfully!", "id": image.id},
@@ -360,9 +360,9 @@ class LocationApiView(APIView):
 
         # Log the action
         Log.objects.create(
-            user=request.user,
+            user=request.user_to_notify,
             action="add_location",
-            text=f"{request.user} added adoption notice {location.pk} via API",
+            text=f"{request.user_to_notify} added adoption notice {location.pk} via API",
         )
 
         # Return success response with new adoption notice details

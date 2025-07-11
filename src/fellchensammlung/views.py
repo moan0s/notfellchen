@@ -20,9 +20,9 @@ from notfellchen import settings
 
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    User, Location, AdoptionNoticeStatus, Subscriptions, CommentNotification, BaseNotification, RescueOrganization, \
-    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, AdoptionNoticeNotification, \
-    ImportantLocation, SpeciesSpecificURL
+    User, Location, AdoptionNoticeStatus, Subscriptions, Notification, RescueOrganization, \
+    Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, \
+    ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment
 from .models import Language, Announcement
@@ -121,10 +121,12 @@ def adoption_notice_detail(request, adoption_notice_id):
                     for subscription in adoption_notice.get_subscriptions():
                         # Create a notification but only if the user is not the one that posted the comment
                         if subscription.owner != request.user:
-                            notification = CommentNotification(user=subscription.owner,
-                                                               title=f"{adoption_notice.name} - Neuer Kommentar",
-                                                               text=f"{request.user}: {comment_instance.text}",
-                                                               comment=comment_instance)
+                            notification = Notification(user_to_notify=subscription.owner,
+                                                        adoption_notice=adoption_notice,
+                                                        notification_type=NotificationTypeChoices.NEW_COMMENT,
+                                                        title=f"{adoption_notice.name} - Neuer Kommentar",
+                                                        text=f"{request.user}: {comment_instance.text}",
+                                                        comment=comment_instance)
                             notification.save()
             else:
                 comment_form = CommentForm(instance=adoption_notice)
@@ -177,7 +179,8 @@ def search_important_locations(request, important_location_slug):
     search.search_from_predefined_i_location(i_location)
 
     site_title = _("Ratten in %(location_name)s") % {"location_name": i_location.name}
-    site_description = _("Ratten in Tierheimen und Rattenhilfen in der Nähe von %(location_name)s suchen.") % {"location_name": i_location.name}
+    site_description = _("Ratten in Tierheimen und Rattenhilfen in der Nähe von %(location_name)s suchen.") % {
+        "location_name": i_location.name}
     canonical_url = reverse("search-by-location", args=[i_location.slug])
 
     context = {"adoption_notices": search.get_adoption_notices(),
@@ -528,7 +531,7 @@ def report_detail_success(request, report_id):
 def user_detail(request, user, token=None):
     context = {"user": user,
                "adoption_notices": AdoptionNotice.objects.filter(owner=user),
-               "notifications": BaseNotification.objects.filter(user=user, read=False),
+               "notifications": Notification.objects.filter(user_to_notify=user, read=False),
                "search_subscriptions": SearchSubscription.objects.filter(owner=user), }
     if token is not None:
         context["token"] = token
@@ -561,13 +564,11 @@ def my_profile(request):
         action = request.POST.get("action")
         if action == "notification_mark_read":
             notification_id = request.POST.get("notification_id")
-            try:
-                notification = CommentNotification.objects.get(pk=notification_id)
-            except CommentNotification.DoesNotExist:
-                notification = BaseNotification.objects.get(pk=notification_id)
+
+            notification = Notification.objects.get(pk=notification_id)
             notification.mark_read()
         elif action == "notification_mark_all_read":
-            notifications = CommentNotification.objects.filter(user=request.user, mark_read=False)
+            notifications = Notification.objects.filter(user=request.user, mark_read=False)
             for notification in notifications:
                 notification.mark_read()
         elif action == "search_subscription_delete":
@@ -770,11 +771,13 @@ def rescue_organization_check(request, context=None):
     }
     rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
     timeframe = timezone.now().date() - timedelta(days=14)
-    num_rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).filter(last_checked__lt=timeframe).count()
-    num_rescue_orgs_checked = RescueOrganization.objects.filter(exclude_from_check=False).filter(last_checked__gte=timeframe).count()
+    num_rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).filter(
+        last_checked__lt=timeframe).count()
+    num_rescue_orgs_checked = RescueOrganization.objects.filter(exclude_from_check=False).filter(
+        last_checked__gte=timeframe).count()
 
     try:
-        percentage_checked = 100*num_rescue_orgs_checked/(num_rescue_orgs_to_check+num_rescue_orgs_checked)
+        percentage_checked = 100 * num_rescue_orgs_checked / (num_rescue_orgs_to_check + num_rescue_orgs_checked)
     except ZeroDivisionError:
         percentage_checked = 100
 
