@@ -256,10 +256,10 @@ class User(AbstractUser):
         return self.get_absolute_url()
 
     def get_unread_notifications(self):
-        return BaseNotification.objects.filter(user=self, read=False)
+        return Notification.objects.filter(user=self, read=False)
 
     def get_num_unread_notifications(self):
-        return BaseNotification.objects.filter(user=self, read=False).count()
+        return Notification.objects.filter(user=self, read=False).count()
 
     @property
     def adoption_notices(self):
@@ -479,7 +479,11 @@ class AdoptionNotice(models.Model):
         for subscription in self.get_subscriptions():
             notification_title = _("Vermittlung deaktiviert:") + f" {self.name}"
             text = _("Die folgende Vermittlung wurde deaktiviert: ") + f"[{self.name}]({self.get_absolute_url()})"
-            BaseNotification.objects.create(user=subscription.owner, text=text, title=notification_title)
+            Notification.objects.create(user_to_notify=subscription.owner,
+                                        notification_type=NotificationTypeChoices.AN_WAS_DEACTIVATED,
+                                        adoption_notice=self,
+                                        text=text,
+                                        title=notification_title)
 
 
 class AdoptionNoticeStatus(models.Model):
@@ -902,41 +906,54 @@ class Comment(models.Model):
         return self.adoption_notice.get_absolute_url()
 
 
-class BaseNotification(models.Model):
+class NotificationTypeChoices(models.TextChoices):
+    NEW_USER = "new_user", _("Useraccount wurde erstellt")
+    NEW_REPORT_AN = "new_report_an", _("Vermittlung wurde gemeldet")
+    NEW_REPORT_COMMENT = "new_report_comment", _("Kommentar wurde gemeldet")
+    AN_IS_TO_BE_CHECKED = "an_is_to_be_checked", _("Vermittlung muss überprüft werden")
+    AN_WAS_DEACTIVATED = "an_was_deactivated", _("Vermittlung wurde deaktiviert")
+    AN_FOR_SEARCH_FOUND = "an_for_search_found", _("Vermittlung für Suche gefunden")
+    NEW_COMMENT = "new_comment", _("Neuer Kommentar")
+
+
+class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     read_at = models.DateTimeField(blank=True, null=True, verbose_name=_("Gelesen am"))
+    notification_type = models.CharField(max_length=200,
+                                         choices=NotificationTypeChoices.choices,
+                                         verbose_name=_('Benachrichtigungsgrund'))
     title = models.CharField(max_length=100, verbose_name=_("Titel"))
     text = models.TextField(verbose_name="Inhalt")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
+    user_to_notify = models.ForeignKey(User,
+                                       on_delete=models.CASCADE,
+                                       blank=True, null=True,
+                                       verbose_name=_('Nutzer*in'),
+                                       help_text=_("Useraccount der Benachrichtigt wird"),
+                                       related_name='user')
     read = models.BooleanField(default=False)
+    comment = models.ForeignKey(Comment, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('Antwort'))
+    adoption_notice = models.ForeignKey(AdoptionNotice, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
+    user_related = models.ForeignKey(User,
+                                     blank=True, null=True,
+                                     on_delete=models.CASCADE, verbose_name=_('Verwandter Useraccount'),
+                                     help_text=_("Useraccount auf den sich die Benachrichtigung bezieht."))
+    report = models.ForeignKey(Report,
+                               blank=True, null=True,
+                               on_delete=models.CASCADE,
+                               verbose_name=_('Report'),
+                               help_text=_("Report auf den sich die Benachrichtigung bezieht."))
 
     def __str__(self):
-        return f"[{self.user}] {self.title} ({self.created_at})"
+        return f"[{self.user_to_notify}] {self.title} ({self.created_at})"
 
     def get_absolute_url(self):
-        self.user.get_notifications_url()
+        self.user_to_notify.get_notifications_url()
 
     def mark_read(self):
         self.read = True
         self.read_at = timezone.now()
         self.save()
-
-
-class CommentNotification(BaseNotification):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, verbose_name=_('Antwort'))
-
-    @property
-    def url(self):
-        return self.comment.get_absolute_url
-
-
-class AdoptionNoticeNotification(BaseNotification):
-    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
-
-    @property
-    def url(self):
-        return self.adoption_notice.get_absolute_url
 
 
 class Subscriptions(models.Model):

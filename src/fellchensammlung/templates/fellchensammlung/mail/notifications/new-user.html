@@ -1,0 +1,19 @@
+{% extends "fellchensammlung/mail/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% translate 'Neuer User' %}
+{% endblock %}
+
+{% block content %}
+    <p>Moin,</p>
+    <p>
+        es wurde ein neuer Useraccount erstellt.
+
+    </p>
+    <p>
+        Details findest du hier
+    </p>
+    <p>
+        <a href="{{ notification.user_related.get_absolute_url }}" class="cta-button">{% translate 'User anzeigen' %}</a>
+    </p>
+{% endblock %}

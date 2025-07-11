@@ -1,0 +1,16 @@
+{% extends "fellchensammlung/mail/base.html" %}
+{% load i18n %}
+{% block title %}
+    {% translate 'Vermittlung wurde deaktiviert' %}
+{% endblock %}
+
+{% block content %}
+    <p>Moin,</p>
+    <p>
+        die Vermittlung {{ notification.adoption_notice }} wurde deaktiviert.
+
+    </p>
+    <p>
+        <a href="{{ notification.adoption_notice.get_absolute_url }}" class="cta-button">{% translate 'Vermittlung anzeigen' %}</a>
+    </p>
+{% endblock %}

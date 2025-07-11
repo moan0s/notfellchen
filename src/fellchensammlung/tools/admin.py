@@ -10,7 +10,7 @@ from django.core import mail
 from django.utils.html import strip_tags
 
 from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus, Log, \
-    AdoptionNoticeNotification
+    Notification, NotificationTypeChoices
 from fellchensammlung.tools.misc import is_404
 
 
@@ -92,10 +92,11 @@ def deactivate_404_adoption_notices():
 
                 deactivation_message = f'Die Vermittlung  [{adoption_notice.name}]({adoption_notice.get_absolute_url()}) wurde automatisch deaktiviert, da die Website unter "Mehr Informationen" nicht mehr online ist.'
                 for subscription in adoption_notice.get_subscriptions():
-                    AdoptionNoticeNotification.objects.create(user=subscription.owner,
-                                                              title="Vermittlung deaktiviert",
-                                                              adoption_notice=adoption_notice,
-                                                              text=deactivation_message)
+                    Notification.objects.create(user_to_notify=subscription.owner,
+                                                notification_type=NotificationTypeChoices.AN_WAS_DEACTIVATED,
+                                                title="Vermittlung deaktiviert",
+                                                adoption_notice=adoption_notice,
+                                                text=deactivation_message)
 
 
 def dedup_location(location: Location, destructive=False):
