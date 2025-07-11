@@ -14,7 +14,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 
 from .tools import misc, geo
-from notfellchen.settings import MEDIA_URL
+from notfellchen.settings import MEDIA_URL, base_url
 from .tools.geo import LocationProxy, Position
 from .tools.misc import age_as_hr_string, time_since_as_hr_string
 
@@ -388,6 +388,10 @@ class AdoptionNotice(models.Model):
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the adoption notice."""
         return reverse('adoption-notice-detail', args=[str(self.id)])
+
+    def get_full_url(self):
+        """Returns the url including protocol and domain"""
+        return f"{base_url}{self.get_absolute_url()}"
 
     def get_report_url(self):
         """Returns the url to report an adoption notice."""
