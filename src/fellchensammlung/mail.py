@@ -35,7 +35,7 @@ def mail_admins_new_report(report):
 def send_notification_email(notification_pk):
     notification = Notification.objects.get(pk=notification_pk)
 
-    subject = f"🔔 {notification.title}"
+    subject = f"{notification.title}"
     context = {"notification": notification, }
     if notification.notification_type == NotificationTypeChoices.NEW_REPORT_COMMENT or notification.notification_type == NotificationTypeChoices.NEW_REPORT_AN:
         context["user_comment"] = notification.report.user_comment
