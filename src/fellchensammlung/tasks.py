@@ -48,6 +48,7 @@ def post_adoption_notice_save(pk):
     notify_search_subscribers(instance, only_if_active=True)
     notify_of_AN_to_be_checked(instance)
 
+
 @celery_app.task(name="tools.healthcheck")
 def task_healthcheck():
     healthcheck_ok()
@@ -57,6 +58,7 @@ def task_healthcheck():
 @shared_task
 def task_send_notification_email(notification_pk):
     send_notification_email(notification_pk)
+
 
 @celery_app.task(name="commit.post_rescue_org_save")
 def post_rescue_org_save(pk):
