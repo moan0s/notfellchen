@@ -8,9 +8,8 @@
     <p>Moin,</p>
     <p>
         es wurde eine neue Vermittlung gefunden die deinen Kriterien entspricht: {{ notification.adoption_notice }}
-
     </p>
     <p>
-        <a href="{{ notification.adoption_notice.get_absolute_url }}" class="cta-button">{% translate 'Vermittlung anzeigen' %}</a>
+        <a href="{{ notification.adoption_notice.get_full_url }}" class="cta-button">{% translate 'Vermittlung anzeigen' %}</a>
     </p>
 {% endblock %}

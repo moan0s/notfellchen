@@ -48,7 +48,7 @@ def send_notification_email(notification_pk):
     elif notification.notification_type == NotificationTypeChoices.AN_WAS_DEACTIVATED:
         html_message = render_to_string('fellchensammlung/mail/notifications/an-deactivated.html', context)
     elif notification.notification_type == NotificationTypeChoices.AN_FOR_SEARCH_FOUND:
-        html_message = render_to_string('fellchensammlung/mail/notifications/report.html', context)
+        html_message = render_to_string('fellchensammlung/mail/notifications/an-for-search-found.html', context)
     elif notification.notification_type == NotificationTypeChoices.NEW_COMMENT:
         html_message = render_to_string('fellchensammlung/mail/notifications/new-comment.html', context)
     else:
