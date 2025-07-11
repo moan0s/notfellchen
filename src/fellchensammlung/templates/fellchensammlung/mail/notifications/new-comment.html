@@ -14,6 +14,6 @@
         {{ notification.comment.text | render_markdown }}
     </i></p>
     <p>
-        <a href="{{ notification.adoption_notice.get_absolute_url }}" class="cta-button">{% translate 'Vermittlung anzeigen' %}</a>
+        <a href="{{ notification.adoption_notice.get_full_url }}" class="cta-button">{% translate 'Vermittlung anzeigen' %}</a>
     </p>
 {% endblock %}
