@@ -35,6 +35,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='notification',
             name='user_to_notify',
-            field=models.ForeignKey(blank=True, help_text='Useraccount der Benachrichtigt wird', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='user', to=settings.AUTH_USER_MODEL, verbose_name='Nutzer*in'),
+            field=models.ForeignKey(help_text='Useraccount der Benachrichtigt wird', on_delete=django.db.models.deletion.CASCADE, related_name='user', to=settings.AUTH_USER_MODEL, verbose_name='Nutzer*in'),
         ),
     ]

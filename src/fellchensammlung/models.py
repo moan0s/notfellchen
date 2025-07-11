@@ -927,7 +927,6 @@ class Notification(models.Model):
     text = models.TextField(verbose_name="Inhalt")
     user_to_notify = models.ForeignKey(User,
                                        on_delete=models.CASCADE,
-                                       blank=True, null=True,
                                        verbose_name=_('Nutzer*in'),
                                        help_text=_("Useraccount der Benachrichtigt wird"),
                                        related_name='user')
