@@ -9,11 +9,9 @@ from django.utils.translation import gettext_lazy as _
 
 @receiver(post_save, sender=Notification)
 def base_notification_receiver(sender, instance: Notification, created: bool, **kwargs):
-    print("Dada")
     if not created or not instance.user_to_notify.email_notifications:
         return
     else:
-        print("Dodo")
         task_send_notification_email.delay(instance.pk)
 
 
