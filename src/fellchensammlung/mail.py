@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.core import mail
 from fellchensammlung.models import User, Notification, TrustLevel, NotificationTypeChoices
-from notfellchen.settings import host
+from notfellchen.settings import base_url
 
 NEWLINE = "\r\n"
 
@@ -17,7 +17,7 @@ def mail_admins_new_report(report):
     Sends an e-mail to all users that should handle the report.
     """
     for moderator in User.objects.filter(trust_level__gt=TrustLevel.MODERATOR):
-        report_url = "https://" + host + report.get_absolute_url()
+        report_url = base_url + report.get_absolute_url()
         context = {"report_url": report_url,
                    "user_comment": report.user_comment, }
 
@@ -39,7 +39,7 @@ def send_notification_email(notification_pk):
     context = {"notification": notification, }
     if notification.notification_type == NotificationTypeChoices.NEW_REPORT_COMMENT or notification.notification_type == NotificationTypeChoices.NEW_REPORT_AN:
         context["user_comment"] = notification.report.user_comment
-        context["report_url"] = notification.report.get_absolute_url()
+        context["report_url"] = f"{base_url}{notification.report.get_absolute_url()}"
         html_message = render_to_string('fellchensammlung/mail/notifications/report.html', context)
     elif notification.notification_type == NotificationTypeChoices.NEW_USER:
         html_message = render_to_string('fellchensammlung/mail/notifications/new-user.html', context)
