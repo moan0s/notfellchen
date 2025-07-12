@@ -1,0 +1,8 @@
+{% extends "fellchensammlung/mail/base.txt" %}
+{% load i18n %}
+{% block content %}{% blocktranslate %}Moin,
+
+die Vermittlung {{ notification.adoption_notice }} muss überprüft werden.
+
+Vermittlung anzeigen: {{ notification.adoption_notice.get_full_url }}
+{% endblocktranslate %}{% endblock %}

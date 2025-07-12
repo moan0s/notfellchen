@@ -252,6 +252,9 @@ class User(AbstractUser):
     def get_absolute_url(self):
         return reverse("user-detail", args=[str(self.pk)])
 
+    def get_full_url(self):
+        return f"{base_url}{self.get_absolute_url()}"
+
     def get_notifications_url(self):
         return self.get_absolute_url()
 

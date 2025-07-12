@@ -23,7 +23,7 @@ def mail_admins_new_report(report):
 
         subject = _("Neue Meldung")
         html_message = render_to_string('fellchensammlung/mail/notifications/report.html', context)
-        plain_message = strip_tags(html_message)
+        plain_message = render_to_string('fellchensammlung/mail/notifications/report.txt', context)
 
         mail.send_mail(subject,
                        plain_message,
@@ -41,20 +41,27 @@ def send_notification_email(notification_pk):
         context["user_comment"] = notification.report.user_comment
         context["report_url"] = f"{base_url}{notification.report.get_absolute_url()}"
         html_message = render_to_string('fellchensammlung/mail/notifications/report.html', context)
+        plain_message = render_to_string('fellchensammlung/mail/notifications/report.txt', context)
     elif notification.notification_type == NotificationTypeChoices.NEW_USER:
         html_message = render_to_string('fellchensammlung/mail/notifications/new-user.html', context)
+        plain_message = render_to_string('fellchensammlung/mail/notifications/new-user.txt', context)
     elif notification.notification_type == NotificationTypeChoices.AN_IS_TO_BE_CHECKED:
         html_message = render_to_string('fellchensammlung/mail/notifications/an-to-be-checked.html', context)
+        plain_message = render_to_string('fellchensammlung/mail/notifications/an-to-be-checked.txt', context)
     elif notification.notification_type == NotificationTypeChoices.AN_WAS_DEACTIVATED:
         html_message = render_to_string('fellchensammlung/mail/notifications/an-deactivated.html', context)
+        plain_message = render_to_string('fellchensammlung/mail/notifications/an-deactivated.txt', context)
     elif notification.notification_type == NotificationTypeChoices.AN_FOR_SEARCH_FOUND:
         html_message = render_to_string('fellchensammlung/mail/notifications/an-for-search-found.html', context)
+        plain_message = render_to_string('fellchensammlung/mail/notifications/an-for-search-found.txt', context)
     elif notification.notification_type == NotificationTypeChoices.NEW_COMMENT:
         html_message = render_to_string('fellchensammlung/mail/notifications/new-comment.html', context)
+        plain_message = render_to_string('fellchensammlung/mail/notifications/new-comment.txt', context)
     else:
         raise NotImplementedError("Unknown notification type")
 
-    plain_message = strip_tags(html_message)
+    if "plain_message" not in locals():
+        plain_message = strip_tags(html_message)
     mail.send_mail(subject, plain_message, settings.DEFAULT_FROM_EMAIL,
                    [notification.user_to_notify.email],
                    html_message=html_message)

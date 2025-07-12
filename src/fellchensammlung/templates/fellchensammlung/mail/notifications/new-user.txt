@@ -1,0 +1,12 @@
+{% extends "fellchensammlung/mail/base.txt" %}
+{% load i18n %}
+{% block content %}{% blocktranslate %}Moin,
+
+es wurde ein neuer Useraccount erstellt.
+
+{{ notification }}
+Related: {{ notification.user_related }}
+{{ notification.user_related.get_full_url }}
+
+User anzeigen: {{ notification.user_related.get_full_url }}
+{% endblocktranslate %}{% endblock %}

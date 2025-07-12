@@ -1,0 +1,11 @@
+{% extends "fellchensammlung/mail/base.html" %}
+{% load i18n %}
+{% load custom_tags %}
+{% block content %}{% blocktranslate %}Moin,
+ 
+folgender Kommentar wurde zur Vermittlung {{ notification.adoption_notice }} hinzugefügt:
+
+{{ notification.comment.text }}
+
+Vermittlung anzeigen: {{ notification.adoption_notice.get_full_url }}
+{% endblocktranslate %}{% endblock %}

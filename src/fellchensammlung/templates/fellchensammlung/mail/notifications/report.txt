@@ -1,0 +1,11 @@
+{% extends "fellchensammlung/mail/base.txt" %}
+{% load i18n %}
+{% block content %}{% blocktranslate %}Moin,
+
+es gibt eine neue Meldung. Folgende Nachricht wurde zur Meldung hinzugefügt:
+
+{{ user_comment }}
+
+Bitte bearbeite die Meldung möglichst bald.
+
+Meldung bearbeiten: {{ report_url }}{% endblocktranslate %}{% endblock %}
