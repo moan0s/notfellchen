@@ -259,10 +259,10 @@ class User(AbstractUser):
         return self.get_absolute_url()
 
     def get_unread_notifications(self):
-        return Notification.objects.filter(user=self, read=False)
+        return Notification.objects.filter(user_to_notify=self, read=False)
 
     def get_num_unread_notifications(self):
-        return Notification.objects.filter(user=self, read=False).count()
+        return Notification.objects.filter(user_to_notify=self, read=False).count()
 
     @property
     def adoption_notices(self):
