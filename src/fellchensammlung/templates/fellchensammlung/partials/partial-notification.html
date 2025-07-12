@@ -9,7 +9,7 @@
     </form>
     <div class="notification-header">
         <a href="{{ notification.url }}"><b>{{ notification.title }}</b></a>
-        <i class="card-timestamp">{{ notification.created_at }}</i>
+        <i class="card-timestamp">{{ notification.created_at|time_since_hr }}</i>
     </div>
     <div class="notification-body">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

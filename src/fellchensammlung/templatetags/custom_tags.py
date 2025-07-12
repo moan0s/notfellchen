@@ -4,7 +4,9 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from urllib.parse import urlparse
+from django.utils import timezone
 
+from fellchensammlung.tools.misc import time_since_as_hr_string
 from notfellchen import settings
 from fellchensammlung.models import TrustLevel
 
@@ -114,3 +116,9 @@ def dictkey(d, key):
 def host():
     # Will not work for localhost or deployments without https
     return f"https://{settings.host}"
+
+
+@register.filter
+def time_since_hr(timestamp):
+    t_delta = timezone.now() - timestamp
+    return time_since_as_hr_string(t_delta)
