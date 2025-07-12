@@ -1,0 +1,13 @@
+{% load i18n %}
+<p>
+{% blocktranslate %}
+    Es gibt eine neue Meldung. Folgende Nachricht wurde zur Meldung hinzugefügt:
+{% endblocktranslate %}
+</p>
+<p>
+    <i>
+        {{ notification.report.user_comment }}
+    </i>
+</p>
+
+<a href="{{ notification.report.get_absolute_url }}">{% translate 'Meldung anzeigen' %}</a>

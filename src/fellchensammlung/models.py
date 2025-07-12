@@ -17,6 +17,8 @@ from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL, base_url
 from .tools.geo import LocationProxy, Position
 from .tools.misc import age_as_hr_string, time_since_as_hr_string
+from .tools.model_helpers import NotificationTypeChoices
+from .tools.model_helpers import ndm as NotificationDisplayMapping
 
 
 class Language(models.Model):
@@ -913,16 +915,6 @@ class Comment(models.Model):
         return self.adoption_notice.get_absolute_url()
 
 
-class NotificationTypeChoices(models.TextChoices):
-    NEW_USER = "new_user", _("Useraccount wurde erstellt")
-    NEW_REPORT_AN = "new_report_an", _("Vermittlung wurde gemeldet")
-    NEW_REPORT_COMMENT = "new_report_comment", _("Kommentar wurde gemeldet")
-    AN_IS_TO_BE_CHECKED = "an_is_to_be_checked", _("Vermittlung muss überprüft werden")
-    AN_WAS_DEACTIVATED = "an_was_deactivated", _("Vermittlung wurde deaktiviert")
-    AN_FOR_SEARCH_FOUND = "an_for_search_found", _("Vermittlung für Suche gefunden")
-    NEW_COMMENT = "new_comment", _("Neuer Kommentar")
-
-
 class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -939,7 +931,8 @@ class Notification(models.Model):
     read = models.BooleanField(default=False)
     read_at = models.DateTimeField(blank=True, null=True, verbose_name=_("Gelesen am"))
     comment = models.ForeignKey(Comment, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('Antwort'))
-    adoption_notice = models.ForeignKey(AdoptionNotice, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
+    adoption_notice = models.ForeignKey(AdoptionNotice, blank=True, null=True, on_delete=models.CASCADE,
+                                        verbose_name=_('Vermittlung'))
     user_related = models.ForeignKey(User,
                                      blank=True, null=True,
                                      on_delete=models.CASCADE, verbose_name=_('Verwandter Useraccount'),
@@ -960,6 +953,9 @@ class Notification(models.Model):
         self.read = True
         self.read_at = timezone.now()
         self.save()
+
+    def get_body_part(self):
+        return NotificationDisplayMapping[self.notification_type].web_partial
 
 
 class Subscriptions(models.Model):

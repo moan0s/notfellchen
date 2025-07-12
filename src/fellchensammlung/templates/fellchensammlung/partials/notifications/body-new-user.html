@@ -1,0 +1,5 @@
+{% load i18n %}
+{% blocktranslate %}
+    Es wurde ein neuer Useraccount erstellt:
+{% endblocktranslate %}
+<a href="{{ notification.user_related.get_full_url }}">{% translate 'User anzeigen' %}</a>

@@ -12,6 +12,6 @@
         <i class="card-timestamp">{{ notification.created_at|time_since_hr }}</i>
     </div>
     <div class="notification-body">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        {% include notification.get_body_part %}
     </div>
 </div>

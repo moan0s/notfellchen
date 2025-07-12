@@ -1,0 +1,5 @@
+{% load i18n %}
+{% blocktranslate with adoption_notice_title=notification.adoption_notice.name %}
+    Die Vermittlung <strong>{{ adoption_notice_title }}</strong> muss überprüft werden.
+{% endblocktranslate %}
+<a href="{{ notification.adoption_notice.get_full_url }}">{% translate 'Vermittlung anzeigen' %}</a>

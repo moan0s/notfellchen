@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load custom_tags %}
+<p>
+    {% blocktranslate with adoption_notice_title=notification.adoption_notice.name %}
+        Folgender Kommentar wurde zur Vermittlung <strong>{{ adoption_notice_title }}</strong> hinzugefügt:
+    {% endblocktranslate %}
+</p>
+<p><i>
+    {{ notification.comment.text | render_markdown }}
+</i></p>
+<p>
+    <a href="{{ notification.adoption_notice.get_full_url }}">{% translate 'Vermittlung anzeigen' %}</a>
+</p>
