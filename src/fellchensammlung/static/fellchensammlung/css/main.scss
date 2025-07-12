@@ -320,3 +320,29 @@ AN Cards
   background-color: var(--bulma-success-on-scheme);
 }
 
+
+
+.notification-container {
+    display: inline-block;
+    position: relative;
+    padding: 0;
+}
+
+.notification-label {
+  padding: 2px 5px;
+}
+
+/* Make the badge float in the top right corner of the button */
+.notification-badge {
+    background-color: #fa3e3e;
+    border-radius: 2px;
+    color: white;
+
+    padding: 1px 3px;
+    font-size: 8px;
+
+    position: absolute; /* Position the badge within the relatively positioned button */
+    top: 0;
+    right: 0;
+}
+

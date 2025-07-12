@@ -9,7 +9,8 @@
             <h1 class="title is-4">notfellchen.org</h1>
         </a>
 
-        <a role="button" class="navbar-burger" aria-label="{% trans 'Hauptmenü' %}"  tabindex="0" aria-expanded="false" data-target="navbarBasicExample">
+        <a role="button" class="navbar-burger" aria-label="{% trans 'Hauptmenü' %}" tabindex="0" aria-expanded="false"
+           data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -30,7 +31,16 @@
         </div>
         <div class="navbar-end">
             {% if user.is_authenticated %}
-
+                <div class="navbar-item">
+                    <div class="notification-container">
+                        <a class="notification-label" href="{% url 'user-me' %}">
+                            <i class="fas fa-bell fa-fw"></i>
+                        </a>
+                        {% if request.user.get_num_unread_notifications > 0 %}
+                            <span class="notification-badge">{{ request.user.get_num_unread_notifications }}</span>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="navbar-item">
                     <a href="{% url 'user-me' %}">
                         <i class="fas fa-user fa-fw"></i> {{ user }}
