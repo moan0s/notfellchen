@@ -602,7 +602,7 @@ def my_notifications(request):
         action = request.POST.get("action")
         process_notification_actions(request, action)
 
-    context = {"notifications_unread": Notification.objects.filter(user_to_notify=request.user, read=False),
+    context = {"notifications_unread": Notification.objects.filter(user_to_notify=request.user, read=False).order_by("-created_at"),
                "notifications_read_last": Notification.objects.filter(user_to_notify=request.user,
                                                                       read=True).order_by("-read_at") }
     return render(request, 'fellchensammlung/notifications.html', context=context)
