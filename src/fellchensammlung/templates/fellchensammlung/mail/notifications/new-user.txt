@@ -4,9 +4,5 @@
 
 es wurde ein neuer Useraccount erstellt.
 
-{{ notification }}
-Related: {{ notification.user_related }}
-{{ notification.user_related.get_full_url }}
-
-User anzeigen: {{ notification.user_related.get_full_url }}
+User anzeigen: {{ new_user_url }}
 {% endblocktranslate %}{% endblock %}

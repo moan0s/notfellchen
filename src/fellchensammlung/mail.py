@@ -44,6 +44,8 @@ def send_notification_email(notification_pk):
         plain_message = render_to_string('fellchensammlung/mail/notifications/report.txt', context)
     elif notification.notification_type == NotificationTypeChoices.NEW_USER:
         html_message = render_to_string('fellchensammlung/mail/notifications/new-user.html', context)
+        new_user_url = notification.user_related.get_full_url()
+        context["new_user_url"] = new_user_url
         plain_message = render_to_string('fellchensammlung/mail/notifications/new-user.txt', context)
     elif notification.notification_type == NotificationTypeChoices.AN_IS_TO_BE_CHECKED:
         html_message = render_to_string('fellchensammlung/mail/notifications/an-to-be-checked.html', context)
