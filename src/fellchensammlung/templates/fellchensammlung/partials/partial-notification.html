@@ -1,17 +1,17 @@
 {% load i18n %}
 {% load custom_tags %}
 <div class="notification">
+    <form class="delete" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="notification_mark_read">
+        <input type="hidden" name="notification_id" value="{{ notification.pk }}">
+        <button class="" type="submit" id="submit"></button>
+    </form>
     <div class="notification-header">
-        <a href="{{ notification.url }}" ><b>{{ notification.title }}</b></a>
+        <a href="{{ notification.url }}"><b>{{ notification.title }}</b></a>
         <i class="card-timestamp">{{ notification.created_at }}</i>
-        <form class="notification-card-mark-read" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="action" value="notification_mark_read">
-            <input type="hidden" name="notification_id" value="{{ notification.pk }}">
-            <button class="btn2" type="submit" id="submit"><i class="fa-solid fa-check"></i></button>
-        </form>
     </div>
-    <p>
-        {{ notification.text | render_markdown }}
-    </p>
+    <div class="notification-body">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </div>
 </div>
