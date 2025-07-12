@@ -732,6 +732,9 @@ class Report(models.Model):
         """Returns the url to access a detailed page for the report."""
         return reverse('report-detail', args=[str(self.id)])
 
+    def get_full_url(self):
+        return f"{base_url}{self.get_absolute_url()}"
+
     def get_reported_rules(self):
         return self.reported_broken_rules.all()
 

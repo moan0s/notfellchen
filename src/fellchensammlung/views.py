@@ -15,7 +15,7 @@ from django.core.serializers import serialize
 from django.utils.translation import gettext_lazy as _
 import json
 
-from .mail import mail_admins_new_report
+from .mail import notify_mods_new_report
 from notfellchen import settings
 
 from fellchensammlung import logger
@@ -478,8 +478,7 @@ def report_adoption(request, adoption_notice_id):
             report_instance.status = Report.WAITING
             report_instance.save()
             form.save_m2m()
-            mail_admins_new_report(report_instance)
-            print("dada")
+            notify_mods_new_report(report_instance, NotificationTypeChoices.NEW_REPORT_AN)
             return redirect(reverse("report-detail-success", args=[report_instance.pk], ))
     else:
         form = ReportAdoptionNoticeForm()
@@ -499,7 +498,7 @@ def report_comment(request, comment_id):
             report_instance.status = Report.WAITING
             report_instance.save()
             form.save_m2m()
-            mail_admins_new_report(report_instance)
+            notify_mods_new_report(report_instance, NotificationTypeChoices.NEW_REPORT_COMMENT)
             return redirect(reverse("report-detail-success", args=[report_instance.pk], ))
     else:
         form = ReportCommentForm()

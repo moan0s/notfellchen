@@ -5,21 +5,31 @@
 {% endblock %}
 
 {% block content %}
-    <p>Moin,</p>
+    <p>{% translate 'Moin' %},</p>
     <p>
-        es gibt eine neue Meldung. Folgende Nachricht wurde zur Meldung hinzugefügt:
+        {% blocktranslate %}
+            es gibt eine neue Meldung.
+        {% endblocktranslate %}
+        {% if notification.report.user_comment %}
+            {% blocktranslate %}
+                Folgende Nachricht wurde zur Meldung hinzugefügt:
+            {% endblocktranslate %}
+        {% endif %}
 
     </p>
+    {% if notification.report.user_comment %}
+        <p>
+            <i>
+                {{ notification.report.user_comment }}
+            </i>
+        </p>
+    {% endif %}
     <p>
-        <i>
-            {{ user_comment }}
-        </i>
+        {% blocktranslate %}
+            Bitte bearbeite die Meldung möglichst bald.
+        {% endblocktranslate %}
     </p>
     <p>
-
-        Bitte bearbeite die Meldung möglichst bald.
-    </p>
-    <p>
-        <a href="{{ report_url }}" class="cta-button">{% translate 'Report bearbeiten' %}</a>
+        <a href="{{ notification.report.get_full_url }}" class="cta-button">{% translate 'Report bearbeiten' %}</a>
     </p>
 {% endblock %}

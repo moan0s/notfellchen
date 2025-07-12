@@ -1,6 +1,6 @@
 {% extends "fellchensammlung/mail/base.txt" %}
 {% load i18n %}
-{% block content %}{% blocktranslate %}Moin,
+{% block content %}{% blocktranslate with new_user_url=notification.user_related.get_full_url %}Moin,
 
 es wurde ein neuer Useraccount erstellt.
 
