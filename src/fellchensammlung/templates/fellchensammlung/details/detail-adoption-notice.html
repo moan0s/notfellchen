@@ -49,30 +49,54 @@
                             <!--- Action menu (dropdown) --->
                             <div class="dropdown-menu" role="menu">
                                 <div class="dropdown-content">
+                                    {% if is_subscribed %}
+                                        <form class="dropdown-item" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="action" value="unsubscribe">
+
+                                            <button type="submit" id="submit">
+                                                <i class="fas fa-bell-slash fa-fw"
+                                                   aria-hidden="true"></i> {% trans 'Deabonnieren' %}
+                                            </button>
+
+                                        </form>
+                                    {% else %}
+                                        <form class="dropdown-item" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="action" value="subscribe">
+
+                                            <button type="submit" id="submit">
+                                                <i class="fas fa-bell fa-fw"
+                                                   aria-hidden="true"></i> {% trans 'Abonnieren' %}
+                                            </button>
+
+                                        </form>
+                                    {% endif %}
+                                    <hr class="dropdown-divider">
 
                                     {% if has_edit_permission %}
 
                                         <a class="dropdown-item">
-                                            <i class="fas fa-check"
-                                               aria-hidden="true"></i> {% trans 'Als aktiv bestätigen' %}
+                                            <i class="fas fa-check fa-fw"
+                                               aria-hidden="true"></i> {% trans 'Alsalhost:8000/ aktiv bestätigen' %}
                                         </a>
                                         <a class="dropdown-item"
                                            href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
-                                            <i class="fas fa-pencil"
+                                            <i class="fas fa-pencil fa-fw"
                                                aria-hidden="true"></i> {% translate 'Bearbeiten' %}
                                         </a>
                                         <a class="dropdown-item"
                                            href="{% url 'adoption-notice-add-photo' adoption_notice.pk %}">
-                                            <i class="fas fa-image"
+                                            <i class="fas fa-image fa-fw"
                                                aria-hidden="true"></i> {% trans 'Bilder hinzufügen' %}
                                         </a>
                                         <a class="dropdown-item"
                                            href="{% url 'adoption-notice-add-animal' adoption_notice.pk %}">
-                                            <i class="fas fa-plus"
+                                            <i class="fas fa-plus fa-fw"
                                                aria-hidden="true"></i> {% trans 'Tier hinzufügen' %}
                                         </a>
                                         <a class="dropdown-item">
-                                            <i class="fas fa-circle-xmark"
+                                            <i class="fas fa-circle-xmark fa-fw"
                                                aria-hidden="true"></i> {% trans 'Deaktivieren' %}
                                         </a>
                                         <hr class="dropdown-divider">
