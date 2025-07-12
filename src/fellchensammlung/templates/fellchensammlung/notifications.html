@@ -5,9 +5,22 @@
 {% block content %}
     <div class="block">
         <h1 class="title is-1">{% translate 'Benachrichtigungen' %}</h1>
-        {% with notifications=notifications_unread %}
-            {% include "fellchensammlung/lists/list-notifications.html" %}
-        {% endwith %}
+        {% if notifications_unread|length > 0 %}
+            <div class="block">
+                <form class="button is-danger" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="notification_mark_all_read">
+                    <button class="" type="submit" id="submit">
+                        {% trans 'Alle Benachrichtigungen als gelesen markieren' %}
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+        <div class="block">
+            {% with notifications=notifications_unread %}
+                {% include "fellchensammlung/lists/list-notifications.html" %}
+            {% endwith %}
+        </div>
     </div>
 
     <div class="block">

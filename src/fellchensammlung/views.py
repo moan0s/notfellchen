@@ -563,7 +563,7 @@ def process_notification_actions(request, action):
             return render(request, "fellchensammlung/errors/403.html", status=403)
         notification.mark_read()
     elif action == "notification_mark_all_read":
-        notifications = Notification.objects.filter(user=request.user, mark_read=False)
+        notifications = Notification.objects.filter(user_to_notify=request.user, read=False)
         for notification in notifications:
             notification.mark_read()
     return None
