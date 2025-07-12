@@ -1,3 +1,12 @@
+{% load i18n %}
 <div class="footer">
     🐀 notfellchen.org | Für Menschen die Ratten aus dem Tierschutz ein liebendes Zuhause geben wollen.
+{% if notification %}
+    <div class="setting-info">
+    {% trans "Du bekommst diese Nachricht basierend auf deinen Benachrichtigungseinstellungen." %}<br>
+    <a href="{{ notification.user_to_notify.get_full_url }}">
+        {% trans "Einstellungen ändern" %}
+    </a>
+    </div>
+{% endif %}
 </div>

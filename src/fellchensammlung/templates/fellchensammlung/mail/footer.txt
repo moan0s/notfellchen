@@ -1,1 +1,7 @@
+{% load i18n %}
 🐀 notfellchen.org | Für Menschen die Ratten aus dem Tierschutz ein liebendes Zuhause geben wollen.
+
+{% if notification %}
+{% trans "Du bekommst diese Nachricht basierend auf deinen Benachrichtigungseinstellungen." %}
+{% trans "Einstellungen ändern" %}: {{ notification.user_to_notify.get_full_url }}
+{% endif %}
