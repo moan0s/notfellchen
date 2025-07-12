@@ -926,18 +926,18 @@ class NotificationTypeChoices(models.TextChoices):
 class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    read_at = models.DateTimeField(blank=True, null=True, verbose_name=_("Gelesen am"))
     notification_type = models.CharField(max_length=200,
                                          choices=NotificationTypeChoices.choices,
                                          verbose_name=_('Benachrichtigungsgrund'))
-    title = models.CharField(max_length=100, verbose_name=_("Titel"))
-    text = models.TextField(verbose_name="Inhalt")
     user_to_notify = models.ForeignKey(User,
                                        on_delete=models.CASCADE,
-                                       verbose_name=_('Nutzer*in'),
+                                       verbose_name=_('Empfänger*in'),
                                        help_text=_("Useraccount der Benachrichtigt wird"),
                                        related_name='user')
+    title = models.CharField(max_length=100, verbose_name=_("Titel"))
+    text = models.TextField(verbose_name="Inhalt")
     read = models.BooleanField(default=False)
+    read_at = models.DateTimeField(blank=True, null=True, verbose_name=_("Gelesen am"))
     comment = models.ForeignKey(Comment, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('Antwort'))
     adoption_notice = models.ForeignKey(AdoptionNotice, blank=True, null=True, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
     user_related = models.ForeignKey(User,
