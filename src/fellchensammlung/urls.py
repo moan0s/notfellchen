@@ -75,6 +75,7 @@ urlpatterns = [
     # ex: user/1
     path("user/<int:user_id>/", views.user_by_id, name="user-detail"),
     path("user/me/", views.my_profile, name="user-me"),
+    path("user/notifications/", views.my_notifications, name="user-notifications"),
     path('user/me/export/', views.export_own_profile, name='user-me-export'),
 
     path('accounts/register/',

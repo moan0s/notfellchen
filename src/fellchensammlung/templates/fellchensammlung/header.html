@@ -33,7 +33,7 @@
             {% if user.is_authenticated %}
                 <div class="navbar-item">
                     <div class="notification-container">
-                        <a class="notification-label" href="{% url 'user-me' %}">
+                        <a class="notification-label" href="{% url 'user-notifications' %}">
                             <i class="fas fa-bell fa-fw"></i>
                         </a>
                         {% if request.user.get_num_unread_notifications > 0 %}

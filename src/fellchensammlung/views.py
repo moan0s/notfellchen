@@ -549,6 +549,27 @@ def user_by_id(request, user_id):
         return user_detail(request, user)
 
 
+def process_notification_actions(request, action):
+    """
+    As multiple views allow to mark notifications as read, this function can be used to process these actions
+
+    The function allows users to mark only their own notifications as read.
+    """
+    if action == "notification_mark_read":
+        notification_id = request.POST.get("notification_id")
+
+        notification = Notification.objects.get(pk=notification_id)
+        # Ensures a user can only mark their own notifications as read
+        if not notification.user_to_notify == request.user:
+            return render(request, "fellchensammlung/errors/403.html", status=403)
+        notification.mark_read()
+    elif action == "notification_mark_all_read":
+        notifications = Notification.objects.filter(user=request.user, mark_read=False)
+        for notification in notifications:
+            notification.mark_read()
+    return None
+
+
 @login_required()
 def my_profile(request):
     if request.method == 'POST':
@@ -562,16 +583,8 @@ def my_profile(request):
             user.save()
 
         action = request.POST.get("action")
-        if action == "notification_mark_read":
-            notification_id = request.POST.get("notification_id")
-
-            notification = Notification.objects.get(pk=notification_id)
-            notification.mark_read()
-        elif action == "notification_mark_all_read":
-            notifications = Notification.objects.filter(user=request.user, mark_read=False)
-            for notification in notifications:
-                notification.mark_read()
-        elif action == "search_subscription_delete":
+        process_notification_actions(request, action)
+        if action == "search_subscription_delete":
             search_subscription_id = request.POST.get("search_subscription_id")
             SearchSubscription.objects.get(pk=search_subscription_id).delete()
             logging.info(f"Deleted subscription {search_subscription_id}")
@@ -581,6 +594,18 @@ def my_profile(request):
     except Token.DoesNotExist:
         token = None
     return user_detail(request, request.user, token)
+
+
+@login_required()
+def my_notifications(request):
+    if request.method == 'POST':
+        action = request.POST.get("action")
+        process_notification_actions(request, action)
+
+    context = {"notifications_unread": Notification.objects.filter(user_to_notify=request.user, read=False),
+               "notifications_read_last": Notification.objects.filter(user_to_notify=request.user,
+                                                                      read=True).order_by("-read_at") }
+    return render(request, 'fellchensammlung/notifications.html', context=context)
 
 
 @user_passes_test(user_is_trust_level_or_above)
