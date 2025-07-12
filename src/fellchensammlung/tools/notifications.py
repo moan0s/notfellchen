@@ -1,7 +1,3 @@
-from types import SimpleNamespace as sn
-
-from celery.bin.celery import report
-
 from fellchensammlung.models import User, Notification, TrustLevel
 from fellchensammlung.models import NotificationTypeChoices as ntc
 
