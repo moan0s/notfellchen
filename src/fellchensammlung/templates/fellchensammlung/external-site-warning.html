@@ -1,15 +1,28 @@
 {% extends "fellchensammlung/base.html" %}
 {% load i18n %}
-    {% load custom_tags %}
+{% load custom_tags %}
 {% block content %}
-    <div class="content">
-        {% if external_site_warning %}
-            {{ external_site_warning.content | render_markdown }}
-        {% else %}
-            {% blocktranslate %}
-                <p>Achtung du verlässt notfellchen.org</p>
-            {% endblocktranslate %}
-        {% endif %}
-        <a href="{{ url }}" class="button is-primary">{% translate "Weiter" %}</a>
+    <div class="block">
+        <div class="message is-warning">
+            {% if external_site_warning %}
+                <h1 class="message-header">
+                    {{ external_site_warning.title }}
+                </h1>
+                <div class="message-body">
+                    {{ external_site_warning.content | render_markdown }}
+                </div>
+            {% else %}
+
+                <h1 class="message-header">
+                    {% trans 'Achtung du verlässt notfellchen.org' %}
+                </h1>
+                <div class="message-body">
+                    {% trans 'Sichere Abgabebedingungen können von uns, trotz vieler Bemühungen, nicht garantiert werden. Nimm Kontakt zu einer Rattenhilfe oder dem VdRD e.V. auf, die dich beraten können.' %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="block">
+            <a href="{{ url }}" class="button is-primary is-fullwidth">{% translate "Weiter" %}<i class="fa fa-arrow-right fa-fw" aria-hidden="true"></i> </a>
+        </div>
     </div>
 {% endblock content %}
