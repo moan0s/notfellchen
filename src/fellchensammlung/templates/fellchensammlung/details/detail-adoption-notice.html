@@ -193,6 +193,13 @@
                                 {% translate "Keine Beschreibung angegeben" %}
                             {% endif %}
                             </p>
+                            <hr>
+                            <p>
+                                <strong>
+                                    {% translate 'Zuletzt auf Aktualität überprüft:' %}
+                                </strong>
+                                {{ adoption_notice.last_checked|time_since_hr }}
+                            </p>
                         </div>
                     </div>
                 </div>
