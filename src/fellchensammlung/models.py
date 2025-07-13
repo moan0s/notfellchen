@@ -151,6 +151,9 @@ class RescueOrganization(models.Model):
     exclude_from_check = models.BooleanField(default=False, verbose_name=_('Von Prüfung ausschließen'),
                                              help_text=_("Organisation von der manuellen Überprüfung ausschließen, "
                                                          "z.B. weil Tiere nicht online geführt werden"))
+    ongoing_communication = models.BooleanField(default=False, verbose_name=_('In aktiver Kommunikation'),
+                                                help_text=_(
+                                                    "Es findet gerade Kommunikation zwischen Notfellchen und der Organisation statt."))
     parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True)
 
     class Meta:

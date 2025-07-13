@@ -31,6 +31,18 @@
     <hr>
 
     <div class="block">
+        <h2 class="title is-3">{% translate "In aktiver Kommunikation" %}</h2>
+        <div class="grid is-col-min-15">
+            {% for rescue_org in rescue_orgs_with_ongoing_communication %}
+                <div class="cell">
+                    {% include "fellchensammlung/partials/partial-check-rescue-org.html" %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+
+    <div class="block">
         <h2 class="title is-3">{% translate "Zuletzt geprüft" %}</h2>
         <div class="grid is-col-min-15">
             {% for rescue_org in rescue_orgs_last_checked %}

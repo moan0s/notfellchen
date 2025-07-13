@@ -803,12 +803,15 @@ def rescue_organization_check(request, context=None):
             if comment_form.is_valid():
                 comment_form.save()
 
-    rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).order_by("last_checked")[:10]
+    rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False, ongoing_communication=False).order_by("last_checked")[:3]
+    rescue_orgs_with_ongoing_communication = RescueOrganization.objects.filter(ongoing_communication=True).order_by("updated_at")
+    rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
+    rescue_orgs_to_comment = rescue_orgs_to_check | rescue_orgs_with_ongoing_communication | rescue_orgs_last_checked
     # Prepare a form for each organization
     comment_forms = {
-        org.id: RescueOrgInternalComment(instance=org) for org in rescue_orgs_to_check
+        org.id: RescueOrgInternalComment(instance=org) for org in rescue_orgs_to_comment
     }
-    rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
+
     timeframe = timezone.now().date() - timedelta(days=14)
     num_rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).filter(
         last_checked__lt=timeframe).count()
@@ -826,6 +829,7 @@ def rescue_organization_check(request, context=None):
     context["num_rescue_orgs_to_check"] = num_rescue_orgs_to_check
     context["percentage_checked"] = percentage_checked
     context["num_rescue_orgs_checked"] = num_rescue_orgs_checked
+    context["rescue_orgs_with_ongoing_communication"] = rescue_orgs_with_ongoing_communication
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
 
 
