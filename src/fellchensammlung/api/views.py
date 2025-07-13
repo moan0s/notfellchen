@@ -360,9 +360,9 @@ class LocationApiView(APIView):
 
         # Log the action
         Log.objects.create(
-            user=request.user_to_notify,
+            user=request.user,
             action="add_location",
-            text=f"{request.user_to_notify} added adoption notice {location.pk} via API",
+            text=f"{request.user} added adoption notice {location.pk} via API",
         )
 
         # Return success response with new adoption notice details
