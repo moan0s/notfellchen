@@ -85,6 +85,24 @@ def change_language(request):
         return render(request, "fellchensammlung/errors/403.html", status=403)
 
 
+def handle_an_check_actions(request, action, adoption_notice=None):
+    if adoption_notice is None:
+        adoption_notice = AdoptionNotice.objects.get(id=request.POST.get("adoption_notice_id"))
+    edit_permission = request.user == adoption_notice.owner or user_is_trust_level_or_above(request.user,
+                                                                                            TrustLevel.MODERATOR)
+
+    # Check if the user is permitted to perform the actions
+    if action in ("checked_inactive", "checked_active") and not request.user.is_authenticated or not edit_permission:
+        return render(request, "fellchensammlung/errors/403.html", status=403)
+
+    if action == "checked_inactive":
+        adoption_notice.set_closed()
+    elif action == "checked_active":
+        print("dads")
+        adoption_notice.set_active()
+    return None
+
+
 def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
     if request.user.is_authenticated:
@@ -98,6 +116,7 @@ def adoption_notice_detail(request, adoption_notice_id):
     has_edit_permission = user_is_owner_or_trust_level(request.user, adoption_notice)
     if request.method == 'POST':
         action = request.POST.get("action")
+        handle_an_check_actions(request, action, adoption_notice)
         if request.user.is_authenticated:
             if action == "comment":
                 comment_form = CommentForm(request.POST)
@@ -601,9 +620,10 @@ def my_notifications(request):
         action = request.POST.get("action")
         process_notification_actions(request, action)
 
-    context = {"notifications_unread": Notification.objects.filter(user_to_notify=request.user, read=False).order_by("-created_at"),
+    context = {"notifications_unread": Notification.objects.filter(user_to_notify=request.user, read=False).order_by(
+        "-created_at"),
                "notifications_read_last": Notification.objects.filter(user_to_notify=request.user,
-                                                                      read=True).order_by("-read_at") }
+                                                                      read=True).order_by("-read_at")}
     return render(request, 'fellchensammlung/notifications.html', context=context)
 
 
@@ -617,16 +637,11 @@ def modqueue(request):
 @login_required
 def updatequeue(request):
     if request.method == "POST":
-        adoption_notice = AdoptionNotice.objects.get(id=request.POST.get("adoption_notice_id"))
-        edit_permission = request.user == adoption_notice.owner or user_is_trust_level_or_above(request.user,
-                                                                                                TrustLevel.MODERATOR)
-        if not edit_permission:
-            return render(request, "fellchensammlung/errors/403.html", status=403)
         action = request.POST.get("action")
-        if action == "checked_inactive":
-            adoption_notice.set_closed()
-        if action == "checked_active":
-            adoption_notice.set_active()
+
+        # This function handles the activation and deactivation of ANs
+        # Separate function because it's used in multiple places
+        handle_an_check_actions(request, action)
 
     if user_is_trust_level_or_above(request.user, TrustLevel.MODERATOR):
         last_checked_adoption_list = AdoptionNotice.objects.order_by("last_checked")

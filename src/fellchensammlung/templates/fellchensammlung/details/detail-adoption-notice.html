@@ -76,10 +76,14 @@
 
                                     {% if has_edit_permission %}
 
-                                        <a class="dropdown-item">
-                                            <i class="fas fa-check fa-fw"
-                                               aria-hidden="true"></i> {% trans 'Alsalhost:8000/ aktiv bestätigen' %}
-                                        </a>
+                                        <form class="dropdown-item" method="POST">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="action" value="checked_active">
+                                            <button type="submit" id="submit">
+                                                <i class="fas fa-check fa-fw"
+                                                   aria-hidden="true"></i> {% trans 'Als aktiv bestätigen' %}
+                                            </button>
+                                        </form>
                                         <a class="dropdown-item"
                                            href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
                                             <i class="fas fa-pencil fa-fw"
