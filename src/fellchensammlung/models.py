@@ -466,10 +466,10 @@ class AdoptionNotice(models.Model):
             return False
         return self.adoptionnoticestatus.is_disabled_unchecked
 
-    def set_closed(self):
+    def set_closed(self, minor_status=None):
         self.last_checked = timezone.now()
         self.save()
-        self.adoptionnoticestatus.set_closed()
+        self.adoptionnoticestatus.set_closed(minor_status)
 
     def set_active(self):
         self.last_checked = timezone.now()
@@ -574,9 +574,12 @@ class AdoptionNoticeStatus(models.Model):
                                             minor_status=minor_status,
                                             adoption_notice=an_instance)
 
-    def set_closed(self):
+    def set_closed(self, minor_status=None):
         self.major_status = self.MAJOR_STATUS_CHOICES[self.CLOSED]
-        self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED]["other"]
+        if minor_status is None:
+            self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED]["other"]
+        else:
+            self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED][minor_status]
         self.save()
 
     def set_unchecked(self):

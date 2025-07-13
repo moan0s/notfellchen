@@ -99,7 +99,7 @@
                                             <i class="fas fa-plus fa-fw"
                                                aria-hidden="true"></i> {% trans 'Tier hinzufügen' %}
                                         </a>
-                                        <a class="dropdown-item">
+                                        <a class="dropdown-item" href="{% url 'adoption-notice-close' adoption_notice_id=adoption_notice.pk%}">
                                             <i class="fas fa-circle-xmark fa-fw"
                                                aria-hidden="true"></i> {% trans 'Deaktivieren' %}
                                         </a>

@@ -35,6 +35,8 @@ urlpatterns = [
     # ex: /adoption_notice/2/add-animal
     path("vermittlung/<int:adoption_notice_id>/add-animal", views.adoption_notice_add_animal,
          name="adoption-notice-add-animal"),
+    path("vermittlung/<int:adoption_notice_id>/close", views.deactivate_an,
+         name="adoption-notice-close"),
 
     path("tierschutzorganisationen/", views.list_rescue_organizations, name="rescue-organizations"),
     path("tierschutzorganisationen/<int:rescue_organization_id>/", views.detail_view_rescue_organization,

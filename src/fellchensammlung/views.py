@@ -622,8 +622,8 @@ def my_notifications(request):
 
     context = {"notifications_unread": Notification.objects.filter(user_to_notify=request.user, read=False).order_by(
         "-created_at"),
-               "notifications_read_last": Notification.objects.filter(user_to_notify=request.user,
-                                                                      read=True).order_by("-read_at")}
+        "notifications_read_last": Notification.objects.filter(user_to_notify=request.user,
+                                                               read=True).order_by("-read_at")}
     return render(request, 'fellchensammlung/notifications.html', context=context)
 
 
@@ -845,3 +845,13 @@ def rescue_organization_check_dq(request):
 @user_passes_test(user_is_trust_level_or_above)
 def moderation_tools_overview(request):
     return render(request, 'fellchensammlung/mod-tool-overview.html')
+
+
+def deactivate_an(request, adoption_notice_id):
+    adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
+    if request.method == "POST":
+        reason_for_closing = request.POST.get("reason_for_closing")
+        adoption_notice.set_closed(reason_for_closing)
+        return redirect(reverse("adoption-notice-detail", args=[adoption_notice.pk], ))
+    context = {"adoption_notice": adoption_notice,}
+    return render(request, 'fellchensammlung/misc/deactivate-an.html', context=context)
