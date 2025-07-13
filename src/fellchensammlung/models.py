@@ -121,9 +121,6 @@ class AllowUseOfMaterialsChices(models.TextChoices):
 
 
 class RescueOrganization(models.Model):
-    def __str__(self):
-        return f"{self.name}"
-
     name = models.CharField(max_length=200)
     trusted = models.BooleanField(default=False, verbose_name=_('Vertrauenswürdig'))
     allows_using_materials = models.CharField(max_length=200,
@@ -158,6 +155,10 @@ class RescueOrganization(models.Model):
 
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
+        ordering = ['name']
+
+    def __str__(self):
+        return f"{self.name}"
 
     def clean(self):
         super().clean()
