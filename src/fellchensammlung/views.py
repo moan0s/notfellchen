@@ -741,8 +741,12 @@ def external_site_warning(request, template_name='fellchensammlung/external-site
     return render(request, template_name, context=context)
 
 
-def list_rescue_organizations(request, template='fellchensammlung/animal-shelters.html'):
-    rescue_organizations = RescueOrganization.objects.all()
+def list_rescue_organizations(request, species=None, template='fellchensammlung/animal-shelters.html'):
+    if species is None:
+        rescue_organizations = RescueOrganization.objects.all()
+    else:
+        rescue_organizations = RescueOrganization.objects.filter(specializations=species)
+
     paginator = Paginator(rescue_organizations, 10)
 
     page_number = request.GET.get("page")
@@ -759,6 +763,11 @@ def list_rescue_organizations(request, template='fellchensammlung/animal-shelter
                "show_rescue_orgs": True,
                "elided_page_range": paginator.get_elided_page_range(page_number, on_each_side=2, on_ends=1)}
     return render(request, template, context=context)
+
+
+def specialized_rescues(request, species_id):
+    species = get_object_or_404(Species, pk=species_id)
+    return list_rescue_organizations(request, species)
 
 
 def detail_view_rescue_organization(request, rescue_organization_id,
@@ -808,8 +817,10 @@ def rescue_organization_check(request, context=None):
             if comment_form.is_valid():
                 comment_form.save()
 
-    rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False, ongoing_communication=False).order_by("last_checked")[:3]
-    rescue_orgs_with_ongoing_communication = RescueOrganization.objects.filter(ongoing_communication=True).order_by("updated_at")
+    rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False,
+                                                             ongoing_communication=False).order_by("last_checked")[:3]
+    rescue_orgs_with_ongoing_communication = RescueOrganization.objects.filter(ongoing_communication=True).order_by(
+        "updated_at")
     rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
     rescue_orgs_to_comment = rescue_orgs_to_check | rescue_orgs_with_ongoing_communication | rescue_orgs_last_checked
     # Prepare a form for each organization
@@ -862,5 +873,5 @@ def deactivate_an(request, adoption_notice_id):
         reason_for_closing = request.POST.get("reason_for_closing")
         adoption_notice.set_closed(reason_for_closing)
         return redirect(reverse("adoption-notice-detail", args=[adoption_notice.pk], ))
-    context = {"adoption_notice": adoption_notice,}
+    context = {"adoption_notice": adoption_notice, }
     return render(request, 'fellchensammlung/misc/deactivate-an.html', context=context)

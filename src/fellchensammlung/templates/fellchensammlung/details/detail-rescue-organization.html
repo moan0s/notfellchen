@@ -35,6 +35,18 @@
                                 <p>{{ org.description | render_markdown }}</p>
                             {% endif %}
                         </div>
+                        {% if org.specializations %}
+                            <div class="block">
+                                <h3 class="title is-5">{% translate 'Spezialisierung' %}</h3>
+                                <div class="content">
+                                    <ul>
+                                        {% for specialization in org.specializations.all %}
+                                            <li>{{ specialization }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -42,7 +54,8 @@
                 {% include "fellchensammlung/partials/partial-rescue-organization-contact.html" %}
             </div>
             <div class="block">
-                <a class="button is-warning is-fullwidth" href="{% url org_meta|admin_urlname:'change' org.pk %}"><i class="fa-solid fa-tools fa-fw"></i> Admin interface</a>
+                <a class="button is-warning is-fullwidth" href="{% url org_meta|admin_urlname:'change' org.pk %}"><i
+                        class="fa-solid fa-tools fa-fw"></i> Admin interface</a>
             </div>
         </div>
         <div class="column">
