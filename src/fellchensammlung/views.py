@@ -473,6 +473,11 @@ def privacy(request):
     return render_text(request, text)
 
 
+def buying(request):
+    text = i18n.get_text_by_language("buying")
+    return render_text(request, text)
+
+
 def terms_of_service(request):
     text = i18n.get_text_by_language("terms_of_service")
     rules = Rule.objects.all()

@@ -54,6 +54,7 @@ urlpatterns = [
     path("impressum/", views.imprint, name="imprint"),
     path("terms-of-service/", views.terms_of_service, name="terms-of-service"),
     path("datenschutz/", views.privacy, name="privacy"),
+    path("ratten-kaufen/", views.buying, name="buying"),
 
     ################
     ## Moderation ##
