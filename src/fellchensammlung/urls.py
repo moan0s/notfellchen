@@ -7,12 +7,14 @@ from . import views, registration_views
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from django.contrib.sitemaps.views import sitemap
-from .sitemap import StaticViewSitemap, AdoptionNoticeSitemap, AnimalSitemap
+from .sitemap import StaticViewSitemap, AdoptionNoticeSitemap, RescueOrganizationSitemap, SearchSitemap
 
 sitemaps = {
     "static": StaticViewSitemap,
     "vermittlungen": AdoptionNoticeSitemap,
-    "tiere": AnimalSitemap,
+    "tierschutzorganisationen": RescueOrganizationSitemap,
+    "orte": SearchSitemap
+
 }
 
 urlpatterns = [

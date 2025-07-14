@@ -107,6 +107,9 @@ class ImportantLocation(models.Model):
     slug = models.SlugField(unique=True)
     name = models.CharField(max_length=200)
 
+    def get_absolute_url(self):
+        return reverse('search-by-location', kwargs={'important_location_slug': self.slug})
+
 
 class ExternalSourceChoices(models.TextChoices):
     OSM = "OSM", _("Open Street Map")
