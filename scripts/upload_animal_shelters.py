@@ -178,8 +178,13 @@ def create_location(tierheim, instance, headers):
     location_result = requests.post(f"{instance}/api/locations/", json=location_data, headers=headers)
 
     if location_result.status_code != 201:
-        print(
-            f"Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
+        try:
+            print(
+                f"Location for {tierheim["properties"]["name"]}:{location_result.status_code} {location_result.json()} not created")
+        except requests.exceptions.JSONDecodeError:
+            print(f"Location for {tierheim["properties"]["name"]} could not be created")
+            exit()
+
     return location_result.json()
 
 
