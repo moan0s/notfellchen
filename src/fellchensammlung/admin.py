@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils.http import urlencode
 
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription, \
-    SpeciesSpecificURL, ImportantLocation, SpeciesSpecialization
+    SpeciesSpecificURL, ImportantLocation
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, Notification
@@ -100,11 +100,6 @@ class SpeciesSpecificURLInline(admin.StackedInline):
     model = SpeciesSpecificURL
 
 
-class SpeciesSpecializationInline(admin.StackedInline):
-    model = SpeciesSpecialization
-    extra = 0
-
-
 @admin.register(RescueOrganization)
 class RescueOrganizationAdmin(admin.ModelAdmin):
     search_fields = ("name", "description", "internal_comment", "location_string", "location__city")
@@ -112,7 +107,6 @@ class RescueOrganizationAdmin(admin.ModelAdmin):
     list_filter = ("allows_using_materials", "trusted", ("external_source_identifier", EmptyFieldListFilter))
 
     inlines = [
-        SpeciesSpecializationInline,
         SpeciesSpecificURLInline,
     ]
 

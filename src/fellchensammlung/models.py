@@ -123,6 +123,23 @@ class AllowUseOfMaterialsChices(models.TextChoices):
     USE_MATERIALS_NOT_ASKED = "not_asked", _("Not asked")
 
 
+class Species(models.Model):
+    """Model representing a species of animal."""
+    name = models.CharField(max_length=200, help_text=_('Name der Tierart'),
+                            verbose_name=_('Name'))
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return self.name
+
+    class Meta:
+        verbose_name = _('Tierart')
+        verbose_name_plural = _('Tierarten')
+
+
+
 class RescueOrganization(models.Model):
     name = models.CharField(max_length=200)
     trusted = models.BooleanField(default=False, verbose_name=_('Vertrauenswürdig'))
@@ -155,6 +172,8 @@ class RescueOrganization(models.Model):
                                                 help_text=_(
                                                     "Es findet gerade Kommunikation zwischen Notfellchen und der Organisation statt."))
     parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True)
+    # allows to specify if a rescue organization has a specialization for dedicated species
+    specializations = models.ManyToManyField(Species)
 
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
@@ -295,22 +314,6 @@ class Image(models.Model):
     @property
     def as_html(self):
         return f'<img src="{MEDIA_URL}/{self.image}" alt="{self.alt_text}">'
-
-
-class Species(models.Model):
-    """Model representing a species of animal."""
-    name = models.CharField(max_length=200, help_text=_('Name der Tierart'),
-                            verbose_name=_('Name'))
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        """String for representing the Model object."""
-        return self.name
-
-    class Meta:
-        verbose_name = _('Tierart')
-        verbose_name_plural = _('Tierarten')
 
 
 class AdoptionNotice(models.Model):
@@ -1015,15 +1018,3 @@ class SpeciesSpecificURL(models.Model):
     rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
                                             verbose_name=_("Tierschutzorganisation"))
     url = models.URLField(verbose_name=_("Tierartspezifische URL"))
-
-
-class SpeciesSpecialization(models.Model):
-    """
-    Model that allows to specify if a rescue organization has a specialization for dedicated species
-    """
-    species = models.ForeignKey(Species, on_delete=models.CASCADE, verbose_name=_("Tierart"))
-    rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
-                                            verbose_name=_("Tierschutzorganisation"))
-
-    def __str__(self):
-        return f"{_('Spezialisierung')} {self.species}"
