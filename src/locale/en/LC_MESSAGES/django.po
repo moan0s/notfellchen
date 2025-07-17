@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Notfellchen\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-06-19 15:51+0000\n"
-"PO-Revision-Date: 2025-06-19 17:52+0200\n"
+"PO-Revision-Date: 2025-07-17 15:55+0200\n"
 "Last-Translator: Julian-Samuel <Gebühr>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -343,7 +343,7 @@ msgstr "Adoption Notice deactivated:"
 
 #: src/fellchensammlung/models.py:485
 msgid "Die folgende Vermittlung wurde deaktiviert: "
-msgstr "The following adoption notice was deactivated:"
+msgstr "The following adoption notice was deactivated: "
 
 #: src/fellchensammlung/models.py:585 src/fellchensammlung/models.py:593
 msgid "Weiblich"
@@ -562,7 +562,7 @@ msgstr "Adoption notices of Organization"
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-rescue-organization.html:47
 #: src/fellchensammlung/templates/fellchensammlung/lists/list-adoption-notices.html:11
 msgid "Keine Vermittlungen gefunden."
-msgstr "No adoption notices found"
+msgstr "No adoption notices found."
 
 #: src/fellchensammlung/templates/fellchensammlung/details/detail-user.html:11
 msgid "Profil verwalten"
@@ -680,7 +680,7 @@ msgstr "Report problems"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:77
 msgid "Code"
-msgstr "code"
+msgstr "Code"
 
 #: src/fellchensammlung/templates/fellchensammlung/footer.html:84
 msgid "Hilfreiche Links"
@@ -903,7 +903,7 @@ msgstr "Modqueue"
 msgid ""
 "Erlaube oder blockiere Vermittlungsanzeigen die bisher noch zurückgehalten "
 "werden "
-msgstr ""
+msgstr "Allow or block adoption notices that are waiting in queue"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice.html:12
 msgid "Notfellchen"
@@ -956,7 +956,7 @@ msgstr "You need to log in to comment"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:4
 msgid "Meldung von "
-msgstr "Report of"
+msgstr "Report of "
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-report.html:7
 msgid "Regeln gegen die Verstoßen wurde"
@@ -1049,7 +1049,7 @@ msgstr "Deactivated adoption notices to check"
 
 #: src/fellchensammlung/templates/fellchensammlung/updatequeue.html:13
 msgid "Aktive Vermittlungen zur Überprüfung"
-msgstr "Active "
+msgstr "Active Adoption Notices to check"
 
 #: src/fellchensammlung/tools/misc.py:42
 #, python-format
