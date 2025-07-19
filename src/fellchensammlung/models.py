@@ -139,7 +139,6 @@ class Species(models.Model):
         verbose_name_plural = _('Tierarten')
 
 
-
 class RescueOrganization(models.Model):
     name = models.CharField(max_length=200)
     trusted = models.BooleanField(default=False, verbose_name=_('Vertrauenswürdig'))
@@ -471,6 +470,19 @@ class AdoptionNotice(models.Model):
         return self.adoptionnoticestatus.is_active
 
     @property
+    def is_disabled(self):
+        if not hasattr(self, 'adoptionnoticestatus'):
+            return False
+        return self.adoptionnoticestatus.is_disabled
+
+
+    @property
+    def is_closed(self):
+        if not hasattr(self, 'adoptionnoticestatus'):
+            return False
+        return self.adoptionnoticestatus.is_closed
+
+    @property
     def is_disabled_unchecked(self):
         if not hasattr(self, 'adoptionnoticestatus'):
             return False
@@ -566,6 +578,14 @@ class AdoptionNoticeStatus(models.Model):
     @property
     def is_active(self):
         return self.major_status == self.ACTIVE
+
+    @property
+    def is_disabled(self):
+        return self.major_status == self.DISABLED
+
+    @property
+    def is_closed(self):
+        return self.major_status == self.CLOSED
 
     @property
     def is_disabled_unchecked(self):
