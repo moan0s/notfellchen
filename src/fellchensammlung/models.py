@@ -172,7 +172,7 @@ class RescueOrganization(models.Model):
                                                     "Es findet gerade Kommunikation zwischen Notfellchen und der Organisation statt."))
     parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True)
     # allows to specify if a rescue organization has a specialization for dedicated species
-    specializations = models.ManyToManyField(Species)
+    specializations = models.ManyToManyField(Species, blank=True)
 
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
