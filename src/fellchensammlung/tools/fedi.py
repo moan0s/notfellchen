@@ -73,7 +73,7 @@ class FediClient:
         media_ids = []
         for image in images:
             # Upload the image and get the media ID
-            media_ids = self.upload_media(f"{settings.MEDIA_ROOT}/{image.image}", image.alt_text)
+            media_ids.append(self.upload_media(f"{settings.MEDIA_ROOT}/{image.image}", image.alt_text))
 
         # Post the status with the uploaded image's media ID
         return self.post_status(status, media_ids=media_ids)
