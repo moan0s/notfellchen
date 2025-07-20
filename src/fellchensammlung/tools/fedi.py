@@ -1,5 +1,6 @@
 import logging
 import requests
+from django.template.loader import render_to_string
 
 from fellchensammlung.models import SocialMediaPost, PlatformChoices
 from notfellchen import settings
@@ -81,7 +82,8 @@ class FediClient:
 def post_an_to_fedi(adoption_notice):
     client = FediClient(settings.fediverse_access_token, settings.fediverse_api_base_url)
 
-    status_text = adoption_notice.name
+    context = {"adoption_notice": adoption_notice}
+    status_text = render_to_string("fellchensammlung/misc/fediverse/an-post.md", context)
     images = adoption_notice.get_photos()
 
     if images is not None:
