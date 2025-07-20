@@ -848,6 +848,7 @@ def rescue_organization_check(request, context=None):
     context["percentage_checked"] = percentage_checked
     context["num_rescue_orgs_checked"] = num_rescue_orgs_checked
     context["rescue_orgs_with_ongoing_communication"] = rescue_orgs_with_ongoing_communication
+    context["set_internal_comment_available"] = True
     return render(request, 'fellchensammlung/rescue-organization-check.html', context=context)
 
 
@@ -858,7 +859,7 @@ def rescue_organization_check_dq(request):
     DQ = data quality
     """
     context = {"set_species_url_available": True,
-               "set_internal_comment_available": True,
+               "dq": True,
                "species_url_form": SpeciesURLForm,
                "internal_comment_form": RescueOrgInternalComment}
     return rescue_organization_check(request, context)
