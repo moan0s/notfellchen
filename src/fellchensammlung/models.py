@@ -360,7 +360,7 @@ class AdoptionNotice(models.Model):
     def num_per_sex(self):
         num_per_sex = dict()
         for sex in SexChoices:
-            num_per_sex[sex] = self.animals.filter(sex=sex).count
+            num_per_sex[sex] = self.animals.filter(sex=sex).count()
         return num_per_sex
 
     @property
