@@ -76,7 +76,7 @@
     <h2 class="title is-2">{% translate 'Vermittlungen der Organisation' %}</h2>
     <div class="container-cards">
         {% if org.adoption_notices %}
-            {% for adoption_notice in org.adoption_notices %}
+            {% for adoption_notice in org.adoption_notices_in_hierarchy %}
                 {% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}
             {% endfor %}
         {% else %}

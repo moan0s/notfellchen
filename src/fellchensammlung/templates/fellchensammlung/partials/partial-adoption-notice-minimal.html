@@ -15,13 +15,24 @@
 
                     <div class="cell">
 
-                        <p>
-                            <i class="fa-solid fa-location-dot fa-fw"></i>
-                            {% if adoption_notice.location %}
-                                {{ adoption_notice.location }}
-                            {% else %}
-                                {{ adoption_notice.location_string }}
-                            {% endif %}</p>
+                        {% if adoption_notice.organization %}
+                            <div class="cell">
+                        <span>
+                            <i class="fa-solid fa-building fa-fw" aria-label="{% trans 'Tierschutzorganisation' %}"></i>
+                                <a href="{{ adoption_notice.organization.get_absolute_url }}"> {{ adoption_notice.organization }}</a>
+                        </span>
+
+                            </div>
+                        {% else %}
+                            <p>
+                                <i class="fa-solid fa-location-dot fa-fw"></i>
+                                {% if adoption_notice.location %}
+                                    {{ adoption_notice.location }}
+                                {% else %}
+                                    {{ adoption_notice.location_string }}
+                                {% endif %}
+                            </p>
+                        {% endif %}
                     </div>
                     <div class="cell">
                         {% include "fellchensammlung/partials/sex-overview.html" %}

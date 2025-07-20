@@ -194,6 +194,17 @@ class RescueOrganization(models.Model):
         return AdoptionNotice.objects.filter(organization=self)
 
     @property
+    def adoption_notices_in_hierarchy(self, adoption_notices=None):
+        """
+        Shows all adoption notices of this rescue organization and all child organizations.
+        """
+        adoption_notices_discovered = list(self.adoption_notices)
+        if self.child_organizations:
+            for child in self.child_organizations:
+                adoption_notices_discovered.extend(child.adoption_notices_in_hierarchy)
+        return adoption_notices_discovered
+
+    @property
     def position(self):
         if self.location:
             return Position(latitude=self.location.latitude, longitude=self.location.longitude)
@@ -233,6 +244,7 @@ class RescueOrganization(models.Model):
         self.exclude_from_check = True
         self.save()
 
+    @property
     def child_organizations(self):
         return RescueOrganization.objects.filter(parent_org=self)
 
