@@ -233,6 +233,9 @@ class RescueOrganization(models.Model):
         self.exclude_from_check = True
         self.save()
 
+    def child_organizations(self):
+        return RescueOrganization.objects.filter(parent_org=self)
+
 
 # Admins can perform all actions and have the highest trust associated with them
 # Moderators can make moderation decisions regarding the deletion of content

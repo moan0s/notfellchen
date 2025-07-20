@@ -63,6 +63,15 @@
         </div>
     </div>
 
+    {% if org.child_organizations %}
+        <div class="block">
+        <h2 class="title is-2">{% translate 'Unterorganisationen' %}</h2>
+            {% with rescue_organizations=org.child_organizations %}
+                {% include "fellchensammlung/lists/list-animal-shelters.html" %}
+            {% endwith %}
+        </div>
+    {% endif %}
+
 
     <h2 class="title is-2">{% translate 'Vermittlungen der Organisation' %}</h2>
     <div class="container-cards">
