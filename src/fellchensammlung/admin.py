@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.utils.http import urlencode
 
 from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription, \
-    SpeciesSpecificURL, ImportantLocation
+    SpeciesSpecificURL, ImportantLocation, SocialMediaPost
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
     Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, Notification
@@ -162,6 +162,9 @@ class LocationAdmin(admin.ModelAdmin):
         ImportantLocationInline,
     ]
 
+@admin.register(SocialMediaPost)
+class SocialMediaPostAdmin(admin.ModelAdmin):
+    list_filter = ("platform",)
 
 admin.site.register(Animal)
 admin.site.register(Species)

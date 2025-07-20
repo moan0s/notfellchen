@@ -7,13 +7,52 @@
     <div class="block">
         <h1 class="title is-1">{% translate 'Moderationstools' %}</h1>
         <div class="block">
-            <a class="button is-primary is-fullwidth" href="{% url 'modqueue' %}">{% translate 'Moderationswarteschlange' %}</a>
+            <a class="button is-primary is-fullwidth"
+               href="{% url 'modqueue' %}">{% translate 'Moderationswarteschlange' %}</a>
         </div>
         <div class="block">
-            <a class="button is-primary is-fullwidth" href="{% url 'updatequeue' %}">{% translate 'Up-To-Date Check' %}</a>
+            <a class="button is-primary is-fullwidth"
+               href="{% url 'updatequeue' %}">{% translate 'Up-To-Date Check' %}</a>
         </div>
         <div class="block">
-            <a class="button is-primary is-fullwidth" href="{% url 'organization-check' %}">{% translate 'Organisations Check' %}</a>
+            <a class="button is-primary is-fullwidth"
+               href="{% url 'organization-check' %}">{% translate 'Organisations Check' %}</a>
+        </div>
+
+        <div class="block">
+            {% if action_was_posting %}
+                {% if posted_successfully %}
+                    <div class="message is-success">
+                        <div class="message-header">
+                            {% translate 'Vermittlung gepostet' %}
+                        </div>
+                        <div class="message-body">
+                            {% blocktranslate with post_url=post.url %}
+                                Link zum Post: <a href={{ post_url }}>{{ post_url }}</a>
+                            {% endblocktranslate %}
+                        </div>
+
+                    </div>
+                {% else %}
+                    <div class="message is-danger">
+                        <div class="message-header">
+                            {% translate 'Vermittlung konnte nicht gepostet werden' %}
+                        </div>
+                        <div class="message-body">
+                            {{ error_message }}
+                        </div>
+
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <form class="cell" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="post_to_fedi">
+                <button class="button is-fullwidth is-warning is-primary" type="submit" id="submit">
+                    <i class="fa-solid fa-bullhorn fa-fw"></i> {% translate "Vermittlung ins Fediverse posten" %}
+                </button>
+            </form>
         </div>
     </div>
 

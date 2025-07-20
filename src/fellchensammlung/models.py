@@ -475,7 +475,6 @@ class AdoptionNotice(models.Model):
             return False
         return self.adoptionnoticestatus.is_disabled
 
-
     @property
     def is_closed(self):
         if not hasattr(self, 'adoptionnoticestatus'):
@@ -515,6 +514,14 @@ class AdoptionNotice(models.Model):
                                         adoption_notice=self,
                                         text=text,
                                         title=notification_title)
+
+    def last_posted(self, platform=None):
+        if platform is None:
+            last_post = SocialMediaPost.objects.filter(adoption_notice=self).order_by('-created_at').first()
+        else:
+            last_post = SocialMediaPost.objects.filter(adoption_notice=self, platform=platform).order_by(
+                '-created_at').first()
+        return last_post.created_at
 
 
 class AdoptionNoticeStatus(models.Model):
@@ -1038,3 +1045,24 @@ class SpeciesSpecificURL(models.Model):
     rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
                                             verbose_name=_("Tierschutzorganisation"))
     url = models.URLField(verbose_name=_("Tierartspezifische URL"))
+
+
+class PlatformChoices(models.TextChoices):
+    FEDIVERSE = "fediverse", _("Fediverse")
+
+
+class SocialMediaPost(models.Model):
+    created_at = models.DateField(verbose_name=_('Erstellt am'), default=timezone.now)
+    platform = models.CharField(max_length=255, verbose_name=_("Social Media Platform"),
+                                choices=PlatformChoices.choices)
+    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
+    url = models.URLField(verbose_name=_("URL"))
+
+    @staticmethod
+    def get_an_to_post():
+        adoption_notices_without_post = AdoptionNotice.objects.filter(socialmediapost__isnull=True,
+                                                                      adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE)
+        return adoption_notices_without_post.first()
+
+    def __str__(self):
+        return f"{self.platform} - {self.adoption_notice}"

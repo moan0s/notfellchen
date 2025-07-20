@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.serializers import serialize
 from django.utils.translation import gettext_lazy as _
 import json
+import requests
 
 from .mail import notify_mods_new_report
 from notfellchen import settings
@@ -22,11 +23,12 @@ from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, AdoptionNoticeStatus, Subscriptions, Notification, RescueOrganization, \
     Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, \
-    ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices
+    ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment
 from .models import Language, Announcement
 from .tools import i18n
+from .tools.fedi import post_an_to_fedi
 from .tools.geo import GeoAPI, zoom_level_for_radius
 from .tools.metrics import gather_metrics_data
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
@@ -864,7 +866,31 @@ def rescue_organization_check_dq(request):
 
 @user_passes_test(user_is_trust_level_or_above)
 def moderation_tools_overview(request):
-    return render(request, 'fellchensammlung/mod-tool-overview.html')
+    context = None
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "post_to_fedi":
+            adoption_notice = SocialMediaPost.get_an_to_post()
+            if adoption_notice is not None:
+                try:
+                    post = post_an_to_fedi(adoption_notice)
+                    context = {"action_was_posting": True, "post": post, "posted_successfully": True}
+                except requests.exceptions.ConnectionError as e:
+                    logging.error(f"Could not post fediverse post: {e}")
+                    context = {"action_was_posting": True,
+                               "posted_successfully": False,
+                               "error_message": _("Verbindungsfehler. Vermittlung wurde nicht gepostet")}
+                except requests.exceptions.HTTPError as e:
+                    logging.error(f"Could not post fediverse post: {e}")
+                    context = {"action_was_posting": True,
+                               "posted_successfully": False,
+                               "error_message": _("Fehler beim Posten. Vermittlung wurde nicht gepostet. Das kann "
+                                                  "z.B. an falschen Zugangsdaten liegen. Kontaktieren einen Admin.")}
+            else:
+                context = {"action_was_posting": True,
+                           "posted_successfully": False,
+                           "error_message": _("Keine Vermittlung zum Posten gefunden.")}
+    return render(request, 'fellchensammlung/mod-tool-overview.html', context=context)
 
 
 def deactivate_an(request, adoption_notice_id):

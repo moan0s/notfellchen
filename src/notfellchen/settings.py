@@ -118,6 +118,12 @@ else:
     EMAIL_USE_TLS = config.getboolean('mail', 'tls', fallback=False)
     EMAIL_USE_SSL = config.getboolean('mail', 'ssl', fallback=False)
 
+""" Fediverse """
+fediverse_enabled = config.get('fediverse', 'enabled', fallback=False)
+if fediverse_enabled:
+    fediverse_api_base_url = config.get('fediverse', 'api_base_url')
+    fediverse_access_token = config.get('fediverse', 'access_token')
+
 """USER MANAGEMENT"""
 AUTH_USER_MODEL = "fellchensammlung.User"
 ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
