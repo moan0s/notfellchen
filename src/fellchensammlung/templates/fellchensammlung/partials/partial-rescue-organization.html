@@ -11,7 +11,7 @@
         <p>
             <b><i class="fa-solid fa-location-dot"></i></b>
             {% if rescue_organization.location %}
-                {{ rescue_organization.location.str }}
+                {{ rescue_organization.location }}
             {% else %}
                 {{ rescue_organization.location_string }}
             {% endif %}
