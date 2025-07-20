@@ -24,6 +24,11 @@ app.conf.beat_schedule = {
         'task': 'admin.deactivate_404_adoption_notices',
         'schedule': crontab(hour=3),
     },
+    'daily-fedi-post': {
+        'task': 'social_media.post_fedi',
+        'schedule': crontab(hour=19),
+    },
+
 }
 
 if settings.HEALTHCHECKS_URL is not None and settings.HEALTHCHECKS_URL != "":
