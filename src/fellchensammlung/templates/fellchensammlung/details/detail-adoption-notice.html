@@ -1,5 +1,6 @@
 {% extends "fellchensammlung/base.html" %}
 {% load custom_tags %}
+{% load admin_urls %}
 {% load i18n %}
 {% load static %}
 
@@ -124,6 +125,13 @@
                                         <i class="fas fa-flag"
                                            aria-hidden="true"></i> {% trans 'Melden' %}
                                     </a>
+                                    {% if request.user.is_superuser %}
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item is-warning"
+                                           href="{% url adoption_notice_meta|admin_urlname:'change' adoption_notice.pk %}">
+                                            <i class="fa-solid fa-tools fa-fw"></i> Admin interface
+                                        </a>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

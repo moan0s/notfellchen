@@ -107,6 +107,7 @@ def handle_an_check_actions(request, action, adoption_notice=None):
 
 def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
+    adoption_notice_meta = adoption_notice._meta
     if request.user.is_authenticated:
         try:
             subscription = Subscriptions.objects.get(owner=request.user, adoption_notice=adoption_notice)
@@ -164,7 +165,8 @@ def adoption_notice_detail(request, adoption_notice_id):
     else:
         comment_form = CommentForm(instance=adoption_notice)
     context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
-               "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed}
+               "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed,
+               "adoption_notice_meta": adoption_notice_meta}
     return render(request, 'fellchensammlung/details/detail-adoption-notice.html', context=context)
 
 
