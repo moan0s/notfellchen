@@ -47,6 +47,17 @@
                                 </div>
                             </div>
                         {% endif %}
+                        {% if org.parent_org %}
+                            <div class="block">
+                                <h3 class="title is-5">{% translate 'Übergeordnete Organisation' %}</h3>
+                                <p>
+                                    <span>
+                                        <i class="fa-solid fa-building fa-fw" aria-label="{% trans 'Tierschutzorganisation' %}"></i>
+                                            <a href="{{ org.parent_org.get_absolute_url }}"> {{ org.parent_org }}</a>
+                                    </span>
+                                </p>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -54,8 +65,9 @@
                 {% include "fellchensammlung/partials/partial-rescue-organization-contact.html" %}
             </div>
             <div class="block">
-                <a class="button is-warning is-fullwidth" href="{% url org_meta|admin_urlname:'change' org.pk %}"><i
-                        class="fa-solid fa-tools fa-fw"></i> Admin interface</a>
+                <a class="button is-warning is-fullwidth" href="{% url org_meta|admin_urlname:'change' org.pk %}">
+                    <i class="fa-solid fa-tools fa-fw"></i> Admin interface
+                </a>
             </div>
         </div>
         <div class="column">
