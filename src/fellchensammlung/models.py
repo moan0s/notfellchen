@@ -194,7 +194,7 @@ class RescueOrganization(models.Model):
         return AdoptionNotice.objects.filter(organization=self)
 
     @property
-    def adoption_notices_in_hierarchy(self, adoption_notices=None):
+    def adoption_notices_in_hierarchy(self):
         """
         Shows all adoption notices of this rescue organization and all child organizations.
         """
