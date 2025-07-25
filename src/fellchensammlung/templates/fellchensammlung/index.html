@@ -23,7 +23,9 @@
     {% endfor %}
     {% if introduction %}
         <h1>{{ introduction.title }}</h1>
-        {{ introduction.content | render_markdown }}
+        <div class="content">
+            {{ introduction.content | render_markdown }}
+        </div>
     {% endif %}
 
     <h2 class="title is-2">{% translate "Aktuelle Vermittlungen" %}</h2>
@@ -44,7 +46,7 @@
                     <h2 class="title is-1">{{ how_to.title }}</h2>
                 </div>
             </div>
-            <div class="card-content">
+            <div class="card-content content">
                 {{ how_to.content | render_markdown }}
             </div>
         </div>

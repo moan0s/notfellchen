@@ -8,18 +8,18 @@
 
     </div>
     <div class="card-content">
-        <p>
+        <div class="block">
             <b><i class="fa-solid fa-location-dot"></i></b>
             {% if rescue_organization.location %}
                 {{ rescue_organization.location }}
             {% else %}
                 {{ rescue_organization.location_string }}
             {% endif %}
-        </p>
-        <p>
+        </div>
+        <div class="block content">
             {% if rescue_organization.description_short %}
                 {{ rescue_organization.description_short | render_markdown }}
             {% endif %}
-        </p>
+        </div>
     </div>
 </div>

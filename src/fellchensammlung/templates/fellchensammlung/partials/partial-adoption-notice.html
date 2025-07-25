@@ -19,13 +19,15 @@
                 {{ adoption_notice.location_string }}
             {% endif %}
         </p>
-        <p>
+        <div class="content">
             {% if adoption_notice.description %}
                 {{ adoption_notice.description | render_markdown }}
             {% else %}
-                {% translate "Keine Beschreibung" %}
+                <p>
+                    {% translate "Keine Beschreibung" %}
+                </p>
             {% endif %}
-        </p>
+        </div>
         {% if adoption_notice.get_photo %}
             <div class="adoption-notice-img">
                 <img src="{{ MEDIA_URL }}/{{ adoption_notice.get_photo.image }}"

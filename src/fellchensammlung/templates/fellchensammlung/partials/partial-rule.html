@@ -3,7 +3,7 @@
     <div class="card-header">
         <h2 class="card-header-title">{{ rule.title }}</h2>
     </div>
-    <div class="card-content">
-        <p class="content">{{ rule.rule_text | render_markdown }}</p>
+    <div class="card-content content">
+        {{ rule.rule_text | render_markdown }}
     </div>
 </div>

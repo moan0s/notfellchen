@@ -32,7 +32,9 @@
                                 {{ org.location_string }}
                             {% endif %}
                             {% if org.description %}
-                                <p>{{ org.description | render_markdown }}</p>
+                                <div class="block content">
+                                    <p>{{ org.description | render_markdown }}</p>
+                                </div>
                             {% endif %}
                         </div>
                         {% if org.specializations %}
@@ -52,7 +54,8 @@
                                 <h3 class="title is-5">{% translate 'Übergeordnete Organisation' %}</h3>
                                 <p>
                                     <span>
-                                        <i class="fa-solid fa-building fa-fw" aria-label="{% trans 'Tierschutzorganisation' %}"></i>
+                                        <i class="fa-solid fa-building fa-fw"
+                                           aria-label="{% trans 'Tierschutzorganisation' %}"></i>
                                             <a href="{{ org.parent_org.get_absolute_url }}"> {{ org.parent_org }}</a>
                                     </span>
                                 </p>
@@ -77,7 +80,7 @@
 
     {% if org.child_organizations %}
         <div class="block">
-        <h2 class="title is-2">{% translate 'Unterorganisationen' %}</h2>
+            <h2 class="title is-2">{% translate 'Unterorganisationen' %}</h2>
             {% with rescue_organizations=org.child_organizations %}
                 {% include "fellchensammlung/lists/list-animal-shelters.html" %}
             {% endwith %}

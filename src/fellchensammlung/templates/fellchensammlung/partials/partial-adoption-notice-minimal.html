@@ -71,7 +71,9 @@
             </div>
         {% else %}
             {% if adoption_notice.description_short %}
-                {{ adoption_notice.description_short | render_markdown }}
+                <div class="content">
+                    {{ adoption_notice.description_short | render_markdown }}
+                </div>
             {% endif %}
         {% endif %}
     </div>
