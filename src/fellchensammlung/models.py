@@ -503,6 +503,12 @@ class AdoptionNotice(models.Model):
         return self.adoptionnoticestatus.is_interested
 
     @property
+    def is_awaiting_action(self):
+        if not hasattr(self, 'adoptionnoticestatus'):
+            return False
+        return self.adoptionnoticestatus.is_awaiting_action
+
+    @property
     def is_disabled_unchecked(self):
         if not hasattr(self, 'adoptionnoticestatus'):
             return False
@@ -614,6 +620,10 @@ class AdoptionNoticeStatus(models.Model):
     @property
     def is_closed(self):
         return self.major_status == self.CLOSED
+
+    @property
+    def is_awaiting_action(self):
+        return self.major_status == self.AWAITING_ACTION
 
     @property
     def is_interested(self):
