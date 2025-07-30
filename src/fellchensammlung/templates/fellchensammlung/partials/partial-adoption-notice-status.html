@@ -1,0 +1,30 @@
+{% load custom_tags %}
+{% load i18n %}
+
+{% if adoption_notice.is_closed %}
+    <article class="message is-warning">
+        <div class="message-header">
+            <p>{% translate 'Vermittlung deaktiviert' %}</p>
+        </div>
+        <div class="message-body content">
+            {% blocktranslate %}
+                Diese Vermittlung wurde deaktiviert. Typischerweise passiert das, wenn die Tiere erfolgreich
+                vermittelt wurden.
+                In den Kommentaren findest du ggf. mehr Informationen.
+            {% endblocktranslate %}
+        </div>
+    </article>
+{% elif adoption_notice.is_interested %}
+    <article class="message is-info">
+        <div class="message-header">
+            <p>{% translate 'Tiere sind reserviert' %}</p>
+        </div>
+        <div class="message-body content">
+            {% blocktranslate %}
+                Diese Tiere sind bereits reserviert.
+                In den Kommentaren findest du ggf. mehr Informationen.
+            {% endblocktranslate %}
+        </div>
+    </article>
+{% endif %}
+

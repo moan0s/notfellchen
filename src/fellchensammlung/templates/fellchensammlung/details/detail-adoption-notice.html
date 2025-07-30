@@ -26,20 +26,7 @@
 {% endblock %}
 
 {% block content %}
-    {% if adoption_notice.is_closed %}
-        <article class="message is-warning">
-            <div class="message-header">
-                <p>{% translate 'Vermittlung deaktiviert' %}</p>
-            </div>
-            <div class="message-body content">
-                {% blocktranslate %}
-                    Diese Vermittlung wurde deaktiviert. Typischerweise passiert das, wenn die Tiere erfolgreich
-                    vermittelt wurden.
-                    In den Kommentaren findest du ggf. mehr Informationen.
-                {% endblocktranslate %}
-            </div>
-        </article>
-    {% endif %}
+    {% include "fellchensammlung/partials/partial-adoption-notice-status.html" %}
     <div class="columns">
         <div class="column is-two-thirds">
             <!--- Title level (including action dropdown) -->

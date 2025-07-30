@@ -497,6 +497,12 @@ class AdoptionNotice(models.Model):
         return self.adoptionnoticestatus.is_closed
 
     @property
+    def is_interested(self):
+        if not hasattr(self, 'adoptionnoticestatus'):
+            return False
+        return self.adoptionnoticestatus.is_interested
+
+    @property
     def is_disabled_unchecked(self):
         if not hasattr(self, 'adoptionnoticestatus'):
             return False
@@ -608,6 +614,10 @@ class AdoptionNoticeStatus(models.Model):
     @property
     def is_closed(self):
         return self.major_status == self.CLOSED
+
+    @property
+    def is_interested(self):
+        return self.major_status == self.ACTIVE and self.minor_status == "interested"
 
     @property
     def is_disabled_unchecked(self):
