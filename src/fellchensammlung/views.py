@@ -106,7 +106,7 @@ def handle_an_check_actions(request, action, adoption_notice=None):
 
 
 def adoption_notice_detail(request, adoption_notice_id):
-    adoption_notice = AdoptionNotice.objects.get(id=adoption_notice_id)
+    adoption_notice = get_object_or_404(AdoptionNotice, id=adoption_notice_id)
     adoption_notice_meta = adoption_notice._meta
     if request.user.is_authenticated:
         try:
