@@ -1,5 +1,6 @@
 import logging
 
+from random import randint
 from notfellchen import settings
 from django.utils import timezone
 from datetime import timedelta
@@ -139,3 +140,18 @@ def send_test_email(email):
     to = email
 
     mail.send_mail(subject, plain_message, from_email, [to], html_message=html_message)
+
+
+def mask_organization_contact_data(catchall_domain="example.org"):
+    """
+    Masks e-mails, so they are all sent to one domain, preferably a catchall domain.
+    """
+    rescue_orgs_with_phone_number = RescueOrganization.objects.filter(phone_number__isnull=False)
+    for rescue_org_with_phone_number in rescue_orgs_with_phone_number:
+        rescue_org_with_phone_number.phone_number = randint(100000000000, 1000000000000)
+        rescue_org_with_phone_number.save()
+    rescue_orgs_with_email = RescueOrganization.objects.filter(email__isnull=False)
+    for rescue_org_with_email in rescue_orgs_with_email:
+        rescue_org_with_email.email = f"{rescue_org_with_email.email.replace('@', '-')}@{catchall_domain}"
+        rescue_org_with_email.save()
+

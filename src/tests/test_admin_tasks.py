@@ -2,12 +2,12 @@ from datetime import timedelta
 from django.utils import timezone
 
 from fellchensammlung.tools.admin import get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
-    deactivate_404_adoption_notices
+    deactivate_404_adoption_notices, mask_organization_contact_data
 from fellchensammlung.tools.misc import is_404
 from django.test import TestCase
 
 from model_bakery import baker
-from fellchensammlung.models import AdoptionNotice
+from fellchensammlung.models import AdoptionNotice, RescueOrganization
 
 
 class DeactivationTest(TestCase):
@@ -96,3 +96,21 @@ class PingTest(TestCase):
         self.adoption2.refresh_from_db()
         self.assertTrue(self.adoption1.is_active)
         self.assertFalse(self.adoption2.is_active)
+
+
+class MaskingTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.rescue1 = baker.make(RescueOrganization, email="test1@example.com", )
+        cls.rescue2 = baker.make(RescueOrganization, email="test-2@example.com", phone_number="0123456789", )
+
+    def test_masking(self):
+        mask_organization_contact_data()
+        self.assertEqual(RescueOrganization.objects.count(), 2)
+
+        # Ensure that the rescues are pulled from the database again, otherwise this test will fail
+        self.rescue1.refresh_from_db()
+        self.rescue2.refresh_from_db()
+        self.assertNotEqual(self.rescue1.phone_number, "0123456789")
+        self.assertEqual(self.rescue1.email, "test1-example.com@example.org")
+        self.assertEqual(self.rescue2.email, "test-2-example.com@example.org")
