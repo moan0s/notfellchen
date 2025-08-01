@@ -1,6 +1,14 @@
 {% extends "fellchensammlung/base.html" %}
 {% load i18n %}
 
+{% block description %}
+    {% if next %}
+        <meta name="description" content="{% trans 'Bei Notfellchen.org einloggen' %}">
+    {% else %}
+        <meta name="description" content="{% translate "Bitte log dich ein um diese Seite sehen zu können." %}">
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 
     {% if form.errors %}
@@ -14,15 +22,15 @@
 
     {% if user.is_authenticated %}
         <p class="is-warning">{% translate "Du bist bereits eingeloggt." %}</p>
-    {% else %} {% if next %}
-
-        <div class="notification is-warning">
-            <button class="delete"></button>
-            <p>
-                {% translate "Bitte log dich ein um diese Seite sehen zu können." %}
-            </p>
-        </div>
-    {% endif %}
+    {% else %}
+        {% if next %}
+            <div class="notification is-warning">
+                <button class="delete"></button>
+                <p>
+                    {% translate "Bitte log dich ein um diese Seite sehen zu können." %}
+                </p>
+            </div>
+        {% endif %}
     {% endif %}
 
     {% if not user.is_authenticated %}
