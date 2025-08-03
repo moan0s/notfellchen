@@ -1,12 +1,14 @@
 {% load i18n %}
 {% load custom_tags %}
-<div class="notification">
-    <form class="delete" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="action" value="notification_mark_read">
-        <input type="hidden" name="notification_id" value="{{ notification.pk }}">
-        <button class="" type="submit" id="submit"></button>
-    </form>
+<div class="notification {% if not notification.read %}is-info is-light{% endif %}">
+    {% if not notification.read %}
+        <form class="delete js-delete-excluded" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="notification_mark_read">
+            <input type="hidden" name="notification_id" value="{{ notification.pk }}">
+            <button class="delete js-delete-excluded" type="submit" id="submit"></button>
+        </form>
+    {% endif %}
     <div class="notification-header">
         <a href="{{ notification.url }}"><b>{{ notification.title }}</b></a>
         <i class="card-timestamp">{{ notification.created_at|time_since_hr }}</i>

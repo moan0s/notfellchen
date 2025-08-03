@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Looks for all notifications with a delete and allows closing them when pressing delete
 document.addEventListener('DOMContentLoaded', () => {
-  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+  (document.querySelectorAll('.notification .delete:not(.js-delete-excluded)') || []).forEach(($delete) => {
     const $notification = $delete.parentNode;
 
     $delete.addEventListener('click', () => {
