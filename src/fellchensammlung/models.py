@@ -173,6 +173,8 @@ class RescueOrganization(models.Model):
     parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True)
     # allows to specify if a rescue organization has a specialization for dedicated species
     specializations = models.ManyToManyField(Species, blank=True)
+    twenty_id = models.UUIDField(verbose_name=_("Twenty-ID"), null=True, blank=True,
+                                 help_text=_("ID der der Organisation in Twenty"))
 
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
