@@ -60,6 +60,10 @@ class Location(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = _("Standort")
+        verbose_name_plural = _("Standorte")
+
     def __str__(self):
         if self.city and self.postcode:
             return f"{self.city} ({self.postcode})"
@@ -103,6 +107,10 @@ class Location(models.Model):
 
 
 class ImportantLocation(models.Model):
+    class Meta:
+        verbose_name = _("Wichtiger Standort")
+        verbose_name_plural = _("Wichtige Standorte")
+
     location = models.OneToOneField(Location, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True)
     name = models.CharField(max_length=200)
@@ -179,6 +187,8 @@ class RescueOrganization(models.Model):
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
         ordering = ['name']
+        verbose_name = _("Tierschutzorganisation")
+        verbose_name_plural = _("Tierschutzorganisationen")
 
     def __str__(self):
         return f"{self.name}"
@@ -327,6 +337,10 @@ class Image(models.Model):
     def __str__(self):
         return self.alt_text
 
+    class Meta:
+        verbose_name = _("Bild")
+        verbose_name_plural = _("Bilder")
+
     @property
     def as_html(self):
         return f'<img src="{MEDIA_URL}/{self.image}" alt="{self.alt_text}">'
@@ -337,11 +351,11 @@ class AdoptionNotice(models.Model):
         permissions = [
             ("create_active_adoption_notice", "Can create an active adoption notice"),
         ]
+        verbose_name = _("Vermittlung")
+        verbose_name_plural = _("Vermittlungen")
 
     def __str__(self):
-        if not hasattr(self, 'adoptionnoticestatus'):
-            return self.name
-        return f"[{self.adoptionnoticestatus.as_string()}] {self.name}"
+        return self.name
 
     created_at = models.DateField(verbose_name=_('Erstellt am'), default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
@@ -559,6 +573,10 @@ class AdoptionNoticeStatus(models.Model):
     whereas the minor status is used for reporting
     """
 
+    class Meta:
+        verbose_name = _('Vermittlungsstatus')
+        verbose_name_plural = _('Vermittlungsstati')
+
     ACTIVE = "active"
     AWAITING_ACTION = "awaiting_action"
     CLOSED = "closed"
@@ -685,6 +703,10 @@ class SexChoicesWithAll(models.TextChoices):
 
 
 class Animal(models.Model):
+    class Meta:
+        verbose_name = _('Tier')
+        verbose_name_plural = _('Tiere')
+
     date_of_birth = models.DateField(verbose_name=_('Geburtsdatum'))
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
@@ -750,6 +772,11 @@ class SearchSubscription(models.Model):
     - On new AdoptionNotice: Check all existing SearchSubscriptions for matches
     - For matches: Send notification to user of the SearchSubscription
     """
+
+    class Meta:
+        verbose_name = _("Abonnierte Suche")
+        verbose_name_plural = _("Abonnierte Suchen")
+
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.PROTECT, null=True)
     sex = models.CharField(max_length=20, choices=SexChoicesWithAll.choices)
@@ -768,6 +795,11 @@ class Rule(models.Model):
     """
     Class to store rules
     """
+
+    class Meta:
+        verbose_name = _("Regel")
+        verbose_name_plural = _("Regeln")
+
     title = models.CharField(max_length=200)
 
     # Markdown is allowed in rule text
@@ -784,7 +816,8 @@ class Rule(models.Model):
 
 class Report(models.Model):
     class Meta:
-        permissions = []
+        verbose_name = _("Meldung")
+        verbose_name_plural = _("Meldungen")
 
     ACTION_TAKEN = "action taken"
     NO_ACTION_TAKEN = "no action taken"
@@ -864,6 +897,10 @@ class ReportComment(Report):
 
 
 class ModerationAction(models.Model):
+    class Meta:
+        verbose_name = _("Moderationsaktion")
+        verbose_name_plural = _("Moderationsaktionen")
+
     BAN = "user_banned"
     DELETE = "content_deleted"
     COMMENT = "comment"
@@ -928,6 +965,11 @@ class Announcement(Text):
     """
     Class to store announcements that should be displayed for all users
     """
+
+    class Meta:
+        verbose_name = _("Banner")
+        verbose_name_plural = _("Banner")
+
     logged_in_only = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -977,6 +1019,11 @@ class Comment(models.Model):
     """
     Class to store comments in markdown content
     """
+
+    class Meta:
+        verbose_name = _("Kommentar")
+        verbose_name_plural = _("Kommentare")
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -996,6 +1043,10 @@ class Comment(models.Model):
 
 
 class Notification(models.Model):
+    class Meta:
+        verbose_name = _("Benachrichtigung")
+        verbose_name_plural = _("Benachrichtigungen")
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     notification_type = models.CharField(max_length=200,
@@ -1039,6 +1090,12 @@ class Notification(models.Model):
 
 
 class Subscriptions(models.Model):
+    """Subscription to a AdoptionNotice"""
+
+    class Meta:
+        verbose_name = _("Abonnement")
+        verbose_name_plural = _("Abonnements")
+
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
     created_at = models.DateTimeField(auto_now_add=True)
@@ -1066,6 +1123,11 @@ class Timestamp(models.Model):
     """
     Class to store timestamps based on keys
     """
+
+    class Meta:
+        verbose_name = _("Zeitstempel")
+        verbose_name_plural = _("Zeitstempel")
+
     key = models.CharField(max_length=255, verbose_name=_("Schlüssel"), primary_key=True)
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name=_("Zeitstempel"))
     data = models.CharField(max_length=2000, blank=True, null=True)
@@ -1078,6 +1140,11 @@ class SpeciesSpecificURL(models.Model):
     """
     Model that allows to specify a URL for a rescue organization where a certain species can be found
     """
+
+    class Meta:
+        verbose_name = _("Tierartspezifische URL")
+        verbose_name_plural = _("Tierartspezifische URLs")
+
     species = models.ForeignKey(Species, on_delete=models.CASCADE, verbose_name=_("Tierart"))
     rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
                                             verbose_name=_("Tierschutzorganisation"))
