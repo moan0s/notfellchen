@@ -1,7 +1,8 @@
 from django.test import TestCase
 from model_bakery import baker
 
-from fellchensammlung.models import User, TrustLevel, Species, Location, AdoptionNotice, AdoptionNoticeNotification
+from fellchensammlung.models import User, TrustLevel, Species, Location, AdoptionNotice, Notification
+from fellchensammlung.tools.model_helpers import NotificationTypeChoices
 from fellchensammlung.tools.notifications import notify_of_AN_to_be_checked
 
 
@@ -24,11 +25,17 @@ class TestNotifications(TestCase):
         cls.test_user0.trust_level = TrustLevel.ADMIN
         cls.test_user0.save()
 
-        cls.adoption1 = baker.make(AdoptionNotice, name="TestAdoption1", owner=cls.test_user1,)
-        cls.adoption1.set_unchecked() # Could also emit notification
+        cls.adoption1 = baker.make(AdoptionNotice, name="TestAdoption1", owner=cls.test_user1, )
+        cls.adoption1.set_unchecked()  # Could also emit notification
 
     def test_notify_of_AN_to_be_checked(self):
         notify_of_AN_to_be_checked(self.adoption1)
-        self.assertTrue(AdoptionNoticeNotification.objects.filter(user=self.test_user0).exists())
-        self.assertTrue(AdoptionNoticeNotification.objects.filter(user=self.test_user1).exists())
-        self.assertFalse(AdoptionNoticeNotification.objects.filter(user=self.test_user2).exists())
+        self.assertTrue(Notification.objects.filter(user_to_notify=self.test_user0,
+                                                    adoption_notice=self.adoption1,
+                                                    notification_type=NotificationTypeChoices.AN_IS_TO_BE_CHECKED).exists())
+        self.assertTrue(Notification.objects.filter(user_to_notify=self.test_user1,
+                                                    adoption_notice=self.adoption1,
+                                                    notification_type=NotificationTypeChoices.AN_IS_TO_BE_CHECKED).exists())
+        self.assertFalse(Notification.objects.filter(user_to_notify=self.test_user2,
+                                                     adoption_notice=self.adoption1,
+                                                     notification_type=NotificationTypeChoices.AN_IS_TO_BE_CHECKED).exists())

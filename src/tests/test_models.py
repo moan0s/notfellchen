@@ -85,8 +85,8 @@ class TestNotifications(TestCase):
         cls.test_user_1 = User.objects.create(username="Testuser1", password="SUPERSECRET", email="test@example.org")
 
     def test_mark_read(self):
-        not1 = Notification.objects.create(user=self.test_user_1, text="New rats to adopt", title="🔔 New Rat alert")
-        not2 = Notification.objects.create(user=self.test_user_1,
+        not1 = Notification.objects.create(user_to_notify=self.test_user_1, text="New rats to adopt", title="🔔 New Rat alert")
+        not2 = Notification.objects.create(user_to_notify=self.test_user_1,
                                            text="New wombat to adopt", title="🔔 New Wombat alert")
         not1.mark_read()
 

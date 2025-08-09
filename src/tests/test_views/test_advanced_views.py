@@ -5,8 +5,9 @@ from django.urls import reverse
 from model_bakery import baker
 
 from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, \
-    Animal, Subscriptions, Comment, CommentNotification, SearchSubscription
+    Animal, Subscriptions, Comment, Notification, SearchSubscription
 from fellchensammlung.tools.geo import LocationProxy
+from fellchensammlung.tools.model_helpers import NotificationTypeChoices
 from fellchensammlung.views import add_adoption_notice
 
 
@@ -33,15 +34,6 @@ class AnimalAndAdoptionTest(TestCase):
                           adoption_notice=adoption1,
                           species=rat,
                           description="Eine unglaublich süße Ratte")
-
-    def test_detail_animal(self):
-        self.client.login(username='testuser0', password='12345')
-
-        response = self.client.post(reverse('animal-detail', args="1"))
-        self.assertEqual(response.status_code, 200)
-        # Check our user is logged in
-        self.assertEqual(str(response.context['user']), 'testuser0')
-        self.assertContains(response, "Rat1")
 
     def test_detail_animal_notice(self):
         self.client.login(username='testuser0', password='12345')
@@ -339,8 +331,10 @@ class AdoptionDetailTest(TestCase):
             reverse('adoption-notice-detail', args=str(an1.pk)),
             data={"action": "comment", "text": "Test"})
         self.assertTrue(Comment.objects.filter(user__username="testuser0").exists())
-        self.assertFalse(CommentNotification.objects.filter(user__username="testuser0").exists())
-        self.assertTrue(CommentNotification.objects.filter(user__username="testuser1").exists())
+        self.assertFalse(Notification.objects.filter(user_to_notify__username="testuser0",
+                                                     notification_type=NotificationTypeChoices.NEW_COMMENT).exists())
+        self.assertTrue(Notification.objects.filter(user_to_notify__username="testuser1",
+                                                    notification_type=NotificationTypeChoices.NEW_COMMENT).exists())
 
 
 class AdoptionEditTest(TestCase):

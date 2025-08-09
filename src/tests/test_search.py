@@ -3,10 +3,11 @@ from time import sleep
 from django.test import TestCase
 from django.urls import reverse
 from fellchensammlung.models import SearchSubscription, User, TrustLevel, AdoptionNotice, Location, SexChoicesWithAll, \
-    Animal, Species, AdoptionNoticeNotification, SexChoices
+    Animal, Species, SexChoices, Notification
 from model_bakery import baker
 
 from fellchensammlung.tools.geo import LocationProxy
+from fellchensammlung.tools.model_helpers import NotificationTypeChoices
 from fellchensammlung.tools.search import Search, notify_search_subscribers
 
 
@@ -100,5 +101,7 @@ class TestSearch(TestCase):
         """
         notify_search_subscribers(self.adoption1)
 
-        self.assertTrue(AdoptionNoticeNotification.objects.filter(user=self.test_user1, adoption_notice=self.adoption1).exists())
-        self.assertFalse(AdoptionNoticeNotification.objects.filter(user=self.test_user2).exists())
+        self.assertTrue(Notification.objects.filter(user_to_notify=self.test_user1,
+                                                    adoption_notice=self.adoption1,
+                                                    notification_type=NotificationTypeChoices.AN_FOR_SEARCH_FOUND).exists())
+        self.assertFalse(Notification.objects.filter(user_to_notify=self.test_user2,).exists())
