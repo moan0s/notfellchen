@@ -17,7 +17,7 @@ def notify_mods_new_report(report, notification_type):
     for moderator in User.objects.filter(trust_level__gt=TrustLevel.MODERATOR):
         if notification_type == NotificationTypeChoices.NEW_REPORT_AN:
             title = _("Vermittlung gemeldet")
-        elif notification_type == NotificationTypeChoices.NEW_COMMENT:
+        elif notification_type == NotificationTypeChoices.NEW_REPORT_COMMENT:
             title = _("Kommentar gemeldet")
         else:
             raise NotImplementedError
