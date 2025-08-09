@@ -60,10 +60,18 @@ class BasicViewTest(TestCase):
         self.client.login(username='testuser0', password='12345')
         response = self.client.get(reverse('about'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Rule 1")
 
     def test_about_anonymous(self):
         response = self.client.get(reverse('about'))
+        self.assertEqual(response.status_code, 200)
+
+    def terms_of_service_logged_in(self):
+        response = self.client.get(reverse('terms-of-service'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Rule 1")
+
+    def terms_of_service_anonymous(self):
+        response = self.client.get(reverse('terms-of-service'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Rule 1")
 
