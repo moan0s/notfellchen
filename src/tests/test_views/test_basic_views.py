@@ -38,7 +38,7 @@ class BasicViewTest(TestCase):
         report_comment1 = ReportComment.objects.create(reported_comment=comment1,
                                                        user_comment="ReportComment1")
         report_comment1.save()
-        report_comment1.reported_broken_rules.set({rule1,})
+        report_comment1.reported_broken_rules.set({rule1, })
 
     def test_index_logged_in(self):
         self.client.login(username='testuser0', password='12345')
@@ -141,4 +141,16 @@ class BasicViewTest(TestCase):
         self.assertContains(response, "ReportComment1")
         self.assertContains(response, '<form action="allow" class="">')
 
+    def test_rss_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
 
+        response = self.client.get(reverse('rss'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "TestAdoption0")
+        self.assertNotContains(response, "TestAdoption5")  # Should not be active, therefore not shown
+
+    def test_rss_anonymous(self):
+        response = self.client.get(reverse('rss'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "TestAdoption1")
+        self.assertNotContains(response, "TestAdoption5")
