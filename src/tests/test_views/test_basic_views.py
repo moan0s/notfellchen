@@ -180,3 +180,21 @@ class BasicViewTest(TestCase):
     def test_important_location_anonymous(self):
         response = self.client.get(reverse('search-by-location', args=(self.important_berlin.slug,)))
         self.assertEqual(response.status_code, 200)
+
+    def test_map_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.get(reverse('map'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_map_anonymous(self):
+        response = self.client.get(reverse('map'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_metrics_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+        response = self.client.get(reverse('metrics'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_metrics_anonymous(self):
+        response = self.client.get(reverse('metrics'))
+        self.assertEqual(response.status_code, 200)
