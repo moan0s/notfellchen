@@ -2,7 +2,8 @@ from django.test import TestCase
 from django.urls import reverse
 
 from docs.conf import language
-from fellchensammlung.models import User, TrustLevel, AdoptionNotice, Species, Rule, Language, Comment, ReportComment
+from fellchensammlung.models import User, TrustLevel, AdoptionNotice, Species, Rule, Language, Comment, ReportComment, \
+    Location, ImportantLocation
 from model_bakery import baker
 
 
@@ -39,6 +40,10 @@ class BasicViewTest(TestCase):
                                                        user_comment="ReportComment1")
         report_comment1.save()
         report_comment1.reported_broken_rules.set({rule1, })
+
+        berlin = Location.get_location_from_string("Berlin")
+        cls.important_berlin = ImportantLocation(location=berlin, slug="berlin", name="Berlin")
+        cls.important_berlin.save()
 
     def test_index_logged_in(self):
         self.client.login(username='testuser0', password='12345')
@@ -165,3 +170,13 @@ class BasicViewTest(TestCase):
         response = self.client.get(reverse('add-adoption'))
         self.assertEqual(response.status_code, 302)
         self.assertEqual(response.url, "/accounts/login/?next=/vermitteln/")
+
+    def test_important_location_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+
+        response = self.client.get(reverse('search-by-location', args=(self.important_berlin.slug,)))
+        self.assertEqual(response.status_code, 200)
+
+    def test_important_location_anonymous(self):
+        response = self.client.get(reverse('search-by-location', args=(self.important_berlin.slug,)))
+        self.assertEqual(response.status_code, 200)
