@@ -92,17 +92,19 @@
                 {% translate 'Tierheime in der Nähe' %}
             </a>
             <br/>
-            {% trust_level "MODERATOR" as coordinator_trust_level %}
-            {% if request.user.trust_level >= coordinator_trust_level %}
-                <a class="nav-link " href="{% url "modtools" %}">
-                    {% translate 'Moderationstools' %}
-                </a>
-            {% endif %}
-            <br/>
-            {% if request.user.is_superuser %}
-                <a class="nav-link " href="{% url "admin:index" %}">
-                    <i class="fa-solid fa-screwdriver-wrench fa-fw"></i>{% translate 'Admin-Bereich' %}
-                </a>
+            {% if request.user.is_authenticated %}
+                {% trust_level "MODERATOR" as coordinator_trust_level %}
+                {% if request.user.trust_level >= coordinator_trust_level %}
+                    <a class="nav-link " href="{% url "modtools" %}">
+                        {% translate 'Moderationstools' %}
+                    </a>
+                {% endif %}
+                <br/>
+                {% if request.user.is_superuser %}
+                    <a class="nav-link " href="{% url "admin:index" %}">
+                        <i class="fa-solid fa-screwdriver-wrench fa-fw"></i>{% translate 'Admin-Bereich' %}
+                    </a>
+                {% endif %}
             {% endif %}
         </div>
     </div>
