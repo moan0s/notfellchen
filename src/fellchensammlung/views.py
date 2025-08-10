@@ -44,8 +44,11 @@ def user_is_trust_level_or_above(user, trust_level=TrustLevel.MODERATOR):
 
 
 def user_is_owner_or_trust_level(user, django_object, trust_level=TrustLevel.MODERATOR):
+    """
+    Checks if a user is either the owner of a record or has a trust level equal or higher than the given one
+    """
     return user.is_authenticated and (
-            user.trust_level == trust_level or django_object.owner == user)
+            user.trust_level >= trust_level or django_object.owner == user)
 
 
 def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=TrustLevel.MODERATOR):
@@ -568,7 +571,7 @@ def user_detail(request, user, token=None):
 def user_by_id(request, user_id):
     user = User.objects.get(id=user_id)
     # Only users that are mods or owners of the user are allowed to view
-    fail_if_user_not_owner_or_trust_level(request.user, user)
+    fail_if_user_not_owner_or_trust_level(user=request.user, django_object=user, trust_level=TrustLevel.MODERATOR)
     if user == request.user:
         return my_profile(request)
     else:
