@@ -100,7 +100,6 @@ def handle_an_check_actions(request, action, adoption_notice=None):
     if action == "checked_inactive":
         adoption_notice.set_closed()
     elif action == "checked_active":
-        print("dads")
         adoption_notice.set_active()
     return None
 
