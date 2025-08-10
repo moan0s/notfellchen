@@ -154,3 +154,14 @@ class BasicViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "TestAdoption1")
         self.assertNotContains(response, "TestAdoption5")
+
+    def test_an_form_logged_in(self):
+        self.client.login(username='testuser0', password='12345')
+
+        response = self.client.get(reverse('add-adoption'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_an_form_anonymous(self):
+        response = self.client.get(reverse('add-adoption'))
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, "/accounts/login/?next=/vermitteln/")
