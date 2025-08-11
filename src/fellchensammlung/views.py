@@ -877,6 +877,7 @@ def moderation_tools_overview(request):
         if action == "post_to_fedi":
             adoption_notice = SocialMediaPost.get_an_to_post()
             if adoption_notice is not None:
+                logging.info(f"Posting adoption notice: {adoption_notice} ({adoption_notice.id})")
                 try:
                     post = post_an_to_fedi(adoption_notice)
                     context = {"action_was_posting": True, "post": post, "posted_successfully": True}

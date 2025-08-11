@@ -58,6 +58,9 @@ class FediClient:
         response = requests.post(status_endpoint, headers=self.headers, data=payload)
 
         # Raise exception if posting fails
+        if response.status_code >= 300:
+            logging.error(f"Request= {response.request.body}")
+            logging.error(f"Response= {response.json()}")
         response.raise_for_status()
 
         return response.json()
@@ -70,8 +73,11 @@ class FediClient:
         :param alt_text: The alt text for the image.
         :return: The response from the Mastodon API.
         """
+        MAX_NUM_OF_IMAGES = 6
+        if len(images) > MAX_NUM_OF_IMAGES:
+            logging.warning(f"Too many images ({len(images)}) to post. Selecting the first {MAX_NUM_OF_IMAGES} images.")
         media_ids = []
-        for image in images:
+        for image in images[:MAX_NUM_OF_IMAGES]:
             # Upload the image and get the media ID
             media_ids.append(self.upload_media(f"{settings.MEDIA_ROOT}/{image.image}", image.alt_text))
 
