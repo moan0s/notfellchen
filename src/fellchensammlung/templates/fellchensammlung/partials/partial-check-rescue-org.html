@@ -55,7 +55,7 @@
     </div>
     <div class="card-footer">
         <div class="card-footer-item is-confirm">
-            <form method="post">
+            <form method="post" id="mark_checked_{{ forloop.counter }}">
                 {% csrf_token %}
                 <input type="hidden"
                        name="rescue_organization_id"

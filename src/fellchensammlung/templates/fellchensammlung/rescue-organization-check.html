@@ -1,5 +1,11 @@
 {% extends "fellchensammlung/base.html" %}
 {% load i18n %}
+{% load static %}
+{% block additional_scrips %}
+    <script src="{% static 'fellchensammlung/js/mousetrap.min.js' %}"></script>
+    <script src="{% static 'fellchensammlung/js/rescue-org-check-shortcuts.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     <h1 class="title is-1">{% translate "Aktualitätscheck" %}</h1>
     <p class="subtitle is-3">{% translate "Überprüfe ob es in Tierheimen neue Tiere gibt die ein Zuhause suchen" %}</p>
