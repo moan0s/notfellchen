@@ -15,18 +15,27 @@
                 <strong>{% translate 'Zuletzt geprüft:' %}</strong> {{ rescue_org.last_checked_hr }}
             </p>
             <p>
-                <i class="fas fa-images" aria-label="{% translate "Material verwenden?" %}"></i> {{ rescue_org.get_allows_using_materials_display }}
+                <i class="fas fa-images"
+                   aria-label="{% translate "Material verwenden?" %}"></i> {{ rescue_org.get_allows_using_materials_display }}
             </p>
             {% if rescue_org.website %}
-                <a href="{{ rescue_org.website }}" target="_blank">
+                <a href="{{ rescue_org.website }}" id="rescue_org_website_{{ forloop.counter }}" target="_blank">
                     <i class="fas fa-globe" aria-label="{% translate "Website" %}"></i>
                     {{ rescue_org.website|domain }}
                 </a>
             {% endif %}
-            {% for species_url in rescue_org.species_urls %}
-                <p>{{ species_url.species }}: <a href="{{ species_url.url }}" target="_blank">{{ species_url.url }}</a>
-                </p>
-            {% endfor %}
+            {% with rescue_org_counter=forloop.counter %}
+                {% for species_url in rescue_org.species_urls %}
+                    <p>{{ species_url.species }}:
+                        <a href="{{ species_url.url }}"
+                           id="species_url_{{ rescue_org_counter }}_{{ forloop.counter }}"
+                           target="_blank">
+                            {{ species_url.url }}
+                        </a>
+                    </p>
+                {% endfor %}
+
+            {% endwith %}
         </div>
         {% if set_internal_comment_available %}
             <div class="block">
