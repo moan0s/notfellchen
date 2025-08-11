@@ -89,13 +89,32 @@
 
 
     <h2 class="title is-2">{% translate 'Vermittlungen der Organisation' %}</h2>
-    <div class="container-cards">
-        {% if org.adoption_notices_in_hierarchy %}
-            {% for adoption_notice in org.adoption_notices_in_hierarchy %}
-                {% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}
-            {% endfor %}
-        {% else %}
-            <p>{% translate "Keine Vermittlungen gefunden." %}</p>
-        {% endif %}
-    </div>
+    {% with ans_by_status=org.adoption_notices_in_hierarchy_divided_by_status %}
+        {% with active_ans=ans_by_status.0 inactive_ans=ans_by_status.1 %}
+            <div class="block">
+                <h3 class="title is-3">{% translate 'Aktive Vermittlungen' %}</h3>
+                <div class="container-cards">
+                    {% if active_ans %}
+                        {% for adoption_notice in active_ans %}
+                            {% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}
+                        {% endfor %}
+                    {% else %}
+                        <p>{% translate "Keine Vermittlungen gefunden." %}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="block">
+                <h3 class="title is-3">{% translate 'Inaktive Vermittlungen' %}</h3>
+                <div class="container-cards">
+                    {% if inactive_ans %}
+                        {% for adoption_notice in inactive_ans %}
+                            {% include "fellchensammlung/partials/partial-adoption-notice-minimal.html" %}
+                        {% endfor %}
+                    {% else %}
+                        <p>{% translate "Keine Vermittlungen gefunden." %}</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endwith %}
+    {% endwith %}
 {% endblock %}

@@ -217,6 +217,18 @@ class RescueOrganization(models.Model):
         return adoption_notices_discovered
 
     @property
+    def adoption_notices_in_hierarchy_divided_by_status(self):
+        """Returns two lists of adoption notices, the first active, the other inactive."""
+        active_adoption_notices = []
+        inactive_adoption_notices = []
+        for an in self.adoption_notices_in_hierarchy:
+            if an.is_active:
+                active_adoption_notices.append(an)
+            else:
+                inactive_adoption_notices.append(an)
+        return active_adoption_notices, inactive_adoption_notices
+
+    @property
     def position(self):
         if self.location:
             return Position(latitude=self.location.latitude, longitude=self.location.longitude)
