@@ -272,6 +272,14 @@ class RescueOrganization(models.Model):
     def child_organizations(self):
         return RescueOrganization.objects.filter(parent_org=self)
 
+    def in_distance(self, position, max_distance, unknown_true=True):
+        """
+        Returns a boolean indicating if the Location of the adoption notice is within a given distance to the position
+
+        If the location is none, we by default return that the location is within the given distance
+        """
+        return geo.object_in_distance(self, position, max_distance, unknown_true)
+
 
 # Admins can perform all actions and have the highest trust associated with them
 # Moderators can make moderation decisions regarding the deletion of content
@@ -500,11 +508,7 @@ class AdoptionNotice(models.Model):
 
         If the location is none, we by default return that the location is within the given distance
         """
-        if unknown_true and self.position is None:
-            return True
-
-        distance = geo.calculate_distance_between_coordinates(self.position, position)
-        return distance < max_distance
+        return geo.object_in_distance(self, position, max_distance, unknown_true)
 
     @property
     def is_active(self):

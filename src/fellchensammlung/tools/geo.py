@@ -53,6 +53,19 @@ def calculate_distance_between_coordinates(position1, position2):
     return distance_in_km
 
 
+def object_in_distance(obj, position, max_distance, unknown_true=True):
+    """
+    Returns a boolean indicating if the Location of the object is within a given distance to the position
+
+    If the location is none, we by default return that the location is within the given distance
+    """
+    if unknown_true and obj.position is None:
+        return True
+
+    distance = calculate_distance_between_coordinates(obj.position, position)
+    return distance < max_distance
+
+
 class ResponseMock:
     content = b'[{"place_id":138181499,"licence":"Data \xc2\xa9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright","osm_type":"relation","osm_id":1247237,"lat":"48.4949904","lon":"9.040330235970146","category":"boundary","type":"postal_code","place_rank":21, "importance":0.12006895017929346,"addresstype":"postcode","name":"72072","display_name":"72072, Derendingen, T\xc3\xbcbingen, Landkreis T\xc3\xbcbingen, Baden-W\xc3\xbcrttemberg, Deutschland", "boundingbox":["48.4949404","48.4950404","9.0402802","9.0403802"]}]'
     status_code = 200

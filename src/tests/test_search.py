@@ -8,7 +8,7 @@ from model_bakery import baker
 
 from fellchensammlung.tools.geo import LocationProxy
 from fellchensammlung.tools.model_helpers import NotificationTypeChoices
-from fellchensammlung.tools.search import Search, notify_search_subscribers
+from fellchensammlung.tools.search import AdoptionNoticeSearch, notify_search_subscribers
 
 
 class TestSearch(TestCase):
@@ -72,7 +72,7 @@ class TestSearch(TestCase):
                                                                  sex=SexChoicesWithAll.ALL,
                                                                  max_distance=100
                                                                  )
-        search1 = Search()
+        search1 = AdoptionNoticeSearch()
         search1.search_position = LocationProxy("Stuttgart").position
         search1.max_distance = 100
         search1.area_search = True
@@ -83,11 +83,11 @@ class TestSearch(TestCase):
         self.assertEqual(search_subscription1, search1)
 
     def test_adoption_notice_fits_search(self):
-        search1 = Search(search_subscription=self.subscription1)
+        search1 = AdoptionNoticeSearch(search_subscription=self.subscription1)
         self.assertTrue(search1.adoption_notice_fits_search(self.adoption1))
         self.assertFalse(search1.adoption_notice_fits_search(self.adoption2))
 
-        search2 = Search(search_subscription=self.subscription2)
+        search2 = AdoptionNoticeSearch(search_subscription=self.subscription2)
         self.assertFalse(search2.adoption_notice_fits_search(self.adoption1))
         self.assertTrue(search2.adoption_notice_fits_search(self.adoption2))
 

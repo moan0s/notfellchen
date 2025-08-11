@@ -36,7 +36,7 @@ from .tools.admin import clean_locations, get_unchecked_adoption_notices, deacti
 from .tasks import post_adoption_notice_save
 from rest_framework.authtoken.models import Token
 
-from .tools.search import Search
+from .tools.search import AdoptionNoticeSearch, RescueOrgSearch
 
 
 def user_is_trust_level_or_above(user, trust_level=TrustLevel.MODERATOR):
@@ -200,7 +200,7 @@ def adoption_notice_edit(request, adoption_notice_id):
 
 def search_important_locations(request, important_location_slug):
     i_location = get_object_or_404(ImportantLocation, slug=important_location_slug)
-    search = Search()
+    search = AdoptionNoticeSearch()
     search.search_from_predefined_i_location(i_location)
 
     site_title = _("Ratten in %(location_name)s") % {"location_name": i_location.name}
@@ -231,8 +231,8 @@ def search(request, templatename="fellchensammlung/search.html"):
     # A user just visiting the search site did not search, only upon completing the search form a user has really
     # searched. This will toggle the "subscribe" button
     searched = False
-    search = Search()
-    search.search_from_request(request)
+    search = AdoptionNoticeSearch()
+    search.adoption_notice_search_from_request(request)
     if request.method == 'POST':
         searched = True
         if "subscribe_to_search" in request.POST:
@@ -749,7 +749,10 @@ def external_site_warning(request, template_name='fellchensammlung/external-site
 
 def list_rescue_organizations(request, species=None, template='fellchensammlung/animal-shelters.html'):
     if species is None:
-        rescue_organizations = RescueOrganization.objects.all()
+        # rescue_organizations = RescueOrganization.objects.all()
+
+        org_search = RescueOrgSearch(request)
+        rescue_organizations = org_search.get_rescue_orgs()
     else:
         rescue_organizations = RescueOrganization.objects.filter(specializations=species)
 
@@ -767,7 +770,8 @@ def list_rescue_organizations(request, species=None, template='fellchensammlung/
     rescue_organizations_to_list = paginator.get_page(page_number)
     context = {"rescue_organizations_to_list": rescue_organizations_to_list,
                "show_rescue_orgs": True,
-               "elided_page_range": paginator.get_elided_page_range(page_number, on_each_side=2, on_ends=1)}
+               "elided_page_range": paginator.get_elided_page_range(page_number, on_each_side=2, on_ends=1),
+               "search_form": org_search.search_form, }
     return render(request, template, context=context)
 
 

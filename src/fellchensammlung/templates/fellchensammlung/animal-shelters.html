@@ -16,11 +16,26 @@
 {% block canonical_url %}{% host %}{% url 'rescue-organizations' %}{% endblock %}
 
 {% block content %}
-    <div class="block">
-        <div style="height: 70vh">
-            {% include "fellchensammlung/partials/partial-map.html" %}
+    <div class="columns block">
+        <div class=" column is-two-thirds">
+            <div style="height: 70vh">
+                {% include "fellchensammlung/partials/partial-map.html" %}
+            </div>
+        </div>
+        <div class="column is-one-third">
+            <form method="post" autocomplete="off">
+                {% csrf_token %}
+                <input type="hidden" name="longitude" maxlength="200" id="longitude">
+                <input type="hidden" name="latitude" maxlength="200" id="latitude">
+                <!--- https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
+                {{ search_form }}
+                <button class="button is-primary is-fullwidth" type="submit" value="search" name="search">
+                    <i class="fas fa-search  fa-fw"></i> {% trans 'Suchen' %}
+                </button>
+            </form>
         </div>
     </div>
+
     <div class="block">
         {% with rescue_organizations=rescue_organizations_to_list %}
             {% include "fellchensammlung/lists/list-animal-shelters.html" %}
@@ -32,7 +47,8 @@
                href="?page={{ rescue_organizations_to_list.previous_page_number }}">{% trans 'Vorherige' %}</a>
         {% endif %}
         {% if rescue_organizations_to_list.has_next %}
-            <a class="pagination-next" href="?page={{ rescue_organizations_to_list.next_page_number }}">{% trans 'Nächste' %}</a>
+            <a class="pagination-next"
+               href="?page={{ rescue_organizations_to_list.next_page_number }}">{% trans 'Nächste' %}</a>
         {% endif %}
         <ul class="pagination-list">
             {% for page in elided_page_range %}
