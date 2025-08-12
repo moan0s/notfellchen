@@ -754,6 +754,7 @@ def list_rescue_organizations(request, species=None, template='fellchensammlung/
         org_search = RescueOrgSearch(request)
         rescue_organizations = org_search.get_rescue_orgs()
     else:
+        org_search = None
         rescue_organizations = RescueOrganization.objects.filter(specializations=species)
 
     paginator = Paginator(rescue_organizations, 10)
@@ -771,15 +772,20 @@ def list_rescue_organizations(request, species=None, template='fellchensammlung/
     context = {"rescue_organizations_to_list": rescue_organizations_to_list,
                "show_rescue_orgs": True,
                "elided_page_range": paginator.get_elided_page_range(page_number, on_each_side=2, on_ends=1),
-               "search_form": org_search.search_form,
-               "place_not_found": org_search.place_not_found,
-               "map_center": org_search.position,
-               "search_center": org_search.position,
-               "map_pins": [org_search],
-               "location": org_search.location,
-               "search_radius": org_search.max_distance,
-               "zoom_level": zoom_level_for_radius(org_search.max_distance),
                }
+    if org_search:
+        additional_context = {
+            "show_search": True,
+            "search_form": org_search.search_form,
+            "place_not_found": org_search.place_not_found,
+            "map_center": org_search.position,
+            "search_center": org_search.position,
+            "map_pins": [org_search],
+            "location": org_search.location,
+            "search_radius": org_search.max_distance,
+            "zoom_level": zoom_level_for_radius(org_search.max_distance),
+        }
+        context.update(additional_context)
     return render(request, template, context=context)
 
 

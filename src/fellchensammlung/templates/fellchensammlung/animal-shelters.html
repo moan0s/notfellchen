@@ -17,22 +17,24 @@
 
 {% block content %}
     <div class="columns block">
-        <div class=" column is-two-thirds">
+        <div class=" column {% if show_search %}is-two-thirds {% endif %}">
             <div style="height: 70vh">
                 {% include "fellchensammlung/partials/partial-map.html" %}
             </div>
         </div>
-        <div class="column is-one-third">
-            <form method="GET" autocomplete="off">
-                <input type="hidden" name="longitude" maxlength="200" id="longitude">
-                <input type="hidden" name="latitude" maxlength="200" id="latitude">
-                <!--- https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
-                {{ search_form }}
-                <button class="button is-primary is-fullwidth" type="submit" value="search" name="action">
-                    <i class="fas fa-search  fa-fw"></i> {% trans 'Suchen' %}
-                </button>
-            </form>
-        </div>
+        {% if show_search %}
+            <div class="column is-one-third">
+                <form method="GET" autocomplete="off">
+                    <input type="hidden" name="longitude" maxlength="200" id="longitude">
+                    <input type="hidden" name="latitude" maxlength="200" id="latitude">
+                    <!--- https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
+                    {{ search_form }}
+                    <button class="button is-primary is-fullwidth" type="submit" value="search" name="action">
+                        <i class="fas fa-search  fa-fw"></i> {% trans 'Suchen' %}
+                    </button>
+                </form>
+            </div>
+        {% endif %}
     </div>
 
     <div class="block">
