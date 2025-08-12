@@ -217,8 +217,8 @@ class RescueOrgSearch:
         return fitting_rescue_orgs
 
     def rescue_org_search_from_request(self, request):
-        if request.method == 'POST':
-            self.search_form = RescueOrgSearchForm(request.POST)
+        if request.method == 'GET' and request.GET.get("action", False) == "search":
+            self.search_form = RescueOrgSearchForm(request.GET)
             self.search_form.is_valid()
 
             if self.search_form.cleaned_data["location_string"] != "" and self.search_form.cleaned_data[

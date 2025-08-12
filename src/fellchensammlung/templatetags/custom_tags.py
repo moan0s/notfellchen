@@ -122,3 +122,12 @@ def host():
 def time_since_hr(timestamp):
     t_delta = timezone.now() - timestamp
     return time_since_as_hr_string(t_delta)
+
+
+@register.simple_tag
+def url_replace(request, field, value):
+    dict_ = request.GET.copy()
+
+    dict_[field] = value
+
+    return dict_.urlencode()

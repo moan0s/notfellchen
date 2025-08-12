@@ -23,13 +23,12 @@
             </div>
         </div>
         <div class="column is-one-third">
-            <form method="post" autocomplete="off">
-                {% csrf_token %}
+            <form method="GET" autocomplete="off">
                 <input type="hidden" name="longitude" maxlength="200" id="longitude">
                 <input type="hidden" name="latitude" maxlength="200" id="latitude">
                 <!--- https://docs.djangoproject.com/en/5.2/topics/forms/#reusable-form-templates -->
                 {{ search_form }}
-                <button class="button is-primary is-fullwidth" type="submit" value="search" name="search">
+                <button class="button is-primary is-fullwidth" type="submit" value="search" name="action">
                     <i class="fas fa-search  fa-fw"></i> {% trans 'Suchen' %}
                 </button>
             </form>
@@ -44,17 +43,17 @@
     <nav class="pagination" role="navigation" aria-label="{% trans 'Paginierung' %}">
         {% if rescue_organizations_to_list.has_previous %}
             <a class="pagination-previous"
-               href="?page={{ rescue_organizations_to_list.previous_page_number }}">{% trans 'Vorherige' %}</a>
+               href="?page={% url_replace request 'page' rescue_organizations_to_list.previous_page_number %}">{% trans 'Vorherige' %}</a>
         {% endif %}
         {% if rescue_organizations_to_list.has_next %}
             <a class="pagination-next"
-               href="?page={{ rescue_organizations_to_list.next_page_number }}">{% trans 'Nächste' %}</a>
+               href="?{% url_replace request 'page' rescue_organizations_to_list.next_page_number %}">{% trans 'Nächste' %}</a>
         {% endif %}
         <ul class="pagination-list">
             {% for page in elided_page_range %}
                 {% if page != "…" %}
                     <li>
-                        <a href="?page={{ page }}"
+                        <a href="?{% url_replace request 'page' page %}"
                            class="pagination-link {% if page == rescue_organizations_to_list.number %} is-current{% endif %}"
                            aria-label="{% blocktranslate %}Gehe zu Seite {{ page }}.{% endblocktranslate %}">
                             {{ page }}
