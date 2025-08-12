@@ -153,5 +153,5 @@ class RescueOrgSearchForm(forms.Form):
     template_name = "fellchensammlung/forms/form_snippets.html"
 
     location_string = forms.CharField(max_length=100, label=_("Stadt"), required=False)
-    max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.ONE_HUNDRED,
+    max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.TWENTY,
                                      label=_("Suchradius"))
