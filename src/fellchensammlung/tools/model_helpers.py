@@ -30,8 +30,8 @@ report_mapping = NotificationDisplayMapping(
 )
 # ndm = notification display mapping
 ndm = {NotificationTypeChoices.NEW_USER: NotificationDisplayMapping(
-    email_html_template='fellchensammlung/mail/notifications/report.html',
-    email_plain_template="fellchensammlung/mail/notifications/report.txt",
+    email_html_template='fellchensammlung/mail/notifications/new-user.html',
+    email_plain_template="fellchensammlung/mail/notifications/new-user.txt",
     web_partial="fellchensammlung/partials/notifications/body-new-user.html"),
     NotificationTypeChoices.NEW_COMMENT: NotificationDisplayMapping(
         email_html_template='fellchensammlung/mail/notifications/new-comment.html',
