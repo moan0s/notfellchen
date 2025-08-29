@@ -19,6 +19,17 @@
             <label class="label" for="image">{{ form.image.label }}</label>
             {{ form.image|add_class:"input"|attr:"id:image" }}
         </div>
+
+        <!--- Image Preview: Only shown if image gets selected --->
+        <div class="field" id="image-preview-wrapper" style="display: none;">
+            <label class="label">{% translate "Vorschau" %}</label>
+            <div class="box has-text-centered">
+                <figure class="image is-256x256 is-inline-block">
+                    <img id="image-preview" src="" alt="{% translate 'Bildvorschau' %}" class="is-rounded">
+                </figure>
+            </div>
+        </div>
+
         <div class="field">
             <label class="label" for="alt-text">{{ form.alt_text.label }}</label>
             {{ form.alt_text|add_class:"textarea"|attr:"id:alt-text"|attr:"rows:3" }}
@@ -26,4 +37,31 @@
         </div>
         <input class="button is-primary" type="submit" value="{% translate "Speichern" %}">
     </form>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.getElementById("image");
+            const previewWrapper = document.getElementById("image-preview-wrapper");
+            const preview = document.getElementById("image-preview");
+
+            input.addEventListener("change", function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        previewWrapper.style.display = "block";
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = "";
+                    previewWrapper.style.display = "none";
+                }
+            });
+        });
+    </script>
+
 {% endblock %}
+
