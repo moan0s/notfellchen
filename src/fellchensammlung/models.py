@@ -12,12 +12,13 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from sphinx.ext.inheritance_diagram import module_sig_re
 
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL, base_url
 from .tools.geo import LocationProxy, Position
 from .tools.misc import age_as_hr_string, time_since_as_hr_string
-from .tools.model_helpers import NotificationTypeChoices
+from .tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices
 from .tools.model_helpers import ndm as NotificationDisplayMapping
 
 
@@ -395,6 +396,8 @@ class AdoptionNotice(models.Model):
     location_string = models.CharField(max_length=200, verbose_name=_("Ortsangabe"))
     location = models.ForeignKey(Location, blank=True, null=True, on_delete=models.SET_NULL, )
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Creator'))
+    adoption_notice_status = models.TextField(max_length=64, verbose_name=_('Status'),
+                                              choices=AdoptionNoticeStatusChoices.all_choices())
 
     @property
     def animals(self):

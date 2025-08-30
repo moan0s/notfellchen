@@ -1,4 +1,4 @@
-from fellchensammlung.models import User, AdoptionNotice, AdoptionNoticeStatus
+from fellchensammlung.models import User, AdoptionNotice, AdoptionNoticeStatusChoices
 
 
 def gather_metrics_data():
@@ -9,14 +9,14 @@ def gather_metrics_data():
     """Adoption notices"""
     num_adoption_notices = AdoptionNotice.objects.count()
     adoption_notices_active = AdoptionNotice.objects.filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE)
+        adoptionnoticestatus=AdoptionNoticeStatusChoices.all_choices())  # TODO fix
     num_adoption_notices_active = adoption_notices_active.count()
     num_adoption_notices_closed = AdoptionNotice.objects.filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.CLOSED).count()
+        adoptionnoticestatus=AdoptionNoticeStatusChoices.all_choices())  # TODO fix
     num_adoption_notices_disabled = AdoptionNotice.objects.filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.DISABLED).count()
+        adoptionnoticestatus=AdoptionNoticeStatusChoices.all_choices())  # TODO fix
     num_adoption_notices_awaiting_action = AdoptionNotice.objects.filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.AWAITING_ACTION).count()
+        adoptionnoticestatus=AdoptionNoticeStatusChoices.all_choices())  # TODO fix
 
     adoption_notices_without_location = AdoptionNotice.objects.filter(location__isnull=True).count()
 

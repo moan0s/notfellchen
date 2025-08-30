@@ -21,7 +21,7 @@ from notfellchen import settings
 
 from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
-    User, Location, AdoptionNoticeStatus, Subscriptions, Notification, RescueOrganization, \
+    User, Location, Subscriptions, Notification, RescueOrganization, \
     Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, \
     ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
@@ -36,6 +36,7 @@ from .tools.admin import clean_locations, get_unchecked_adoption_notices, deacti
 from .tasks import post_adoption_notice_save
 from rest_framework.authtoken.models import Token
 
+from .tools.model_helpers import AdoptionNoticeStatusChoices
 from .tools.search import AdoptionNoticeSearch, RescueOrgSearch
 
 
@@ -59,7 +60,7 @@ def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=Trust
 def index(request):
     """View function for home page of site."""
     latest_adoption_list = AdoptionNotice.objects.filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE).order_by("-created_at")
+        adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.choices).order_by("-created_at")
     active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
     language_code = translation.get_language()
     lang = Language.objects.get(languagecode=language_code)

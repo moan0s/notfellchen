@@ -5,7 +5,7 @@ from fellchensammlung.api.serializers import LocationSerializer, AdoptionNoticeG
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
-from fellchensammlung.models import AdoptionNotice, Animal, Log, TrustLevel, Location, AdoptionNoticeStatus
+from fellchensammlung.models import Log, TrustLevel, Location, AdoptionNoticeStatusChoices
 from fellchensammlung.tasks import post_adoption_notice_save, post_rescue_org_save
 from rest_framework import status, serializers
 from rest_framework.permissions import IsAuthenticated
@@ -374,7 +374,7 @@ class LocationApiView(APIView):
 
 class AdoptionNoticeGeoJSONView(ListAPIView):
     queryset = AdoptionNotice.objects.select_related('location').filter(location__isnull=False).filter(
-        adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE)
+        adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.choices)
     serializer_class = AdoptionNoticeGeoJSONSerializer
     renderer_classes = [GeoJSONRenderer]
 

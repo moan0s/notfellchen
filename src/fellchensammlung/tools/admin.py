@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from django.core import mail
 from django.utils.html import strip_tags
 
-from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, AdoptionNoticeStatus, Log, \
+from fellchensammlung.models import AdoptionNotice, Location, RescueOrganization, Log, \
     Notification, NotificationTypeChoices
 from fellchensammlung.tools.misc import is_404
 

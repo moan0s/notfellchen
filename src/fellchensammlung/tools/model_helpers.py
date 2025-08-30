@@ -55,3 +55,74 @@ ndm = {NotificationTypeChoices.NEW_USER: NotificationDisplayMapping(
         web_partial='fellchensammlung/partials/notifications/body-an-for-search.html'
     )
 }
+
+
+class DescriptiveTextChoices(models.TextChoices):
+    class Descriptions:
+        pass
+
+    @classmethod
+    def get_description(cls, value):
+        return cls.Descriptions.__getattribute__(value, "")
+
+
+class AdoptionNoticeStatusChoices:
+    class Active(DescriptiveTextChoices):
+        SEARCHING = "active_searching", _("Searching")
+        INTERESTED = "active_interested", _("Interested")
+
+        class Descriptions:
+            SEARCHING = ""
+            INTERESTED = _("Jemand hat bereits Interesse an den Tieren.")
+
+    class AwaitingAction(DescriptiveTextChoices):
+        WAITING_FOR_REVIEW = "awaiting_action_waiting_for_review", _("Waiting for review")
+        NEEDS_ADDITIONAL_INFO = "awaiting_action_needs_additional_info", _("Needs additional info")
+
+        class Descriptions:
+            WAITING_FOR_REVIEW = _("Deaktiviert bis Moderator*innen die Vermittlung prüfen können.")
+            NEEDS_ADDITIONAL_INFO = _("Deaktiviert bis Informationen nachgetragen werden.")
+
+    class Closed(DescriptiveTextChoices):
+        SUCCESSFUL_WITH_NOTFELLCHEN = "closed_successful_with_notfellchen", _("Successful (with Notfellchen)")
+        SUCCESSFUL_WITHOUT_NOTFELLCHEN = "closed_successful_without_notfellchen", _("Successful (without Notfellchen)")
+        ANIMAL_DIED = "closed_animal_died", _("Animal died")
+        FOR_OTHER_ADOPTION_NOTICE = "closed_for_other_adoption_notice", _("Closed for other adoption notice")
+        NOT_OPEN_ANYMORE = "closed_not_open_for_adoption_anymore", _("Not open for adoption anymore")
+        OTHER = "closed_other", _("Other (closed)")
+
+        class Descriptions:
+            SUCCESSFUL_WITH_NOTFELLCHEN = _("Vermittlung erfolgreich abgeschlossen.")
+            SUCCESSFUL_WITHOUT_NOTFELLCHEN = _("Vermittlung erfolgreich abgeschlossen.")
+            ANIMAL_DIED = _("Die zu vermittelnden Tiere sind über die Regenbrücke gegangen.")
+            FOR_OTHER_ADOPTION_NOTICE = _("Vermittlung wurde zugunsten einer anderen geschlossen.")
+            NOT_OPEN_ANYMORE = _("Tier(e) stehen nicht mehr zur Vermittlung bereit.")
+            OTHER = _("Vermittlung geschlossen.")
+
+    class Disabled(DescriptiveTextChoices):
+        AGAINST_RULES = "disabled_against_the_rules", _("Against the rules")
+        UNCHECKED = "disabled_unchecked", _("Unchecked")
+        OTHER = "disabled_other", _("Other (disabled)")
+
+        class Descriptions:
+            AGAINST_RULES = _("Vermittlung deaktiviert da sie gegen die Regeln verstößt.")
+            UNCHECKED = _("Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde.")
+            OTHER = _("Vermittlung deaktiviert.")
+
+    @classmethod
+    def all_choices(cls):
+        """Return all subgroup choices as a single list for use in models."""
+        return (
+                cls.Active.choices
+                + cls.AwaitingAction.choices
+                + cls.Closed.choices
+                + cls.Disabled.choices
+        )
+
+    @classmethod
+    def get_description(cls, value):
+        """Get description regardless of which subgroup the value belongs to."""
+        for subgroup in (cls.Active, cls.AwaitingAction, cls.Closed, cls.Disabled):
+            if value in subgroup.values:
+                return subgroup.get_description(value)
+        return ""
