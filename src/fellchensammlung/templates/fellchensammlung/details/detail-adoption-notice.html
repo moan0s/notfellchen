@@ -225,8 +225,8 @@
                 {% if adoption_notice.further_information %}
                     <form method="get" action="{% url 'external-site' %}">
                         <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
-                        <button class="button is-primary is-fullwidth" type="submit" id="submit">
-                            {{ adoption_notice.further_information | domain }} <i
+                        <button class="button is-warning is-fullwidth" type="submit" id="submit">
+                            {% translate 'Weitere Informationen' %}: {{ adoption_notice.further_information | domain }} <i
                                 class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
                         </button>
                     </form>
