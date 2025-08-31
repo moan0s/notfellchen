@@ -1,3 +1,4 @@
+from django.db.models.enums import TextChoices
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
@@ -57,58 +58,29 @@ ndm = {NotificationTypeChoices.NEW_USER: NotificationDisplayMapping(
 }
 
 
-class DescriptiveTextChoices(models.TextChoices):
-    class Descriptions:
-        pass
-
-    @classmethod
-    def get_description(cls, value):
-        return cls.Descriptions.__getattribute__(value, "")
-
-
 class AdoptionNoticeStatusChoices:
-    class Active(DescriptiveTextChoices):
+    class Active(TextChoices):
         SEARCHING = "active_searching", _("Searching")
         INTERESTED = "active_interested", _("Interested")
 
-        class Descriptions:
-            SEARCHING = ""
-            INTERESTED = _("Jemand hat bereits Interesse an den Tieren.")
-
-    class AwaitingAction(DescriptiveTextChoices):
+    class AwaitingAction(TextChoices):
         WAITING_FOR_REVIEW = "awaiting_action_waiting_for_review", _("Waiting for review")
         NEEDS_ADDITIONAL_INFO = "awaiting_action_needs_additional_info", _("Needs additional info")
 
-        class Descriptions:
-            WAITING_FOR_REVIEW = _("Deaktiviert bis Moderator*innen die Vermittlung prüfen können.")
-            NEEDS_ADDITIONAL_INFO = _("Deaktiviert bis Informationen nachgetragen werden.")
-
-    class Closed(DescriptiveTextChoices):
+    class Closed(TextChoices):
         SUCCESSFUL_WITH_NOTFELLCHEN = "closed_successful_with_notfellchen", _("Successful (with Notfellchen)")
         SUCCESSFUL_WITHOUT_NOTFELLCHEN = "closed_successful_without_notfellchen", _("Successful (without Notfellchen)")
         ANIMAL_DIED = "closed_animal_died", _("Animal died")
         FOR_OTHER_ADOPTION_NOTICE = "closed_for_other_adoption_notice", _("Closed for other adoption notice")
         NOT_OPEN_ANYMORE = "closed_not_open_for_adoption_anymore", _("Not open for adoption anymore")
-        LINK_TO_MORE_INFO_NOT_REACHABLE = "closed_link_to_more_info_not_reachable", _("Der Link zu weiteren Informationen ist nicht mehr erreichbar.")
+        LINK_TO_MORE_INFO_NOT_REACHABLE = "closed_link_to_more_info_not_reachable", _(
+            "Der Link zu weiteren Informationen ist nicht mehr erreichbar.")
         OTHER = "closed_other", _("Other (closed)")
 
-        class Descriptions:
-            SUCCESSFUL_WITH_NOTFELLCHEN = _("Vermittlung erfolgreich abgeschlossen.")
-            SUCCESSFUL_WITHOUT_NOTFELLCHEN = _("Vermittlung erfolgreich abgeschlossen.")
-            ANIMAL_DIED = _("Die zu vermittelnden Tiere sind über die Regenbrücke gegangen.")
-            FOR_OTHER_ADOPTION_NOTICE = _("Vermittlung wurde zugunsten einer anderen geschlossen.")
-            NOT_OPEN_ANYMORE = _("Tier(e) stehen nicht mehr zur Vermittlung bereit.")
-            OTHER = _("Vermittlung geschlossen.")
-
-    class Disabled(DescriptiveTextChoices):
+    class Disabled(TextChoices):
         AGAINST_RULES = "disabled_against_the_rules", _("Against the rules")
         UNCHECKED = "disabled_unchecked", _("Unchecked")
         OTHER = "disabled_other", _("Other (disabled)")
-
-        class Descriptions:
-            AGAINST_RULES = _("Vermittlung deaktiviert da sie gegen die Regeln verstößt.")
-            UNCHECKED = _("Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde.")
-            OTHER = _("Vermittlung deaktiviert.")
 
     @classmethod
     def all_choices(cls):
@@ -120,10 +92,22 @@ class AdoptionNoticeStatusChoices:
                 + cls.Disabled.choices
         )
 
-    @classmethod
-    def get_description(cls, value):
-        """Get description regardless of which subgroup the value belongs to."""
-        for subgroup in (cls.Active, cls.AwaitingAction, cls.Closed, cls.Disabled):
-            if value in subgroup.values:
-                return subgroup.get_description(value)
-        return ""
+
+class AdoptionNoticeStatusChoicesDescriptions:
+    _ansc = AdoptionNoticeStatusChoices # Mapping for readability
+    mapping = {_ansc.Active.SEARCHING.value: "",
+               _ansc.Active.INTERESTED: _("Jemand hat bereits Interesse an den Tieren."),
+               _ansc.Closed.SUCCESSFUL_WITH_NOTFELLCHEN: _("Vermittlung erfolgreich abgeschlossen."),
+               _ansc.Closed.SUCCESSFUL_WITHOUT_NOTFELLCHEN: _("Vermittlung erfolgreich abgeschlossen."),
+               _ansc.Closed.ANIMAL_DIED: _("Die zu vermittelnden Tiere sind über die Regenbrücke gegangen."),
+               _ansc.Closed.FOR_OTHER_ADOPTION_NOTICE: _("Vermittlung wurde zugunsten einer anderen geschlossen."),
+               _ansc.Closed.NOT_OPEN_ANYMORE: _("Tier(e) stehen nicht mehr zur Vermittlung bereit."),
+               _ansc.Closed.OTHER: _("Vermittlung geschlossen."),
+
+               _ansc.AwaitingAction.WAITING_FOR_REVIEW: _("Deaktiviert bis Moderator*innen die Vermittlung prüfen können."),
+               _ansc.AwaitingAction.NEEDS_ADDITIONAL_INFO: _("Deaktiviert bis Informationen nachgetragen werden."),
+
+               _ansc.Disabled.AGAINST_RULES: _("Vermittlung deaktiviert da sie gegen die Regeln verstößt."),
+               _ansc.Disabled.UNCHECKED: _("Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde."),
+               _ansc.Disabled.OTHER: _("Vermittlung deaktiviert.")
+               }
