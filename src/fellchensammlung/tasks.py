@@ -42,7 +42,8 @@ def task_deactivate_unchecked():
 @celery_app.task(name="social_media.post_fedi")
 def task_post_to_fedi():
     adoption_notice = SocialMediaPost.get_an_to_post()
-    post_an_to_fedi(adoption_notice)
+    if adoption_notice is not None:
+        post_an_to_fedi(adoption_notice)
     set_timestamp("task_social_media.post_fedi")
 
 
