@@ -173,7 +173,8 @@ def adoption_notice_detail(request, adoption_notice_id):
     context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
                "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed,
                "adoption_notice_meta": adoption_notice_meta,
-               "adoption_process_template": "fellchensammlung/partials/adoption_process/generic.html"}
+               "adoption_process_template": "fellchensammlung/partials/adoption_process/generic.html",
+               "oxitraffic_base_url": settings.OXITRAFFIC_BASE_URL}
     return render(request, 'fellchensammlung/details/detail-adoption-notice.html', context=context)
 
 

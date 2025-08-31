@@ -77,7 +77,6 @@
                                     <hr class="dropdown-divider">
 
                                     {% if has_edit_permission %}
-
                                         <form class="dropdown-item" method="POST">
                                             {% csrf_token %}
                                             <input type="hidden" name="action" value="checked_active">
@@ -113,6 +112,12 @@
                                            aria-hidden="true"></i> {% trans 'Melden' %}
                                     </a>
                                     {% if request.user.is_superuser %}
+                                        {% if oxitraffic_base_url %}
+                                            <hr class="dropdown-divider">
+                                            <a class="dropdown-item" href="{{ oxitraffic_base_url }}/stats?path={{ adoption_notice.get_absolute_url }}">
+                                                <i class="fas fa-chart-line fa-fw"></i> {% trans 'Aufrufe' %}
+                                            </a>
+                                        {% endif %}
                                         <hr class="dropdown-divider">
                                         <a class="dropdown-item is-warning"
                                            href="{% url adoption_notice_meta|admin_urlname:'change' adoption_notice.pk %}">
@@ -226,8 +231,9 @@
                     <form method="get" action="{% url 'external-site' %}">
                         <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">
                         <button class="button is-warning is-fullwidth" type="submit" id="submit">
-                            {% translate 'Weitere Informationen' %}: {{ adoption_notice.further_information | domain }} <i
-                                class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
+                            {% translate 'Weitere Informationen' %}: {{ adoption_notice.further_information | domain }}
+                            <i
+                                    class="fa-solid fa-arrow-up-right-from-square fa-fw"></i>
                         </button>
                     </form>
                 {% endif %}
