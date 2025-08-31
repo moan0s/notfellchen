@@ -8,6 +8,7 @@ from django.test import TestCase
 
 from model_bakery import baker
 from fellchensammlung.models import AdoptionNotice, RescueOrganization
+from fellchensammlung.tools.model_helpers import AdoptionNoticeStatusChoices
 
 
 class DeactivationTest(TestCase):
@@ -25,10 +26,10 @@ class DeactivationTest(TestCase):
                                    name="TestAdoption3",
                                    created_at=less_than_three_weeks_ago)
 
-        cls.adoption1.set_active()
+        cls.adoption1.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
         cls.adoption1.last_checked = more_than_three_weeks_ago  # Reset updated_at to simulate test conditions
         cls.adoption1.save()
-        cls.adoption3.set_active()
+        cls.adoption3.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
         cls.adoption3.last_checked = less_than_three_weeks_ago  # Reset updated_at to simulate test conditions
         cls.adoption3.save()
 
@@ -67,20 +68,20 @@ class PingTest(TestCase):
                                    name="TestAdoption1",
                                    created_at=less_than_three_weeks_ago,
                                    last_checked=less_than_three_weeks_ago,
-                                   further_information=link_active)
+                                   further_information=link_active,
+                                   adoption_notice_status=AdoptionNoticeStatusChoices.Active.SEARCHING)
         cls.adoption2 = baker.make(AdoptionNotice,
                                    name="TestAdoption2",
                                    created_at=less_than_three_weeks_ago,
                                    last_checked=less_than_three_weeks_ago,
-                                   further_information=link_inactive)
+                                   further_information=link_inactive,
+                                   adoption_notice_status=AdoptionNoticeStatusChoices.Active.SEARCHING)
         cls.adoption3 = baker.make(AdoptionNotice,
                                    name="TestAdoption3",
                                    created_at=less_than_three_weeks_ago,
                                    last_checked=less_than_three_weeks_ago,
-                                   further_information=None)
-        cls.adoption1.set_active()
-        cls.adoption2.set_active()
-        cls.adoption3.set_active()
+                                   further_information=None,
+                                   adoption_notice_status=AdoptionNoticeStatusChoices.Active.SEARCHING)
 
     def test_is_404(self):
         urls = [("https://hyteck.de/maxwell", True),

@@ -1,6 +1,8 @@
 import logging
 
 from random import randint
+
+from fellchensammlung.tools.model_helpers import AdoptionNoticeStatusChoices
 from notfellchen import settings
 from django.utils import timezone
 from datetime import timedelta
@@ -86,7 +88,8 @@ def deactivate_404_adoption_notices():
     for adoption_notice in get_active_adoption_notices():
         if adoption_notice.further_information and adoption_notice.further_information != "":
             if is_404(adoption_notice.further_information):
-                adoption_notice.set_closed()
+                adoption_notice.adoption_notice_status = AdoptionNoticeStatusChoices.Closed.LINK_TO_MORE_INFO_NOT_REACHABLE
+                adoption_notice.save()
                 logging_msg = f"Automatically set Adoption Notice {adoption_notice.id} closed as link to more information returened 404"
                 logging.info(logging_msg)
                 Log.objects.create(action="automated", text=logging_msg)

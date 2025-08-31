@@ -89,6 +89,7 @@ class AdoptionNoticeStatusChoices:
         ANIMAL_DIED = "closed_animal_died", _("Animal died")
         FOR_OTHER_ADOPTION_NOTICE = "closed_for_other_adoption_notice", _("Closed for other adoption notice")
         NOT_OPEN_ANYMORE = "closed_not_open_for_adoption_anymore", _("Not open for adoption anymore")
+        LINK_TO_MORE_INFO_NOT_REACHABLE = "closed_link_to_more_info_not_reachable", _("Der Link zu weiteren Informationen ist nicht mehr erreichbar.")
         OTHER = "closed_other", _("Other (closed)")
 
         class Descriptions:

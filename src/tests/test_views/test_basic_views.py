@@ -6,6 +6,8 @@ from fellchensammlung.models import User, TrustLevel, AdoptionNotice, Species, R
     Location, ImportantLocation
 from model_bakery import baker
 
+from fellchensammlung.tools.model_helpers import AdoptionNoticeStatusChoices
+
 
 class BasicViewTest(TestCase):
     @classmethod
@@ -26,7 +28,10 @@ class BasicViewTest(TestCase):
         for i in range(0, 8):
             ans.append(baker.make(AdoptionNotice, name=f"TestAdoption{i}"))
         for i in range(0, 4):
-            AdoptionNotice.objects.get(name=f"TestAdoption{i}").set_active()
+            adoption_notice = AdoptionNotice.objects.get(name=f"TestAdoption{i}")
+            adoption_notice.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
+            adoption_notice.save()
+
 
         rule1 = Rule.objects.create(title="Rule 1", rule_text="Description of r1", rule_identifier="rule1",
                                     language=Language.objects.get(name="English"))

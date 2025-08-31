@@ -2,7 +2,7 @@ from django.test import TestCase
 from model_bakery import baker
 
 from fellchensammlung.models import User, TrustLevel, Species, Location, AdoptionNotice, Notification
-from fellchensammlung.tools.model_helpers import NotificationTypeChoices
+from fellchensammlung.tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices
 from fellchensammlung.tools.notifications import notify_of_AN_to_be_checked
 
 
@@ -26,7 +26,7 @@ class TestNotifications(TestCase):
         cls.test_user0.save()
 
         cls.adoption1 = baker.make(AdoptionNotice, name="TestAdoption1", owner=cls.test_user1, )
-        cls.adoption1.set_unchecked()  # Could also emit notification
+        cls.adoption1.adoption_notice_status = AdoptionNoticeStatusChoices.AwaitingAction.WAITING_FOR_REVIEW
 
     def test_notify_of_AN_to_be_checked(self):
         notify_of_AN_to_be_checked(self.adoption1)

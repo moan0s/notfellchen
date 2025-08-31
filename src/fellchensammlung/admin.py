@@ -7,30 +7,26 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.http import urlencode
 
-from .models import User, Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription, \
+from .models import Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription, \
     SpeciesSpecificURL, ImportantLocation, SocialMediaPost
 
 from .models import Animal, Species, RescueOrganization, AdoptionNotice, Location, Rule, Image, ModerationAction, \
-    Comment, Report, Announcement, AdoptionNoticeStatus, User, Subscriptions, Notification
+    Comment, Announcement, User, Subscriptions, Notification
 from django.utils.translation import gettext_lazy as _
 
-
-class StatusInline(admin.StackedInline):
-    model = AdoptionNoticeStatus
+from .tools.model_helpers import AdoptionNoticeStatusChoices
 
 
 @admin.register(AdoptionNotice)
 class AdoptionNoticeAdmin(admin.ModelAdmin):
     search_fields = ("name__icontains", "description__icontains")
     list_filter = ("owner",)
-    inlines = [
-        StatusInline,
-    ]
     actions = ("activate",)
 
     def activate(self, request, queryset):
         for obj in queryset:
-            obj.set_active()
+            obj.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
+            obj.save()
 
     activate.short_description = _("Ausgewählte Vermittlungen aktivieren")
 
@@ -162,9 +158,11 @@ class LocationAdmin(admin.ModelAdmin):
         ImportantLocationInline,
     ]
 
+
 @admin.register(SocialMediaPost)
 class SocialMediaPostAdmin(admin.ModelAdmin):
     list_filter = ("platform",)
+
 
 admin.site.register(Animal)
 admin.site.register(Species)

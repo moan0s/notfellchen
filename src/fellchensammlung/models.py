@@ -513,60 +513,30 @@ class AdoptionNotice(models.Model):
         """
         return geo.object_in_distance(self, position, max_distance, unknown_true)
 
+    @staticmethod
+    def _values_of(list_of_enums):
+        return list(map(lambda x: x[0], list_of_enums))
+
     @property
     def is_active(self):
-        if not hasattr(self, 'adoptionnoticestatus'):
-            return False
-        return self.adoptionnoticestatus.is_active
+        return self.adoption_notice_status in self._values_of(AdoptionNoticeStatusChoices.Active.choices)
 
     @property
     def is_disabled(self):
-        if not hasattr(self, 'adoptionnoticestatus'):
-            return False
-        return self.adoptionnoticestatus.is_disabled
+        return self.adoption_notice_status in self._values_of(AdoptionNoticeStatusChoices.Disabled.choices)
 
     @property
     def is_closed(self):
-        if not hasattr(self, 'adoptionnoticestatus'):
-            return False
-        return self.adoptionnoticestatus.is_closed
-
-    @property
-    def is_interested(self):
-        if not hasattr(self, 'adoptionnoticestatus'):
-            return False
-        return self.adoptionnoticestatus.is_interested
+        return self.adoption_notice_status in self._values_of(AdoptionNoticeStatusChoices.Closed.choices)
 
     @property
     def is_awaiting_action(self):
-        if not hasattr(self, 'adoptionnoticestatus'):
-            return False
-        return self.adoptionnoticestatus.is_awaiting_action
-
-    @property
-    def is_disabled_unchecked(self):
-        if not hasattr(self, 'adoptionnoticestatus'):
-            return False
-        return self.adoptionnoticestatus.is_disabled_unchecked
-
-    def set_closed(self, minor_status=None):
-        self.last_checked = timezone.now()
-        self.save()
-        self.adoptionnoticestatus.set_closed(minor_status)
-
-    def set_active(self):
-        self.last_checked = timezone.now()
-        self.save()
-        if not hasattr(self, 'adoptionnoticestatus'):
-            AdoptionNoticeStatus.create_other(self)
-        self.adoptionnoticestatus.set_active()
+        return self.adoption_notice_status in self._values_of(AdoptionNoticeStatusChoices.AwaitingAction.choices)
 
     def set_unchecked(self):
         self.last_checked = timezone.now()
+        self.adoption_notice_status = AdoptionNoticeStatusChoices.Disabled.UNCHECKED
         self.save()
-        if not hasattr(self, 'adoptionnoticestatus'):
-            AdoptionNoticeStatus.create_other(self)
-        self.adoptionnoticestatus.set_unchecked()
 
         for subscription in self.get_subscriptions():
             notification_title = _("Vermittlung deaktiviert:") + f" {self.name}"
@@ -584,124 +554,6 @@ class AdoptionNotice(models.Model):
             last_post = SocialMediaPost.objects.filter(adoption_notice=self, platform=platform).order_by(
                 '-created_at').first()
         return last_post.created_at
-
-
-class AdoptionNoticeStatus(models.Model):
-    """
-    The major status indicates a general state of an adoption notice
-    whereas the minor status is used for reporting
-    """
-
-    class Meta:
-        verbose_name = _('Vermittlungsstatus')
-        verbose_name_plural = _('Vermittlungsstati')
-
-    ACTIVE = "active"
-    AWAITING_ACTION = "awaiting_action"
-    CLOSED = "closed"
-    DISABLED = "disabled"
-    MAJOR_STATUS_CHOICES = {
-        ACTIVE: "active",
-        AWAITING_ACTION: "in review",
-        CLOSED: "closed",
-        DISABLED: "disabled",
-    }
-
-    MINOR_STATUS_CHOICES = {
-        ACTIVE: {
-            "searching": "searching",
-            "interested": "interested",
-        },
-        AWAITING_ACTION: {
-            "waiting_for_review": "waiting_for_review",
-            "needs_additional_info": "needs_additional_info",
-        },
-        CLOSED: {
-            "successful_with_notfellchen": "successful_with_notfellchen",
-            "successful_without_notfellchen": "successful_without_notfellchen",
-            "animal_died": "animal_died",
-            "closed_for_other_adoption_notice": "closed_for_other_adoption_notice",
-            "not_open_for_adoption_anymore": "not_open_for_adoption_anymore",
-            "other": "other"
-        },
-        DISABLED: {
-            "against_the_rules": "against_the_rules",
-            "missing_information": "missing_information",
-            "technical_error": "technical_error",
-            "unchecked": "unchecked",
-            "other": "other"
-        }
-    }
-
-    major_status = models.CharField(choices=MAJOR_STATUS_CHOICES, max_length=200)
-    minor_choices = {}
-    for key in MINOR_STATUS_CHOICES:
-        minor_choices.update(MINOR_STATUS_CHOICES[key])
-    minor_status = models.CharField(choices=minor_choices, max_length=200)
-    adoption_notice = models.OneToOneField(AdoptionNotice, on_delete=models.CASCADE)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.adoption_notice}: {self.major_status}, {self.minor_status}"
-
-    def as_string(self):
-        return f"{self.major_status}, {self.minor_status}"
-
-    @property
-    def is_active(self):
-        return self.major_status == self.ACTIVE
-
-    @property
-    def is_disabled(self):
-        return self.major_status == self.DISABLED
-
-    @property
-    def is_closed(self):
-        return self.major_status == self.CLOSED
-
-    @property
-    def is_awaiting_action(self):
-        return self.major_status == self.AWAITING_ACTION
-
-    @property
-    def is_interested(self):
-        return self.major_status == self.ACTIVE and self.minor_status == "interested"
-
-    @property
-    def is_disabled_unchecked(self):
-        return self.major_status == self.DISABLED and self.minor_status == "unchecked"
-
-    @staticmethod
-    def get_minor_choices(major_status):
-        return AdoptionNoticeStatus.MINOR_STATUS_CHOICES[major_status]
-
-    @staticmethod
-    def create_other(an_instance):
-        # Used as empty status to be changed immediately
-        major_status = AdoptionNoticeStatus.DISABLED
-        minor_status = AdoptionNoticeStatus.MINOR_STATUS_CHOICES[AdoptionNoticeStatus.DISABLED]["other"]
-        AdoptionNoticeStatus.objects.create(major_status=major_status,
-                                            minor_status=minor_status,
-                                            adoption_notice=an_instance)
-
-    def set_closed(self, minor_status=None):
-        self.major_status = self.MAJOR_STATUS_CHOICES[self.CLOSED]
-        if minor_status is None:
-            self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED]["other"]
-        else:
-            self.minor_status = self.MINOR_STATUS_CHOICES[self.CLOSED][minor_status]
-        self.save()
-
-    def set_unchecked(self):
-        self.major_status = self.MAJOR_STATUS_CHOICES[self.DISABLED]
-        self.minor_status = self.MINOR_STATUS_CHOICES[self.DISABLED]["unchecked"]
-        self.save()
-
-    def set_active(self):
-        self.major_status = self.MAJOR_STATUS_CHOICES[self.ACTIVE]
-        self.minor_status = self.MINOR_STATUS_CHOICES[self.ACTIVE]["searching"]
-        self.save()
 
 
 class SexChoices(models.TextChoices):

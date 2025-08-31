@@ -4,11 +4,8 @@ from django.urls import reverse
 
 from model_bakery import baker
 
-from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, \
-    Animal, Subscriptions, Comment, Notification, SearchSubscription
-from fellchensammlung.tools.geo import LocationProxy
-from fellchensammlung.tools.model_helpers import NotificationTypeChoices
-from fellchensammlung.views import add_adoption_notice
+from fellchensammlung.models import AdoptionNotice, User, Location, SearchSubscription
+from fellchensammlung.tools.model_helpers import AdoptionNoticeStatusChoices
 
 
 class SearchTest(TestCase):
@@ -28,9 +25,11 @@ class SearchTest(TestCase):
 
         # Location of Berlin: lat 52.5170365 lon 13.3888599 PLZ 10115 (Mitte)
 
-        adoption1 = baker.make(AdoptionNotice, name="TestAdoption1")
+        adoption1 = baker.make(AdoptionNotice, name="TestAdoption1",
+                               adoption_notice_status=AdoptionNoticeStatusChoices.Active.SEARCHING)
         adoption2 = baker.make(AdoptionNotice, name="TestAdoption2")
-        adoption3 = baker.make(AdoptionNotice, name="TestAdoption3")
+        adoption3 = baker.make(AdoptionNotice, name="TestAdoption3",
+                               adoption_notice_status=AdoptionNoticeStatusChoices.Active.INTERESTED)
 
         berlin = Location.get_location_from_string("Berlin")
         adoption1.location = berlin
@@ -40,8 +39,6 @@ class SearchTest(TestCase):
         adoption3.location = stuttgart
         adoption3.save()
 
-        adoption1.set_active()
-        adoption3.set_active()
         adoption2.set_unchecked()
 
         cls.subscription1 = SearchSubscription.objects.create(owner=test_user1,

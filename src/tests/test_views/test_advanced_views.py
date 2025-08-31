@@ -1,14 +1,11 @@
 from django.test import TestCase
-from django.contrib.auth.models import Permission
 from django.urls import reverse
 
 from model_bakery import baker
 
-from fellchensammlung.models import Animal, Species, AdoptionNotice, User, Location, AdoptionNoticeStatus, TrustLevel, \
-    Animal, Subscriptions, Comment, Notification, SearchSubscription
-from fellchensammlung.tools.geo import LocationProxy
-from fellchensammlung.tools.model_helpers import NotificationTypeChoices
-from fellchensammlung.views import add_adoption_notice
+from fellchensammlung.models import Species, AdoptionNotice, User, Location, TrustLevel, \
+    Animal, Subscriptions, Comment, Notification
+from fellchensammlung.tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices
 
 
 class AnimalAndAdoptionTest(TestCase):
@@ -158,7 +155,7 @@ class UpdateQueueTest(TestCase):
         # Make sure correct status is set and AN is not shown anymore
         self.assertNotContains(response, "TestAdoption3")
         self.assertFalse(self.adoption3.is_active)
-        self.assertEqual(self.adoption3.adoptionnoticestatus.major_status, AdoptionNoticeStatus.CLOSED)
+        self.assertTrue(self.adoption3.is_closed)
 
 
 class AdoptionDetailTest(TestCase):
@@ -189,8 +186,8 @@ class AdoptionDetailTest(TestCase):
         adoption3.location = stuttgart
         adoption3.save()
 
-        adoption1.set_active()
-        adoption3.set_active()
+        adoption1.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
+        adoption3.adoption_notice_status = AdoptionNoticeStatusChoices.Active.INTERESTED
         adoption2.set_unchecked()
 
     def test_basic_view(self):

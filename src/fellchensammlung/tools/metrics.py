@@ -9,14 +9,14 @@ def gather_metrics_data():
     """Adoption notices"""
     num_adoption_notices = AdoptionNotice.objects.count()
     adoption_notices_active = AdoptionNotice.objects.filter(
-        adoptionnoticestatus=AdoptionNoticeStatusChoices.all_choices())  # TODO fix
+        adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.values)
     num_adoption_notices_active = adoption_notices_active.count()
     num_adoption_notices_closed = AdoptionNotice.objects.filter(
-        adoptionnoticestatus=AdoptionNoticeStatusChoices.all_choices())  # TODO fix
+        adoption_notice_status__in=AdoptionNoticeStatusChoices.Closed.values).count()
     num_adoption_notices_disabled = AdoptionNotice.objects.filter(
-        adoptionnoticestatus=AdoptionNoticeStatusChoices.all_choices())  # TODO fix
+        adoption_notice_status__in=AdoptionNoticeStatusChoices.Disabled.values).count()
     num_adoption_notices_awaiting_action = AdoptionNotice.objects.filter(
-        adoptionnoticestatus=AdoptionNoticeStatusChoices.all_choices())  # TODO fix
+        adoption_notice_status__in=AdoptionNoticeStatusChoices.AwaitingAction.values).count()
 
     adoption_notices_without_location = AdoptionNotice.objects.filter(location__isnull=True).count()
 

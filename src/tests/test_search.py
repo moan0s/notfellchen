@@ -7,7 +7,7 @@ from fellchensammlung.models import SearchSubscription, User, TrustLevel, Adopti
 from model_bakery import baker
 
 from fellchensammlung.tools.geo import LocationProxy
-from fellchensammlung.tools.model_helpers import NotificationTypeChoices
+from fellchensammlung.tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices
 from fellchensammlung.tools.search import AdoptionNoticeSearch, notify_search_subscribers
 
 
@@ -45,7 +45,7 @@ class TestSearch(TestCase):
                           species=rat,
                           sex=SexChoices.MALE,
                           description="Eine unglaublich süße Ratte")
-        cls.adoption1.set_active()
+        cls.adoption1.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
 
         cls.adoption2 = baker.make(AdoptionNotice, name="TestAdoption2", owner=cls.test_user0, location=cls.location_berlin)
         rat2 = baker.make(Animal,
@@ -54,7 +54,7 @@ class TestSearch(TestCase):
                           species=rat,
                           sex=SexChoices.FEMALE,
                           description="Eine unglaublich süße Ratte")
-        cls.adoption2.set_active()
+        cls.adoption2.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
 
         cls.subscription1 = SearchSubscription.objects.create(owner=cls.test_user1,
                                                               location=cls.location_tue,

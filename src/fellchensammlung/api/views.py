@@ -73,9 +73,9 @@ class AdoptionNoticeApiView(APIView):
 
         # Only set active when user has trust level moderator or higher
         if request.user_to_notify.trust_level >= TrustLevel.MODERATOR:
-            adoption_notice.set_active()
+            adoption_notice.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
         else:
-            adoption_notice.set_unchecked()
+            adoption_notice.adoption_notice_status = AdoptionNoticeStatusChoices.AwaitingAction.WAITING_FOR_REVIEW
 
         # Log the action
         Log.objects.create(

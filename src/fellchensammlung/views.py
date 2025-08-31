@@ -59,9 +59,8 @@ def fail_if_user_not_owner_or_trust_level(user, django_object, trust_level=Trust
 
 def index(request):
     """View function for home page of site."""
-    latest_adoption_list = AdoptionNotice.objects.filter(
-        adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.choices).order_by("-created_at")
-    active_adoptions = [adoption for adoption in latest_adoption_list if adoption.is_active]
+    active_adoptions = AdoptionNotice.objects.filter(
+        adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.values).order_by("-created_at")
     language_code = translation.get_language()
     lang = Language.objects.get(languagecode=language_code)
     active_announcements = Announcement.get_active_announcements(lang)
@@ -102,9 +101,13 @@ def handle_an_check_actions(request, action, adoption_notice=None):
         return render(request, "fellchensammlung/errors/403.html", status=403)
 
     if action == "checked_inactive":
-        adoption_notice.set_closed()
+        adoption_notice.adoption_notice_status = AdoptionNoticeStatusChoices.Closed.NOT_OPEN_ANYMORE
+        adoption_notice.last_checked = timezone.now()
+        adoption_notice.save()
     elif action == "checked_active":
-        adoption_notice.set_active()
+        adoption_notice.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
+        adoption_notice.last_checked = timezone.now()
+        adoption_notice.save()
     return None
 
 
@@ -286,9 +289,10 @@ def add_adoption_notice(request):
             an_instance.owner = request.user
 
             if request.user.trust_level >= TrustLevel.MODERATOR:
-                an_instance.set_active()
+                an_instance.adoption_notice_status = AdoptionNoticeStatusChoices.Active.SEARCHING
             else:
-                an_instance.set_unchecked()
+                an_instance.adoption_notice_status = AdoptionNoticeStatusChoices.AwaitingAction.WAITING_FOR_REVIEW
+            an_instance.save()
 
             # Get the species and number of animals from the form
             species = form.cleaned_data["species"]
@@ -660,7 +664,8 @@ def updatequeue(request):
     else:
         last_checked_adoption_list = AdoptionNotice.objects.filter(owner=request.user).order_by("last_checked")
     adoption_notices_active = [adoption for adoption in last_checked_adoption_list if adoption.is_active]
-    adoption_notices_disabled = [adoption for adoption in last_checked_adoption_list if adoption.is_disabled_unchecked]
+    adoption_notices_disabled = [adoption for adoption in last_checked_adoption_list if
+                                 adoption.adoption_notice_status == AdoptionNoticeStatusChoices.Disabled.UNCHECKED]
     context = {"adoption_notices_disabled": adoption_notices_disabled,
                "adoption_notices_active": adoption_notices_active}
     return render(request, 'fellchensammlung/updatequeue.html', context=context)
@@ -922,7 +927,10 @@ def deactivate_an(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
     if request.method == "POST":
         reason_for_closing = request.POST.get("reason_for_closing")
-        adoption_notice.set_closed(reason_for_closing)
+        if reason_for_closing not in AdoptionNoticeStatusChoices.Closed.choices:
+            return render(request, "fellchensammlung/errors/403.html", status=403)
+        adoption_notice.adoption_notice_status = reason_for_closing
+        adoption_notice.save()
         return redirect(reverse("adoption-notice-detail", args=[adoption_notice.pk], ))
     context = {"adoption_notice": adoption_notice, }
     return render(request, 'fellchensammlung/misc/deactivate-an.html', context=context)

@@ -2,6 +2,7 @@ import logging
 from django.utils.translation import gettext_lazy as _
 
 from .geo import LocationProxy, Position
+from .model_helpers import AdoptionNoticeStatusChoices
 from ..forms import AdoptionNoticeSearchForm, RescueOrgSearchForm
 from ..models import SearchSubscription, AdoptionNotice, SexChoicesWithAll, Location, \
     Notification, NotificationTypeChoices, RescueOrganization
@@ -95,9 +96,8 @@ class AdoptionNoticeSearch:
         return True
 
     def get_adoption_notices(self):
-        adoptions = AdoptionNotice.objects.order_by("-created_at")
-        # Filter for active adoption notices
-        adoptions = [adoption for adoption in adoptions if adoption.is_active]
+        adoptions = AdoptionNotice.objects.filter(
+            adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.values).order_by("-created_at")
         # Check if adoption notice fits search.
         adoptions = [adoption for adoption in adoptions if self.adoption_notice_fits_search(adoption)]
 
