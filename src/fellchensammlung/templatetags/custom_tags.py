@@ -49,7 +49,7 @@ def render_markdown(value):
 @register.simple_tag
 def get_oxitraffic_script_if_enabled():
     if settings.OXITRAFFIC_ENABLED:
-        return mark_safe(f'<script type="module" src="https://{settings.OXITRAFFIC_BASE_URL}/count.js"></script>')
+        return mark_safe(f'<script type="module" src="{settings.OXITRAFFIC_BASE_URL}/count.js"></script>')
     else:
         return ""
 
