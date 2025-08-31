@@ -14,19 +14,20 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'daily-cleanup': {
         'task': 'admin.clean_locations',
-        'schedule': crontab(hour=2),
+        'schedule': crontab(hour=2, minute=11),
     },
     'daily-unchecked-deactivation': {
         'task': 'admin.daily_unchecked_deactivation',
-        'schedule': crontab(hour=1),
+        'schedule': crontab(hour=1, minute=6),
     },
     'daily-404-deactivation': {
         'task': 'admin.deactivate_404_adoption_notices',
-        'schedule': crontab(hour=3),
+        'schedule': crontab(hour=3, minute=45),
     },
     'daily-fedi-post': {
         'task': 'social_media.post_fedi',
-        'schedule': crontab(hour=19),
+        #  At minute 5 past every hour from 17 through 21.
+        'schedule': crontab(hour='17-21', minute=5),
     },
 
 }
