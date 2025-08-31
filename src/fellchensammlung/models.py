@@ -1029,7 +1029,7 @@ class SocialMediaPost(models.Model):
     @staticmethod
     def get_an_to_post():
         adoption_notices_without_post = AdoptionNotice.objects.filter(socialmediapost__isnull=True,
-                                                                      adoptionnoticestatus__major_status=AdoptionNoticeStatus.ACTIVE)
+                                                                      adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.values)
         return adoption_notices_without_post.first()
 
     def __str__(self):
