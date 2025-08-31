@@ -1,23 +1,16 @@
 import uuid
-from random import choices
-from tabnanny import verbose
-
 from django.db import models
-from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-from sphinx.ext.inheritance_diagram import module_sig_re
 
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL, base_url
 from .tools.geo import LocationProxy, Position
-from .tools.misc import age_as_hr_string, time_since_as_hr_string
+from .tools.misc import time_since_as_hr_string
 from .tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices
 from .tools.model_helpers import ndm as NotificationDisplayMapping
 
