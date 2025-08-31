@@ -219,6 +219,9 @@
                 </div>
             </div>
             <div class="block">
+                {% include 'fellchensammlung/partials/adoption_process/base.html' %}
+            </div>
+            <div class="block">
                 {% if adoption_notice.further_information %}
                     <form method="get" action="{% url 'external-site' %}">
                         <input type="hidden" name="url" value="{{ adoption_notice.further_information }}">

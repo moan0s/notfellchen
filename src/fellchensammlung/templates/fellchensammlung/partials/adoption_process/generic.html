@@ -1,0 +1,31 @@
+{% load i18n %}
+
+<div class="content">
+    <ol class="adoption-process">
+        {% if adoption_notice.organization %}
+            {% if adoption_notice.further_information %}
+                <li>{% translate 'Link zu "Weiteren Informationen" prüfen' %}</li>
+            {% endif %}
+            <li>
+                {% translate 'Organization kontaktieren' %}<br>
+                <a class="button is-info is-small is-fullwidth"
+                   href="{{ adoption_notice.organization.get_absolute_url }}">
+                    {% translate 'Kontaktdaten' %}
+                </a>
+            </li>
+            <li>{% translate 'Bei erfolgreicher Vermittlung: Vermittlung als geschlossen melden' %}</li>
+        {% else %}
+            {% if adoption_notice.further_information %}
+                <li>{% translate 'Link zu "Weiteren Informationen" prüfen' %}</li>
+                <li>{% translate 'Person, die die Vermittlung eingestellt hat, kontaktieren' %}</li>
+            {% else %}
+                <li>
+                    {% translate 'Person, die die Vermittlung eingestellt hat, per Kommentar kontaktieren' %}
+                </li>
+            {% endif %}
+            <li>{% translate 'Bei erfolgreicher Vermittlung: Vermittlung als geschlossen melden' %}</li>
+        {% endif %}
+    </ol>
+</div>
+
+
