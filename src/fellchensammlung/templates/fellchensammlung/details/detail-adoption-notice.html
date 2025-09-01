@@ -27,109 +27,106 @@
 
 {% block content %}
     {% include "fellchensammlung/partials/partial-adoption-notice-status.html" %}
-    <div class="columns">
-        <div class="column is-two-thirds">
-            <!--- Title level (including action dropdown) -->
-            <div class="level">
-                <div class="level-left">
-                    <div class="level-item">
-                        <p class="title is-3 is-size-4-mobile">{{ adoption_notice.name }}</p>
-                    </div>
-                </div>
+    <!--- Title level (including action dropdown) -->
+    <div class="block is-flex is-justify-content-space-between">
+        <div class="">
+            <h2 class="title is-3 is-size-4-mobile">{{ adoption_notice.name }}</h2>
+        </div>
 
-                <div class="level-right">
-                    <div class="level-item">
-                        <div class="dropdown is-right">
-                            <div class="dropdown-trigger">
-                                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
-                                    <span><i class="fas fa-gear" aria-label="{% trans 'Aktionen' %}"></i></span>
-                                    <span class="icon is-small">
+        <div class="">
+            <div class="dropdown is-right">
+                <div class="dropdown-trigger">
+                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                        <span><i class="fas fa-gear" aria-label="{% trans 'Aktionen' %}"></i></span>
+                        <span class="icon is-small">
                                 <i class="fas fa-angle-down" aria-hidden="true"></i>
                             </span>
+                    </button>
+                </div>
+                <!--- Action menu (dropdown) --->
+                <div class="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                        {% if is_subscribed %}
+                            <form class="dropdown-item" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="unsubscribe">
+
+                                <button type="submit" id="submit">
+                                    <i class="fas fa-bell-slash fa-fw"
+                                       aria-hidden="true"></i> {% trans 'Deabonnieren' %}
                                 </button>
-                            </div>
-                            <!--- Action menu (dropdown) --->
-                            <div class="dropdown-menu" role="menu">
-                                <div class="dropdown-content">
-                                    {% if is_subscribed %}
-                                        <form class="dropdown-item" method="POST">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="action" value="unsubscribe">
 
-                                            <button type="submit" id="submit">
-                                                <i class="fas fa-bell-slash fa-fw"
-                                                   aria-hidden="true"></i> {% trans 'Deabonnieren' %}
-                                            </button>
+                            </form>
+                        {% else %}
+                            <form class="dropdown-item" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="subscribe">
 
-                                        </form>
-                                    {% else %}
-                                        <form class="dropdown-item" method="POST">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="action" value="subscribe">
+                                <button type="submit" id="submit">
+                                    <i class="fas fa-bell fa-fw"
+                                       aria-hidden="true"></i> {% trans 'Abonnieren' %}
+                                </button>
 
-                                            <button type="submit" id="submit">
-                                                <i class="fas fa-bell fa-fw"
-                                                   aria-hidden="true"></i> {% trans 'Abonnieren' %}
-                                            </button>
+                            </form>
+                        {% endif %}
+                        <hr class="dropdown-divider">
 
-                                        </form>
-                                    {% endif %}
-                                    <hr class="dropdown-divider">
-
-                                    {% if has_edit_permission %}
-                                        <form class="dropdown-item" method="POST">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="action" value="checked_active">
-                                            <button type="submit" id="submit">
-                                                <i class="fas fa-check fa-fw"
-                                                   aria-hidden="true"></i> {% trans 'Als aktiv bestätigen' %}
-                                            </button>
-                                        </form>
-                                        <a class="dropdown-item"
-                                           href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
-                                            <i class="fas fa-pencil fa-fw"
-                                               aria-hidden="true"></i> {% translate 'Bearbeiten' %}
-                                        </a>
-                                        <a class="dropdown-item"
-                                           href="{% url 'adoption-notice-add-photo' adoption_notice.pk %}">
-                                            <i class="fas fa-image fa-fw"
-                                               aria-hidden="true"></i> {% trans 'Bilder hinzufügen' %}
-                                        </a>
-                                        <a class="dropdown-item"
-                                           href="{% url 'adoption-notice-add-animal' adoption_notice.pk %}">
-                                            <i class="fas fa-plus fa-fw"
-                                               aria-hidden="true"></i> {% trans 'Tier hinzufügen' %}
-                                        </a>
-                                        <a class="dropdown-item"
-                                           href="{% url 'adoption-notice-close' adoption_notice_id=adoption_notice.pk %}">
-                                            <i class="fas fa-circle-xmark fa-fw"
-                                               aria-hidden="true"></i> {% trans 'Deaktivieren' %}
-                                        </a>
-                                        <hr class="dropdown-divider">
-                                    {% endif %}
-                                    <a class="dropdown-item" href="{{ adoption_notice.get_report_url }}">
-                                        <i class="fas fa-flag"
-                                           aria-hidden="true"></i> {% trans 'Melden' %}
-                                    </a>
-                                    {% if request.user.is_superuser %}
-                                        {% if oxitraffic_base_url %}
-                                            <hr class="dropdown-divider">
-                                            <a class="dropdown-item" href="{{ oxitraffic_base_url }}/stats?path={{ adoption_notice.get_absolute_url }}">
-                                                <i class="fas fa-chart-line fa-fw"></i> {% trans 'Aufrufe' %}
-                                            </a>
-                                        {% endif %}
-                                        <hr class="dropdown-divider">
-                                        <a class="dropdown-item is-warning"
-                                           href="{% url adoption_notice_meta|admin_urlname:'change' adoption_notice.pk %}">
-                                            <i class="fa-solid fa-tools fa-fw"></i> Admin interface
-                                        </a>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
+                        {% if has_edit_permission %}
+                            <form class="dropdown-item" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="checked_active">
+                                <button type="submit" id="submit">
+                                    <i class="fas fa-check fa-fw"
+                                       aria-hidden="true"></i> {% trans 'Als aktiv bestätigen' %}
+                                </button>
+                            </form>
+                            <a class="dropdown-item"
+                               href="{% url 'adoption-notice-edit' adoption_notice_id=adoption_notice.pk %}">
+                                <i class="fas fa-pencil fa-fw"
+                                   aria-hidden="true"></i> {% translate 'Bearbeiten' %}
+                            </a>
+                            <a class="dropdown-item"
+                               href="{% url 'adoption-notice-add-photo' adoption_notice.pk %}">
+                                <i class="fas fa-image fa-fw"
+                                   aria-hidden="true"></i> {% trans 'Bilder hinzufügen' %}
+                            </a>
+                            <a class="dropdown-item"
+                               href="{% url 'adoption-notice-add-animal' adoption_notice.pk %}">
+                                <i class="fas fa-plus fa-fw"
+                                   aria-hidden="true"></i> {% trans 'Tier hinzufügen' %}
+                            </a>
+                            <a class="dropdown-item"
+                               href="{% url 'adoption-notice-close' adoption_notice_id=adoption_notice.pk %}">
+                                <i class="fas fa-circle-xmark fa-fw"
+                                   aria-hidden="true"></i> {% trans 'Deaktivieren' %}
+                            </a>
+                            <hr class="dropdown-divider">
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ adoption_notice.get_report_url }}">
+                            <i class="fas fa-flag"
+                               aria-hidden="true"></i> {% trans 'Melden' %}
+                        </a>
+                        {% if request.user.is_superuser %}
+                            {% if oxitraffic_base_url %}
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item"
+                                   href="{{ oxitraffic_base_url }}/stats?path={{ adoption_notice.get_absolute_url }}">
+                                    <i class="fas fa-chart-line fa-fw"></i> {% trans 'Aufrufe' %}
+                                </a>
+                            {% endif %}
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item is-warning"
+                               href="{% url adoption_notice_meta|admin_urlname:'change' adoption_notice.pk %}">
+                                <i class="fa-solid fa-tools fa-fw"></i> Admin interface
+                            </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="columns">
+        <div class="column is-two-thirds">
             <!--- General Information --->
             <div class="grid">
                 <div class="cell">
