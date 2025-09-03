@@ -12,14 +12,13 @@
         {% else %}
             <p class="is-italic">{% translate 'Noch keine Kommentare' %}</p>
         {% endif %}
+        {% if user.is_authenticated %}
+            <hr>
+            {% include "fellchensammlung/forms/form-comment.html" %}
+        {% else %}
+            <div class="card-footer-item">
+                {% translate 'Du musst dich einloggen um Kommentare zu hinterlassen' %}
+            </div>
+        {% endif %}
     </div>
-</div>
-<div class="block">
-    {% if user.is_authenticated %}
-        {% include "fellchensammlung/forms/form-comment.html" %}
-    {% else %}
-        <p class="card-footer-item">
-            {% translate 'Du musst dich einloggen um Kommentare zu hinterlassen' %}
-        </p>
-    {% endif %}
 </div>

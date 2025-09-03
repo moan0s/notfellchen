@@ -1,19 +1,13 @@
 {% load i18n %}
+{% load widget_tweaks %}
 
-<div class="card">
-    <div class="card-header">
-        <div class="card-header-title">
-            {% blocktrans %}
-                Als {{ user }} kommentieren
-            {% endblocktrans %}
-        </div>
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="comment">
+    <div class="field">
+        {{ comment_form.text |add_class:"input textarea"|attr:"rows:3"|attr:"placeholder:Neuer Kommentar" }}
     </div>
-    <div class="card-content">
-        <form method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="action" value="comment">
-            {{ comment_form }}
-            <input type="submit" class="button is-primary" value="{% trans 'Kommentieren' %}">
-        </form>
+    <div class="control">
+        <input type="submit" class="button is-primary" value="{% trans 'Kommentieren' %}">
     </div>
-</div>
+</form>
