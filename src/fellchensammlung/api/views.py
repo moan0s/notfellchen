@@ -374,7 +374,7 @@ class LocationApiView(APIView):
 
 class AdoptionNoticeGeoJSONView(ListAPIView):
     queryset = AdoptionNotice.objects.select_related('location').filter(location__isnull=False).filter(
-        adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.choices)
+        adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.values)
     serializer_class = AdoptionNoticeGeoJSONSerializer
     renderer_classes = [GeoJSONRenderer]
 
