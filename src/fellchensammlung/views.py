@@ -929,7 +929,7 @@ def deactivate_an(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
     if request.method == "POST":
         reason_for_closing = request.POST.get("reason_for_closing")
-        if reason_for_closing not in AdoptionNoticeStatusChoices.Closed.choices:
+        if reason_for_closing not in AdoptionNoticeStatusChoices.Closed.values:
             return render(request, "fellchensammlung/errors/403.html", status=403)
         adoption_notice.adoption_notice_status = reason_for_closing
         adoption_notice.save()
