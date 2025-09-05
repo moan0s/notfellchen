@@ -36,7 +36,7 @@ from .tools.admin import clean_locations, get_unchecked_adoption_notices, deacti
 from .tasks import post_adoption_notice_save
 from rest_framework.authtoken.models import Token
 
-from .tools.model_helpers import AdoptionNoticeStatusChoices
+from .tools.model_helpers import AdoptionNoticeStatusChoices, AdoptionNoticeProcessTemplates
 from .tools.search import AdoptionNoticeSearch, RescueOrgSearch
 
 
@@ -170,10 +170,17 @@ def adoption_notice_detail(request, adoption_notice_id):
             return HttpResponseForbidden()
     else:
         comment_form = CommentForm(instance=adoption_notice)
+
+    # Set the adoption notice template, use default when not set
+    if adoption_notice.adoption_process is not None:
+        adoption_process_template = AdoptionNoticeProcessTemplates.mapping[adoption_notice.adoption_process]
+    else:
+        adoption_process_template = "fellchensammlung/partials/adoption_process/generic.html"
+
     context = {"adoption_notice": adoption_notice, "comment_form": comment_form, "user": request.user,
                "has_edit_permission": has_edit_permission, "is_subscribed": is_subscribed,
                "adoption_notice_meta": adoption_notice_meta,
-               "adoption_process_template": "fellchensammlung/partials/adoption_process/generic.html",
+               "adoption_process_template": adoption_process_template,
                "oxitraffic_base_url": settings.OXITRAFFIC_BASE_URL}
     return render(request, 'fellchensammlung/details/detail-adoption-notice.html', context=context)
 

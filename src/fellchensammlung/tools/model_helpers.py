@@ -94,7 +94,7 @@ class AdoptionNoticeStatusChoices:
 
 
 class AdoptionNoticeStatusChoicesDescriptions:
-    _ansc = AdoptionNoticeStatusChoices # Mapping for readability
+    _ansc = AdoptionNoticeStatusChoices  # Mapping for readability
     mapping = {_ansc.Active.SEARCHING.value: "",
                _ansc.Active.INTERESTED: _("Jemand hat bereits Interesse an den Tieren."),
                _ansc.Closed.SUCCESSFUL_WITH_NOTFELLCHEN: _("Vermittlung erfolgreich abgeschlossen."),
@@ -104,10 +104,21 @@ class AdoptionNoticeStatusChoicesDescriptions:
                _ansc.Closed.NOT_OPEN_ANYMORE: _("Tier(e) stehen nicht mehr zur Vermittlung bereit."),
                _ansc.Closed.OTHER: _("Vermittlung geschlossen."),
 
-               _ansc.AwaitingAction.WAITING_FOR_REVIEW: _("Deaktiviert bis Moderator*innen die Vermittlung prüfen können."),
+               _ansc.AwaitingAction.WAITING_FOR_REVIEW: _(
+                   "Deaktiviert bis Moderator*innen die Vermittlung prüfen können."),
                _ansc.AwaitingAction.NEEDS_ADDITIONAL_INFO: _("Deaktiviert bis Informationen nachgetragen werden."),
 
                _ansc.Disabled.AGAINST_RULES: _("Vermittlung deaktiviert da sie gegen die Regeln verstößt."),
                _ansc.Disabled.UNCHECKED: _("Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde."),
                _ansc.Disabled.OTHER: _("Vermittlung deaktiviert.")
+               }
+
+
+class AdoptionProcess(TextChoices):
+    CONTACT_PERSON_IN_AN = "contact_person_in_an", _("Kontaktiere die Person im Vermittlungstext")
+
+
+class AdoptionNoticeProcessTemplates:
+    _bp = "fellchensammlung/partials/adoption_process/"  # Base path for ease
+    mapping = {AdoptionProcess.CONTACT_PERSON_IN_AN: f"{_bp}contact_person_in_an.html",
                }

@@ -11,7 +11,7 @@ from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL, base_url
 from .tools.geo import LocationProxy, Position
 from .tools.misc import time_since_as_hr_string
-from .tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices
+from .tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices, AdoptionProcess
 from .tools.model_helpers import ndm as NotificationDisplayMapping
 
 
@@ -391,6 +391,9 @@ class AdoptionNotice(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Creator'))
     adoption_notice_status = models.TextField(max_length=64, verbose_name=_('Status'),
                                               choices=AdoptionNoticeStatusChoices.all_choices())
+    adoption_process = models.TextField(null=True, blank=True,
+                                        max_length=64, verbose_name=_('Adoptionsprozess'),
+                                        choices=AdoptionProcess)
 
     @property
     def animals(self):
