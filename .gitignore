@@ -2,6 +2,7 @@
 
 # Database
 notfellchen
+*.sq3
 
 # Geojson from imports
 *.geojson
