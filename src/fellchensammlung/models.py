@@ -343,7 +343,7 @@ class User(AbstractUser):
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='images')
+    image = models.ImageField(upload_to='images', verbose_name=_("Bild"), help_text=_("Wähle ein Bild aus"))
     alt_text = models.TextField(max_length=2000, verbose_name=_('Alternativtext'),
                                 help_text=_("Beschreibe das Bild für blinde und sehbehinderte Menschen"))
     owner = models.ForeignKey(User, on_delete=models.CASCADE)

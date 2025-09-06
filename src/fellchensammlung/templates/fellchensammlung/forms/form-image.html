@@ -4,40 +4,58 @@
 {% load widget_tweaks %}
 
 {% block content %}
-    <div>
-        {% blocktranslate %}
-            Lade hier ein Foto hoch - wähle den Titel wie du willst und mach bitte eine Bildbeschreibung,
-            damit die Fotos auch für blinde und sehbehinderte Personen zugänglich sind.
-        {% endblocktranslate %}
-        <p><a class="button" target="_blank"
-              href="https://www.dbsv.org/bildbeschreibung-4-regeln.html">{% translate 'Anleitung für Bildbeschreibungen' %}</a>
+    <div class="block">
+        <p>
+            {% blocktranslate %}
+                Lade hier ein Foto hoch. Füge bitte eine Bildbeschreibung hinzu,
+                damit die Fotos auch für blinde und sehbehinderte Personen zugänglich sind.
+            {% endblocktranslate %}
         </p>
     </div>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="field">
-            <label class="label" for="image">{{ form.image.label }}</label>
-            {{ form.image|add_class:"input"|attr:"id:image" }}
-        </div>
-
-        <!--- Image Preview: Only shown if image gets selected --->
-        <div class="field" id="image-preview-wrapper" style="display: none;">
-            <label class="label">{% translate "Vorschau" %}</label>
-            <div class="box has-text-centered">
-                <figure class="image is-256x256 is-inline-block">
-                    <img id="image-preview" src="" alt="{% translate 'Bildvorschau' %}" class="is-rounded">
-                </figure>
+    <div class="block">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="file has-name is-boxed is-primary is-">
+                <label class="file-label" for="image">
+                    {{ form.image|add_class:"file-input"|attr:"id:image" }}
+                    <span class="file-cta">
+                          <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                          <span class="file-label">{{ form.image.help_text }}</span>
+                    </span>
+                    <span class="file-name" id="image-upload-filename">...</span>
+                </label>
             </div>
-        </div>
 
-        <div class="field">
-            <label class="label" for="alt-text">{{ form.alt_text.label }}</label>
-            {{ form.alt_text|add_class:"textarea"|attr:"id:alt-text"|attr:"rows:3" }}
-            <div class="is-danger">{{ form.alt_text.errors }}</div>
-        </div>
-        <input class="button is-primary" type="submit" value="{% translate "Speichern" %}">
-    </form>
+            <!--- Image Preview: Only shown if image gets selected --->
+            <div class="field" id="image-preview-wrapper" style="display: none;">
+                <label class="label">{% translate "Vorschau" %}</label>
+                <div class="box has-text-centered">
+                    <figure class="image is-256x256 is-inline-block">
+                        <img id="image-preview" src="" alt="{% translate 'Bildvorschau' %}" class="is-rounded">
+                    </figure>
+                </div>
+            </div>
 
+            <div class="field">
+                <label class="label" for="alt-text">{{ form.alt_text.label }}</label>
+                {{ form.alt_text|add_class:"textarea"|attr:"id:alt-text"|attr:"rows:3" }}
+                <div class="help">
+                    {{ form.alt_text.help_text }}
+                </div>
+                <div class="is-danger">{{ form.alt_text.errors }}</div>
+            </div>
+            <input class="button is-primary" type="submit" value="{% translate "Speichern" %}">
+        </form>
+    </div>
+
+    <div class="block">
+        <a class="button is-info is-warning is-fullwidth" target="_blank"
+           href="https://www.dbsv.org/bildbeschreibung-4-regeln.html">
+            <i class="fa-solid fa-link fa-fw"></i> {% translate 'Anleitung für Bildbeschreibungen' %}
+        </a>
+    </div>
 
 
     <script>
@@ -45,6 +63,7 @@
             const input = document.getElementById("image");
             const previewWrapper = document.getElementById("image-preview-wrapper");
             const preview = document.getElementById("image-preview");
+            const filename = document.getElementById("image-upload-filename");
 
             input.addEventListener("change", function () {
                 const file = this.files[0];
@@ -53,6 +72,7 @@
                     reader.onload = function (e) {
                         preview.src = e.target.result;
                         previewWrapper.style.display = "block";
+                        filename.innerText = file.name;
                     }
                     reader.readAsDataURL(file);
                 } else {
