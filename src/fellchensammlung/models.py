@@ -129,6 +129,7 @@ class Species(models.Model):
     """Model representing a species of animal."""
     name = models.CharField(max_length=200, help_text=_('Name der Tierart'),
                             verbose_name=_('Name'))
+    slug = models.SlugField(unique=True, verbose_name=_('Slug'))
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
