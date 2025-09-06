@@ -106,5 +106,5 @@ class SearchTest(TestCase):
         # We can't use assertContains because TestAdoption3 will always be in response at is included in map
         # In order to test properly, we need to only care for the context that influences the list display
         an_names = [a.name for a in response.context["adoption_notices"]]
-        self.assertTrue("TestAdoption1" in an_names)  # Adoption in Berlin
-        self.assertFalse("TestAdoption3" in an_names)  # Adoption in Stuttgart
+        self.assertTrue("TestAdoption1" in an_names)  # Adoption in Berlin should be included
+        self.assertFalse("TestAdoption3" in an_names)  # Adoption in Stuttgart should not be included

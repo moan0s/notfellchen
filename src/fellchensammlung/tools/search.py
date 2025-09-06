@@ -86,7 +86,7 @@ class AdoptionNoticeSearch:
         Returns true if there are any restrictions on which adoption notices are searched.
         If all adoption notices fit the search, return True
         """
-        return self.sex is None and self.area_search is None
+        return self.sex is not None or self.area_search is not None
 
     def adoption_notice_fits_search(self, adoption_notice: AdoptionNotice):
         # Make sure sex is set and sex is not set to all (then it can be disregarded)
