@@ -80,6 +80,14 @@ class AdoptionNoticeSearch:
         else:
             return None
 
+    @property
+    def has_search_criteria(self):
+        """
+        Returns true if there are any restrictions on which adoption notices are searched.
+        If all adoption notices fit the search, return True
+        """
+        return self.sex is None and self.area_search is None
+
     def adoption_notice_fits_search(self, adoption_notice: AdoptionNotice):
         # Make sure sex is set and sex is not set to all (then it can be disregarded)
         if self.sex is not None and self.sex != SexChoicesWithAll.ALL:
@@ -98,6 +106,10 @@ class AdoptionNoticeSearch:
     def get_adoption_notices(self):
         adoptions = AdoptionNotice.objects.filter(
             adoption_notice_status__in=AdoptionNoticeStatusChoices.Active.values).order_by("-created_at")
+
+        # Quickly return if thera are no search criteria
+        if not self.has_search_criteria:
+            return adoptions
         # Check if adoption notice fits search.
         adoptions = [adoption for adoption in adoptions if self.adoption_notice_fits_search(adoption)]
 
