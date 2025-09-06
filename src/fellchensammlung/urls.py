@@ -43,7 +43,7 @@ urlpatterns = [
     path("tierschutzorganisationen/", views.list_rescue_organizations, name="rescue-organizations"),
     path("tierschutzorganisationen/<int:rescue_organization_id>/", views.detail_view_rescue_organization,
          name="rescue-organization-detail"),
-    path("tierschutzorganisationen/spezialisierung/<int:species_id>", views.specialized_rescues,
+    path("tierschutzorganisationen/spezialisierung/<slug:species_slug>", views.specialized_rescues,
          name="specialized-rescue-organizations"),
 
     # ex: /search/

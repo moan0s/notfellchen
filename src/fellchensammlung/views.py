@@ -804,8 +804,8 @@ def list_rescue_organizations(request, species=None, template='fellchensammlung/
     return render(request, template, context=context)
 
 
-def specialized_rescues(request, species_id):
-    species = get_object_or_404(Species, pk=species_id)
+def specialized_rescues(request, species_slug):
+    species = get_object_or_404(Species, slug=species_slug)
     return list_rescue_organizations(request, species)
 
 
