@@ -38,14 +38,14 @@ class Language(models.Model):
 
 class Location(models.Model):
     place_id = models.CharField(max_length=200)  # OSM id
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    latitude = models.FloatField(verbose_name=_("Breitengrad"))
+    longitude = models.FloatField(verbose_name=_("Längengrad"))
     name = models.CharField(max_length=2000)
-    city = models.CharField(max_length=200, blank=True, null=True)
-    housenumber = models.CharField(max_length=20, blank=True, null=True)
-    postcode = models.CharField(max_length=20, blank=True, null=True)
-    street = models.CharField(max_length=200, blank=True, null=True)
-    county = models.CharField(max_length=200, blank=True, null=True)
+    city = models.CharField(max_length=200, blank=True, null=True, verbose_name=_('Stadt'))
+    housenumber = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Hausnummer"))
+    postcode = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Postleitzahl"))
+    street = models.CharField(max_length=200, blank=True, null=True, verbose_name=_("Straße"))
+    county = models.CharField(max_length=200, blank=True, null=True, verbose_name=_("Landkreis"))
     # Country code as per ISO 3166-1 alpha-2
     # https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
     countrycode = models.CharField(max_length=2, verbose_name=_("Ländercode"),
@@ -343,7 +343,8 @@ class User(AbstractUser):
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images')
-    alt_text = models.TextField(max_length=2000, verbose_name=_('Alternativtext'))
+    alt_text = models.TextField(max_length=2000, verbose_name=_('Alternativtext'),
+                                help_text=_("Beschreibe das Bild für blinde und sehbehinderte Menschen"))
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -575,13 +576,14 @@ class Animal(models.Model):
         verbose_name_plural = _('Tiere')
 
     date_of_birth = models.DateField(verbose_name=_('Geburtsdatum'))
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, verbose_name=_('Name'))
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
     species = models.ForeignKey(Species, on_delete=models.PROTECT, verbose_name=_("Tierart"))
-    photos = models.ManyToManyField(Image, blank=True)
+    photos = models.ManyToManyField(Image, blank=True, verbose_name=_("Fotos"))
     sex = models.CharField(
         max_length=20,
         choices=SexChoices.choices,
+        verbose_name=_("Geschlecht")
     )
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -646,10 +648,10 @@ class SearchSubscription(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.ForeignKey(Location, on_delete=models.PROTECT, null=True)
-    sex = models.CharField(max_length=20, choices=SexChoicesWithAll.choices)
+    sex = models.CharField(max_length=20, choices=SexChoicesWithAll.choices, verbose_name=_("Geschlecht"))
     max_distance = models.IntegerField(choices=DistanceChoices.choices, null=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Zuletzt geändert am"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Erstellt am"))
 
     def __str__(self):
         if self.location and self.max_distance:
@@ -670,12 +672,16 @@ class Rule(models.Model):
     title = models.CharField(max_length=200)
 
     # Markdown is allowed in rule text
-    rule_text = models.TextField()
-    language = models.ForeignKey(Language, on_delete=models.PROTECT)
+    rule_text = models.TextField(verbose_name=_("Regeltext"))
+    language = models.ForeignKey(Language, on_delete=models.PROTECT, verbose_name=_("Sprache"))
     # Rule identifier allows to translate rules with the same identifier
-    rule_identifier = models.CharField(max_length=24)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    rule_identifier = models.CharField(max_length=24,
+                                       verbose_name=_("Regel-ID"),
+                                       help_text=_("Ein eindeutiger Identifikator der Regel. Ein Regelobjekt "
+                                                   "derselben Regel in einer anderen Sprache muss den gleichen "
+                                                   "Identifikator haben"))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Zuletzt geändert am"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Erstellt am"))
 
     def __str__(self):
         return self.title
@@ -699,8 +705,8 @@ class Report(models.Model):
     status = models.CharField(max_length=30, choices=STATES)
     reported_broken_rules = models.ManyToManyField(Rule, verbose_name=_("Regeln gegen die verstoßen wurde"))
     user_comment = models.TextField(blank=True, verbose_name=_("Kommentar/Zusätzliche Information"))
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Zuletzt geändert am"))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Erstellt am"))
 
     def __str__(self):
         return f"[{self.status}]: {self.user_comment:.20}"
@@ -804,7 +810,7 @@ class Text(models.Model):
     """
     Base class to store markdown content
     """
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, verbose_name=_("Titel"))
     content = models.TextField(verbose_name="Inhalt")
     language = models.ForeignKey(Language, verbose_name="Sprache", on_delete=models.PROTECT)
     text_code = models.CharField(max_length=24, verbose_name="Text code", blank=True)
@@ -894,7 +900,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
+    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
     text = models.TextField(verbose_name="Inhalt")
     reply_to = models.ForeignKey("self", verbose_name="Antwort auf", blank=True, null=True, on_delete=models.CASCADE)
 
@@ -922,7 +928,7 @@ class Notification(models.Model):
     user_to_notify = models.ForeignKey(User,
                                        on_delete=models.CASCADE,
                                        verbose_name=_('Empfänger*in'),
-                                       help_text=_("Useraccount der Benachrichtigt wird"),
+                                       help_text=_("Useraccount der benachrichtigt wird"),
                                        related_name='user')
     title = models.CharField(max_length=100, verbose_name=_("Titel"))
     text = models.TextField(verbose_name="Inhalt")
@@ -964,7 +970,8 @@ class Subscriptions(models.Model):
         verbose_name_plural = _("Abonnements")
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Nutzer*in'))
-    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('AdoptionNotice'))
+    adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'),
+                                        help_text=_("Vermittlung die abonniert wurde"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
