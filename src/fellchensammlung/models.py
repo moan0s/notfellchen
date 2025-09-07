@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from docutils.nodes import description
 
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL, base_url
@@ -444,12 +445,22 @@ class AdoptionNotice(models.Model):
         else:
             return self.location.latitude, self.location.longitude
 
-    @property
-    def description_short(self):
+    def _get_short_description(self, length: int) -> str:
         if self.description is None:
             return ""
-        if len(self.description) > 200:
-            return self.description[:200] + f" ... [weiterlesen]({self.get_absolute_url()})"
+        elif len(self.description) > length:
+            return self.description[:length] + f" ... [weiterlesen]({self.get_absolute_url()})"
+        else:
+            return self.description
+
+    @property
+    def description_short(self):
+        return self._get_short_description(200)
+
+    @property
+    def description_100_short(self):
+        return self._get_short_description(90)
+
 
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the adoption notice."""

@@ -54,20 +54,27 @@
                         </a>
                     </div>
                 {% endwith %}
-
-                <div class="thumbnail-row minimal">
-                    {% for photo in adoption_notice.get_photos|slice:"1:4" %}
-                        <div class="thumbnail">
-                            <a href="{{ MEDIA_URL }}{{ photo.image }}"
-                               data-pswp-width="{{ photo.image.width }}"
-                               data-pswp-height="{{ photo.image.height }}"
-                               target="_blank">
-                                <img src="{{ MEDIA_URL }}{{ photo.image }}"
-                                     alt="{{ photo.alt_text }}">
-                            </a>
+                {% if adoption_notice.get_photos|length > 1 %}
+                    <div class="thumbnail-row minimal">
+                        {% for photo in adoption_notice.get_photos|slice:"1:4" %}
+                            <div class="thumbnail">
+                                <a href="{{ MEDIA_URL }}{{ photo.image }}"
+                                   data-pswp-width="{{ photo.image.width }}"
+                                   data-pswp-height="{{ photo.image.height }}"
+                                   target="_blank">
+                                    <img src="{{ MEDIA_URL }}{{ photo.image }}"
+                                         alt="{{ photo.alt_text }}">
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {% if adoption_notice.description_100_short %}
+                        <div class="content">
+                            {{ adoption_notice.description_100_short | render_markdown }}
                         </div>
-                    {% endfor %}
-                </div>
+                    {% endif %}
+                {% endif %}
             </div>
         {% else %}
             {% if adoption_notice.description_short %}
