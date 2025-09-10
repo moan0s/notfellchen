@@ -27,7 +27,7 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment
 from .models import Language, Announcement
-from .tools import i18n
+from .tools import i18n, img
 from .tools.fedi import post_an_to_fedi
 from .tools.geo import GeoAPI, zoom_level_for_radius
 from .tools.metrics import gather_metrics_data
@@ -943,3 +943,9 @@ def deactivate_an(request, adoption_notice_id):
         return redirect(reverse("adoption-notice-detail", args=[adoption_notice.pk], ))
     context = {"adoption_notice": adoption_notice, }
     return render(request, 'fellchensammlung/misc/deactivate-an.html', context=context)
+
+
+def adoption_notice_sharepic(request, adoption_notice_id):
+    adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
+    svg_data = img.export_svg(adoption_notice)
+    return HttpResponse(svg_data, content_type="image/svg+xml")

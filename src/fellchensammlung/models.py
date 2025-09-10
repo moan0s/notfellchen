@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
-from docutils.nodes import description
+import base64
 
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL, base_url
@@ -361,6 +361,11 @@ class Image(models.Model):
     @property
     def as_html(self):
         return f'<img src="{MEDIA_URL}/{self.image}" alt="{self.alt_text}">'
+
+    @property
+    def as_base64(self):
+        encoded_string = base64.b64encode(self.image.file.read())
+        return encoded_string.decode("utf-8")
 
 
 class AdoptionNotice(models.Model):

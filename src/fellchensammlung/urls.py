@@ -29,6 +29,8 @@ urlpatterns = [
     path("tier/<int:animal_id>/add-photo", views.add_photo_to_animal, name="animal-add-photo"),
     # ex: /adoption_notice/7/
     path("vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail, name="adoption-notice-detail"),
+    # ex: /adoption_notice/7/sharepic
+    path("vermittlung/<int:adoption_notice_id>/sharepic", views.adoption_notice_sharepic, name="adoption-notice-sharepic"),
     # ex: /adoption_notice/7/edit
     path("vermittlung/<int:adoption_notice_id>/edit", views.adoption_notice_edit, name="adoption-notice-edit"),
     # ex: /vermittlung/5/add-photo

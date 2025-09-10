@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+        width="264.58334mm"
+        height="264.58334mm"
+        viewBox="0 0 264.58334 264.58334"
+        version="1.1"
+        id="svg1"
+        xml:space="preserve"
+        inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+        sodipodi:docname="drawing.svg"
+        xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+        xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:svg="http://www.w3.org/2000/svg">
+    <sodipodi:namedview
+            id="namedview1"
+            pagecolor="#ffffff"
+            bordercolor="#000000"
+            borderopacity="0.25"
+            inkscape:showpageshadow="2"
+            inkscape:pageopacity="0.0"
+            inkscape:pagecheckerboard="0"
+            inkscape:deskcolor="#d1d1d1"
+            inkscape:document-units="mm"
+            inkscape:zoom="0.51136354"
+            inkscape:cx="1504.8003"
+            inkscape:cy="472.26675"
+            inkscape:window-width="2048"
+            inkscape:window-height="1208"
+            inkscape:window-x="0"
+            inkscape:window-y="0"
+            inkscape:window-maximized="1"
+            inkscape:current-layer="layer1">
+    <inkscape:page
+            x="0"
+            y="0"
+            width="264.58334"
+            height="264.58334"
+            id="page1"
+            margin="0"
+            bleed="0"/>
+        <inkscape:page
+                x="274.58334"
+                y="0"
+                width="264.58334"
+                height="264.58334"
+                id="page2"
+                margin="0"
+                bleed="0"/>
+        <inkscape:page
+                x="549.16669"
+                y="0"
+                width="264.58334"
+                height="264.58334"
+                id="page4"
+                margin="0"
+                bleed="0"/>
+</sodipodi:namedview>
+    <defs id="defs1"/>
+    <g
+            inkscape:label="Layer 1"
+            inkscape:groupmode="layer"
+            id="layer1">
+        <rect
+                style="fill:#6cd4ff;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill-opacity:0.73333335"
+                id="rect1"
+                width="264.58337"
+                height="264.58337"
+                x="0"
+                y="0"/>
+        <rect
+                style="fill:#6cd4ff;fill-opacity:0.733333;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+                id="rect1-2"
+                width="264.58337"
+                height="264.58337"
+                x="274.58334"
+                y="0"/>
+        <rect
+                style="fill:#6cd4ff;fill-opacity:0.733333;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+                id="rect1-0"
+                width="264.58337"
+                height="264.58337"
+                x="549.16669"
+                y="0"/>
+        <text
+                xml:space="preserve"
+                style="font-size:19.7556px;line-height:1.3;font-family:'Latin Modern Mono';-inkscape-font-specification:'Latin Modern Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:-0.574146px;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:230.276;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+                x="16.116602"
+                y="81.350471"
+                id="text4"
+                transform="translate(-7.9696277,63.01184)"><tspan
+         x="16.116602"
+         y="81.350471"
+         id="tspan2">{{ adoption_notice.short_description }}</tspan></text>
+        <rect
+                style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.17108;stroke-linecap:round;stroke-linejoin:round"
+                id="rect4"
+                width="192.30475"
+                height="93.450798"
+                x="42.798157"
+                y="14.846257"/>
+        <text
+                xml:space="preserve"
+                style="font-size:19.7556px;line-height:1.1;font-family:'Latin Modern Mono';-inkscape-font-specification:'Latin Modern Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:-0.79286px;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:192.796;fill:#000000;fill-opacity:0.733333;stroke:none;stroke-width:2.76188;stroke-linecap:round;stroke-linejoin:round"
+                x="98.301682"
+                y="49.274101"
+                id="text1"
+                transform="translate(-58.467048,-14.731528)"><tspan
+         x="98.301682"
+         y="49.274101"
+         id="tspan4"><tspan
+           dx="0 0.79285997 -0.79286003 0 0 0 0 0 0.79285902 -0.79285526 0 0.79285902"
+           style="text-align:center;text-anchor:middle"
+           id="tspan3">{{ adoption_notice.name }}</tspan>
+        </tspan>
+           </text>
+        <rect
+                style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+                id="rect4-8"
+                width="175.74771"
+                height="40.675236"
+                x="309.5625"
+                y="17.4625"/>
+        <text
+                xml:space="preserve"
+                style="font-size:36.6612px;line-height:1.3;font-family:'Latin Modern Mono';-inkscape-font-specification:'Latin Modern Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:-1.06546px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:0.733333;stroke:none;stroke-width:3.71147;stroke-linecap:round;stroke-linejoin:round"
+                x="328.02808"
+                y="47.813782"
+                id="text1-7">
+            <tspan
+                    sodipodi:role="line"
+                    id="tspan1-9"
+                    style="fill:#000000;fill-opacity:0.733333;stroke-width:3.71147"
+                    x="328.02808"
+                    y="47.813782">
+            Ratte 1
+        </tspan>
+        </text>
+        <rect
+                style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+                id="rect4-7"
+                width="175.74771"
+                height="40.675236"
+                x="597.69373"
+                y="18.520834"/>
+        <text
+                xml:space="preserve"
+                style="font-size:36.6612px;line-height:1.3;font-family:'Latin Modern Mono';-inkscape-font-specification:'Latin Modern Mono, Normal';text-align:start;letter-spacing:0px;word-spacing:-1.06546px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;fill-opacity:0.733333;stroke:none;stroke-width:3.71147;stroke-linecap:round;stroke-linejoin:round"
+                x="616.1593"
+                y="48.872116"
+                id="text1-5">
+            <tspan
+                    sodipodi:role="line"
+                    id="tspan1-92"
+                    style="fill:#000000;fill-opacity:0.733333;stroke-width:3.71147"
+                    x="616.1593"
+                    y="48.872116">Ratte 2</tspan>
+        </text>
+        <image
+                width="116.45744"
+                height="145.62663"
+                preserveAspectRatio="none"
+                xlink:href="data:image/jpeg;base64,{{ adoption_notice.get_photo.as_base64 }};"
+                id="image1"
+                x="339.55661"
+                y="87.612373"/>
+    </g>
+</svg>
