@@ -9,6 +9,7 @@ from fellchensammlung.models import RescueOrganization, AdoptionNotice, Species
 @headers({"X-Robots-Tag": "noindex"})
 def list_ans_per_rescue_organization(request, rescue_organization_id, species_slug=None, active=True):
     expand = request.GET.get("expand")
+    background_color = request.GET.get("background_color")
     if expand is not None:
         expand = True
     else:
@@ -26,7 +27,11 @@ def list_ans_per_rescue_organization(request, rescue_organization_id, species_sl
         adoption_notices = adoption_notices_of_org
     else:
         species = get_object_or_404(Species, slug=species_slug)
-        adoption_notices = [adoption_notice for adoption_notice in adoption_notices_of_org if species in adoption_notice.species]
+        adoption_notices = [adoption_notice for adoption_notice in adoption_notices_of_org if
+                            species in adoption_notice.species]
 
     template = 'fellchensammlung/embeddables/list-adoption-notices.html'
-    return render(request, template, context={"adoption_notices": adoption_notices, "expand": expand})
+    return render(request, template,
+                  context={"adoption_notices": adoption_notices,
+                           "expand": expand,
+                           "background_color": background_color})

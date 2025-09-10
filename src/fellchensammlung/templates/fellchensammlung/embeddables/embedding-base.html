@@ -21,6 +21,14 @@
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
 
+    {% if background_color %}
+        <style>
+            body {
+                background: #{{ background_color }};
+            }
+        </style>
+    {% endif %}
+
     <script src="{% static 'fellchensammlung/js/custom.js' %}"></script>
     <script src="{% static 'fellchensammlung/js/toggles.js' %}"></script>
     <script src="{% static 'fellchensammlung/js/jquery.min.js' %}"></script>
@@ -32,6 +40,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'fellchensammlung/favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'fellchensammlung/favicon/favicon-16x16.png' %}">
     {% get_oxitraffic_script_if_enabled %}
+    <base target="_parent"/>
 </head>
 <body>
 
