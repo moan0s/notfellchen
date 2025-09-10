@@ -422,6 +422,13 @@ class AdoptionNotice(models.Model):
         return num_per_sex
 
     @property
+    def species(self):
+        species = set()
+        for animal in self.animals:
+            species.add(animal.species)
+        return species
+
+    @property
     def last_checked_hr(self):
         time_since_last_checked = timezone.now() - self.last_checked
         return time_since_as_hr_string(time_since_last_checked)
@@ -465,7 +472,6 @@ class AdoptionNotice(models.Model):
     @property
     def description_100_short(self):
         return self._get_short_description(90)
-
 
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the adoption notice."""

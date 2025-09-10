@@ -764,8 +764,6 @@ def external_site_warning(request, template_name='fellchensammlung/external-site
 
 def list_rescue_organizations(request, species=None, template='fellchensammlung/animal-shelters.html'):
     if species is None:
-        # rescue_organizations = RescueOrganization.objects.all()
-
         org_search = RescueOrgSearch(request)
         rescue_organizations = org_search.get_rescue_orgs()
     else:

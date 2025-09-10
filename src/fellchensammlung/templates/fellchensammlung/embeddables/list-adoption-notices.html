@@ -1,0 +1,10 @@
+{% extends "fellchensammlung/embeddables/embedding-base.html" %}
+{% load custom_tags %}
+{% load i18n %}
+
+
+{% block content %}
+    <div class="block">
+        {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+    </div>
+{% endblock %}

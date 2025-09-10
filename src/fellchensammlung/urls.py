@@ -4,6 +4,7 @@ from .forms import CustomRegistrationForm
 from .feeds import LatestAdoptionNoticesFeed
 
 from . import views, registration_views
+from fellchensammlung.aviews import embeddables
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from django.contrib.sitemaps.views import sitemap
@@ -30,7 +31,8 @@ urlpatterns = [
     # ex: /adoption_notice/7/
     path("vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail, name="adoption-notice-detail"),
     # ex: /adoption_notice/7/sharepic
-    path("vermittlung/<int:adoption_notice_id>/sharepic", views.adoption_notice_sharepic, name="adoption-notice-sharepic"),
+    path("vermittlung/<int:adoption_notice_id>/sharepic", views.adoption_notice_sharepic,
+         name="adoption-notice-sharepic"),
     # ex: /adoption_notice/7/edit
     path("vermittlung/<int:adoption_notice_id>/edit", views.adoption_notice_edit, name="adoption-notice-edit"),
     # ex: /vermittlung/5/add-photo
@@ -129,4 +131,8 @@ urlpatterns = [
     ###############
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="django.contrib.sitemaps.views.sitemap"),
 
+    ###########
+    ## EMBED ##
+
+    path('embed/', include('fellchensammlung.aviews.urls')),
 ]
