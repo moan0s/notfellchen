@@ -12,5 +12,14 @@
         {% endfor %}
     </div>
 {% else %}
-    <p>{% translate "Keine Vermittlungen gefunden." %}</p>
+    <article class="message is-warning">
+        <div class="message-header">
+            <p>{% translate "Keine Vermittlungen gefunden." %}</p>
+        </div>
+        <div class="message-body">
+            {% blocktranslate %}
+                Versuche es zu einem späteren Zeitpunkt erneut
+            {% endblocktranslate %}
+        </div>
+    </article>
 {% endif %}
