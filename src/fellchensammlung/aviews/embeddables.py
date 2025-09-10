@@ -6,6 +6,11 @@ from fellchensammlung.models import RescueOrganization, AdoptionNotice, Species
 
 @headers({"X-Robots-Tag": "noindex"})
 def list_ans_per_rescue_organization(request, rescue_organization_id, species_slug=None):
+    expand = request.GET.get("expand")
+    if expand is not None:
+        expand = True
+    else:
+        expand = False
     org = get_object_or_404(RescueOrganization, pk=rescue_organization_id)
     if species_slug is None:
         adoption_notices = AdoptionNotice.objects.filter(organization=org)
