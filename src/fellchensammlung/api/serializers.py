@@ -3,6 +3,12 @@ from rest_framework import serializers
 import math
 
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['id', 'image']
+
+
 class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
     location = serializers.PrimaryKeyRelatedField(
         queryset=Location.objects.all(),
@@ -21,11 +27,7 @@ class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
         allow_null=True
     )
 
-    photos = serializers.PrimaryKeyRelatedField(
-        queryset=Image.objects.all(),
-        many=True,
-        required=False
-    )
+    photos = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = AdoptionNotice
