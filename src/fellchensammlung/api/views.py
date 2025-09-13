@@ -1,4 +1,5 @@
 from django.db.models import Q
+from drf_spectacular.types import OpenApiTypes
 from rest_framework.generics import ListAPIView
 
 from fellchensammlung.api.serializers import LocationSerializer, AdoptionNoticeGeoJSONSerializer
@@ -20,7 +21,7 @@ from .serializers import (
     SpeciesSerializer, RescueOrganizationSerializer,
 )
 from fellchensammlung.models import Animal, RescueOrganization, AdoptionNotice, Species, Image
-from drf_spectacular.utils import extend_schema, inline_serializer
+from drf_spectacular.utils import extend_schema, inline_serializer, OpenApiParameter
 
 
 class AdoptionNoticeApiView(APIView):
@@ -383,3 +384,69 @@ class RescueOrgGeoJSONView(ListAPIView):
     queryset = RescueOrganization.objects.select_related('location').filter(location__isnull=False)
     serializer_class = RescueOrgeGeoJSONSerializer
     renderer_classes = [GeoJSONRenderer]
+
+
+class AdoptionNoticePerOrgApiView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name='id',
+                required=False,
+                description='ID of the rescue organization from which to retrieve adoption notices.',
+                type=OpenApiTypes.INT
+            ),
+            OpenApiParameter(
+                name='in_hierarchy',
+                type=OpenApiTypes.BOOL,
+                required=False,
+                description='Show all Adoption Notices in hierarchy.',
+            ),
+            OpenApiParameter(
+                name='status',
+                type=OpenApiTypes.STR,
+                required=False,
+                description='Show all Adoption Notices in a certain status. Comma separated list of values e.g. '
+                            '"active,closed"',
+            ),
+        ],
+        responses={200: AdoptionNoticeSerializer(many=True)}
+    )
+    def get(self, request, *args, **kwargs):
+        """
+        Retrieve adoption notices with their related animals and images.
+        """
+        org_id = kwargs.get("id")
+        in_hierarchy = request.query_params.get("in_hierarchy")
+        an_status = request.query_params.get("status")
+        try:
+            org = RescueOrganization.objects.get(id=org_id)
+        except RescueOrganization.DoesNotExist:
+            return Response({"error": "Rescue Organization notice not found."}, status=status.HTTP_404_NOT_FOUND)
+        if in_hierarchy:
+            adoption_notices = org.adoption_notices_in_hierarchy
+        else:
+            adoption_notices = AdoptionNotice.objects.filter(organization=org)
+        if an_status:
+            status_list = an_status.lower().strip().split(",")
+            temporary_an_storage = []
+            if "active" in status_list:
+                active_ans = [adoption_notice for adoption_notice in adoption_notices if
+                              adoption_notice.adoption_notice_status in AdoptionNoticeStatusChoices.Active.values]
+                temporary_an_storage.extend(active_ans)
+            if "closed" in status_list:
+                closed_ans = [adoption_notice for adoption_notice in adoption_notices if
+                              adoption_notice.adoption_notice_status in AdoptionNoticeStatusChoices.Closed.values]
+                temporary_an_storage.extend(closed_ans)
+            if "disabled" in status_list:
+                disabled_ans = [adoption_notice for adoption_notice in adoption_notices if
+                                adoption_notice.adoption_notice_status in AdoptionNoticeStatusChoices.Disabled.values]
+                temporary_an_storage.extend(disabled_ans)
+            if "awaiting_action" in status_list:
+                awaiting_action_ans = [adoption_notice for adoption_notice in adoption_notices if
+                                       adoption_notice.adoption_notice_status in AdoptionNoticeStatusChoices.AwaitingAction.values]
+                temporary_an_storage.extend(awaiting_action_ans)
+            adoption_notices = temporary_an_storage
+        serializer = AdoptionNoticeSerializer(adoption_notices, many=True, context={"request": request})
+        return Response(serializer.data, status=status.HTTP_200_OK)

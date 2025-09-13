@@ -30,7 +30,7 @@ class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AdoptionNotice
         fields = ['created_at', 'last_checked', "searching_since", "name", "description", "further_information",
-                  "group_only", "location", "location_details", "organization", "photos"]
+                  "group_only", "location", "location_details", "organization", "photos", "adoption_notice_status"]
 
 
 class AdoptionNoticeGeoJSONSerializer(serializers.ModelSerializer):
