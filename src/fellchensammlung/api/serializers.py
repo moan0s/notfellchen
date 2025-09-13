@@ -6,7 +6,7 @@ import math
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
-        fields = ['id', 'image']
+        fields = ['id', 'image', 'alt_text']
 
 
 class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
