@@ -4,9 +4,18 @@ import math
 
 
 class ImageSerializer(serializers.ModelSerializer):
+    width = serializers.SerializerMethodField()
+    height = serializers.SerializerMethodField()
+
     class Meta:
         model = Image
-        fields = ['id', 'image', 'alt_text']
+        fields = ['id', 'image', 'alt_text', 'width', 'height']
+
+    def get_width(self, obj):
+        return obj.image.width
+
+    def get_height(self, obj):
+        return obj.image.height
 
 
 class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
