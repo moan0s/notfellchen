@@ -35,13 +35,18 @@ class AdoptionNoticeSerializer(serializers.HyperlinkedModelSerializer):
         required=False,
         allow_null=True
     )
+    url = serializers.SerializerMethodField()
 
     photos = ImageSerializer(many=True, read_only=True)
+
+    def get_url(self, obj):
+        return obj.get_full_url()
 
     class Meta:
         model = AdoptionNotice
         fields = ['created_at', 'last_checked', "searching_since", "name", "description", "further_information",
-                  "group_only", "location", "location_details", "organization", "photos", "adoption_notice_status"]
+                  "group_only", "location", "location_details", "organization", "photos", "adoption_notice_status",
+                  "url"]
 
 
 class AdoptionNoticeGeoJSONSerializer(serializers.ModelSerializer):
