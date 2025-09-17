@@ -509,6 +509,11 @@ def terms_of_service(request):
     )
 
 
+def contact(request):
+    text = i18n.get_text_by_language("contact")
+    return render_text(request, text)
+
+
 def report_adoption(request, adoption_notice_id):
     """
     Form to report adoption notices

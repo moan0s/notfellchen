@@ -61,6 +61,7 @@ urlpatterns = [
     path("ueber-uns/", views.about, name="about"),
     path("impressum/", views.imprint, name="imprint"),
     path("terms-of-service/", views.terms_of_service, name="terms-of-service"),
+    path("kontakt/", views.contact, name="contact"),
     path("datenschutz/", views.privacy, name="privacy"),
     path("ratten-kaufen/", views.buying, name="buying"),
 
