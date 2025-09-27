@@ -3,8 +3,10 @@
 
 <div class="card">
     <div class="card-header">
-        <h2 class="card-header-title"><a
-                href="{{ rescue_organization.get_absolute_url }}"> {{ rescue_organization.name }}</a></h2>
+        <h2 class="card-header-title">
+            <a href="{{ rescue_organization.get_absolute_url }}"> {{ rescue_organization.name }}
+            </a>
+        </h2>
 
     </div>
     <div class="card-content">
@@ -16,10 +18,10 @@
                 {{ rescue_organization.location_string }}
             {% endif %}
         </div>
-        <div class="block content">
-            {% if rescue_organization.description_short %}
+        {% if rescue_organization.description_short %}
+            <div class="block content">
                 {{ rescue_organization.description_short | render_markdown }}
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     </div>
 </div>
