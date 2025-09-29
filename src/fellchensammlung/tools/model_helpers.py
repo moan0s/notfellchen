@@ -66,6 +66,7 @@ class AdoptionNoticeStatusChoices:
     class AwaitingAction(TextChoices):
         WAITING_FOR_REVIEW = "awaiting_action_waiting_for_review", _("Waiting for review")
         NEEDS_ADDITIONAL_INFO = "awaiting_action_needs_additional_info", _("Needs additional info")
+        UNCHECKED = "awaiting_action_unchecked", _("Unchecked")
 
     class Closed(TextChoices):
         SUCCESSFUL_WITH_NOTFELLCHEN = "closed_successful_with_notfellchen", _("Successful (with Notfellchen)")
@@ -79,7 +80,6 @@ class AdoptionNoticeStatusChoices:
 
     class Disabled(TextChoices):
         AGAINST_RULES = "disabled_against_the_rules", _("Against the rules")
-        UNCHECKED = "disabled_unchecked", _("Unchecked")
         OTHER = "disabled_other", _("Other (disabled)")
 
     @classmethod
@@ -102,14 +102,17 @@ class AdoptionNoticeStatusChoicesDescriptions:
                _ansc.Closed.ANIMAL_DIED: _("Die zu vermittelnden Tiere sind über die Regenbrücke gegangen."),
                _ansc.Closed.FOR_OTHER_ADOPTION_NOTICE: _("Vermittlung wurde zugunsten einer anderen geschlossen."),
                _ansc.Closed.NOT_OPEN_ANYMORE: _("Tier(e) stehen nicht mehr zur Vermittlung bereit."),
+               _ansc.Closed.LINK_TO_MORE_INFO_NOT_REACHABLE: _(
+                   "Der Link zu weiteren Informationen ist nicht mehr erreichbar,"
+                   "die Vermittlung wurde daher automatisch deaktiviert"),
                _ansc.Closed.OTHER: _("Vermittlung geschlossen."),
 
                _ansc.AwaitingAction.WAITING_FOR_REVIEW: _(
                    "Deaktiviert bis Moderator*innen die Vermittlung prüfen können."),
                _ansc.AwaitingAction.NEEDS_ADDITIONAL_INFO: _("Deaktiviert bis Informationen nachgetragen werden."),
+               _ansc.AwaitingAction.UNCHECKED: _("Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde."),
 
                _ansc.Disabled.AGAINST_RULES: _("Vermittlung deaktiviert da sie gegen die Regeln verstößt."),
-               _ansc.Disabled.UNCHECKED: _("Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde."),
                _ansc.Disabled.OTHER: _("Vermittlung deaktiviert.")
                }
 

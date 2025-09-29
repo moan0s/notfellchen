@@ -12,7 +12,8 @@ from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL, base_url
 from .tools.geo import LocationProxy, Position
 from .tools.misc import time_since_as_hr_string
-from .tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices, AdoptionProcess
+from .tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices, AdoptionProcess, \
+    AdoptionNoticeStatusChoicesDescriptions
 from .tools.model_helpers import ndm as NotificationDisplayMapping
 
 
@@ -552,6 +553,10 @@ class AdoptionNotice(models.Model):
     @property
     def is_awaiting_action(self):
         return self.adoption_notice_status in self._values_of(AdoptionNoticeStatusChoices.AwaitingAction.choices)
+
+    @property
+    def status_description(self):
+        return AdoptionNoticeStatusChoicesDescriptions.mapping[self.adoption_notice_status]
 
     def set_unchecked(self):
         self.last_checked = timezone.now()
