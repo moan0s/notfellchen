@@ -679,7 +679,7 @@ def updatequeue(request):
         last_checked_adoption_list = AdoptionNotice.objects.filter(owner=request.user).order_by("last_checked")
     adoption_notices_active = [adoption for adoption in last_checked_adoption_list if adoption.is_active]
     adoption_notices_disabled = [adoption for adoption in last_checked_adoption_list if
-                                 adoption.adoption_notice_status == AdoptionNoticeStatusChoices.Disabled.UNCHECKED]
+                                 adoption.adoption_notice_status == AdoptionNoticeStatusChoices.AwaitingAction.UNCHECKED]
     context = {"adoption_notices_disabled": adoption_notices_disabled,
                "adoption_notices_active": adoption_notices_active}
     return render(request, 'fellchensammlung/updatequeue.html', context=context)
