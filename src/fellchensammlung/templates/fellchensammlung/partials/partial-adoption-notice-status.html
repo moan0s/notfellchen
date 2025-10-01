@@ -25,14 +25,10 @@
 {% elif adoption_notice.is_awaiting_action %}
     <article class="message is-warning">
         <div class="message-header">
-            <p>{% translate 'Warten auf Aktivierung' %}</p>
+            <p>{% translate 'Wartet auf Freigabe von Moderator*innen' %}</p>
         </div>
         <div class="message-body content">
-            {% blocktranslate %}
-                Diese Vermittlung muss noch durch Moderator*innen aktiviert werden und taucht daher nicht auf der
-                Startseite auf.
-                Ggf. fehlen noch relevante Informationen.
-            {% endblocktranslate %}
+            {{ adoption_notice.status_description }}
         </div>
     </article>
 {% endif %}
