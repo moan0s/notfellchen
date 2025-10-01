@@ -560,7 +560,7 @@ class AdoptionNotice(models.Model):
 
     def set_unchecked(self):
         self.last_checked = timezone.now()
-        self.adoption_notice_status = AdoptionNoticeStatusChoices.Disabled.UNCHECKED
+        self.adoption_notice_status = AdoptionNoticeStatusChoices.AwaitingAction.UNCHECKED
         self.save()
 
         for subscription in self.get_subscriptions():
