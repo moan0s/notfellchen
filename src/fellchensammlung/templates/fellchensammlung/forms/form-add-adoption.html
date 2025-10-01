@@ -81,6 +81,20 @@
                 </div>
             </div>
 
+
+            <div class="field">
+                <label class="label" for="an-organization">
+                    {{ form.organization.label }}
+                    {% if form.organization.field.required %}<span class="special_class">*</span>{% endif %}
+                </label>
+                <div class="select">
+                    {{ form.organization|attr:"id:an-organization" }}
+                </div>
+                <div class="help">
+                    {{ form.organization.help_text }}
+                </div>
+            </div>
+
             <div class="notification is-info">
                 <p>
 
