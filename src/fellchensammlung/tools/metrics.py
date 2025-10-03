@@ -1,4 +1,22 @@
-from fellchensammlung.models import User, AdoptionNotice, AdoptionNoticeStatusChoices
+from datetime import timedelta
+
+from django.utils import timezone
+
+from fellchensammlung.models import User, AdoptionNotice, AdoptionNoticeStatusChoices, Animal, RescueOrganization
+
+
+def get_rescue_org_check_stats():
+    timeframe = timezone.now().date() - timedelta(days=14)
+    num_rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).filter(
+        last_checked__lt=timeframe).count()
+    num_rescue_orgs_checked = RescueOrganization.objects.filter(exclude_from_check=False).filter(
+        last_checked__gte=timeframe).count()
+
+    try:
+        percentage_checked = 100 * num_rescue_orgs_checked / (num_rescue_orgs_to_check + num_rescue_orgs_checked)
+    except ZeroDivisionError:
+        percentage_checked = 100
+    return num_rescue_orgs_to_check, num_rescue_orgs_checked, percentage_checked
 
 
 def gather_metrics_data():
@@ -32,6 +50,10 @@ def gather_metrics_data():
                 active_animals_per_sex[sex] = number_of_animals
             active_animals += number_of_animals
 
+    num_animal_shelters = RescueOrganization.objects.all().count()
+
+    num_rescue_orgs_to_check, num_rescue_orgs_checked, percentage_checked = get_rescue_org_check_stats()
+
     data = {
         'users': num_user,
         'staff': num_staff,
@@ -45,6 +67,12 @@ def gather_metrics_data():
         },
         'adoption_notices_without_location': adoption_notices_without_location,
         'active_animals': active_animals,
-        'active_animals_per_sex': active_animals_per_sex
+        'active_animals_per_sex': active_animals_per_sex,
+        'rescue_organizations': num_animal_shelters,
+        'rescue_organization_check': {
+            'rescue_orgs_to_check': num_rescue_orgs_to_check,
+            'rescue_orgs_checked': num_rescue_orgs_checked,
+            'percentage_checked': percentage_checked,
+        }
     }
     return data

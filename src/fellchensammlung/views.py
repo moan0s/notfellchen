@@ -30,7 +30,7 @@ from .models import Language, Announcement
 from .tools import i18n, img
 from .tools.fedi import post_an_to_fedi
 from .tools.geo import GeoAPI, zoom_level_for_radius
-from .tools.metrics import gather_metrics_data
+from .tools.metrics import gather_metrics_data, get_rescue_org_check_stats
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
     deactivate_404_adoption_notices, send_test_email
 from .tasks import post_adoption_notice_save
@@ -870,16 +870,7 @@ def rescue_organization_check(request, context=None):
         org.id: RescueOrgInternalComment(instance=org) for org in rescue_orgs_to_comment
     }
 
-    timeframe = timezone.now().date() - timedelta(days=14)
-    num_rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).filter(
-        last_checked__lt=timeframe).count()
-    num_rescue_orgs_checked = RescueOrganization.objects.filter(exclude_from_check=False).filter(
-        last_checked__gte=timeframe).count()
-
-    try:
-        percentage_checked = 100 * num_rescue_orgs_checked / (num_rescue_orgs_to_check + num_rescue_orgs_checked)
-    except ZeroDivisionError:
-        percentage_checked = 100
+    num_rescue_orgs_to_check, num_rescue_orgs_checked, percentage_checked = get_rescue_org_check_stats()
 
     context["rescue_orgs_to_check"] = rescue_orgs_to_check
     context["rescue_orgs_last_checked"] = rescue_orgs_last_checked
