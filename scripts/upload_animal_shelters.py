@@ -205,6 +205,8 @@ def main():
     h = {'Authorization': f'Token {api_token}', "content-type": "application/json"}
 
     tierheime = overpass_result["features"]
+    stats = {"num_updated_orgs": 0,
+             "num_inserted_orgs": 0}
 
     for idx, tierheim in enumerate(tqdm(tierheime)):
         # Check if data is low quality
@@ -229,11 +231,13 @@ def main():
         optional_data = ["email", "phone_number", "website", "description", "fediverse_profile", "facebook",
                          "instagram"]
 
-        # Check if rescue organization exits
+        # Check if rescue organization exists
         search_data = {"external_source_identifier": "OSM",
                        "external_object_identifier": f"{tierheim["id"]}"}
         search_result = requests.get(f"{instance}/api/organizations", params=search_data, headers=h)
+        # Rescue organization exits
         if search_result.status_code == 200:
+            stats["num_updated_orgs"] += 1
             org_id = search_result.json()[0]["id"]
             logging.debug(f"{th_data.name} already exists as ID {org_id}.")
             org_patch_data = {"id": org_id,
@@ -248,7 +252,9 @@ def main():
             if result.status_code != 200:
                 logging.warning(f"Updating {tierheim['properties']['name']} failed:{result.status_code} {result.json()}")
             continue
+        # Rescue organization does not exist
         else:
+            stats["num_inserted_orgs"] += 1
             location = create_location(tierheim, instance, h)
             org_data = {"name": tierheim["properties"]["name"],
                         "external_object_identifier": f"{tierheim["id"]}",
@@ -262,6 +268,7 @@ def main():
 
             if result.status_code != 201:
                 print(f"{idx} {tierheim["properties"]["name"]}:{result.status_code} {result.json()}")
+    print(f"Upload finished. Inserted {stats['num_inserted_orgs']} new orgs and updated {stats['num_updated_orgs']} orgs.")
 
 
 if __name__ == "__main__":
