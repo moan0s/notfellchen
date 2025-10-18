@@ -17,10 +17,10 @@ def pluralize(number, letter="e"):
 
 
 def age_as_hr_string(age: datetime.timedelta) -> str:
-    days = age.days
-    weeks = age.days / 7
-    months = age.days / 30
-    years = age.days / 365
+    days = int(age.days)
+    weeks = int(age.days / 7)
+    months = int(age.days / 30)
+    years = int(age.days / 365)
     if years >= 1:
         months = months - 12 * years
         return f'{years:.0f} Jahr{pluralize(years)} und {months:.0f} Monat{pluralize(months)}'
@@ -52,9 +52,9 @@ def time_since_as_hr_string(age: datetime.timedelta) -> str:
     elif weeks >= 3:
         text = _("vor %(weeks)d Wochen") % {"weeks": weeks}
     elif days >= 1:
-        text = ngettext("vor einem Tag","vor %(count)d Tagen", days,) % {"count": days,}
+        text = ngettext("vor einem Tag", "vor %(count)d Tagen", days, ) % {"count": days, }
     elif hours >= 1:
-        text = ngettext("vor einer Stunde", "vor %(count)d Stunden", hours,) % {"count": hours,}
+        text = ngettext("vor einer Stunde", "vor %(count)d Stunden", hours, ) % {"count": hours, }
     elif minutes >= 1:
         text = ngettext("vor einer Minute", "vor %(count)d Minuten", minutes, ) % {"count": minutes, }
     else:
