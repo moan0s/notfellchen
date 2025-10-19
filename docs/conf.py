@@ -16,6 +16,10 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path('_ext').resolve()))
 
 # -- Project information -----------------------------------------------------
 
@@ -28,7 +32,6 @@ version = ''
 # The full version, including alpha/beta/rc tags
 release = '0.2.0'
 
-
 # -- General configuration ---------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -40,6 +43,7 @@ release = '0.2.0'
 # ones.
 extensions = [
     'sphinx.ext.ifconfig',
+    'drawio'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -68,7 +72,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
-
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -104,7 +107,6 @@ html_static_path = ['_static']
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'notfellchen'
 
-
 # -- Options for LaTeX output ------------------------------------------------
 
 latex_elements = {
@@ -133,7 +135,6 @@ latex_documents = [
      'Julian-Samuel Gebühr', 'manual'),
 ]
 
-
 # -- Options for manual page output ------------------------------------------
 
 # One entry per manual page. List of tuples
@@ -142,7 +143,6 @@ man_pages = [
     (master_doc, 'notfellchen', 'Notfellchen Dokumentation',
      [author], 1)
 ]
-
 
 # -- Options for Texinfo output ----------------------------------------------
 
@@ -154,7 +154,6 @@ texinfo_documents = [
      author, 'Notfellchen', 'App für die Vermittlung von Tieren aus Tierschutz.',
      'Miscellaneous'),
 ]
-
 
 # -- Options for Epub output -------------------------------------------------
 
@@ -172,6 +171,5 @@ epub_title = project
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = ['search.html']
-
 
 # -- Extension configuration -------------------------------------------------
