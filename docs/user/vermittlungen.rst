@@ -16,6 +16,12 @@ Ersteller*innen von Vermittlungen werden über neue Kommentare per Mail benachri
 
 Kommentare können, wie Vermittlungen, gemeldet werden.
 
+.. drawio::
+   Vermittlung_Lifecycle.drawio.html
+   Vermittlung-Lifecycle.drawio.png
+   :alt: Diagramm das den Prozess der Vermittlungen zeigt.
+
+
 Adoption Notice Status Choices
 ++++++++++++++++++++++++++++++
 

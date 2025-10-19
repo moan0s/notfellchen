@@ -15,32 +15,44 @@ class DrawioDirective(SphinxDirective):
     .. drawio::
        example-diagram.drawio.html
        example-diagram.drawio.png
+       :alt: Example of a Draw.io diagram
     """
 
     has_content = False
     required_arguments = 2  # html and png
+    optional_arguments = 1
+    final_argument_whitespace = True  # indicating if the final argument may contain whitespace
+    option_spec = {
+        "alt": str,
+    }
 
     def run(self) -> list[nodes.Node]:
-        html_path = self.arguments[0]
-        png_path = self.arguments[1]
-
         env = self.state.document.settings.env
+        builder = env.app.builder
 
+        # Resolve paths relative to the document
         docdir = Path(env.doc2path(env.docname)).parent
         html_rel = Path(self.arguments[0])
         png_rel = Path(self.arguments[1])
-
         html_path = (docdir / html_rel).resolve()
         png_path = (docdir / png_rel).resolve()
+
+        alt_text = self.options.get("alt", "")
 
         container = nodes.container()
 
         # HTML output -> raw HTML node
-        if self.builder.format == "html":
+        if builder.format == "html":
             # Embed the HTML file contents directly
+            try:
+                html_content = html_path.read_text(encoding="utf-8")
+            except OSError as e:
+                msg = self.state_machine.reporter.error(f"Cannot read HTML file: {e}")
+                return [msg]
+            aria_attribute = f' aria-label="{alt_text}"' if alt_text else ""
             raw_html_node = nodes.raw(
                 "",
-                f'<div class="drawio-diagram">{open(html_path, encoding="utf-8").read()}</div>',
+                f'<div class="drawio-diagram"{aria_attribute}>{html_content}</div>',
                 format="html",
             )
             container += raw_html_node
@@ -51,17 +63,12 @@ class DrawioDirective(SphinxDirective):
 
         return [container]
 
-    @property
-    def builder(self):
-        # Helper to access the builder from the directive context
-        return self.state.document.settings.env.app.builder
-
 
 def setup(app: Sphinx) -> ExtensionMetadata:
     app.add_directive("drawio", DrawioDirective)
 
     return {
-        "version": "0.1",
+        "version": "0.2",
         "parallel_read_safe": True,
         "parallel_write_safe": True,
     }
