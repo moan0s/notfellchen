@@ -9,3 +9,4 @@ User Dokumentation
    vermittlungen.rst
    moderationskonzept.rst
    benachrichtigungen.rst
+   organisationen-pruefen.rst

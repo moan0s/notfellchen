@@ -23,9 +23,11 @@
             </div>
             <div class="column">
                 {% if dq %}
-                    <a class="button is-info" href="{% url 'organization-check' %}">{% translate 'Datenergänzung deaktivieren' %}</a>
+                    <a class="button is-info"
+                       href="{% url 'organization-check' %}">{% translate 'Datenergänzung deaktivieren' %}</a>
                 {% else %}
-                    <a class="button is-info is-light" href="{% url 'organization-check-dq' %}">{% translate 'Datenergänzung aktivieren' %}</a>
+                    <a class="button is-info is-light"
+                       href="{% url 'organization-check-dq' %}">{% translate 'Datenergänzung aktivieren' %}</a>
                 {% endif %}
             </div>
         </div>
@@ -65,4 +67,5 @@
             {% endfor %}
         </div>
     </div>
+    {% include "fellchensammlung/partials/modal-shortcuts.html" %}
 {% endblock %}

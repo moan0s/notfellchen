@@ -1,0 +1,30 @@
+{% load i18n %}
+<div id="modal-shortcuts" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">{% trans 'Shortcuts' %}</p>
+            <button class="delete" aria-label="{% trans 'Schließen' %}"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="content">
+                <ul>
+                    <li>{% trans 'Website öffnen' %}: <code>O</code></li>
+                    <li>{% trans 'Website schließen' %}: <code>{% trans 'STRG' %} + W</code></li>
+                    <li>{% trans 'Organisation als geprüft markieren' %}: <code>{% trans 'STRG' %} + W</code></li>
+                </ul>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <div class="buttons">
+                <button class="button is-success nf-modal-close">{% translate 'Verstanden' %}</button>
+                <button class="button">{% translate 'Details' %}</button>
+            </div>
+        </footer>
+    </div>
+</div>
+
+
+<button class="button is-info floating js-modal-trigger" data-target="modal-shortcuts">
+    <i class="fa-solid fa-keyboard fa-fw"></i> {% trans 'Shortcuts' %}
+</button>
