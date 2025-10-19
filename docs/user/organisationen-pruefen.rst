@@ -22,6 +22,12 @@ oder findest ihn in unter :menuselection:`Hilfreiche Links --> Moderationstools`
   :alt: Screenshot der Moderationstools. Zur Auswahl stehen "Moderationswarteschlange", "Up-to-Date Check", "Organisations-Check" und "Vermittlung ins Fediverse posten".
 
 
+Arbeitsmodus
+------------
+
+.. drawio::
+   Tiere-in-Vermittlung-entdecken.drawio.html
+   Tiere-in-Vermittlung-entdecken.drawio.png
 
 Shortcuts
 ---------
