@@ -897,21 +897,36 @@ def rescue_organization_check_dq(request):
     return rescue_organization_check(request, context)
 
 
-@user_passes_test(user_is_trust_level_or_above)
-def exclude_from_regular_check(request, rescue_organization_id):
+def exclude_from_regular_check(request, rescue_organization_id, source="organization-check"):
     rescue_org = get_object_or_404(RescueOrganization, pk=rescue_organization_id)
     if request.method == "POST":
         form = UpdateRescueOrgRegularCheckStatus(request.POST, instance=rescue_org)
         if form.is_valid():
             form.save()
-            if form.cleaned_data["regular_check_status"] != RegularCheckStatusChoices.REGULAR_CHECK:
-                rescue_org.exclude_from_check = True
-                rescue_org.save()
-            return redirect(reverse("organization-check"))
+            to_be_excluded = form.cleaned_data["regular_check_status"] != RegularCheckStatusChoices.REGULAR_CHECK
+            rescue_org.exclude_from_check = to_be_excluded
+            rescue_org.save()
+
+            return redirect(reverse(source))
     else:
         form = UpdateRescueOrgRegularCheckStatus(instance=rescue_org)
-    context = {"form": form, rescue_org: rescue_org}
+    org_meta = rescue_org._meta
+    context = {"form": form, "org": rescue_org, "org_meta": org_meta}
     return render(request, 'fellchensammlung/forms/form-exclude-org-from-check.html', context=context)
+
+
+@user_passes_test(user_is_trust_level_or_above)
+def update_exclusion_reason(request):
+    """
+    This view will redirect to update a rescue org that not yet has an exclusion reason but is excluded
+    """
+    orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=True,
+                                                      regular_check_status=RegularCheckStatusChoices.REGULAR_CHECK)
+    if orgs_to_check.count() > 0:
+        return exclude_from_regular_check(request, orgs_to_check[0].pk,
+                                          source="rescue-organization-add-exclusion-reason")
+    else:
+        return render(request, "fellchensammlung/errors/404.html", status=404)
 
 
 @user_passes_test(user_is_trust_level_or_above)

@@ -1,18 +1,35 @@
 {% extends "fellchensammlung/base.html" %}
 {% load i18n %}
 {% load widget_tweaks %}
+{% load admin_urls %}
 
 {% block title %}
-    <title>Organisation {{ rescue_org }} von regelmäßiger Prüfung ausschließen</title>
+    <title>Organisation {{ org }} von regelmäßiger Prüfung ausschließen</title>
 {% endblock %}
 
 {% block content %}
-    <h1 class="title is-1">Organisation {{ rescue_org }} von regelmäßiger Prüfung ausschließen</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
+    <h1 class="title is-1">Organisation {{ org }} von regelmäßiger Prüfung ausschließen</h1>
+    <div class="columns block">
+        <div class="column">
+            {% include "fellchensammlung/partials/rescue_orgs/partial-basic-info-card.html" %}
+        </div>
+        <div class="column">
+            {% include "fellchensammlung/partials/rescue_orgs/partial-rescue-organization-contact.html" %}
+        </div>
+    </div>
+    <div class="block">
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
 
-        <a class="button" href="{% url 'organization-check' %}">{% translate "Zurück (nicht exkludieren)" %}</a>
-        <input class="button is-danger" type="submit" name="delete" value="{% translate "Von regelmäßiger Prüfung ausschließen" %}">
-    </form>
+            <a class="button" href="{% url 'organization-check' %}">{% translate "Zurück (nicht exkludieren)" %}</a>
+            <input class="button is-danger" type="submit" name="delete"
+                   value="{% translate "Von regelmäßiger Prüfung ausschließen" %}">
+        </form>
+    </div>
+    <div class="block">
+        <a class="button is-warning is-fullwidth" href="{% url org_meta|admin_urlname:'change' org.pk %}">
+            <i class="fa-solid fa-tools fa-fw"></i> Admin interface
+        </a>
+    </div>
 {% endblock %}

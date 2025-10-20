@@ -19,53 +19,10 @@
     <div class="columns">
         <div class="column">
             <div class="block">
-                <div class="card">
-                    <div class="card-header">
-                        <h1 class="card-header-title">{{ org.name }}</h1>
-                    </div>
-                    <div class="card-content">
-                        <div class="block">
-                            <b><i class="fa-solid fa-location-dot"></i></b>
-                            {% if org.location %}
-                                {{ org.location }}
-                            {% else %}
-                                {{ org.location_string }}
-                            {% endif %}
-                            {% if org.description %}
-                                <div class="block content">
-                                    <p>{{ org.description | render_markdown }}</p>
-                                </div>
-                            {% endif %}
-                        </div>
-                        {% if org.specializations %}
-                            <div class="block">
-                                <h3 class="title is-5">{% translate 'Spezialisierung' %}</h3>
-                                <div class="content">
-                                    <ul>
-                                        {% for specialization in org.specializations.all %}
-                                            <li>{{ specialization }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        {% endif %}
-                        {% if org.parent_org %}
-                            <div class="block">
-                                <h3 class="title is-5">{% translate 'Übergeordnete Organisation' %}</h3>
-                                <p>
-                                    <span>
-                                        <i class="fa-solid fa-building fa-fw"
-                                           aria-label="{% trans 'Tierschutzorganisation' %}"></i>
-                                            <a href="{{ org.parent_org.get_absolute_url }}"> {{ org.parent_org }}</a>
-                                    </span>
-                                </p>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
+                {% include "fellchensammlung/partials/rescue_orgs/partial-basic-info-card.html" %}
             </div>
             <div class="block">
-                {% include "fellchensammlung/partials/partial-rescue-organization-contact.html" %}
+                {% include "fellchensammlung/partials/rescue_orgs/partial-rescue-organization-contact.html" %}
             </div>
             <div class="block">
                 <a class="button is-warning is-fullwidth" href="{% url org_meta|admin_urlname:'change' org.pk %}">

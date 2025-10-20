@@ -49,6 +49,8 @@ urlpatterns = [
          name="rescue-organization-detail"),
     path("tierschutzorganisationen/<int:rescue_organization_id>/exkludieren", views.exclude_from_regular_check,
          name="rescue-organization-exclude"),
+    path("tierschutzorganisationen/add-exclusion-reason", views.update_exclusion_reason,
+         name="rescue-organization-add-exclusion-reason"),
     path("tierschutzorganisationen/spezialisierung/<slug:species_slug>", views.specialized_rescues,
          name="specialized-rescue-organizations"),
 
