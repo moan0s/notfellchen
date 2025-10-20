@@ -57,6 +57,14 @@ class AnimalForm(forms.ModelForm):
         }
 
 
+class UpdateRescueOrgRegularCheckStatus(forms.ModelForm):
+    template_name = "fellchensammlung/forms/form_snippets.html"
+
+    class Meta:
+        model = RescueOrganization
+        fields = ["regular_check_status"]
+
+
 class ImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'in_flow' in kwargs:

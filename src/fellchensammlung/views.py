@@ -25,7 +25,8 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
     Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, \
     ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
-    CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment
+    CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment, \
+    UpdateRescueOrgRegularCheckStatus
 from .models import Language, Announcement
 from .tools import i18n, img
 from .tools.fedi import post_an_to_fedi
@@ -36,7 +37,7 @@ from .tools.admin import clean_locations, get_unchecked_adoption_notices, deacti
 from .tasks import post_adoption_notice_save
 from rest_framework.authtoken.models import Token
 
-from .tools.model_helpers import AdoptionNoticeStatusChoices, AdoptionNoticeProcessTemplates
+from .tools.model_helpers import AdoptionNoticeStatusChoices, AdoptionNoticeProcessTemplates, RegularCheckStatusChoices
 from .tools.search import AdoptionNoticeSearch, RescueOrgSearch
 
 
@@ -894,6 +895,23 @@ def rescue_organization_check_dq(request):
                "species_url_form": SpeciesURLForm,
                "internal_comment_form": RescueOrgInternalComment}
     return rescue_organization_check(request, context)
+
+
+@user_passes_test(user_is_trust_level_or_above)
+def exclude_from_regular_check(request, rescue_organization_id):
+    rescue_org = get_object_or_404(RescueOrganization, pk=rescue_organization_id)
+    if request.method == "POST":
+        form = UpdateRescueOrgRegularCheckStatus(request.POST, instance=rescue_org)
+        if form.is_valid():
+            form.save()
+            if form.cleaned_data["regular_check_status"] != RegularCheckStatusChoices.REGULAR_CHECK:
+                rescue_org.exclude_from_check = True
+                rescue_org.save()
+            return redirect(reverse("organization-check"))
+    else:
+        form = UpdateRescueOrgRegularCheckStatus(instance=rescue_org)
+    context = {"form": form, rescue_org: rescue_org}
+    return render(request, 'fellchensammlung/forms/form-exclude-org-from-check.html', context=context)
 
 
 @user_passes_test(user_is_trust_level_or_above)

@@ -75,15 +75,7 @@
             </form>
         </div>
         <div class="card-footer-item is-danger">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden"
-                       name="rescue_organization_id"
-                       value="{{ rescue_org.pk }}">
-                <input type="hidden" name="action" value="exclude">
-                <button class="" type="submit">{% translate "Von Check exkludieren" %}</button>
-
-            </form>
+            <a href="{% url 'rescue-organization-exclude' rescue_organization_id=rescue_org.pk %}">{% translate "Von Check exkludieren" %}</a>
         </div>
     </div>
 </div>

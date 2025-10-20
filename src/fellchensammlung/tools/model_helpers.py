@@ -110,7 +110,8 @@ class AdoptionNoticeStatusChoicesDescriptions:
                _ansc.AwaitingAction.WAITING_FOR_REVIEW: _(
                    "Deaktiviert bis Moderator*innen die Vermittlung prüfen können."),
                _ansc.AwaitingAction.NEEDS_ADDITIONAL_INFO: _("Deaktiviert bis Informationen nachgetragen werden."),
-               _ansc.AwaitingAction.UNCHECKED: _("Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde."),
+               _ansc.AwaitingAction.UNCHECKED: _(
+                   "Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde."),
 
                _ansc.Disabled.AGAINST_RULES: _("Vermittlung deaktiviert da sie gegen die Regeln verstößt."),
                _ansc.Disabled.OTHER: _("Vermittlung deaktiviert.")
@@ -125,3 +126,11 @@ class AdoptionNoticeProcessTemplates:
     _bp = "fellchensammlung/partials/adoption_process/"  # Base path for ease
     mapping = {AdoptionProcess.CONTACT_PERSON_IN_AN: f"{_bp}contact_person_in_an.html",
                }
+
+
+class RegularCheckStatusChoices(models.TextChoices):
+    REGULAR_CHECK = "regular_check", _("Wird regelmäßig geprüft")
+    EXCLUDED_NO_ONLINE_LISTING = "excluded_no_online_listing", _("Exkludiert: Tiere werden nicht online gelistet")
+    EXCLUDED_OTHER_ORG = "excluded_other_org", _("Exkludiert: Andere Organisation wird geprüft")
+    EXCLUDED_SCOPE = "excluded_scope", _("Exkludiert: Organisation hat nie Notfellchen-relevanten Vermittlungen")
+    EXCLUDED_OTHER = "excluded_other", _("Exkludiert: Anderer Grund")

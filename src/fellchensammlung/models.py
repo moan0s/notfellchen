@@ -13,7 +13,7 @@ from notfellchen.settings import MEDIA_URL, base_url
 from .tools.geo import LocationProxy, Position
 from .tools.misc import time_since_as_hr_string
 from .tools.model_helpers import NotificationTypeChoices, AdoptionNoticeStatusChoices, AdoptionProcess, \
-    AdoptionNoticeStatusChoicesDescriptions
+    AdoptionNoticeStatusChoicesDescriptions, RegularCheckStatusChoices
 from .tools.model_helpers import ndm as NotificationDisplayMapping
 
 
@@ -172,6 +172,12 @@ class RescueOrganization(models.Model):
     exclude_from_check = models.BooleanField(default=False, verbose_name=_('Von Prüfung ausschließen'),
                                              help_text=_("Organisation von der manuellen Überprüfung ausschließen, "
                                                          "z.B. weil Tiere nicht online geführt werden"))
+    regular_check_status = models.CharField(max_length=30, choices=RegularCheckStatusChoices.choices,
+                                            default=RegularCheckStatusChoices.REGULAR_CHECK,
+                                            verbose_name=_('Status der regelmäßigen Prüfung'),
+                                            help_text=_(
+                                                "Organisationen können, durch ändern dieser Einstellung, von der "
+                                                "regelmäßigen Prüfung ausgeschlossen werden."))
     ongoing_communication = models.BooleanField(default=False, verbose_name=_('In aktiver Kommunikation'),
                                                 help_text=_(
                                                     "Es findet gerade Kommunikation zwischen Notfellchen und der Organisation statt."))
