@@ -1,9 +1,18 @@
 Tiere in Vermittlung systematisch entdecken & eintragen
 =======================================================
 
-Notfellchen hat eine Liste der meisten deutschen Tierheime und anderer Tierschutzorganisationen (550, Stand Oktober 2025).
-Die meisten dieser Organisationen (412, Stand Oktober 2025) nehmen Tiere auf die bei Notfellchen eingetragen werden können.
+Notfellchen hat eine Liste der meisten deutschen Tierheime und anderer Tierschutzorganisationen.
+Die meisten dieser Organisationen nehmen Tiere auf die bei Notfellchen eingetragen werden können.
 Es ist daher das Ziel, diese Organisationen alle zwei Wochen auf neue Tiere zu prüfen.
+
+
++-------------------------------------------------+---------+----------------------+
+| Gruppe                                          | Anzahl  | Zuletzt aktualisiert |
++=================================================+=========+======================+
+|  Tierschutzorganisationen im Verzeichnis        | 550     | Oktober 2025         |
++-------------------------------------------------+---------+----------------------+
+| Tierschutzorganisationen in regelmäßigerPrüfung | 412     | Oktober 2025         |
++-------------------------------------------------+---------+----------------------+
 
 .. warning::
 
