@@ -22,9 +22,9 @@
             {% csrf_token %}
             {{ form }}
 
-            <a class="button" href="{% url 'organization-check' %}">{% translate "Zurück (nicht exkludieren)" %}</a>
-            <input class="button is-danger" type="submit" name="delete"
-                   value="{% translate "Von regelmäßiger Prüfung ausschließen" %}">
+            <input class="button is-primary" type="submit" name="delete"
+                   value="{% translate "Aktualisieren" %}">
+            <a class="button" href="{% url 'organization-check' %}">{% translate "Zurück" %}</a>
         </form>
     </div>
     <div class="block">
