@@ -1,7 +1,8 @@
 {% extends "fellchensammlung/base.html" %}
 {% load i18n %}
+{% load account %}
 
-{% block title %}<title>{{ user.get_full_name }}</title>{% endblock %}
+{% block title %}<title>{% user_display user %}</title>{% endblock %}
 
 
 {% block content %}
@@ -13,7 +14,7 @@
         </div>
         <div class="level-right">
             <div class="level-item">
-                <form class="" action="{% url 'logout' %}" method="post">
+                <form class="" action="{% url 'account_logout' %}" method="post">
                     {% csrf_token %}
                     <button class="button" type="submit">
                         <i aria-hidden="true" class="fas fa-sign-out fa-fw"></i> Logout
@@ -25,12 +26,12 @@
 
     <div class="block">
         <h2 class="title is-2">{% trans 'Profil verwalten' %}</h2>
-        <p><strong>{% translate "E-Mail" %}:</strong> {{ user.email }}</p>
-        <div class="">
-            <p>
-                <a class="button is-warning" href="{% url 'password_change' %}">{% translate "Change password" %}</a>
-                <a class="button is-info" href="{% url 'user-me-export' %}">{% translate "Daten exportieren" %}</a>
-            </p>
+        <div class="block"><strong>{% translate "E-Mail" %}:</strong> {{ user.email }}</div>
+        <div class="block">
+            <a class="button is-warning"
+               href="{% url 'account_change_password' %}">{% translate "Passwort ändern" %}</a>
+            <a class="button is-warning" href="{% url 'account_email' %}">{% translate "E-Mail Adresse ändern" %}</a>
+            <a class="button is-info" href="{% url 'user-me-export' %}">{% translate "Daten exportieren" %}</a>
         </div>
     </div>
 

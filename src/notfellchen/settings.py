@@ -130,6 +130,34 @@ ACCOUNT_ACTIVATION_DAYS = 7  # One-week activation window
 REGISTRATION_OPEN = True
 REGISTRATION_SALT = "notfellchen"
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
+
+ACCOUNT_SIGNUP_FIELDS = ['username*', "email*", "password1*", "password2*"]
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'fellchensammlung.forms.AddedRegistrationForm'
+
+MFA_SUPPORTED_TYPES = ["totp",
+                       "webauthn",
+                       "recovery_codes"]
+
+MFA_PASSKEY_LOGIN_ENABLED = True
+MFA_PASSKEY_SIGNUP_ENABLED = True
+
+# Optional -- use for local development only: the WebAuthn uses the
+#``fido2`` package, and versions up to including version 1.1.3 do not
+# regard localhost as a secure origin, which is problematic during
+# local development and testing.
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = True
+
 """ SECURITY.TXT """
 SEC_CONTACT = config.get("security", "Contact", fallback="julian-samuel@gebuehr.net")
 SEC_EXPIRES = config.get("security", "Expires", fallback="2028-03-17T07:00:00.000Z")
@@ -182,7 +210,11 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    "django.contrib.humanize",
     'django.contrib.messages',
+    'allauth',
+    'allauth.account',
+    'allauth.mfa',
     'django.contrib.staticfiles',
     "django.contrib.sitemaps",
     'fontawesomefree',
@@ -193,7 +225,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_spectacular',
     'drf_spectacular_sidecar',  # required for Django collectstatic discovery
-    'widget_tweaks'
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -208,6 +240,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # allauth middleware, needs to be after message middleware
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'notfellchen.urls'
@@ -222,6 +256,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                # Needed for allauth
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.media',

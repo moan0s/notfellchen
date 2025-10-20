@@ -137,6 +137,14 @@ class ModerationActionForm(forms.ModelForm):
         fields = ('action', 'public_comment', 'private_comment')
 
 
+class AddedRegistrationForm(forms.Form):
+    captcha = forms.CharField(validators=[animal_validator], label=_("Nenne eine bekannte Tierart"), help_text=_(
+        "Bitte nenne hier eine bekannte Tierart (z.B. ein Tier das an der Leine geführt wird). Das Fragen wir dich um sicherzustellen, dass du kein Roboter bist."))
+
+    def signup(self, request, user):
+        pass
+
+
 class CustomRegistrationForm(RegistrationForm):
     class Meta(RegistrationForm.Meta):
         model = User

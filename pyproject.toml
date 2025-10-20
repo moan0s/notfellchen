@@ -38,7 +38,8 @@ dependencies = [
     "celery[redis]",
     "drf-spectacular[sidecar]",
     "django-widget-tweaks",
-    "django-super-deduper"
+    "django-super-deduper",
+    "django-allauth[mfa]"
 ]
 
 dynamic = ["version", "readme"]
