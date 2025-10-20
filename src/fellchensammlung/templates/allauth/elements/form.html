@@ -1,0 +1,12 @@
+{% load allauth %}
+<div class="block">
+    <form method="{{ attrs.method }}"
+          {% if attrs.action %}action="{{ attrs.action }}"{% endif %}>
+        {% slot body %}
+        {% endslot %}
+        <div class="field is-grouped is-grouped-multiline">
+            {% slot actions %}
+            {% endslot %}
+        </div>
+    </form>
+</div>
