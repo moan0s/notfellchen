@@ -1,0 +1,78 @@
+{% extends "mfa/webauthn/base.html" %}
+{% load i18n %}
+{% load static %}
+{% load allauth %}
+{% load humanize %}
+{% block content %}
+    {% element h1 %}
+        {% trans "Security Keys" %}
+    {% endelement %}
+    {% if authenticators|length == 0 %}
+        {% element p %}
+            {% blocktranslate %}No security keys have been added.{% endblocktranslate %}
+        {% endelement %}
+    {% else %}
+        <article class="panel">
+            <p class="panel-heading">{% trans "Security Keys" %}</p>
+            {% for authenticator in authenticators %}
+                <div class="panel-block">
+                    <div class="level" style="width: 100%;">
+                        <div class="level-left">
+                            <div class="level-item">
+                                {% if authenticator.wrap.is_passwordless is True %}
+                                    {% element badge tags="mfa,key,primary" %}
+                                        {% translate "Passkey" %}
+                                    {% endelement %}
+                                {% elif authenticator.wrap.is_passwordless is False %}
+                                    {% element badge tags="mfa,key,secondary" %}
+                                        {% translate "Security key" %}
+                                    {% endelement %}
+                                {% else %}
+                                    {% element badge title=_("This key does not indicate whether it is a passkey.") tags="mfa,key,warning" %}
+                                        {% translate "Unspecified" %}
+                                    {% endelement %}
+                                {% endif %}
+                            </div>
+                            <div class="level-item">
+                                <strong>
+                                    {{ authenticator }}
+                                </strong>
+                            </div>
+                            <div class="level-item">
+                                {% blocktranslate with created_at=authenticator.created_at|date:"SHORT_DATE_FORMAT" %}
+                                    Added
+                                    on {{ created_at }}{% endblocktranslate %}.
+                            </div>
+                            <div class="level-item">
+                                {% if authenticator.last_used_at %}
+                                    {% blocktranslate with last_used=authenticator.last_used_at|naturaltime %}Last used
+                                        {{ last_used }}{% endblocktranslate %}
+                                {% else %}
+                                    Not used.
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="level-right">
+                            <div class="level-item">
+                                {% url 'mfa_edit_webauthn' pk=authenticator.pk as edit_url %}
+                                {% element button tags="mfa,authenticator,edit,tool" href=edit_url %}
+                                    {% translate "Edit" %}
+                                {% endelement %}
+                            </div>
+                            <div class="level-item">
+                                {% url 'mfa_remove_webauthn' pk=authenticator.pk as remove_url %}
+                                {% element button tags="mfa,authenticator,danger,delete,tool" href=remove_url %}
+                                    {% translate "Remove" %}
+                                {% endelement %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </article>
+    {% endif %}
+    {% url 'mfa_add_webauthn' as add_url %}
+    {% element button href=add_url %}
+        {% translate "Add" %}
+    {% endelement %}
+{% endblock %}
