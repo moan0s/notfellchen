@@ -1,0 +1,43 @@
+{% extends "mfa/recovery_codes/base.html" %}
+{% load i18n %}
+{% load allauth %}
+{% block content %}
+{% element h1 %}
+{% translate "Recovery Codes" %}
+{% endelement %}
+{% element p %}
+{% blocktranslate count unused_count=unused_codes|length %}There is {{ unused_count }} out of {{ total_count }}
+recovery codes available.{% plural %}There are {{ unused_count }} out of {{ total_count }} recovery codes
+available.{% endblocktranslate %}
+{% endelement %}
+<div class="block">
+{% element field id="recovery_codes" type="textarea" disabled=True rows=unused_codes|length readonly=True %}
+{% slot label %}
+{% translate "Unused codes" %}
+{% endslot %}
+{% comment %} djlint:off {% endcomment %}
+{% slot value %}{% for code in unused_codes %}{% if forloop.counter0 %}
+{% endif %}{{ code }}{% endfor %}{% endslot %}
+{% comment %} djlint:on {% endcomment %}
+{% endelement %}
+</div>
+<div class="block">
+<div class="field is-grouped is-grouped-multiline">
+{% if unused_codes %}
+{% url 'mfa_download_recovery_codes' as download_url %}
+<div class="control">
+{% element button href=download_url %}
+{% translate "Download codes" %}
+{% endelement %}
+</div>
+{% endif %}
+{% url 'mfa_generate_recovery_codes' as generate_url %}
+
+<div class="control">
+{% element button href=generate_url %}
+{% translate "Generate new codes" %}
+{% endelement %}
+</div>
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% load allauth %}
+<section class="block">
+    <h2 class="title is-2">
+        {% slot title %}
+        {% endslot %}
+    </h2>
+    {% slot body %}
+    {% endslot %}
+    {% if slots.actions %}
+        <div class="field is-grouped is-grouped-multiline">
+            {% for action in slots.actions %}
+                <div class="control">
+                    {{ action }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</section>
