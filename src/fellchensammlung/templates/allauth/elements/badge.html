@@ -1,0 +1,12 @@
+{% load allauth %}
+{% setvar variant %}
+    {% if "primary" in attrs.tags %}
+        is-success
+    {% elif "secondary" in attrs.tags %}
+        is-success is-light
+    {% endif %}
+{% endsetvar %}
+<span class="tag{% if variant %} {{ variant }}{% endif %}" {% if attrs.title %}title="{{ attrs.title }}"{% endif %}>
+    {% slot %}
+    {% endslot %}
+</span>
