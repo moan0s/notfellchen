@@ -654,7 +654,7 @@ def my_notifications(request):
     context = {"notifications_unread": Notification.objects.filter(user_to_notify=request.user, read=False).order_by(
         "-created_at"),
         "notifications_read_last": Notification.objects.filter(user_to_notify=request.user,
-                                                               read=True).order_by("-read_at")}
+                                                               read=True).order_by("-read_at")[:10]}
     return render(request, 'fellchensammlung/notifications.html', context=context)
 
 
