@@ -30,77 +30,83 @@
         <div class="block">
             <div class="field is-grouped is-grouped-multiline">
                 <div class="control">
-                <a class="button is-warning"
-                   href="{% url 'account_change_password' %}">{% translate "Passwort ändern" %}</a>
-                    </div>
+                    <a class="button is-warning"
+                       href="{% url 'account_change_password' %}">{% translate "Passwort ändern" %}</a>
+                </div>
                 <div class="control">
-                <a class="button is-warning"
-                   href="{% url 'account_email' %}">
-                    {% translate "E-Mail Adresse ändern" %}
-                </a>
-                    </div>
+                    <a class="button is-warning"
+                       href="{% url 'account_email' %}">
+                        {% translate "E-Mail Adresse ändern" %}
+                    </a>
+                </div>
                 <div class="control">
-                <a class="button is-info" href="{% url 'user-me-export' %}">
-                    {% translate "Daten exportieren" %}
-                </a>
+                    <a class="button is-warning"
+                       href="{% url 'mfa_index' %}">
+                        {% translate "2-Faktor Authentifizierung" %}
+                    </a>
+                </div>
+                <div class="control">
+                    <a class="button is-info" href="{% url 'user-me-export' %}">
+                        {% translate "Daten exportieren" %}
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 
-    {% if user.id is request.user.id %}
-        <div class="block">
-            <h2 class="title is-2">{% trans 'Einstellungen' %}</h2>
-            <form class="block" action="" method="POST">
-                {% csrf_token %}
-                {% if user.email_notifications %}
-                    <label class="toggle">
-                        <input type="submit" class="toggle-checkbox checked" name="toggle_email_notifications">
-                        <div class="toggle-switch round "></div>
-                        <span class="slider-label">
+        {% if user.id is request.user.id %}
+            <div class="block">
+                <h2 class="title is-2">{% trans 'Einstellungen' %}</h2>
+                <form class="block" action="" method="POST">
+                    {% csrf_token %}
+                    {% if user.email_notifications %}
+                        <label class="toggle">
+                            <input type="submit" class="toggle-checkbox checked" name="toggle_email_notifications">
+                            <div class="toggle-switch round "></div>
+                            <span class="slider-label">
                         {% translate 'E-Mail Benachrichtigungen' %}
                         </span>
-                    </label>
-                {% else %}
-                    <label class="toggle">
-                        <input type="submit" class="toggle-checkbox" name="toggle_email_notifications">
-                        <div class="toggle-switch round"></div>
-                        <span class="slider-label">
-                        {% translate 'E-Mail Benachrichtigungen' %}
-                        </span>
-                    </label>
-                {% endif %}
-            </form>
-            <details>
-                <summary><strong>{% trans 'Erweiterte Einstellungen' %}</strong></summary>
-                <div class="block">
-                    {% if token %}
-                        <form action="" method="POST">
-                            {% csrf_token %}
-                            <p class="text-muted"><strong>{% translate "API token:" %}</strong> {{ token }}</p>
-                            <input class="button is-danger" type="submit" name="delete_token"
-                                   value={% translate "Delete API token" %}>
-                        </form>
+                        </label>
                     {% else %}
-                        <p>{% translate "Kein API-Token vorhanden." %}</p>
-                        <form action="" method="POST">
-                            {% csrf_token %}
-                            <input class="button is-primary" type="submit" name="create_token"
-                                   value={% translate "Create API token" %}>
-                        </form>
+                        <label class="toggle">
+                            <input type="submit" class="toggle-checkbox" name="toggle_email_notifications">
+                            <div class="toggle-switch round"></div>
+                            <span class="slider-label">
+                        {% translate 'E-Mail Benachrichtigungen' %}
+                        </span>
+                        </label>
                     {% endif %}
-                </div>
-            </details>
+                </form>
+                <details>
+                    <summary><strong>{% trans 'Erweiterte Einstellungen' %}</strong></summary>
+                    <div class="block">
+                        {% if token %}
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <p class="text-muted"><strong>{% translate "API token:" %}</strong> {{ token }}</p>
+                                <input class="button is-danger" type="submit" name="delete_token"
+                                       value={% translate "Delete API token" %}>
+                            </form>
+                        {% else %}
+                            <p>{% translate "Kein API-Token vorhanden." %}</p>
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input class="button is-primary" type="submit" name="create_token"
+                                       value={% translate "Create API token" %}>
+                            </form>
+                        {% endif %}
+                    </div>
+                </details>
 
-        </div>
+            </div>
 
-        <h2 class="title is-2">{% translate 'Benachrichtigungen' %}</h2>
-        {% include "fellchensammlung/lists/list-notifications.html" %}
+            <h2 class="title is-2">{% translate 'Benachrichtigungen' %}</h2>
+            {% include "fellchensammlung/lists/list-notifications.html" %}
 
-        <h2 class="title is-2">{% translate 'Abonnierte Suchen' %}</h2>
-        {% include "fellchensammlung/lists/list-search-subscriptions.html" %}
+            <h2 class="title is-2">{% translate 'Abonnierte Suchen' %}</h2>
+            {% include "fellchensammlung/lists/list-search-subscriptions.html" %}
 
-        <h2 class="title is-2">{% translate 'Meine Vermittlungen' %}</h2>
-        {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+            <h2 class="title is-2">{% translate 'Meine Vermittlungen' %}</h2>
+            {% include "fellchensammlung/lists/list-adoption-notices.html" %}
 
-    {% endif %}
+        {% endif %}
 {% endblock %}
