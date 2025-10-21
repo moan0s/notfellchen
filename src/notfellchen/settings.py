@@ -149,6 +149,9 @@ MFA_SUPPORTED_TYPES = ["totp",
                        "webauthn",
                        "recovery_codes"]
 
+MFA_TOTP_TOLERANCE = 1
+MFA_TOTP_ISSUER = config.get('security', 'totp_issuer', fallback="Notfellchen")
+
 MFA_PASSKEY_LOGIN_ENABLED = True
 MFA_PASSKEY_SIGNUP_ENABLED = True
 
@@ -156,7 +159,7 @@ MFA_PASSKEY_SIGNUP_ENABLED = True
 #``fido2`` package, and versions up to including version 1.1.3 do not
 # regard localhost as a secure origin, which is problematic during
 # local development and testing.
-MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = True
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = config.get('security', 'webauth_allow_insecure_origin', fallback=False)
 
 """ SECURITY.TXT """
 SEC_CONTACT = config.get("security", "Contact", fallback="julian-samuel@gebuehr.net")
