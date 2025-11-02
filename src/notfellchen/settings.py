@@ -141,7 +141,7 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
 
-ACCOUNT_SIGNUP_FIELDS = ['username*', "email*", "password1*", "password2*"]
+ACCOUNT_SIGNUP_FIELDS = ['username*', "email*", "password1*"]
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'fellchensammlung.forms.AddedRegistrationForm'
 
