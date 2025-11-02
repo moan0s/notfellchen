@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.widgets import Textarea
 
 from .models import AdoptionNotice, Animal, Image, ReportAdoptionNotice, ReportComment, ModerationAction, User, Species, \
     Comment, SexChoicesWithAll, DistanceChoices, SpeciesSpecificURL, RescueOrganization
@@ -8,6 +9,8 @@ from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Fie
 from django.utils.translation import gettext_lazy as _
 from notfellchen.settings import MEDIA_URL
 from crispy_forms.layout import Div
+
+from .tools.model_helpers import reason_for_signup_label, reason_for_signup_help_text
 
 
 def animal_validator(value: str):
@@ -138,8 +141,12 @@ class ModerationActionForm(forms.ModelForm):
 
 
 class AddedRegistrationForm(forms.Form):
+    reason_for_signup = forms.CharField(label=reason_for_signup_label,
+                                        help_text=reason_for_signup_help_text,
+                                        widget=Textarea)
     captcha = forms.CharField(validators=[animal_validator], label=_("Nenne eine bekannte Tierart"), help_text=_(
-        "Bitte nenne hier eine bekannte Tierart (z.B. ein Tier das an der Leine geführt wird). Das Fragen wir dich um sicherzustellen, dass du kein Roboter bist."))
+        "Bitte nenne hier eine bekannte Tierart (z.B. ein Tier das an der Leine geführt wird). Das Fragen wir dich um "
+        "sicherzustellen, dass du kein Roboter bist."))
 
     def signup(self, request, user):
         pass
