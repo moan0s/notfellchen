@@ -1,5 +1,6 @@
 import datetime as datetime
 import logging
+import time
 
 from django.utils.translation import ngettext
 from django.utils.translation import gettext as _
@@ -75,3 +76,20 @@ def is_404(url):
         return result.status_code == 404
     except requests.RequestException as e:
         logging.warning(f"Request to {url} failed: {e}")
+
+
+class RequestProfiler:
+    data = []
+
+    def add_status(self, status):
+        self.data.append((time.time(), status))
+
+    @property
+    def as_relative(self):
+        first_ts = self.data[0][0]
+        return [(datum[0] - first_ts, datum[1]) for datum in self.data]
+
+    @property
+    def as_relative_with_ms(self):
+        first_ts = self.data[0][0]
+        return [(f"{(datum[0] - first_ts)*1000:.4}ms", datum[1]) for datum in self.data]

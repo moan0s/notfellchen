@@ -37,6 +37,26 @@
 {% block header %}
     {% include "fellchensammlung/header.html" %}
 {% endblock %}
+{% if profile %}
+    <div class="profile">
+        <table class="table is-bordered is-fullwidth is-hoverable is-striped">
+            <thead>
+            <tr>
+                <td>Timestamp</td>
+                <td>Status</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for status in profile %}
+                <tr>
+                    <td>{{ status.0 }}</td>
+                    <td>{{ status.1 }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endif %}
 <div class="main-content">
     {% block content %}{% endblock %}
 </div>

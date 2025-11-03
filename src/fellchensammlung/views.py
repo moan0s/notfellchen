@@ -1,5 +1,4 @@
 import logging
-from datetime import timedelta
 
 from django.contrib.auth.views import redirect_to_login
 from django.core.paginator import Paginator
@@ -37,6 +36,7 @@ from .tools.admin import clean_locations, get_unchecked_adoption_notices, deacti
 from .tasks import post_adoption_notice_save
 from rest_framework.authtoken.models import Token
 
+from .tools.misc import RequestProfiler
 from .tools.model_helpers import AdoptionNoticeStatusChoices, AdoptionNoticeProcessTemplates, RegularCheckStatusChoices
 from .tools.search import AdoptionNoticeSearch, RescueOrgSearch
 
@@ -242,11 +242,17 @@ def search_important_locations(request, important_location_slug):
 
 
 def search(request, templatename="fellchensammlung/search.html"):
+    search_profile = RequestProfiler()
+    search_profile.add_status("Start")
+
     # A user just visiting the search site did not search, only upon completing the search form a user has really
     # searched. This will toggle the "subscribe" button
     searched = False
+    search_profile.add_status("Init Search")
     search = AdoptionNoticeSearch()
+    search_profile.add_status("Search from request starting")
     search.adoption_notice_search_from_request(request)
+    search_profile.add_status("Search from request finished")
     if request.method == 'POST':
         searched = True
         if "subscribe_to_search" in request.POST:
@@ -266,10 +272,12 @@ def search(request, templatename="fellchensammlung/search.html"):
         subscribed_search = search.get_subscription_or_none(request.user)
     else:
         subscribed_search = None
+    search_profile.add_status("End of POST")
     site_title = _("Suche")
     site_description = _("Ratten in Tierheimen und Rattenhilfen in der Nähe suchen.")
     canonical_url = reverse("search")
 
+    search_profile.add_status("Start of context")
     context = {"adoption_notices": search.get_adoption_notices(),
                "search_form": search.search_form,
                "place_not_found": search.place_not_found,
@@ -286,6 +294,10 @@ def search(request, templatename="fellchensammlung/search.html"):
                "site_title": site_title,
                "site_description": site_description,
                "canonical_url": canonical_url}
+    search_profile.add_status("End of context")
+    if request.user.is_superuser:
+        context["profile"] = search_profile.as_relative_with_ms
+    search_profile.add_status("Finished - returing render")
     return render(request, templatename, context=context)
 
 
@@ -578,12 +590,20 @@ def report_detail_success(request, report_id):
 
 
 def user_detail(request, user, token=None):
+    user_detail_profile = RequestProfiler()
+    user_detail_profile.add_status("Start")
+    adoption_notices = AdoptionNotice.objects.filter(owner=user)
+    user_detail_profile.add_status("Finished fetching adoption notices")
     context = {"user": user,
-               "adoption_notices": AdoptionNotice.objects.filter(owner=user),
+               "adoption_notices": adoption_notices,
                "notifications": Notification.objects.filter(user_to_notify=user, read=False),
                "search_subscriptions": SearchSubscription.objects.filter(owner=user), }
+    user_detail_profile.add_status("End of context")
     if token is not None:
         context["token"] = token
+    user_detail_profile.add_status("Finished - returning to renderer")
+    if request.user.is_superuser:
+        context["profile"] = user_detail_profile.as_relative_with_ms
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
 
 
