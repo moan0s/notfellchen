@@ -419,7 +419,6 @@ class AdoptionNotice(models.Model):
 
     @property
     def num_per_sex(self):
-        print(f"{self.pk} x")
         num_per_sex = dict()
         for sex in SexChoices:
             num_per_sex[sex] = len([animal for animal in self.animals if animal.sex == sex])
