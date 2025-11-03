@@ -1,19 +1,20 @@
 {% load static %}
 {% load i18n %}
 <div class="grid is-col-min-2">
-    {% if adoption_notice.num_per_sex.F > 0 %}
-        <span class="cell icon-text tag is-medium">
-            <span class="has-text-weight-bold is-size-4">{{ adoption_notice.num_per_sex.F }} </span>
+    {% with num_per_sex=adoption_notice.num_per_sex %}
+        {% if num_per_sex.F > 0 %}
+            <span class="cell icon-text tag is-medium">
+            <span class="has-text-weight-bold is-size-4">{{ num_per_sex.F }}</span>
             <span class="icon">
                 <img class="icon" src="{% static 'fellchensammlung/img/sexes/Female.png' %}"
                      alt="{% translate 'weibliche Tiere' %}">
             </span>
         </span>
-    {% endif %}
+        {% endif %}
 
-    {% if adoption_notice.num_per_sex.I > 0 %}
-        <span class="cell icon-text tag is-medium">
-            <span class="has-text-weight-bold is-size-4">{{ adoption_notice.num_per_sex.I }}</span>
+        {% if num_per_sex.I > 0 %}
+            <span class="cell icon-text tag is-medium">
+            <span class="has-text-weight-bold is-size-4">{{ num_per_sex.I }}</span>
 
             <span class="icon">
                 <img class="icon"
@@ -21,24 +22,25 @@
                      alt="{% translate 'intersexuelle Tiere' %}">
             </span>
         </span>
-    {% endif %}
-    {% if adoption_notice.num_per_sex.M > 0 %}
-        <span class="cell icon-text tag is-medium">
-            <span class="has-text-weight-bold is-size-4">{{ adoption_notice.num_per_sex.M }}</span>
+        {% endif %}
+        {% if num_per_sex.M > 0 %}
+            <span class="cell icon-text tag is-medium">
+            <span class="has-text-weight-bold is-size-4">{{ num_per_sex.M }}</span>
             <span class="icon">
                 <img class="icon" src="{% static 'fellchensammlung/img/sexes/Male.png' %}"
                      alt="{% translate 'männliche Tiere' %}">
             </span>
         </span>
-    {% endif %}
-    {% if adoption_notice.num_per_sex.M_N > 0 %}
-        <span class="cell icon-text tag is-medium">
-            <span class="has-text-weight-bold is-size-4">{{ adoption_notice.num_per_sex.M_N }}</span>
+        {% endif %}
+        {% if num_per_sex.M_N > 0 %}
+            <span class="cell icon-text tag is-medium">
+            <span class="has-text-weight-bold is-size-4">{{ num_per_sex.M_N }}</span>
             <span class="icon">
                 <img class="icon"
                      src="{% static 'fellchensammlung/img/sexes/Male Neutered.png' %}"
                      alt="{% translate 'männlich, kastrierte Tiere' %}">
             </span>
         </span>
-    {% endif %}
+        {% endif %}
+    {% endwith %}
 </div>
