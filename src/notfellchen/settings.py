@@ -75,8 +75,19 @@ except configparser.NoSectionError:
 DEBUG = config.getboolean('django', 'debug', fallback=False)
 
 # Internal IPs
-raw_config_value = config.get("django", "internal_ips", fallback=[])
-INTERNAL_IPS = json.loads(raw_config_value)
+internal_ip_raw_config_value = config.get("django", "internal_ips", fallback=None)
+if internal_ip_raw_config_value:
+    INTERNAL_IPS = json.loads(internal_ip_raw_config_value)
+
+# Cache
+if config.getboolean('django', 'cache', fallback=False):
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "uniques-snowflake",
+        }
+    }
+
 
 """ DATABASE """
 DB_BACKEND = config.get("database", "backend", fallback="sqlite3")
@@ -245,7 +256,9 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     # Needs to be after SessionMiddleware and before CommonMiddleware
     'django.middleware.locale.LocaleMiddleware',
+    "django.middleware.cache.UpdateCacheMiddleware",
     'django.middleware.common.CommonMiddleware',
+    "django.middleware.cache.FetchFromCacheMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
