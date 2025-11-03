@@ -929,7 +929,7 @@ def exclude_from_regular_check(request, rescue_organization_id, source="organiza
             if to_be_excluded:
                 Log.objects.create(user=request.user,
                                    action="rescue_organization_excluded_from_check",
-                                   text=f"New status: {form.cleaned_data["regular_check_status"]}")
+                                   text=f"New status: {form.cleaned_data['regular_check_status']}")
 
             return redirect(reverse(source))
     else:
