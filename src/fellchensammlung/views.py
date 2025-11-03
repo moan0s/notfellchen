@@ -866,8 +866,7 @@ def rescue_organization_check(request, context=None):
         action = request.POST.get("action")
         if action == "checked":
             rescue_org.set_checked()
-        elif action == "exclude":
-            rescue_org.set_exclusion_from_checks()
+            Log.objects.create(user=request.user, action="rescue_organization_checked", )
         elif action == "set_species_url":
             species_url_form = SpeciesURLForm(request.POST)
 
@@ -878,6 +877,7 @@ def rescue_organization_check(request, context=None):
         elif action == "update_internal_comment":
             comment_form = RescueOrgInternalComment(request.POST, instance=rescue_org)
             if comment_form.is_valid():
+                Log.objects.create(user=request.user, action="rescue_organization_added_internal_comment", )
                 comment_form.save()
 
     rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False,
@@ -926,6 +926,10 @@ def exclude_from_regular_check(request, rescue_organization_id, source="organiza
             to_be_excluded = form.cleaned_data["regular_check_status"] != RegularCheckStatusChoices.REGULAR_CHECK
             rescue_org.exclude_from_check = to_be_excluded
             rescue_org.save()
+            if to_be_excluded:
+                Log.objects.create(user=request.user,
+                                   action="rescue_organization_excluded_from_check",
+                                   text=f"New status: {form.cleaned_data["regular_check_status"]}")
 
             return redirect(reverse(source))
     else:

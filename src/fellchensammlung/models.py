@@ -268,10 +268,6 @@ class RescueOrganization(models.Model):
         """
         return self.instagram or self.facebook or self.website or self.phone_number or self.email or self.fediverse_profile
 
-    def set_exclusion_from_checks(self):
-        self.exclude_from_check = True
-        self.save()
-
     @property
     def child_organizations(self):
         return RescueOrganization.objects.filter(parent_org=self)
@@ -423,9 +419,10 @@ class AdoptionNotice(models.Model):
 
     @property
     def num_per_sex(self):
+        print(f"{self.pk} x")
         num_per_sex = dict()
         for sex in SexChoices:
-            num_per_sex[sex] = self.animals.filter(sex=sex).count()
+            num_per_sex[sex] = len([animal for animal in self.animals if animal.sex == sex])
         return num_per_sex
 
     @property
