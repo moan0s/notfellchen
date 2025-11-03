@@ -512,6 +512,7 @@ class AdoptionNotice(models.Model):
                 photos.extend(animal.photos.all())
             if len(photos) > 0:
                 return photos
+            return None
 
     def get_photo(self):
         """
