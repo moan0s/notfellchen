@@ -40,6 +40,7 @@ dependencies = [
     "django-widget-tweaks",
     "django-super-deduper",
     "django-allauth[mfa]",
+    "django_debug_toolbar",
 ]
 
 dynamic = ["version", "readme"]
@@ -49,7 +50,6 @@ develop = [
     "pytest",
     "coverage",
     "model_bakery",
-    "debug_toolbar",
 ]
 docs = [
     "sphinx",
