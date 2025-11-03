@@ -164,6 +164,13 @@ class SocialMediaPostAdmin(admin.ModelAdmin):
     list_filter = ("platform",)
 
 
+@admin.register(Log)
+class LogAdmin(admin.ModelAdmin):
+    ordering = ["-created_at"]
+    list_filter = ("action",)
+    list_display = ("action", "user", "created_at")
+
+
 admin.site.register(Animal)
 admin.site.register(Species)
 admin.site.register(Rule)
@@ -172,5 +179,4 @@ admin.site.register(ModerationAction)
 admin.site.register(Language)
 admin.site.register(Announcement)
 admin.site.register(Subscriptions)
-admin.site.register(Log)
 admin.site.register(Timestamp)
