@@ -39,7 +39,7 @@ dependencies = [
     "drf-spectacular[sidecar]",
     "django-widget-tweaks",
     "django-super-deduper",
-    "django-allauth[mfa]"
+    "django-allauth[mfa]",
 ]
 
 dynamic = ["version", "readme"]
@@ -49,6 +49,7 @@ develop = [
     "pytest",
     "coverage",
     "model_bakery",
+    "debug_toolbar",
 ]
 docs = [
     "sphinx",

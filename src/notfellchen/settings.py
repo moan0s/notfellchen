@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import json
 from pathlib import Path
 import os
 import configparser
@@ -74,6 +74,10 @@ except configparser.NoSectionError:
     raise BaseException("No config found or no Django Secret is configured!")
 DEBUG = config.getboolean('django', 'debug', fallback=False)
 
+# Internal IPs
+raw_config_value = config.get("django", "internal_ips", fallback=[])
+INTERNAL_IPS = json.loads(raw_config_value)
+
 """ DATABASE """
 DB_BACKEND = config.get("database", "backend", fallback="sqlite3")
 DB_NAME = config.get("database", "name", fallback="notfellchen.sqlite3")
@@ -84,6 +88,7 @@ DB_HOST = config.get("database", "host", fallback='')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
+
 
 """ CELERY + KEYDB """
 CELERY_BROKER_URL = config.get("celery", "broker", fallback="redis://localhost:6379/0")
@@ -229,10 +234,12 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'drf_spectacular_sidecar',  # required for Django collectstatic discovery
     'widget_tweaks',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     # Static file serving & caching
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
