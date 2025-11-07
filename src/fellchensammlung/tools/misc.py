@@ -81,6 +81,9 @@ def is_404(url):
 class RequestProfiler:
     data = []
 
+    def clear(self):
+        self.data = []
+
     def add_status(self, status):
         self.data.append((time.time(), status))
 
