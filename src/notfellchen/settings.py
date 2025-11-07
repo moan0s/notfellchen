@@ -88,7 +88,6 @@ if config.getboolean('django', 'cache', fallback=False):
         }
     }
 
-
 """ DATABASE """
 DB_BACKEND = config.get("database", "backend", fallback="sqlite3")
 DB_NAME = config.get("database", "name", fallback="notfellchen.sqlite3")
@@ -99,7 +98,6 @@ DB_HOST = config.get("database", "host", fallback='')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
-
 
 """ CELERY + KEYDB """
 CELERY_BROKER_URL = config.get("celery", "broker", fallback="redis://localhost:6379/0")
@@ -246,6 +244,7 @@ INSTALLED_APPS = [
     'drf_spectacular_sidecar',  # required for Django collectstatic discovery
     'widget_tweaks',
     "debug_toolbar",
+    'admin_extra_buttons',
 ]
 
 MIDDLEWARE = [
