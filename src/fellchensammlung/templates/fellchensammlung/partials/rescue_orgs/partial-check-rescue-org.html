@@ -71,7 +71,22 @@
                        value="{{ rescue_org.pk }}">
                 <input type="hidden" name="action" value="checked">
                 <button class="" type="submit">{% translate "Organisation geprüft" %}</button>
-
+            </form>
+        </div>
+        <div class="card-footer-item is-warning">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden"
+                       name="rescue_organization_id"
+                       value="{{ rescue_org.pk }}">
+                <input type="hidden" name="action" value="toggle_active_communication">
+                <button class="" type="submit">
+                    {% if rescue_org.ongoing_communication %}
+                        {% translate "Aktive Kommunikation beendet" %}
+                    {% else %}
+                        {% translate "Aktive Kommunikation" %}
+                    {% endif %}
+                </button>
             </form>
         </div>
         <div class="card-footer-item is-danger">

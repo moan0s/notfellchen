@@ -867,6 +867,9 @@ def rescue_organization_check(request, context=None):
         if action == "checked":
             rescue_org.set_checked()
             Log.objects.create(user=request.user, action="rescue_organization_checked", )
+        elif action == "toggle_active_communication":
+            rescue_org.ongoing_communication = not rescue_org.ongoing_communication
+            rescue_org.save()
         elif action == "set_species_url":
             species_url_form = SpeciesURLForm(request.POST)
 
