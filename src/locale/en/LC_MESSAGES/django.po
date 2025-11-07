@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Notfellchen\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 14:28+0000\n"
-"PO-Revision-Date: 2025-11-07 17:07+0100\n"
+"PO-Revision-Date: 2025-11-07 18:11+0100\n"
 "Last-Translator: Julian-Samuel <Gebühr>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -964,13 +964,14 @@ msgid ""
 "\n"
 "    \tDiese Seite existiert nicht.\n"
 "    "
-msgstr "This site does not exist"
+msgstr ""
+"\n"
+"    \tThis site does not exist.\n"
+"    "
 
 #: src/fellchensammlung/templates/fellchensammlung/external-site-warning.html:17
 msgid "Achtung du verlässt notfellchen.org"
-msgstr ""
-"\n"
-"Attention: you are leaving the site"
+msgstr "Attention: you are leaving the site"
 
 #: src/fellchensammlung/templates/fellchensammlung/external-site-warning.html:20
 msgid ""
@@ -978,6 +979,9 @@ msgid ""
 "garantiert werden. Nimm Kontakt zu einer Rattenhilfe oder dem VdRD e.V. auf, "
 "die dich beraten können."
 msgstr ""
+"A trusted adoption process can not guaranteed by us, although we take many "
+"measures to ensure the adoption notices are trustworthy. Please be careful "
+"and reach out to a trusted rescue organization if you are unsure."
 
 #: src/fellchensammlung/templates/fellchensammlung/external-site-warning.html:25
 msgid "Weiter"
@@ -1705,28 +1709,28 @@ msgid ""
 "    Es gibt eine neue Meldung. Folgende Nachricht wurde zur Meldung "
 "hinzugefügt:\n"
 msgstr ""
+"\r\n"
+"    There is a new report. The following message was added to it:\r\n"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/notifications/body-new-report.html:13
-#, fuzzy
-#| msgid "Meldung von "
 msgid "Meldung anzeigen"
-msgstr "Report of "
+msgstr "Show report"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/notifications/body-new-user.html:2
 msgid ""
 "\n"
 "    Es wurde ein neuer Useraccount erstellt:\n"
 msgstr ""
+"\n"
+"    A new user account was created:\n"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice-status.html:7
-#, fuzzy
-#| msgid "Vermittlung hinzufügen"
 msgid "Vermittlung geschlossen"
-msgstr "Add Adoption Notice"
+msgstr "Adoption notice closed"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice-status.html:16
 msgid "Tiere sind reserviert"
-msgstr ""
+msgstr "Animals are reserved"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice-status.html:19
 msgid ""
@@ -1735,10 +1739,14 @@ msgid ""
 "                In den Kommentaren findest du ggf. mehr Informationen.\n"
 "            "
 msgstr ""
+"\n"
+"                These animals are already reserved.\n"
+"                You might find more information in the comments.\n"
+"            "
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-adoption-notice-status.html:28
 msgid "Wartet auf Freigabe von Moderator*innen"
-msgstr ""
+msgstr "Waiting for approval of a moderator"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/partial-animal-card.html:62
 msgid "Foto hinzufügen"
@@ -1795,23 +1803,19 @@ msgstr "Mark content as restricted"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-basic-info-card.html:23
 msgid "Spezialisierung"
-msgstr ""
+msgstr "Specialization"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-basic-info-card.html:35
-#, fuzzy
-#| msgid "Ort der Organisation"
 msgid "Übergeordnete Organisation"
-msgstr "Location of Organization"
+msgstr "Parent organization"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-check-rescue-org.html:19
 msgid "Material verwenden?"
-msgstr ""
+msgstr "Use material?"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-check-rescue-org.html:47
-#, fuzzy
-#| msgid "Kommentieren"
 msgid "Kommentar speichern"
-msgstr "Comment"
+msgstr "Save comment"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-check-rescue-org.html:73
 msgid "Organisation geprüft"
@@ -1819,15 +1823,15 @@ msgstr "Organization checked"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-check-rescue-org.html:85
 msgid "Aktive Kommunikation beendet"
-msgstr ""
+msgstr "Active communication finished"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-check-rescue-org.html:87
 msgid "Aktive Kommunikation"
-msgstr ""
+msgstr "Active communication"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-check-rescue-org.html:93
 msgid "Von Check exkludieren"
-msgstr ""
+msgstr "Exclude from check"
 
 #: src/fellchensammlung/templates/fellchensammlung/partials/rescue_orgs/partial-rescue-organization-contact.html:17
 msgid "Keine Kontaktdaten hinterlegt"
@@ -2342,7 +2346,7 @@ msgstr "Login to notfellchen.org"
 #: src/templates/registration/login.html:8
 #: src/templates/registration/login.html:30
 msgid "Bitte log dich ein um diese Seite sehen zu können."
-msgstr "Please log in to see this site"
+msgstr "Please log in to see this site."
 
 #: src/templates/registration/login.html:18
 msgid "Der eingegebene Username oder das Passwort ist falsch."
@@ -2366,7 +2370,7 @@ msgstr "Log in again?"
 
 #: src/templates/registration/password_reset_confirmation.html:6
 msgid "Bitte änder und bestätige dein neues Passwort."
-msgstr "Please change and confirm your password"
+msgstr "Please change and confirm your password."
 
 #: src/templates/registration/password_reset_confirmation.html:12
 msgid "Neues Passwort"
@@ -2400,7 +2404,7 @@ msgid ""
 "Jemand hat um versucht dein Passwort zurückzusetzen. Wenn du das warst "
 "kannst du das unter folgendem Link tun:"
 msgstr ""
-"someone tried to reset your password. If this was you, you can do so by "
+"Someone tried to reset your password. If this was you, you can do so by "
 "using the following Link:"
 
 #: src/templates/registration/password_reset_form.html:10
