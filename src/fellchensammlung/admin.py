@@ -17,6 +17,21 @@ from django.utils.translation import gettext_lazy as _
 from .tools.model_helpers import AdoptionNoticeStatusChoices
 
 
+def export_to_csv_generic(model, queryset):
+    meta = model._meta
+    field_names = [field.name for field in meta.fields]
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+    writer = csv.writer(response)
+
+    writer.writerow(field_names)
+    for obj in queryset:
+        row = writer.writerow([getattr(obj, field) for field in field_names])
+
+    return response
+
+
 @admin.register(AdoptionNotice)
 class AdoptionNoticeAdmin(admin.ModelAdmin):
     search_fields = ("name__icontains", "description__icontains")
@@ -49,17 +64,7 @@ class UserAdmin(admin.ModelAdmin):
         return format_html('<a href="{}">{} Adoption Notices</a>', url, count)
 
     def export_as_csv(self, request, queryset):
-        meta = self.model._meta
-        field_names = [field.name for field in meta.fields]
-
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
-        writer = csv.writer(response)
-
-        writer.writerow(field_names)
-        for obj in queryset:
-            row = writer.writerow([getattr(obj, field) for field in field_names])
-
+        response = export_to_csv_generic(self.model, queryset)
         return response
 
     export_as_csv.short_description = _("Ausgewählte User exportieren")
@@ -169,6 +174,13 @@ class LogAdmin(admin.ModelAdmin):
     ordering = ["-created_at"]
     list_filter = ("action",)
     list_display = ("action", "user", "created_at")
+    actions = ("export_as_csv",)
+
+    def export_as_csv(self, request, queryset):
+        response = export_to_csv_generic(Log, queryset)
+        return response
+
+    export_as_csv.short_description = _("Ausgewählte Logs exportieren")
 
 
 admin.site.register(Animal)
