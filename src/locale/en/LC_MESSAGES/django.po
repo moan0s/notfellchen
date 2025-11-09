@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Notfellchen\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-11-07 14:28+0000\n"
-"PO-Revision-Date: 2025-11-07 18:17+0100\n"
+"PO-Revision-Date: 2025-11-08 00:33+0100\n"
 "Last-Translator: Julian-Samuel <Gebühr>\n"
 "Language-Team: English\n"
 "Language: en\n"
@@ -1516,7 +1516,7 @@ msgstr "Adoption Notice deactivated"
 
 #: src/fellchensammlung/templates/fellchensammlung/misc/deactivate-an.html:10
 msgid "Warum schließt du die Vermittlung?"
-msgstr "Why are you closing the adoption notice"
+msgstr "Why are you closing the adoption notice?"
 
 #: src/fellchensammlung/templates/fellchensammlung/misc/deactivate-an.html:14
 msgid "Vermittelt mit Hilfe von Notfellchen"

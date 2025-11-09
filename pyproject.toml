@@ -41,6 +41,7 @@ dependencies = [
     "django-super-deduper",
     "django-allauth[mfa]",
     "django_debug_toolbar",
+    "django-admin-extra-buttons"
 ]
 
 dynamic = ["version", "readme"]

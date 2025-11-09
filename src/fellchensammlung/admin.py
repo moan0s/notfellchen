@@ -7,6 +7,8 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.http import urlencode
 
+from admin_extra_buttons.api import ExtraButtonsMixin, button, link
+
 from .models import Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription, \
     SpeciesSpecificURL, ImportantLocation, SocialMediaPost
 
@@ -170,18 +172,26 @@ class SocialMediaPostAdmin(admin.ModelAdmin):
 
 
 @admin.register(Log)
-class LogAdmin(admin.ModelAdmin):
+class LogAdmin(ExtraButtonsMixin, admin.ModelAdmin):
     ordering = ["-created_at"]
     list_filter = ("action",)
     list_display = ("action", "user", "created_at")
     actions = ("export_as_csv",)
 
+    @admin.action(description=_("Ausgewählte Logs exportieren"))
     def export_as_csv(self, request, queryset):
         response = export_to_csv_generic(Log, queryset)
         return response
 
-    export_as_csv.short_description = _("Ausgewählte Logs exportieren")
+    @button()
+    def export_all_as_csv(self, request):
+        actual_queryset = Log.objects.all()
+        response = export_to_csv_generic(Log, actual_queryset)
+        return response
 
+    @link(href="https://www.google.com/", visible=lambda btn: True)
+    def invisible(self, button):
+        button.visible = False
 
 admin.site.register(Animal)
 admin.site.register(Species)
