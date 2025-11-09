@@ -9,15 +9,14 @@ RUN apt install gettext -y
 RUN apt install libpq-dev gcc -y
 COPY . /app
 WORKDIR /app
-RUN mkdir /app/data
-RUN mkdir /app/data/static
+RUN mkdir /app/data/static -p
 RUN mkdir /app/data/media
-RUN pip install -e .  # Without the -e the library static folder will not be copied by collectstatic!
+RUN pip install --no-cache-dir -e .  # Without the -e the library static folder will not be copied by collectstatic!
 
 RUN nf collectstatic --noinput
 RUN nf compilemessages --ignore venv
 
-COPY docker/notfellchen.bash /bin/notfellchen
+COPY docker/entrypoint.sh /bin/notfellchen
 
 EXPOSE 7345
 CMD ["notfellchen"]
