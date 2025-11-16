@@ -113,8 +113,8 @@ class AdoptionNoticeStatusChoicesDescriptions:
                _ansc.AwaitingAction.UNCHECKED: _(
                    "Vermittlung deaktiviert bis sie vom Team auf Aktualität geprüft wurde."),
 
-               _ansc.Disabled.AGAINST_RULES: _("Vermittlung deaktiviert da sie gegen die Regeln verstößt."),
-               _ansc.Disabled.OTHER: _("Vermittlung deaktiviert.")
+               _ansc.Disabled.AGAINST_RULES: _("Die Vermittlung wurde gesperrt, da sie gegen die Regeln verstößt."),
+               _ansc.Disabled.OTHER: _("Vermittlung gesperrt.")
                }
 
 

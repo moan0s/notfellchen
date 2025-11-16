@@ -7,9 +7,14 @@
 {% block content %}
     <h1 class="title is-1">403 Forbidden</h1>
     <p>
-    {% blocktranslate %}
-    	Diese Aktion ist dir nicht erlaubt. Logge dich ein oder nutze einen anderen Account. Wenn du denkst, dass hier
-        ein Fehler vorliegt, kontaktiere das Team!
-    {% endblocktranslate %}
+        {% if error_message %}
+            {{ error_message }}
+        {% else %}
+            {% blocktranslate %}
+                Diese Aktion ist dir nicht erlaubt. Logge dich ein oder nutze einen anderen Account. Wenn du denkst,
+                dass hier
+                ein Fehler vorliegt, kontaktiere das Team!
+            {% endblocktranslate %}
+        {% endif %}
     </p>
 {% endblock %}

@@ -31,5 +31,14 @@
             {{ adoption_notice.status_description }}
         </div>
     </article>
+{% elif adoption_notice.is_disabled %}
+    <article class="message is-warning">
+        <div class="message-header">
+            <p>{% translate 'Vermittlung wurde gesperrt' %}</p>
+        </div>
+        <div class="message-body content">
+            {{ adoption_notice.status_description }}
+        </div>
+    </article>
 {% endif %}
 

@@ -114,6 +114,13 @@ def handle_an_check_actions(request, action, adoption_notice=None):
 
 def adoption_notice_detail(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, id=adoption_notice_id)
+    if adoption_notice.is_disabled and not user_is_owner_or_trust_level(request.user, adoption_notice):
+        error_message = _("Die Vermittlung wurde versteckt und ist nur Admins zugänglich. Grund dafür kann z.b. ein "
+                          "Regelverstoß sein.")
+        return render(request,
+                      "fellchensammlung/errors/403.html",
+                      context={"error_message": error_message},
+                      status=403)
     adoption_notice_meta = adoption_notice._meta
     if request.user.is_authenticated:
         try:
