@@ -98,15 +98,35 @@
                 </details>
 
             </div>
-
-            <h2 class="title is-2">{% translate 'Benachrichtigungen' %}</h2>
-            {% include "fellchensammlung/lists/list-notifications.html" %}
-
-            <h2 class="title is-2">{% translate 'Abonnierte Suchen' %}</h2>
-            {% include "fellchensammlung/lists/list-search-subscriptions.html" %}
-
-            <h2 class="title is-2">{% translate 'Meine Vermittlungen' %}</h2>
-            {% include "fellchensammlung/lists/list-adoption-notices.html" %}
-
         {% endif %}
+
+        {% if show_mod_actions %}
+            <div class="block">
+                <h2 class="title is-2">{% trans 'Moderation' %}</h2>
+                <div class="block">
+                    <p><strong>{% translate 'Moderationsnotizen' %}:</strong> {{ user.mod_notes }}</p>
+                </div>
+                <div class="block">
+                    {% if user.is_active %}
+                        <a href="{% url 'user-deactivate' user_id=user.pk %}" class="button is-danger">
+                            {% translate 'User deaktivieren' %}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user-activate' user_id=user.pk %}" class="button is-info">
+                            {% translate 'User aktivieren' %}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+
+        <h2 class="title is-2">{% translate 'Benachrichtigungen' %}</h2>
+        {% include "fellchensammlung/lists/list-notifications.html" %}
+
+        <h2 class="title is-2">{% translate 'Abonnierte Suchen' %}</h2>
+        {% include "fellchensammlung/lists/list-search-subscriptions.html" %}
+
+        <h2 class="title is-2">{% translate 'Vermittlungen' %}</h2>
+        {% include "fellchensammlung/lists/list-adoption-notices.html" %}
+
 {% endblock %}

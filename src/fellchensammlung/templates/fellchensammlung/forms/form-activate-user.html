@@ -1,0 +1,17 @@
+{% extends "fellchensammlung/base.html" %}
+{% load i18n %}
+
+{% block description %}
+    <meta name="description" content="{% trans 'User aktivieren' %}">
+{% endblock %}
+{% block content %}
+    <h1 class="title is-1">{% trans 'User aktivieren' %}</h1>
+    {% blocktranslate %}
+        Hier kannst du einen User manuell aktivieren und optional eine Notiz hinterlassen.
+    {% endblocktranslate %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button class="button is-info is-fullwidth" type="submit">{% translate "Aktivieren" %}</button>
+    </form>
+{% endblock %}

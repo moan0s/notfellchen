@@ -90,10 +90,11 @@ urlpatterns = [
     ###########
     # ex: user/1
     path("user/<int:user_id>/", views.user_by_id, name="user-detail"),
+    path("user/<int:user_id>/deactivate/", views.user_deactivate, name="user-deactivate"),
+    path("user/<int:user_id>/activate/", views.user_activate, name="user-activate"),
     path("user/me/", views.my_profile, name="user-me"),
     path("user/notifications/", views.my_notifications, name="user-notifications"),
     path('user/me/export/', views.export_own_profile, name='user-me-export'),
-
 
     path('change-language', views.change_language, name="change-language"),
 
@@ -120,7 +121,7 @@ urlpatterns = [
     ###################
     ## External Site ##
     ###################
-    path('bulma/external-site/', views.external_site_warning, name="external-site"),
+    path('external-site/', views.external_site_warning, name="external-site"),
 
     ###############
     ## TECHNICAL ##

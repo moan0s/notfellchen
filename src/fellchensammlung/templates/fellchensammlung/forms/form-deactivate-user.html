@@ -1,0 +1,19 @@
+{% extends "fellchensammlung/base.html" %}
+{% load i18n %}
+
+{% block description %}
+    <meta name="description" content="{% trans 'User deaktivieren' %}">
+{% endblock %}
+{% block content %}
+    <h1 class="title is-1">{% trans 'User deaktivieren' %}</h1>
+    {% url "about" as rule_url %}
+    {% blocktranslate %}
+        Wenn dieser User unseren <a href='{{ rule_url }}'>Regeln</a> zuwider gehandelt hat oder seit langem inaktiv
+        ist, kannst du ihn deaktivieren.
+    {% endblocktranslate %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button class="button is-danger is-fullwidth" type="submit">{% translate "Deaktivieren" %}</button>
+    </form>
+{% endblock %}

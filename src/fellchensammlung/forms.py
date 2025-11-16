@@ -116,6 +116,12 @@ class ReportCommentForm(forms.ModelForm):
         fields = ('reported_broken_rules', 'user_comment')
 
 
+class UserModCommentForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('mod_notes',)
+
+
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment

@@ -309,6 +309,7 @@ class User(AbstractUser):
     organization_affiliation = models.ForeignKey(RescueOrganization, on_delete=models.PROTECT, null=True, blank=True,
                                                  verbose_name=_('Organisation'))
     reason_for_signup = models.TextField(verbose_name=reason_for_signup_label, help_text=reason_for_signup_help_text)
+    mod_notes = models.TextField(verbose_name=_("Moderationsnotizen"), null=True, blank=True)
     email_notifications = models.BooleanField(verbose_name=_("Benachrichtigung per E-Mail"), default=True)
     REQUIRED_FIELDS = ["reason_for_signup", "email"]
 

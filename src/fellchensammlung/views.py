@@ -25,7 +25,7 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
     ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment, \
-    UpdateRescueOrgRegularCheckStatus
+    UpdateRescueOrgRegularCheckStatus, UserModCommentForm
 from .models import Language, Announcement
 from .tools import i18n, img
 from .tools.fedi import post_an_to_fedi
@@ -611,6 +611,9 @@ def user_detail(request, user, token=None):
     user_detail_profile.add_status("Finished - returning to renderer")
     if request.user.is_superuser:
         context["profile"] = user_detail_profile.as_relative_with_ms
+    if request.user.trust_level > TrustLevel.MODERATOR:
+        context["show_mod_actions"] = True
+
     return render(request, 'fellchensammlung/details/detail-user.html', context=context)
 
 
@@ -683,6 +686,36 @@ def my_notifications(request):
         "notifications_read_last": Notification.objects.filter(user_to_notify=request.user,
                                                                read=True).order_by("-read_at")[:10]}
     return render(request, 'fellchensammlung/notifications.html', context=context)
+
+
+def user_activate(request, user_id):
+    return user_de_activation(request, user_id, True)
+
+
+def user_deactivate(request, user_id):
+    return user_de_activation(request, user_id, False)
+
+
+def user_de_activation(request, user_id, is_to_be_active):
+    """
+    Activates or deactivates a user
+    """
+    user = User.objects.get(id=user_id)
+    if request.method == 'POST':
+        form = UserModCommentForm(request.POST, instance=user)
+
+        if form.is_valid():
+            user_instance = form.save(commit=False)
+            user_instance.is_active = is_to_be_active
+            user_instance.save()
+            return redirect(reverse("user-detail", args=[user_instance.pk], ))
+    else:
+        form = UserModCommentForm(instance=user)
+    if is_to_be_active:
+        template = 'fellchensammlung/forms/form-activate-user.html'
+    else:
+        template = 'fellchensammlung/forms/form-deactivate-user.html'
+    return render(request, template, {'form': form})
 
 
 @user_passes_test(user_is_trust_level_or_above)
