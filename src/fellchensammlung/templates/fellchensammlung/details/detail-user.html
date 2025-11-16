@@ -27,33 +27,33 @@
     <div class="block">
         <h2 class="title is-2">{% trans 'Profil verwalten' %}</h2>
         <div class="block"><strong>{% translate "E-Mail" %}:</strong> {{ user.email }}</div>
-        <div class="block">
-            <div class="field is-grouped is-grouped-multiline">
-                <div class="control">
-                    <a class="button is-warning"
-                       href="{% url 'account_change_password' %}">{% translate "Passwort ändern" %}</a>
-                </div>
-                <div class="control">
-                    <a class="button is-warning"
-                       href="{% url 'account_email' %}">
-                        {% translate "E-Mail Adresse ändern" %}
-                    </a>
-                </div>
-                <div class="control">
-                    <a class="button is-warning"
-                       href="{% url 'mfa_index' %}">
-                        {% translate "2-Faktor Authentifizierung" %}
-                    </a>
-                </div>
-                <div class="control">
-                    <a class="button is-info" href="{% url 'user-me-export' %}">
-                        {% translate "Daten exportieren" %}
-                    </a>
+        {% if user.id is request.user.id %}
+            <div class="block">
+                <div class="field is-grouped is-grouped-multiline">
+                    <div class="control">
+                        <a class="button is-warning"
+                           href="{% url 'account_change_password' %}">{% translate "Passwort ändern" %}</a>
+                    </div>
+                    <div class="control">
+                        <a class="button is-warning"
+                           href="{% url 'account_email' %}">
+                            {% translate "E-Mail Adresse ändern" %}
+                        </a>
+                    </div>
+                    <div class="control">
+                        <a class="button is-warning"
+                           href="{% url 'mfa_index' %}">
+                            {% translate "2-Faktor Authentifizierung" %}
+                        </a>
+                    </div>
+                    <div class="control">
+                        <a class="button is-info" href="{% url 'user-me-export' %}">
+                            {% translate "Daten exportieren" %}
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {% if user.id is request.user.id %}
             <div class="block">
                 <h2 class="title is-2">{% trans 'Einstellungen' %}</h2>
                 <form class="block" action="" method="POST">
