@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils.http import urlencode
 
 from admin_extra_buttons.api import ExtraButtonsMixin, button, link
+from simple_history.admin import SimpleHistoryAdmin
 
 from .models import Language, Text, ReportComment, ReportAdoptionNotice, Log, Timestamp, SearchSubscription, \
     SpeciesSpecificURL, ImportantLocation, SocialMediaPost
@@ -50,7 +51,7 @@ class AdoptionNoticeAdmin(admin.ModelAdmin):
 
 # Re-register UserAdmin
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(SimpleHistoryAdmin):
     search_fields = ("usernamname__icontains", "first_name__icontains", "last_name__icontains", "email__icontains")
     list_display = ("username", "email", "trust_level", "is_active", "view_adoption_notices")
     list_filter = ("is_active", "trust_level",)
@@ -78,7 +79,7 @@ def _reported_content_link(obj):
 
 
 @admin.register(ReportComment)
-class ReportCommentAdmin(admin.ModelAdmin):
+class ReportCommentAdmin(SimpleHistoryAdmin):
     list_display = ["user_comment", "reported_content_link"]
     date_hierarchy = "created_at"
 
@@ -89,7 +90,7 @@ class ReportCommentAdmin(admin.ModelAdmin):
 
 
 @admin.register(ReportAdoptionNotice)
-class ReportAdoptionNoticeAdmin(admin.ModelAdmin):
+class ReportAdoptionNoticeAdmin(SimpleHistoryAdmin):
     list_display = ["user_comment", "reported_content_link"]
     date_hierarchy = "created_at"
 
@@ -104,7 +105,7 @@ class SpeciesSpecificURLInline(admin.StackedInline):
 
 
 @admin.register(RescueOrganization)
-class RescueOrganizationAdmin(admin.ModelAdmin):
+class RescueOrganizationAdmin(SimpleHistoryAdmin):
     search_fields = ("name", "description", "internal_comment", "location_string", "location__city")
     list_display = ("name", "trusted", "allows_using_materials", "website")
     list_filter = ("allows_using_materials", "trusted", ("external_source_identifier", EmptyFieldListFilter))
@@ -115,12 +116,12 @@ class RescueOrganizationAdmin(admin.ModelAdmin):
 
 
 @admin.register(Text)
-class TextAdmin(admin.ModelAdmin):
+class TextAdmin(SimpleHistoryAdmin):
     search_fields = ("title__icontains", "text_code__icontains",)
 
 
 @admin.register(Comment)
-class CommentAdmin(admin.ModelAdmin):
+class CommentAdmin(SimpleHistoryAdmin):
     list_filter = ("user",)
 
 
@@ -130,7 +131,7 @@ class BaseNotificationAdmin(admin.ModelAdmin):
 
 
 @admin.register(SearchSubscription)
-class SearchSubscriptionAdmin(admin.ModelAdmin):
+class SearchSubscriptionAdmin(SimpleHistoryAdmin):
     list_filter = ("owner",)
 
 
@@ -158,7 +159,7 @@ class IsImportantListFilter(admin.SimpleListFilter):
 
 
 @admin.register(Location)
-class LocationAdmin(admin.ModelAdmin):
+class LocationAdmin(SimpleHistoryAdmin):
     search_fields = ("name__icontains", "city__icontains")
     list_filter = [IsImportantListFilter]
     inlines = [
@@ -167,7 +168,7 @@ class LocationAdmin(admin.ModelAdmin):
 
 
 @admin.register(SocialMediaPost)
-class SocialMediaPostAdmin(admin.ModelAdmin):
+class SocialMediaPostAdmin(SimpleHistoryAdmin):
     list_filter = ("platform",)
 
 
@@ -193,12 +194,13 @@ class LogAdmin(ExtraButtonsMixin, admin.ModelAdmin):
     def invisible(self, button):
         button.visible = False
 
-admin.site.register(Animal)
+
+admin.site.register(Animal, SimpleHistoryAdmin)
 admin.site.register(Species)
-admin.site.register(Rule)
+admin.site.register(Rule, SimpleHistoryAdmin)
 admin.site.register(Image)
-admin.site.register(ModerationAction)
+admin.site.register(ModerationAction, SimpleHistoryAdmin)
 admin.site.register(Language)
-admin.site.register(Announcement)
-admin.site.register(Subscriptions)
+admin.site.register(Announcement, SimpleHistoryAdmin)
+admin.site.register(Subscriptions, SimpleHistoryAdmin)
 admin.site.register(Timestamp)

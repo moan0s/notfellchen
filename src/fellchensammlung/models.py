@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 import base64
+from simple_history.models import HistoricalRecords
 
 from .tools import misc, geo
 from notfellchen.settings import MEDIA_URL, base_url
@@ -187,6 +188,7 @@ class RescueOrganization(models.Model):
     specializations = models.ManyToManyField(Species, blank=True)
     twenty_id = models.UUIDField(verbose_name=_("Twenty-ID"), null=True, blank=True,
                                  help_text=_("ID der der Organisation in Twenty"))
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = ('external_object_identifier', 'external_source_identifier',)
@@ -250,6 +252,7 @@ class RescueOrganization(models.Model):
 
     def set_checked(self):
         self.last_checked = timezone.now()
+        self._change_reason = 'Organization checked'
         self.save()
 
     @property
@@ -311,6 +314,7 @@ class User(AbstractUser):
     reason_for_signup = models.TextField(verbose_name=reason_for_signup_label, help_text=reason_for_signup_help_text)
     mod_notes = models.TextField(verbose_name=_("Moderationsnotizen"), null=True, blank=True)
     email_notifications = models.BooleanField(verbose_name=_("Benachrichtigung per E-Mail"), default=True)
+    history = HistoricalRecords()
     REQUIRED_FIELDS = ["reason_for_signup", "email"]
 
     class Meta:
@@ -406,6 +410,7 @@ class AdoptionNotice(models.Model):
     adoption_process = models.TextField(null=True, blank=True,
                                         max_length=64, verbose_name=_('Adoptionsprozess'),
                                         choices=AdoptionProcess)
+    history = HistoricalRecords()
 
     @property
     def animals(self):
@@ -641,6 +646,7 @@ class Animal(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"{self.name}"
@@ -704,6 +710,7 @@ class SearchSubscription(models.Model):
     max_distance = models.IntegerField(choices=DistanceChoices.choices, null=True)
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Zuletzt geändert am"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Erstellt am"))
+    history = HistoricalRecords()
 
     def __str__(self):
         if self.location and self.max_distance:
@@ -734,6 +741,7 @@ class Rule(models.Model):
                                                    "Identifikator haben"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Zuletzt geändert am"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Erstellt am"))
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.title
@@ -759,6 +767,7 @@ class Report(models.Model):
     user_comment = models.TextField(blank=True, verbose_name=_("Kommentar/Zusätzliche Information"))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_("Zuletzt geändert am"))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Erstellt am"))
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"[{self.status}]: {self.user_comment:.20}"
@@ -845,6 +854,7 @@ class ModerationAction(models.Model):
     # Only visible to moderator
     private_comment = models.TextField(blank=True)
     report = models.ForeignKey(Report, on_delete=models.CASCADE)
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"[{self.action}]: {self.public_comment}"
@@ -866,6 +876,7 @@ class Text(models.Model):
     content = models.TextField(verbose_name="Inhalt")
     language = models.ForeignKey(Language, verbose_name="Sprache", on_delete=models.PROTECT)
     text_code = models.CharField(max_length=24, verbose_name="Text code", blank=True)
+    history = HistoricalRecords()
 
     class Meta:
         verbose_name = "Text"
@@ -909,6 +920,7 @@ class Announcement(Text):
         INFO: "info",
     }
     type = models.CharField(choices=TYPES, max_length=100, default=INFO)
+    history = HistoricalRecords()
 
     @property
     def is_active(self):
@@ -955,6 +967,7 @@ class Comment(models.Model):
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
     text = models.TextField(verbose_name="Inhalt")
     reply_to = models.ForeignKey("self", verbose_name="Antwort auf", blank=True, null=True, on_delete=models.CASCADE)
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"{self.user} at {self.created_at.strftime('%H:%M %d.%m.%y')}: {self.text:.10}"
@@ -1026,6 +1039,7 @@ class Subscriptions(models.Model):
                                         help_text=_("Vermittlung die abonniert wurde"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return f"{self.owner} - {self.adoption_notice}"
@@ -1087,6 +1101,7 @@ class SocialMediaPost(models.Model):
                                 choices=PlatformChoices.choices)
     adoption_notice = models.ForeignKey(AdoptionNotice, on_delete=models.CASCADE, verbose_name=_('Vermittlung'))
     url = models.URLField(verbose_name=_("URL"))
+    history = HistoricalRecords()
 
     @staticmethod
     def get_an_to_post():

@@ -237,6 +237,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     "debug_toolbar",
     'admin_extra_buttons',
+    'simple_history',
 ]
 
 MIDDLEWARE = [
@@ -254,6 +255,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # allauth middleware, needs to be after message middleware
     "allauth.account.middleware.AccountMiddleware",
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'notfellchen.urls'
