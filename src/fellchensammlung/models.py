@@ -542,6 +542,13 @@ class AdoptionNotice(models.Model):
         return list(map(lambda x: x[0], list_of_enums))
 
     @property
+    def status_category(self):
+        ansc = AdoptionNoticeStatusChoices
+        for status_category in [ansc.Active, ansc.Disabled, ansc.Closed, ansc.AwaitingAction]:
+            if self.adoption_notice_status in self._values_of(status_category.choices):
+                return status_category.__name__.lower()
+
+    @property
     def is_active(self):
         return self.adoption_notice_status in self._values_of(AdoptionNoticeStatusChoices.Active.choices)
 
@@ -556,6 +563,19 @@ class AdoptionNotice(models.Model):
     @property
     def is_awaiting_action(self):
         return self.adoption_notice_status in self._values_of(AdoptionNoticeStatusChoices.AwaitingAction.choices)
+
+    @property
+    def status_description_short(self):
+        if self.is_active:
+            return _("Vermittlung aktiv")
+        elif self.is_disabled:
+            return _("Vermittlung gesperrt")
+        elif self.is_closed:
+            return _("Vermittlung geschlossen")
+        elif self.is_awaiting_action:
+            return _("Wartet auf Freigabe von Moderator*innen")
+        else:
+            raise NotImplementedError()
 
     @property
     def status_description(self):

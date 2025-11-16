@@ -164,6 +164,9 @@
                 {% if adoption_notice.get_photos %}
                     <div class="column block">
                         <div class="card">
+                            {% if not adoption_notice.is_active %}
+                                <div class="cover">{{ adoption_notice.status_description_short }}</div>
+                            {% endif %}
                             <div class="grid card-content">
                                 <div class="gallery">
                                     {% with photo=adoption_notice.get_photos.0 %}

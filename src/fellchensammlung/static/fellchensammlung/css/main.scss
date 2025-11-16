@@ -245,6 +245,34 @@ IMAGES
   flex: 1;
 }
 
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(192, 192, 192, 0.75);
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 500ms;
+  border-radius: inherit; // ensure border radius of cards is followed, see https://css-tricks.com/preventing-child-background-overflow-with-inherited-border-radii/
+}
+
+.cover:hover {
+  transition: opacity 500ms;
+  opacity: 0;
+
+  // For being able to click the image and for accessibility the cover should have display: none;
+  // This is accepted by W3C: https://front-end.social/@mia/109433817951030826
+  // However this does not yet seem to be supported to be animated by browsers.
+  // Chrome claims to have shipped it: https://chromestatus.com/feature/5154958272364544
+  // However I couldn't get it to work there too.
+  // display: none;
+  // transition: opacity 1000ms, display 100ms;
+}
 
 /**
 AN Cards
@@ -322,11 +350,10 @@ AN Cards
 }
 
 
-
 .notification-container {
-    display: inline-block;
-    position: relative;
-    padding: 0;
+  display: inline-block;
+  position: relative;
+  padding: 0;
 }
 
 .notification-label {
@@ -335,16 +362,16 @@ AN Cards
 
 /* Make the badge float in the top right corner of the button */
 .notification-badge {
-    background-color: #fa3e3e;
-    border-radius: 2px;
-    color: white;
+  background-color: #fa3e3e;
+  border-radius: 2px;
+  color: white;
 
-    padding: 1px 3px;
-    font-size: 8px;
+  padding: 1px 3px;
+  font-size: 8px;
 
-    position: absolute; /* Position the badge within the relatively positioned button */
-    top: 0;
-    right: 0;
+  position: absolute; /* Position the badge within the relatively positioned button */
+  top: 0;
+  right: 0;
 }
 
 

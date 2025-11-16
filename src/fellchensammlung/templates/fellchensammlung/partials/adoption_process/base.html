@@ -7,6 +7,9 @@
             {% translate 'Adoptionsprozess' %}
         </h2>
     </div>
+    {% if not adoption_notice.is_active %}
+        <div class="cover">{{ adoption_notice.status_description_short }}</div>
+    {% endif %}
     <div class="card-content">
         {% include adoption_process_template %}
     </div>
