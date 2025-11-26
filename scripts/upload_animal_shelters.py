@@ -133,6 +133,19 @@ def get_center_coordinates(geometry):
         raise ValueError(f"Unsupported geometry type: {geom_type}")
 
 
+def is_not_for_adoption(tierheim):
+    """
+    Returns true if the shelter is not for the purpose of adoption
+    """
+    if tierheim.purpose_adoption == "no":
+        return True
+    elif (tierheim.purpose_adoption is None and
+          (tierheim.purpose_sanctuary == "yes" or tierheim.purpose_release == "yes")):
+        return True
+    else:
+        return False
+
+
 # TODO: take note of new get_overpass_result function which does the bulk of the new overpass query work
 def get_overpass_result(area, data_file):
     """Build the Overpass query for fetching animal shelters in the specified area."""
@@ -225,7 +238,13 @@ def main():
             description=get_or_none(tierheim, "opening_hours"),
             external_object_identifier=tierheim["id"],
             EXTERNAL_SOURCE_IDENTIFIER="OSM",
+            purpose_adoption=get_or_none(tierheim, "animal_shelter:adoption"),
+            purpose_sanctuary=get_or_none(tierheim, "animal_shelter:sanctuary"),
+            purpose_release=get_or_none(tierheim, "animal_shelter:release"),
         )
+        # Skip the shelter if it is not for adopting animals
+        if is_not_for_adoption(th_data):
+            continue
 
         # Define here for later
         optional_data = ["email", "phone_number", "website", "description", "fediverse_profile", "facebook",
@@ -250,7 +269,8 @@ def main():
 
             result = requests.patch(endpoint, json=org_patch_data, headers=h)
             if result.status_code != 200:
-                logging.warning(f"Updating {tierheim['properties']['name']} failed:{result.status_code} {result.json()}")
+                logging.warning(
+                    f"Updating {tierheim['properties']['name']} failed:{result.status_code} {result.json()}")
             continue
         # Rescue organization does not exist
         else:
@@ -268,7 +288,8 @@ def main():
 
             if result.status_code != 201:
                 print(f"{idx} {tierheim["properties"]["name"]}:{result.status_code} {result.json()}")
-    print(f"Upload finished. Inserted {stats['num_inserted_orgs']} new orgs and updated {stats['num_updated_orgs']} orgs.")
+    print(
+        f"Upload finished. Inserted {stats['num_inserted_orgs']} new orgs and updated {stats['num_updated_orgs']} orgs.")
 
 
 if __name__ == "__main__":

@@ -58,6 +58,10 @@ docs = [
     "sphinx-rtd-theme",
     "sphinx-autobuild"
 ]
+shelter-upload = [
+    "osm2geojson",
+    "tqdm"
+]
 
 [project.urls]
 homepage = "https://notfellchen.org"
