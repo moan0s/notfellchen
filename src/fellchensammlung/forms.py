@@ -10,7 +10,7 @@ from django.utils.translation import gettext_lazy as _
 from notfellchen.settings import MEDIA_URL
 from crispy_forms.layout import Div
 
-from .tools.model_helpers import reason_for_signup_label, reason_for_signup_help_text
+from .tools.model_helpers import reason_for_signup_label, reason_for_signup_help_text, AdoptionNoticeStatusChoices
 
 
 def animal_validator(value: str):
@@ -184,3 +184,15 @@ class RescueOrgSearchForm(forms.Form):
     location_string = forms.CharField(max_length=100, label=_("Stadt"), required=False)
     max_distance = forms.ChoiceField(choices=DistanceChoices, initial=DistanceChoices.TWENTY,
                                      label=_("Suchradius"))
+
+
+class CloseAdoptionNoticeForm(forms.ModelForm):
+    template_name = "fellchensammlung/forms/form_snippets.html"
+
+    adoption_notice_status = forms.ChoiceField(choices=AdoptionNoticeStatusChoices.Closed,
+                                               label=_("Status"),
+                                               help_text=_("Gib den neuen Status der Vermittlung an"))
+
+    class Meta:
+        model = AdoptionNotice
+        fields = ('adoption_notice_status',)

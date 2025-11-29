@@ -6,21 +6,7 @@
     <h1 class="title is-1">{% translate 'Vermittlung deaktivieren' %}</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="field">
-            <label class="label" for="reason_for_closing">{% translate 'Warum schließt du die Vermittlung?' %}</label>
-            <div class="control">
-                <div class="select">
-                    <select id="reason_for_closing" name="reason_for_closing">
-                        <option value="closed_successful_with_notfellchen">{% translate 'Vermittelt mit Hilfe von Notfellchen' %}</option>
-                        <option value="closed_successful_without_notfellchen">{% translate 'Vermittelt ohne Hilfe von Notfellchen' %}</option>
-                        <option value="closed_for_other_adoption_notice">{% translate 'Vermittlung zugunsten einer anderen geschlossen' %}</option>
-                        <option value="closed_not_open_for_adoption_anymore">{% translate 'Nicht mehr zu vermitteln (z.B. aufgrund von Krankheit)' %}</option>
-                        <option value="closed_animal_died">{% translate 'Tod des Tiers' %}</option>
-                        <option value="closed_other">{% translate 'Anderer Grund' %}</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+        {{ form }}
         <input class="button is-warning" type="submit" value="{% translate "Vermittlung deaktivieren" %}">
     </form>
 {% endblock %}

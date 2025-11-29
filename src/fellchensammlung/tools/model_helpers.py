@@ -69,14 +69,14 @@ class AdoptionNoticeStatusChoices:
         UNCHECKED = "awaiting_action_unchecked", _("Unchecked")
 
     class Closed(TextChoices):
-        SUCCESSFUL_WITH_NOTFELLCHEN = "closed_successful_with_notfellchen", _("Successful (with Notfellchen)")
-        SUCCESSFUL_WITHOUT_NOTFELLCHEN = "closed_successful_without_notfellchen", _("Successful (without Notfellchen)")
-        ANIMAL_DIED = "closed_animal_died", _("Animal died")
-        FOR_OTHER_ADOPTION_NOTICE = "closed_for_other_adoption_notice", _("Closed for other adoption notice")
-        NOT_OPEN_ANYMORE = "closed_not_open_for_adoption_anymore", _("Not open for adoption anymore")
+        SUCCESSFUL = "closed_successfully", _("Erfolgreich vermittelt")
+        ANIMAL_DIED = "closed_animal_died", _("Tier gestorben")
+        FOR_OTHER_ADOPTION_NOTICE = ("closed_for_other_adoption_notice",
+                                     _("Vermittlung wurde zugunsten einer anderen geschlossen."))
+        NOT_OPEN_ANYMORE = "closed_not_open_for_adoption_anymore", _("Tier(e) stehen nicht mehr zur Vermittlung bereit.")
         LINK_TO_MORE_INFO_NOT_REACHABLE = "closed_link_to_more_info_not_reachable", _(
             "Der Link zu weiteren Informationen ist nicht mehr erreichbar.")
-        OTHER = "closed_other", _("Other (closed)")
+        OTHER = "closed_other", _("Anderes")
 
     class Disabled(TextChoices):
         AGAINST_RULES = "disabled_against_the_rules", _("Against the rules")
@@ -97,8 +97,7 @@ class AdoptionNoticeStatusChoicesDescriptions:
     _ansc = AdoptionNoticeStatusChoices  # Mapping for readability
     mapping = {_ansc.Active.SEARCHING.value: "",
                _ansc.Active.INTERESTED: _("Jemand hat bereits Interesse an den Tieren."),
-               _ansc.Closed.SUCCESSFUL_WITH_NOTFELLCHEN: _("Vermittlung erfolgreich abgeschlossen."),
-               _ansc.Closed.SUCCESSFUL_WITHOUT_NOTFELLCHEN: _("Vermittlung erfolgreich abgeschlossen."),
+               _ansc.Closed.SUCCESSFUL: _("Vermittlung erfolgreich abgeschlossen."),
                _ansc.Closed.ANIMAL_DIED: _("Die zu vermittelnden Tiere sind über die Regenbrücke gegangen."),
                _ansc.Closed.FOR_OTHER_ADOPTION_NOTICE: _("Vermittlung wurde zugunsten einer anderen geschlossen."),
                _ansc.Closed.NOT_OPEN_ANYMORE: _("Tier(e) stehen nicht mehr zur Vermittlung bereit."),

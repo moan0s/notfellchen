@@ -25,7 +25,7 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
     ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment, \
-    UpdateRescueOrgRegularCheckStatus, UserModCommentForm
+    UpdateRescueOrgRegularCheckStatus, UserModCommentForm, CloseAdoptionNoticeForm
 from .models import Language, Announcement
 from .tools import i18n, img
 from .tools.fedi import post_an_to_fedi
@@ -1026,16 +1026,17 @@ def moderation_tools_overview(request):
     return render(request, 'fellchensammlung/mod-tool-overview.html', context=context)
 
 
-def deactivate_an(request, adoption_notice_id):
+def close_adoption_notice(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
     if request.method == "POST":
-        reason_for_closing = request.POST.get("reason_for_closing")
-        if reason_for_closing not in AdoptionNoticeStatusChoices.Closed.values:
-            return render(request, "fellchensammlung/errors/403.html", status=403)
-        adoption_notice.adoption_notice_status = reason_for_closing
-        adoption_notice.save()
-        return redirect(reverse("adoption-notice-detail", args=[adoption_notice.pk], ))
-    context = {"adoption_notice": adoption_notice, }
+        form = CloseAdoptionNoticeForm(request.POST, instance=adoption_notice)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("adoption-notice-detail", args=[adoption_notice.pk], ))
+    else:
+        form = CloseAdoptionNoticeForm(instance=adoption_notice)
+    context = {"adoption_notice": adoption_notice, "form": form}
+
     return render(request, 'fellchensammlung/misc/deactivate-an.html', context=context)
 
 
