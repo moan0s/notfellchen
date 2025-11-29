@@ -37,9 +37,16 @@ def export_to_csv_generic(model, queryset):
 
 @admin.register(AdoptionNotice)
 class AdoptionNoticeAdmin(admin.ModelAdmin):
-    search_fields = ("name__icontains", "description__icontains")
-    list_filter = ("owner",)
+    search_fields = ("name__icontains", "description__icontains", "location__icontains")
+    list_display = ["name", "adoption_notice_status", "owner", "organization", "last_checked_hr"]
+    list_filter = ("adoption_notice_status", "owner")
     actions = ("activate",)
+
+    # This admin display is only needed to get a translated label of this property
+    # If not present the column would show up as "last checked hr"
+    @admin.display(description=_("zuletzt überprüft"))
+    def last_checked_hr(self, obj):
+        return obj.last_checked_hr
 
     def activate(self, request, queryset):
         for obj in queryset:
@@ -161,6 +168,15 @@ class IsImportantListFilter(admin.SimpleListFilter):
 @admin.register(Location)
 class LocationAdmin(SimpleHistoryAdmin):
     search_fields = ("name__icontains", "city__icontains")
+    list_display = ("name", "city", "slug")
+
+    @admin.display(description=_("Slug"))
+    def slug(self, obj):
+        if obj.importantlocation:
+            return obj.importantlocation.slug
+        else:
+            return None
+
     list_filter = [IsImportantListFilter]
     inlines = [
         ImportantLocationInline,
