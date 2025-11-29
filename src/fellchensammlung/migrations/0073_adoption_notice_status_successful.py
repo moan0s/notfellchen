@@ -9,7 +9,7 @@ def migrate_status(apps, schema_editor):
     AdoptionNotice = apps.get_model("fellchensammlung", "AdoptionNotice")
     for adoption_notice in AdoptionNotice.objects.filter(
             adoption_notice_status__in=("closed_successful_without_notfellchen", "closed_successful_with_notfellchen")):
-        adoption_notice.adoption_notice_status = "closed_successful"
+        adoption_notice.adoption_notice_status = "closed_successfully"
         adoption_notice.save()
 
 
