@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load custom_tags %}
 <div class="card">
-    <a href="{{ adoption_notice.get_absolute_url }}" class="card-header">
+    <a href="{{ adoption_notice.get_absolute_url }}" class="card-header" target="_blank">
         <div class="card-header-title">
             {{ adoption_notice.name }}
         </div>
@@ -17,25 +17,21 @@
         {% endif %}
     </div>
     <div class="card-footer">
-        <div class="card-footer-item is-confirm">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden"
-                       name="adoption_notice_id"
-                       value="{{ adoption_notice.pk }}">
-                <input type="hidden" name="action" value="checked_active">
-                <button class="" type="submit">{% translate "Vermittlung noch aktuell" %}</button>
-            </form>
-        </div>
-        <div class="card-footer-item is-warning">
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden"
-                       name="adoption_notice_id"
-                       value="{{ adoption_notice.pk }}">
-                <input type="hidden" name="action" value="checked_inactive">
-                <button class="" type="submit">{% translate "Vermittlung inaktiv" %}</button>
-            </form>
-        </div>
+        <form class="card-footer-item is-confirm" method="post">
+            {% csrf_token %}
+            <input type="hidden"
+                   name="adoption_notice_id"
+                   value="{{ adoption_notice.pk }}">
+            <input type="hidden" name="action" value="checked_active">
+            <button style="width: 100%" type="submit">{% translate "Vermittlung noch aktuell" %}</button>
+        </form>
+        <form class="card-footer-item is-warning" method="post">
+            {% csrf_token %}
+            <input type="hidden"
+                   name="adoption_notice_id"
+                   value="{{ adoption_notice.pk }}">
+            <input type="hidden" name="action" value="checked_inactive">
+            <button style="width:100%" type="submit">{% translate "Vermittlung inaktiv" %}</button>
+        </form>
     </div>
 </div>
