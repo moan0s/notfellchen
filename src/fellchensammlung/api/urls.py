@@ -2,10 +2,11 @@ from django.urls import path
 from .views import (
     AdoptionNoticeApiView,
     AnimalApiView, RescueOrganizationApiView, AddImageApiView, SpeciesApiView, LocationApiView,
-    AdoptionNoticeGeoJSONView, RescueOrgGeoJSONView, AdoptionNoticePerOrgApiView
+    AdoptionNoticeGeoJSONView, RescueOrgGeoJSONView, AdoptionNoticePerOrgApiView, index
 )
 
 urlpatterns = [
+    path("", index, name="api-base-url"),
     path("adoption_notice", AdoptionNoticeApiView.as_view(), name="api-adoption-notice-list"),
     path("adoption_notice.geojson", AdoptionNoticeGeoJSONView.as_view(), name="api-adoption-notice-list-geojson"),
     path("adoption_notice/<int:id>/", AdoptionNoticeApiView.as_view(), name="api-adoption-notice-detail"),

@@ -186,6 +186,11 @@ class RescueOrgSearchForm(forms.Form):
                                      label=_("Suchradius"))
 
 
+class RescueOrgSearchByNameForm(forms.Form):
+    template_name = "fellchensammlung/forms/form_snippets.html"
+    name = forms.CharField(max_length=100, label=_("Name der Organisation"), required=False)
+
+
 class CloseAdoptionNoticeForm(forms.ModelForm):
     template_name = "fellchensammlung/forms/form_snippets.html"
 

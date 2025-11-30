@@ -1,4 +1,6 @@
 from django.db.models import Q
+from django.shortcuts import redirect
+from django.urls import reverse
 from drf_spectacular.types import OpenApiTypes
 from rest_framework.generics import ListAPIView
 
@@ -450,3 +452,7 @@ class AdoptionNoticePerOrgApiView(APIView):
             adoption_notices = temporary_an_storage
         serializer = AdoptionNoticeSerializer(adoption_notices, many=True, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+def index(request):
+    return redirect(reverse("swagger-ui"))

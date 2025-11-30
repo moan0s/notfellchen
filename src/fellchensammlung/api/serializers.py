@@ -145,9 +145,14 @@ class AnimalGetSerializer(serializers.ModelSerializer):
 
 
 class RescueOrganizationSerializer(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField()
+
     class Meta:
         model = RescueOrganization
         exclude = ["internal_comment", "allows_using_materials"]
+
+    def get_url(self, obj):
+        return obj.get_absolute_url()
 
 
 class ImageCreateSerializer(serializers.ModelSerializer):

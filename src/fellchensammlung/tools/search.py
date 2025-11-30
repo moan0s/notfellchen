@@ -173,6 +173,7 @@ class AdoptionNoticeSearch:
 
 class RescueOrgSearch:
     def __init__(self, request):
+        self.name = None
         self.area_search = None
         self.max_distance = None
         self.location = None  # Can either be Location (DjangoModel) or LocationProxy
@@ -229,6 +230,7 @@ class RescueOrgSearch:
         return fitting_rescue_orgs
 
     def rescue_org_search_from_request(self, request):
+        # Only search if request method is get with action search
         if request.method == 'GET' and request.GET.get("action", False) == "search":
             self.search_form = RescueOrgSearchForm(request.GET)
             self.search_form.is_valid()

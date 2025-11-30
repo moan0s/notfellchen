@@ -5,6 +5,7 @@ from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from urllib.parse import urlparse
 from django.utils import timezone
+from django.urls import reverse
 
 from fellchensammlung.tools.misc import time_since_as_hr_string
 from notfellchen import settings
@@ -52,6 +53,11 @@ def get_oxitraffic_script_if_enabled():
         return mark_safe(f'<script type="module" src="{settings.OXITRAFFIC_BASE_URL}/count.js"></script>')
     else:
         return ""
+
+
+@register.simple_tag
+def api_base_url():
+    return reverse("api-base-url")
 
 
 @register.filter

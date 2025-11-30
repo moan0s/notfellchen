@@ -25,7 +25,7 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
     ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment, \
-    UpdateRescueOrgRegularCheckStatus, UserModCommentForm, CloseAdoptionNoticeForm
+    UpdateRescueOrgRegularCheckStatus, UserModCommentForm, CloseAdoptionNoticeForm, RescueOrgSearchByNameForm
 from .models import Language, Announcement
 from .tools import i18n, img
 from .tools.fedi import post_an_to_fedi
@@ -851,6 +851,7 @@ def list_rescue_organizations(request, species=None, template='fellchensammlung/
     context = {"rescue_organizations_to_list": rescue_organizations_to_list,
                "show_rescue_orgs": True,
                "elided_page_range": paginator.get_elided_page_range(page_number, on_each_side=2, on_ends=1),
+               "org_name_search_form": RescueOrgSearchByNameForm(),
                }
     if org_search:
         additional_context = {

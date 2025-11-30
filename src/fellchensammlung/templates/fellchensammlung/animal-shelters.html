@@ -33,6 +33,11 @@
                         <i class="fas fa-search  fa-fw"></i> {% trans 'Suchen' %}
                     </button>
                 </form>
+                <hr>
+                <form method="post" autocomplete="off">
+                    {% csrf_token %}
+                    {{ org_name_search_form }}
+                </form>
             </div>
         {% endif %}
     </div>
@@ -69,4 +74,57 @@
             {% endfor %}
         </ul>
     </nav>
+    <script>
+        $(document).ready(function () {
+            const $nameInput = $("#id_name");
+
+            $nameInput.wrap("<div class='dropdown' id='location-result-list'></div>");
+            const dropdown = $("#location-result-list");
+            $nameInput.wrap("<div class='dropdown-trigger'></div>");
+            $("<div class='dropdown-content' id='results'></div>").insertAfter($nameInput);
+            const $resultsList = $("#results");
+            $resultsList.wrap("<div class='dropdown-menu'></div>");
+
+
+            $nameInput.on("input", function () {
+                const query = $.trim($nameInput.val());
+
+                if (query.length < 3) {
+                    dropdown.removeClass("is-active");
+                    return;
+                }
+
+                $.ajax({
+                    url: "{% api_base_url %}organizations/",
+                    data: {
+                        search: query
+                    },
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $resultsList.empty();
+                        dropdown.addClass("is-active");
+
+                        if (data) {
+                            const orgs = data.slice(0, 5);
+
+                            $.each(orgs, function (index, org) {
+                                const $listItem = $("<a>")
+                                    .addClass("dropdown-item")
+                                    .addClass("result-item")
+                                    .attr('href', org.url)
+                                    .text(org.name);
+
+                                $resultsList.append($listItem);
+                            });
+                        }
+                    },
+                    error: function () {
+                        $resultsList.html('<li class="result-item">{%  trans 'Error fetching data. Please try again.' %}</li>');
+                    }
+                });
+            });
+        });
+
+    </script>
 {% endblock %}
