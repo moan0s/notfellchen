@@ -201,3 +201,14 @@ class CloseAdoptionNoticeForm(forms.ModelForm):
     class Meta:
         model = AdoptionNotice
         fields = ('adoption_notice_status',)
+
+
+class RescueOrgForm(forms.ModelForm):
+    template_name = "fellchensammlung/forms/form_snippets.html"
+
+    class Meta:
+        model = RescueOrganization
+        fields = ('name', 'allows_using_materials', 'location_string', "email", "phone_number", "website", "instagram",
+                  "facebook", "fediverse_profile", "internal_comment", "description", "external_source_identifier",
+                  "external_object_identifier",
+                  "parent_org")

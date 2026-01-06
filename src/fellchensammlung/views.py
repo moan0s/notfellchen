@@ -25,7 +25,8 @@ from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, Moderatio
     ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment, \
-    UpdateRescueOrgRegularCheckStatus, UserModCommentForm, CloseAdoptionNoticeForm, RescueOrgSearchByNameForm
+    UpdateRescueOrgRegularCheckStatus, UserModCommentForm, CloseAdoptionNoticeForm, RescueOrgSearchByNameForm, \
+    RescueOrgForm
 from .models import Language, Announcement
 from .tools import i18n, img
 from .tools.fedi import post_an_to_fedi
@@ -1045,3 +1046,32 @@ def adoption_notice_sharepic(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
     svg_data = img.export_svg(adoption_notice)
     return HttpResponse(svg_data, content_type="image/svg+xml")
+
+
+@login_required
+def rescue_org_create_or_update(request, rescue_organization_id=None):
+    """
+    Create or update a rescue organization
+    """
+    # Only users that are mods to create or edit it
+    if not user_is_trust_level_or_above(request.user, TrustLevel.MODERATOR):
+        return HttpResponseForbidden()
+    if rescue_organization_id:
+        rescue_org = get_object_or_404(RescueOrganization, pk=rescue_organization_id)
+    else:
+        rescue_org = None
+
+    if request.method == 'POST':
+        form = RescueOrgForm(request.POST, instance=rescue_org)
+
+        if form.is_valid():
+            rescue_org = form.save()
+
+            """Log"""
+            Log.objects.create(user=request.user, action="add_rescue_org",
+                               text=f"{request.user} hat Tierschutzorganisation {rescue_org.pk} geändert")
+            return redirect(reverse("rescue-organization-detail", args=[rescue_org.pk], ))
+    else:
+        form = RescueOrgForm(instance=rescue_org)
+    return render(request, 'fellchensammlung/forms/form-rescue-organization.html',
+                  context={"form": form, "rescue_org": rescue_org})

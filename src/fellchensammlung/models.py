@@ -167,10 +167,12 @@ class RescueOrganization(models.Model):
     internal_comment = models.TextField(verbose_name=_("Interner Kommentar"), null=True, blank=True, )
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))  # Markdown allowed
     external_object_identifier = models.CharField(max_length=200, null=True, blank=True,
-                                                  verbose_name=_('External Object Identifier'))
+                                                  verbose_name=_('External Object Identifier'),
+                                                  help_text=_("Id des Objekts in der externen Datenbank (kann leer gelassen werden)"))
     external_source_identifier = models.CharField(max_length=200, null=True, blank=True,
                                                   choices=ExternalSourceChoices.choices,
-                                                  verbose_name=_('External Source Identifier'))
+                                                  verbose_name=_('External Source Identifier'),
+                                                  help_text=_("Name der Datenbank aus der die Tierschutzorganisation importiert wurde (kann leer gelassen werden)"))
     exclude_from_check = models.BooleanField(default=False, verbose_name=_('Von Prüfung ausschließen'),
                                              help_text=_("Organisation von der manuellen Überprüfung ausschließen, "
                                                          "z.B. weil Tiere nicht online geführt werden"))
@@ -183,7 +185,7 @@ class RescueOrganization(models.Model):
     ongoing_communication = models.BooleanField(default=False, verbose_name=_('In aktiver Kommunikation'),
                                                 help_text=_(
                                                     "Es findet gerade Kommunikation zwischen Notfellchen und der Organisation statt."))
-    parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True)
+    parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True, verbose_name=_("Übergeordnete Organisation"))
     # allows to specify if a rescue organization has a specialization for dedicated species
     specializations = models.ManyToManyField(Species, blank=True)
     twenty_id = models.UUIDField(verbose_name=_("Twenty-ID"), null=True, blank=True,

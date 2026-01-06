@@ -102,6 +102,10 @@
                     <a class="nav-link " href="{% url "modtools" %}">
                         {% translate 'Moderationstools' %}
                     </a>
+                    <br>
+                    <a class="nav-link " href="{% url "rescue-organization-create" %}">
+                        {% translate 'Tierschutzorganisation hinzufügen' %}
+                    </a>
                 {% endif %}
                 <br/>
                 {% if request.user.is_superuser %}

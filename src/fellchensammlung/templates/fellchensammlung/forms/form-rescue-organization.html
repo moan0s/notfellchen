@@ -1,0 +1,19 @@
+{% extends "fellchensammlung/base.html" %}
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block content %}
+    <h1 class="title is-1">
+        {% if rescue_org %}
+            {{ rescue_org.name }}
+        {% else %}
+            {% translate 'Tierschutzorganisation hinzufügen' %}
+        {% endif %}
+    </h1>
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form }}
+        <input class="button is-primary" type="submit" value="{% translate "Speichern" %}">
+    </form>
+{% endblock %}
