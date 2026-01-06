@@ -16,7 +16,7 @@ from .tools.model_helpers import reason_for_signup_label, reason_for_signup_help
 def animal_validator(value: str):
     value = value.lower()
     animal_list = ["ratte", "farbratte", "katze", "hund", "kaninchen", "hase", "kuh", "fuchs", "cow", "rat", "cat",
-                   "dog", "rabbit", "fox", "fancy rat"]
+                   "dog", "rabbit", "fox", "fancy rat", "meerschweinchen"]
     if value not in animal_list:
         raise forms.ValidationError(_("Dieses Tier kenne ich nicht. Probier ein anderes"))
 
