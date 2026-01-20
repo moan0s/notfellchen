@@ -122,11 +122,11 @@ class ExternalSourceChoices(models.TextChoices):
 
 
 class AllowUseOfMaterialsChices(models.TextChoices):
-    USE_MATERIALS_ALLOWED = "allowed", _("Usage allowed")
-    USE_MATERIALS_REQUESTED = "requested", _("Usage requested")
-    USE_MATERIALS_DENIED = "denied", _("Usage denied")
-    USE_MATERIALS_OTHER = "other", _("It's complicated")
-    USE_MATERIALS_NOT_ASKED = "not_asked", _("Not asked")
+    USE_MATERIALS_ALLOWED = "allowed", _("Nutzung erlaubt")
+    USE_MATERIALS_REQUESTED = "requested", _("Nutzung angefragt")
+    USE_MATERIALS_DENIED = "denied", _("Nutzung verweigert")
+    USE_MATERIALS_OTHER = "other", _("Es ist kompliziert")
+    USE_MATERIALS_NOT_ASKED = "not_asked", _("Nutzung noch nicht angefragt")
 
 
 class Species(models.Model):
