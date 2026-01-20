@@ -1088,8 +1088,10 @@ class SpeciesSpecificURL(models.Model):
         verbose_name_plural = _("Tierartspezifische URLs")
 
     species = models.ForeignKey(Species, on_delete=models.CASCADE, verbose_name=_("Tierart"))
-    rescue_organization = models.ForeignKey(RescueOrganization, on_delete=models.CASCADE,
-                                            verbose_name=_("Tierschutzorganisation"))
+    rescue_organization = models.ForeignKey(RescueOrganization,
+                                            on_delete=models.CASCADE,
+                                            verbose_name=_("Tierschutzorganisation"),
+                                            related_name="species_specific_urls")
     url = models.URLField(verbose_name=_("Tierartspezifische URL"))
 
 

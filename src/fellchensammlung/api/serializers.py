@@ -1,4 +1,4 @@
-from ..models import Animal, RescueOrganization, AdoptionNotice, Species, Image, Location
+from ..models import Animal, RescueOrganization, AdoptionNotice, Species, Image, Location, SpeciesSpecificURL
 from rest_framework import serializers
 import math
 
@@ -144,12 +144,23 @@ class AnimalGetSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class SpeciesSpecificURLSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SpeciesSpecificURL
+        fields = "__all__"
+
+
 class RescueOrganizationSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
+    species_specific_urls = SpeciesSpecificURLSerializer(many=True, read_only=True)
 
     class Meta:
         model = RescueOrganization
-        exclude = ["internal_comment", "allows_using_materials"]
+        fields = ('id', 'name', 'url', 'trusted', 'location_string', 'instagram', "facebook", "fediverse_profile",
+                  "email", "phone_number", "website", "updated_at", "created_at", "last_checked", "description",
+                  "external_source_identifier", "external_object_identifier", "exclude_from_check",
+                  "regular_check_status", "ongoing_communication", "twenty_id", "location", "parent_org", "specializations",
+                   "species_specific_urls")
 
     def get_url(self, obj):
         return obj.get_absolute_url()
