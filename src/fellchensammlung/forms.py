@@ -5,9 +5,8 @@ from .models import AdoptionNotice, Animal, Image, ReportAdoptionNotice, ReportC
     Comment, SexChoicesWithAll, DistanceChoices, SpeciesSpecificURL, RescueOrganization
 from django_registration.forms import RegistrationForm
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, HTML, Row, Column, Field, Hidden
+from crispy_forms.layout import Submit, Layout, Fieldset
 from django.utils.translation import gettext_lazy as _
-from notfellchen.settings import MEDIA_URL
 from crispy_forms.layout import Div
 
 from .tools.model_helpers import reason_for_signup_label, reason_for_signup_help_text, AdoptionNoticeStatusChoices

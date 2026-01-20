@@ -168,11 +168,13 @@ class RescueOrganization(models.Model):
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))  # Markdown allowed
     external_object_identifier = models.CharField(max_length=200, null=True, blank=True,
                                                   verbose_name=_('External Object Identifier'),
-                                                  help_text=_("Id des Objekts in der externen Datenbank (kann leer gelassen werden)"))
+                                                  help_text=_(
+                                                      "Id des Objekts in der externen Datenbank (kann leer gelassen werden)"))
     external_source_identifier = models.CharField(max_length=200, null=True, blank=True,
                                                   choices=ExternalSourceChoices.choices,
                                                   verbose_name=_('External Source Identifier'),
-                                                  help_text=_("Name der Datenbank aus der die Tierschutzorganisation importiert wurde (kann leer gelassen werden)"))
+                                                  help_text=_(
+                                                      "Name der Datenbank aus der die Tierschutzorganisation importiert wurde (kann leer gelassen werden)"))
     exclude_from_check = models.BooleanField(default=False, verbose_name=_('Von Prüfung ausschließen'),
                                              help_text=_("Organisation von der manuellen Überprüfung ausschließen, "
                                                          "z.B. weil Tiere nicht online geführt werden"))
@@ -185,7 +187,8 @@ class RescueOrganization(models.Model):
     ongoing_communication = models.BooleanField(default=False, verbose_name=_('In aktiver Kommunikation'),
                                                 help_text=_(
                                                     "Es findet gerade Kommunikation zwischen Notfellchen und der Organisation statt."))
-    parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True, verbose_name=_("Übergeordnete Organisation"))
+    parent_org = models.ForeignKey("RescueOrganization", on_delete=models.PROTECT, blank=True, null=True,
+                                   verbose_name=_("Übergeordnete Organisation"))
     # allows to specify if a rescue organization has a specialization for dedicated species
     specializations = models.ManyToManyField(Species, blank=True)
     twenty_id = models.UUIDField(verbose_name=_("Twenty-ID"), null=True, blank=True,
@@ -634,7 +637,7 @@ class Animal(models.Model):
         verbose_name = _('Tier')
         verbose_name_plural = _('Tiere')
 
-    date_of_birth = models.DateField(verbose_name=_('Geburtsdatum'))
+    date_of_birth = models.DateField(verbose_name=_('Geburtsdatum'), null=True, blank=True)
     name = models.CharField(max_length=200, verbose_name=_('Name'))
     description = models.TextField(null=True, blank=True, verbose_name=_('Beschreibung'))
     species = models.ForeignKey(Species, on_delete=models.PROTECT, verbose_name=_("Tierart"))
@@ -655,12 +658,18 @@ class Animal(models.Model):
 
     @property
     def age(self):
-        return timezone.now().today().date() - self.date_of_birth
+        if self.date_of_birth:
+            return timezone.now().today().date() - self.date_of_birth
+        else:
+            return None
 
     @property
     def hr_age(self):
         """Returns a human-readable age based on the date of birth."""
-        return misc.age_as_hr_string(self.age)
+        if self.date_of_birth:
+            return misc.age_as_hr_string(self.age)
+        else:
+            return _("Unbekannt")
 
     def get_photo(self):
         """
