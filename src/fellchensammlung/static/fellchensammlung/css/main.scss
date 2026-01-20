@@ -22,12 +22,24 @@ $confirm: hsl(133deg, 100%, calc(41% + 0%));
     background-color: $grey-light !important;
     border-radius: 5px;
   }
+
+  .navbar-burger {
+    color: white;
+  }
+
   .card-header {
     background-color: $grey-dark;
   }
-  a.card-footer-item.is-danger {
-    color: black;
+  div.card-footer-item.is-danger {
+    background-color: #5a212d;
   }
+  div.card-footer-item.is-warning {
+    background-color: #523e13;
+  }
+  div.card-footer-item.is-confirm {
+    background-color: #00420f;
+  }
+
   .tag {
     color: $grey-dark;
     background-color: $grey-light;
