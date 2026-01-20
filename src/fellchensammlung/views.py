@@ -22,7 +22,7 @@ from fellchensammlung import logger
 from .models import AdoptionNotice, Text, Animal, Rule, Image, Report, ModerationAction, \
     User, Location, Subscriptions, Notification, RescueOrganization, \
     Species, Log, Timestamp, TrustLevel, SexChoicesWithAll, SearchSubscription, \
-    ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost
+    ImportantLocation, SpeciesSpecificURL, NotificationTypeChoices, SocialMediaPost, AllowUseOfMaterialsChices
 from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     CommentForm, ReportCommentForm, AnimalForm, AdoptionNoticeFormAutoAnimal, SpeciesURLForm, RescueOrgInternalComment, \
     UpdateRescueOrgRegularCheckStatus, UserModCommentForm, CloseAdoptionNoticeForm, RescueOrgSearchByNameForm, \
@@ -926,7 +926,9 @@ def rescue_organization_check(request, context=None):
                 comment_form.save()
 
     rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False,
-                                                             ongoing_communication=False).order_by("last_checked")[:3]
+                                                             ongoing_communication=False).exclude(
+        allows_using_materials=AllowUseOfMaterialsChices.USE_MATERIALS_DENIED).order_by(
+        "last_checked")[:3]
     rescue_orgs_with_ongoing_communication = RescueOrganization.objects.filter(ongoing_communication=True).order_by(
         "updated_at")
     rescue_orgs_last_checked = RescueOrganization.objects.filter().order_by("-last_checked")[:10]
