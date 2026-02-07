@@ -2,14 +2,19 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from fellchensammlung.models import User, AdoptionNotice, AdoptionNoticeStatusChoices, Animal, RescueOrganization
+from fellchensammlung.models import User, AdoptionNotice, AdoptionNoticeStatusChoices, Animal, RescueOrganization, \
+    AllowUseOfMaterialsChices
 
 
 def get_rescue_org_check_stats():
     timeframe = timezone.now().date() - timedelta(days=14)
-    num_rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False).filter(
+    num_rescue_orgs_to_check = RescueOrganization.objects.filter(exclude_from_check=False,
+                                                                 ongoing_communication=False).exclude(
+        allows_using_materials=AllowUseOfMaterialsChices.USE_MATERIALS_DENIED).filter(
         last_checked__lt=timeframe).count()
-    num_rescue_orgs_checked = RescueOrganization.objects.filter(exclude_from_check=False).filter(
+    num_rescue_orgs_checked = RescueOrganization.objects.filter(exclude_from_check=False,
+                                                                ongoing_communication=False).exclude(
+        allows_using_materials=AllowUseOfMaterialsChices.USE_MATERIALS_DENIED).filter(
         last_checked__gte=timeframe).count()
 
     try:
