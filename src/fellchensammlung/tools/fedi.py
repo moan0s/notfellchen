@@ -107,7 +107,9 @@ def post_an_to_fedi(adoption_notice):
     return post
 
 
-def handle_post_fedi_action(adoption_notice: AdoptionNotice = SocialMediaPost.get_an_to_post()):
+def handle_post_fedi_action(adoption_notice: AdoptionNotice = None):
+    if adoption_notice is None:
+        adoption_notice = SocialMediaPost.get_an_to_post()
     if adoption_notice is not None:
         logging.info(f"Posting adoption notice: {adoption_notice} ({adoption_notice.id})")
         try:
