@@ -5,16 +5,22 @@ from django.db import migrations
 from django.utils.text import slugify
 
 
-def migrate_slug(apps, schema_editor):
-    AdoptionNotice = apps.get_model("fellchensammlung", "AdoptionNotice")
-    for an in AdoptionNotice.objects.all():
+def add_slug(Obj):
+    for an in Obj.objects.all():
         slug = slugify(an.name)
-        if not AdoptionNotice.objects.filter(slug=slug).exists():
+        if not Obj.objects.filter(slug=slug).exists():
             an.slug = slug
             an.save()
         else:
-            an.slug = slug+str(uuid.uuid4())
+            an.slug = slug + str(uuid.uuid4())
             an.save()
+
+
+def migrate_slug(apps, schema_editor):
+    AdoptionNotice = apps.get_model("fellchensammlung", "AdoptionNotice")
+    add_slug(AdoptionNotice)
+    HistoricalAdoptionNotice = apps.get_model("fellchensammlung", "HistoricalAdoptionNotice")
+    add_slug(HistoricalAdoptionNotice)
 
 
 class Migration(migrations.Migration):
