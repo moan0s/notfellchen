@@ -1,0 +1,38 @@
+{% load i18n %}
+
+{% if action_was_posting %}
+    {% if posted_successfully %}
+        <div class="message is-success">
+            <div class="message-header">
+                {% translate 'Vermittlung gepostet' %}
+            </div>
+            <div class="message-body">
+                {% blocktranslate with post_url=post.url %}
+                    Link zum Post: <a href={{ post_url }}>{{ post_url }}</a>
+                {% endblocktranslate %}
+            </div>
+
+        </div>
+    {% else %}
+        <div class="message is-danger">
+            <div class="message-header">
+                {% translate 'Vermittlung konnte nicht gepostet werden' %}
+            </div>
+            <div class="message-body">
+                {{ error_message }}
+            </div>
+
+        </div>
+    {% endif %}
+{% endif %}
+
+<form class="cell" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="post_to_fedi">
+    {% if adoption_notice %}
+        <input type="hidden" name="adoption_notice_pk" value="{{ adoption_notice.pk }}">
+    {% endif %}
+    <button class="button is-fullwidth is-warning is-primary" type="submit" id="submit">
+        <i class="fa-solid fa-bullhorn fa-fw"></i> {% translate "Vermittlung ins Fediverse posten" %}
+    </button>
+</form>

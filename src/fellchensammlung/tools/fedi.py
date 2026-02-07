@@ -1,8 +1,9 @@
 import logging
 import requests
 from django.template.loader import render_to_string
+from django.utils.translation import gettext_lazy as _
 
-from fellchensammlung.models import SocialMediaPost, PlatformChoices
+from fellchensammlung.models import SocialMediaPost, PlatformChoices, AdoptionNotice
 from notfellchen import settings
 
 
@@ -86,7 +87,10 @@ class FediClient:
 
 
 def post_an_to_fedi(adoption_notice):
-    client = FediClient(settings.fediverse_access_token, settings.fediverse_api_base_url)
+    try:
+        client = FediClient(settings.fediverse_access_token, settings.fediverse_api_base_url)
+    except AttributeError:
+        raise ConnectionError("Configuration for connecting to a Fediverse account is missing")
 
     context = {"adoption_notice": adoption_notice}
     status_text = render_to_string("fellchensammlung/misc/fediverse/an-post.md", context)
@@ -101,3 +105,33 @@ def post_an_to_fedi(adoption_notice):
                                           platform=PlatformChoices.FEDIVERSE,
                                           url=response['url'], )
     return post
+
+
+def handle_post_fedi_action(adoption_notice: AdoptionNotice = SocialMediaPost.get_an_to_post()):
+    if adoption_notice is not None:
+        logging.info(f"Posting adoption notice: {adoption_notice} ({adoption_notice.id})")
+        try:
+            post = post_an_to_fedi(adoption_notice)
+            context = {"action_was_posting": True, "post": post, "posted_successfully": True}
+        except requests.exceptions.ConnectionError as e:
+            logging.error(f"Could not post fediverse post: {e}")
+            context = {"action_was_posting": True,
+                       "posted_successfully": False,
+                       "error_message": _("Verbindungsfehler. Vermittlung wurde nicht gepostet")}
+        except requests.exceptions.HTTPError as e:
+            logging.error(f"Could not post fediverse post: {e}")
+            context = {"action_was_posting": True,
+                       "posted_successfully": False,
+                       "error_message": _("Fehler beim Posten. Vermittlung wurde nicht gepostet. Das kann "
+                                          "z.B. an falschen Zugangsdaten liegen. Kontaktieren einen Admin.")}
+        except ConnectionError as e:
+            logging.error(f"Could not post fediverse post: {e}")
+            context = {"action_was_posting": True,
+                       "posted_successfully": False,
+                       "error_message": _(
+                           "Fehler beim Posten, in der Konfiguration fehlen Zugangsdaten zu einem Fediverse Account")}
+    else:
+        context = {"action_was_posting": True,
+                   "posted_successfully": False,
+                   "error_message": _("Keine Vermittlung zum Posten gefunden.")}
+    return context

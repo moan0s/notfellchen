@@ -29,7 +29,7 @@ from .forms import AdoptionNoticeForm, ImageForm, ReportAdoptionNoticeForm, \
     RescueOrgForm
 from .models import Language, Announcement
 from .tools import i18n, img
-from .tools.fedi import post_an_to_fedi
+from .tools.fedi import handle_post_fedi_action
 from .tools.geo import GeoAPI, zoom_level_for_radius
 from .tools.metrics import gather_metrics_data, get_rescue_org_check_stats
 from .tools.admin import clean_locations, get_unchecked_adoption_notices, deactivate_unchecked_adoption_notices, \
@@ -1006,27 +1006,7 @@ def moderation_tools_overview(request):
     if request.method == "POST":
         action = request.POST.get("action")
         if action == "post_to_fedi":
-            adoption_notice = SocialMediaPost.get_an_to_post()
-            if adoption_notice is not None:
-                logging.info(f"Posting adoption notice: {adoption_notice} ({adoption_notice.id})")
-                try:
-                    post = post_an_to_fedi(adoption_notice)
-                    context = {"action_was_posting": True, "post": post, "posted_successfully": True}
-                except requests.exceptions.ConnectionError as e:
-                    logging.error(f"Could not post fediverse post: {e}")
-                    context = {"action_was_posting": True,
-                               "posted_successfully": False,
-                               "error_message": _("Verbindungsfehler. Vermittlung wurde nicht gepostet")}
-                except requests.exceptions.HTTPError as e:
-                    logging.error(f"Could not post fediverse post: {e}")
-                    context = {"action_was_posting": True,
-                               "posted_successfully": False,
-                               "error_message": _("Fehler beim Posten. Vermittlung wurde nicht gepostet. Das kann "
-                                                  "z.B. an falschen Zugangsdaten liegen. Kontaktieren einen Admin.")}
-            else:
-                context = {"action_was_posting": True,
-                           "posted_successfully": False,
-                           "error_message": _("Keine Vermittlung zum Posten gefunden.")}
+            context = handle_post_fedi_action()
     return render(request, 'fellchensammlung/mod-tool-overview.html', context=context)
 
 
