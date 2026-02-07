@@ -1026,13 +1026,15 @@ def close_adoption_notice(request, adoption_notice_id):
 def adoption_notice_sharepic(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
     svg_data = img.export_svg(adoption_notice)
-    return HttpResponse(svg_data, content_type="image/svg+xml")
+    return HttpResponse(svg_data, content_type="image/svg+xml",
+                        headers={"Content-Disposition": f'attachment; filename="{adoption_notice.name}-post.svg"'},)
 
 
 def adoption_notice_story_pic(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
     svg_data = img.export_svg(adoption_notice, "fellchensammlung/images/adoption-notice-story.svg")
-    return HttpResponse(svg_data, content_type="image/svg+xml")
+    return HttpResponse(svg_data, content_type="image/svg+xml",
+                        headers={"Content-Disposition": f'attachment; filename="{adoption_notice.name}-story.svg"'})
 
 
 def adoption_notice_social_media_templates(request, adoption_notice_id):
