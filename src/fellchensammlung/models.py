@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth.models import Group
@@ -415,7 +416,14 @@ class AdoptionNotice(models.Model):
     adoption_process = models.TextField(null=True, blank=True,
                                         max_length=64, verbose_name=_('Adoptionsprozess'),
                                         choices=AdoptionProcess)
+    slug = models.SlugField(unique=True, null=True)
     history = HistoricalRecords()
+
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(AdoptionNotice, self).save(*args, **kwargs)
 
     @property
     def animals(self):
