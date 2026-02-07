@@ -419,9 +419,8 @@ class AdoptionNotice(models.Model):
     slug = models.SlugField(unique=True, null=True)
     history = HistoricalRecords()
 
-
     def save(self, *args, **kwargs):
-        if not self.id:
+        if not self.slug:
             self.slug = slugify(self.name)
         super(AdoptionNotice, self).save(*args, **kwargs)
 
