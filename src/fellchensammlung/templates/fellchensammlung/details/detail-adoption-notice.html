@@ -114,7 +114,17 @@
                                     <i class="fas fa-chart-line fa-fw"></i> {% trans 'Aufrufe' %}
                                 </a>
                             {% endif %}
+
                             <hr class="dropdown-divider">
+
+                            <a class="dropdown-item"
+                               href="{% url 'adoption-notice-social-media-template-selection' adoption_notice_id=adoption_notice.pk %}">
+                                <i class="fab fa-instagram fa-fw"
+                                   aria-hidden="true"></i> {% trans 'Social Media Vorlagen' %}
+                            </a>
+
+                            <hr class="dropdown-divider">
+
                             <a class="dropdown-item is-warning"
                                href="{% url adoption_notice_meta|admin_urlname:'change' adoption_notice.pk %}">
                                 <i class="fa-solid fa-tools fa-fw"></i> Admin interface

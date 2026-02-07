@@ -1,0 +1,62 @@
+{% extends "fellchensammlung/base.html" %}
+{% load i18n %}
+{% load widget_tweaks %}
+{% load admin_urls %}
+
+{% block title %}
+    <title>Social Media Post für {{ adoption_notice }}</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="title is-1">Social Media Post für {{ adoption_notice }}</h1>
+    <div class="columns block">
+        <div class="column">
+            <div class="box">
+            {% include 'fellchensammlung/partials/social_media/post-to-fedi.html' %}
+                <p class="block">
+                    {% blocktranslate %}
+
+                        Die Vermittlung wird auf unserem Fediverse-Account gepostet
+                    {% endblocktranslate %}
+                </p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box block">
+                <a href="{% url 'adoption-notice-story-pic' adoption_notice.pk %}"
+                   class="button is-primary  is-fullwidth">
+                    <i class="fab fa-instagram fa-fw"></i> {% trans 'Instagram Storyvorlage' %}
+                </a>
+                <p class="block">
+                    {% blocktranslate %}
+                        Eine Vorlage für eine Instagram-Story im Format 1080x1980px.
+                    {% endblocktranslate %}
+                </p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="box block">
+                <a href="{% url 'adoption-notice-sharepic' adoption_notice.pk %}"
+                   class="button is-primary block  is-fullwidth">
+                    <i class="fab fa-instagram fa-fw"></i> {% trans 'Instagram Post' %}
+                </a>
+                <p class="block">
+                    {% blocktranslate %}
+                        Eine Vorlage für eine Instagram-Post mit einer Slide pro Tier.
+                    {% endblocktranslate %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <p>
+            {% blocktranslate %}
+                Die Vorlagen werden idealerweise im Grafikprogramm Inkscape weiterbearbeitet.
+            {% endblocktranslate %}
+        </p>
+        <a href="https://inkscape.org/" class="button is-link block is-fullwidth">
+            <i class="fab fa-inkscape fa-fw"></i>
+            {% translate 'Inkscape herunterladen' %}
+        </a>
+    </div>
+{% endblock %}

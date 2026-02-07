@@ -13,7 +13,6 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.serializers import serialize
 from django.utils.translation import gettext_lazy as _
 import json
-import requests
 
 from .mail import notify_mods_new_report
 from notfellchen import settings
@@ -1034,6 +1033,18 @@ def adoption_notice_story_pic(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
     svg_data = img.export_svg(adoption_notice, "fellchensammlung/images/adoption-notice-story.svg")
     return HttpResponse(svg_data, content_type="image/svg+xml")
+
+
+def adoption_notice_social_media_templates(request, adoption_notice_id):
+    context = {}
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "post_to_fedi":
+            context = handle_post_fedi_action()
+
+    adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
+    context["adoption_notice"] = adoption_notice
+    return render(request, 'fellchensammlung/misc/social-media-template-selection.html', context=context)
 
 
 @login_required

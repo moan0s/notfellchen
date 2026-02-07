@@ -30,6 +30,9 @@ urlpatterns = [
     path("tier/<int:animal_id>/add-photo", views.add_photo_to_animal, name="animal-add-photo"),
     # ex: /adoption_notice/7/
     path("vermittlung/<int:adoption_notice_id>/", views.adoption_notice_detail, name="adoption-notice-detail"),
+    # ex: /adoption_notice/7/social-media-templates
+    path("vermittlung/<int:adoption_notice_id>/social-media-templates", views.adoption_notice_social_media_templates,
+         name="adoption-notice-social-media-template-selection"),
     # ex: /adoption_notice/7/sharepic
     path("vermittlung/<int:adoption_notice_id>/sharepic", views.adoption_notice_sharepic,
          name="adoption-notice-sharepic"),
