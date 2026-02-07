@@ -416,7 +416,7 @@ class AdoptionNotice(models.Model):
     adoption_process = models.TextField(null=True, blank=True,
                                         max_length=64, verbose_name=_('Adoptionsprozess'),
                                         choices=AdoptionProcess)
-    slug = models.SlugField(unique=True, null=True)
+    slug = models.SlugField(unique=True)
     history = HistoricalRecords()
 
     def save(self, *args, **kwargs):
