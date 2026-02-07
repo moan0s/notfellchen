@@ -1050,6 +1050,12 @@ def adoption_notice_sharepic(request, adoption_notice_id):
     return HttpResponse(svg_data, content_type="image/svg+xml")
 
 
+def adoption_notice_story_pic(request, adoption_notice_id):
+    adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
+    svg_data = img.export_svg(adoption_notice, "fellchensammlung/images/adoption-notice-story.svg")
+    return HttpResponse(svg_data, content_type="image/svg+xml")
+
+
 @login_required
 def rescue_org_create_or_update(request, rescue_organization_id=None):
     """

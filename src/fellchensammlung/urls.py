@@ -33,6 +33,9 @@ urlpatterns = [
     # ex: /adoption_notice/7/sharepic
     path("vermittlung/<int:adoption_notice_id>/sharepic", views.adoption_notice_sharepic,
          name="adoption-notice-sharepic"),
+    # ex: /adoption_notice/7/story
+    path("vermittlung/<int:adoption_notice_id>/storypic", views.adoption_notice_story_pic,
+         name="adoption-notice-story-pic"),
     # ex: /adoption_notice/7/edit
     path("vermittlung/<int:adoption_notice_id>/edit", views.adoption_notice_edit, name="adoption-notice-edit"),
     # ex: /vermittlung/5/add-photo
