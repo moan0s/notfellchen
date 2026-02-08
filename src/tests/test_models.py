@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.test import TestCase
 from model_bakery import baker
 
-from fellchensammlung.models import Announcement, Language, User, TrustLevel, Notification
+from fellchensammlung.models import Announcement, Language, User, TrustLevel, Notification, AdoptionNotice
 
 
 class UserTest(TestCase):
@@ -85,7 +85,8 @@ class TestNotifications(TestCase):
         cls.test_user_1 = User.objects.create(username="Testuser1", password="SUPERSECRET", email="test@example.org")
 
     def test_mark_read(self):
-        not1 = Notification.objects.create(user_to_notify=self.test_user_1, text="New rats to adopt", title="🔔 New Rat alert")
+        not1 = Notification.objects.create(user_to_notify=self.test_user_1, text="New rats to adopt",
+                                           title="🔔 New Rat alert")
         not2 = Notification.objects.create(user_to_notify=self.test_user_1,
                                            text="New wombat to adopt", title="🔔 New Wombat alert")
         not1.mark_read()
@@ -95,3 +96,30 @@ class TestNotifications(TestCase):
         self.assertTrue((timezone.now() - timedelta(hours=1)) < not1.read_at < timezone.now())
         self.assertIsNone(not2.read_at)
 
+
+class TestAdoptionNotice(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.test_user_1 = User.objects.create(username="Testuser1", password="SUPERSECRET", email="test@example.org")
+
+    def test_duplicate_name(self):
+        """
+        Tested as a similar name could lead to a duplicate slug and therefore error in saving
+        """
+        an1 = AdoptionNotice.objects.create(name="DuplicateTest",
+                                            searching_since=datetime.now(),
+                                            group_only=False,
+                                            location_string="Magdeburg",
+                                            owner=self.test_user_1, )
+
+        an2 = AdoptionNotice.objects.create(name="DuplicateTest",
+                                            searching_since=datetime.now()-timedelta(days=1),
+                                            group_only=False,
+                                            location_string="Bielefeld",
+                                            owner=self.test_user_1, )
+
+        an3 = AdoptionNotice.objects.create(name="DuplicateTest",
+                                            searching_since=datetime.now(),
+                                            group_only=False,
+                                            location_string="Wismar",
+                                            owner=self.test_user_1, )

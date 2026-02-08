@@ -1,5 +1,5 @@
 import uuid
-from django.db import models
+from django.db import models, transaction
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.models import Group
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
+from django.db.utils import IntegrityError
 import base64
 from simple_history.models import HistoricalRecords
 
@@ -420,8 +421,32 @@ class AdoptionNotice(models.Model):
     history = HistoricalRecords()
 
     def save(self, *args, **kwargs):
+        """This save method is overwritten in order to automatically generate a slug
+
+        Saves are wrapped in transaction.atomic() to avoid TransactionManagementError when testing
+        See https://stackoverflow.com/questions/21458387/transactionmanagementerror-you-cant-execute-queries-until-the-end-of-the-atom
+        """
         if not self.slug:
             self.slug = slugify(self.name)
+            try:
+                with transaction.atomic():
+                    super(AdoptionNotice, self).save(*args, **kwargs)
+                return
+            except IntegrityError:
+                # This is the case when the name is the same as another adoption notice
+                try:
+                    # Try uniqueness with date
+                    self.slug = f"{slugify(self.name)}-{timezone.now().strftime('%Y-%m-%d')}"
+                    with transaction.atomic():
+                        super(AdoptionNotice, self).save(*args, **kwargs)
+                    return
+                except IntegrityError:
+                    # Fallback to uuid that is guaranteed to be unique
+                    self.slug = f"{slugify(self.name)}-{uuid.uuid4()}"
+                    with transaction.atomic():
+                        super(AdoptionNotice, self).save(*args, **kwargs)
+                    return
+
         super(AdoptionNotice, self).save(*args, **kwargs)
 
     @property
