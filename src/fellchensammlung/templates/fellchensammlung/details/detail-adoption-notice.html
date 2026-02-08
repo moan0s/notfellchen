@@ -15,7 +15,7 @@
     <meta name="og:description" content="{{ adoption_notice.description }}">
 {% endblock %}
 {% block canonical_url %}{% host %}
-    {% url 'adoption-notice-detail' adoption_notice_id=adoption_notice.id %}{% endblock %}
+    {% url 'adoption-notice-detail' adoption_notice_slug=adoption_notice.slug %}{% endblock %}
 
 {% block og_image %}
     {% if adoption_notice.get_photos %}

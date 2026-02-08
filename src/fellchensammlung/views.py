@@ -111,9 +111,7 @@ def handle_an_check_actions(request, action, adoption_notice=None):
         adoption_notice.save()
     return None
 
-
-def adoption_notice_detail(request, adoption_notice_id):
-    adoption_notice = get_object_or_404(AdoptionNotice, id=adoption_notice_id)
+def adoption_notice_detail(request, adoption_notice):
     if adoption_notice.is_disabled and not user_is_owner_or_trust_level(request.user, adoption_notice):
         error_message = _("Die Vermittlung wurde versteckt und ist nur Admins zugänglich. Grund dafür kann z.b. ein "
                           "Regelverstoß sein.")
@@ -193,6 +191,16 @@ def adoption_notice_detail(request, adoption_notice_id):
     return render(request, 'fellchensammlung/details/detail-adoption-notice.html', context=context)
 
 
+def adoption_notice_detail_by_id(request, adoption_notice_id):
+    adoption_notice = get_object_or_404(AdoptionNotice, id=adoption_notice_id)
+    return adoption_notice_detail(request, adoption_notice)
+
+
+
+def adoption_notice_detail_by_slug(request, adoption_notice_slug):
+    adoption_notice = get_object_or_404(AdoptionNotice, slug=adoption_notice_slug)
+    return adoption_notice_detail(request, adoption_notice)
+
 @login_required()
 def adoption_notice_edit(request, adoption_notice_id):
     """
@@ -213,7 +221,7 @@ def adoption_notice_edit(request, adoption_notice_id):
             """Log"""
             Log.objects.create(user=request.user, action="adoption_notice_edit",
                                text=f"{request.user} hat Vermittlung {adoption_notice.pk} geändert")
-            return redirect(reverse("adoption-notice-detail", args=[adoption_notice_instance.pk], ))
+            return redirect(reverse("adoption-notice-detail", args=[adoption_notice_instance.slug], ))
     else:
         form = AdoptionNoticeForm(instance=adoption_notice)
     return render(request, 'fellchensammlung/forms/form-adoption-notice-basic.html', context={"form": form})
@@ -344,7 +352,7 @@ def add_adoption_notice(request):
             # Automatically subscribe user that created AN to AN
             Subscriptions.objects.create(owner=request.user, adoption_notice=an_instance)
 
-            return redirect(reverse("adoption-notice-detail", args=[an_instance.pk]))
+            return redirect(reverse("adoption-notice-detail", args=[an_instance.slug]))
         else:
             print(form.errors)
     else:
@@ -370,7 +378,7 @@ def adoption_notice_add_animal(request, adoption_notice_id):
                 form = AnimalForm()
                 return render(request, 'fellchensammlung/forms/form-add-animal-to-adoption.html', {'form': form})
             else:
-                return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
+                return redirect(reverse("adoption-notice-detail", args=[adoption_notice.slug]))
     else:
         form = AnimalForm()
     return render(request, 'fellchensammlung/forms/form-add-animal-to-adoption.html', {'form': form})
@@ -399,7 +407,7 @@ def add_photo_to_animal(request, animal_id):
                 form = ImageForm(in_flow=True)
                 return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
             else:
-                return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
+                return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.slug], ))
         else:
             return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
 
@@ -428,7 +436,7 @@ def add_photo_to_adoption_notice(request, adoption_notice_id):
                 form = ImageForm(in_flow=True)
                 return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
             else:
-                return redirect(reverse("adoption-notice-detail", args=[adoption_notice_id]))
+                return redirect(reverse("adoption-notice-detail", args=[adoption_notice.slug]))
         else:
             return render(request, 'fellchensammlung/forms/form-image.html', {'form': form})
     else:
@@ -454,7 +462,7 @@ def animal_edit(request, animal_id):
             """Log"""
             Log.objects.create(user=request.user, action="add_photo_to_animal",
                                text=f"{request.user} hat Tier {animal.pk} zum Tier geändert")
-            return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
+            return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.slug], ))
     else:
         form = AnimalForm(instance=animal)
     return render(request, 'fellchensammlung/forms/form-animal.html',
@@ -479,7 +487,7 @@ def animal_delete(request, animal_id):
             """Log"""
             Log.objects.create(user=request.user, action="delete_animal",
                                text=f"{request.user} hat Tier {animal.pk} gelöscht")
-            return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.pk], ))
+            return redirect(reverse("adoption-notice-detail", args=[animal.adoption_notice.slug], ))
     return render(request, 'fellchensammlung/forms/form-delete-animal.html', context={"animal": animal})
 
 
@@ -1015,7 +1023,7 @@ def close_adoption_notice(request, adoption_notice_id):
         form = CloseAdoptionNoticeForm(request.POST, instance=adoption_notice)
         if form.is_valid():
             form.save()
-            return redirect(reverse("adoption-notice-detail", args=[adoption_notice.pk], ))
+            return redirect(reverse("adoption-notice-detail", args=[adoption_notice.slug], ))
     else:
         form = CloseAdoptionNoticeForm(instance=adoption_notice)
     context = {"adoption_notice": adoption_notice, "form": form}

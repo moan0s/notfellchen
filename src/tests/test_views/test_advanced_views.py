@@ -23,19 +23,19 @@ class AnimalAndAdoptionTest(TestCase):
         test_user0.trust_level = TrustLevel.ADMIN
         test_user0.save()
 
-        adoption1 = baker.make(AdoptionNotice, name="TestAdoption1", owner=test_user0)
+        cls.adoption1 = baker.make(AdoptionNotice, name="TestAdoption1", owner=test_user0)
         rat = baker.make(Species, name="Farbratte")
 
         rat1 = baker.make(Animal,
                           name="Rat1",
-                          adoption_notice=adoption1,
+                          adoption_notice=cls.adoption1,
                           species=rat,
                           description="Eine unglaublich süße Ratte")
 
     def test_detail_adoption_notice(self):
         self.client.login(username='testuser0', password='12345')
 
-        response = self.client.post(reverse('adoption-notice-detail', args="1"))
+        response = self.client.post(reverse('adoption-notice-detail', args=[self.adoption1.slug]))
         self.assertEqual(response.status_code, 200)
         # Check our user is logged in
         self.assertEqual(str(response.context['user']), 'testuser0')
@@ -192,19 +192,19 @@ class AdoptionDetailTest(TestCase):
 
     def test_basic_view(self):
         response = self.client.get(
-            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+            reverse('adoption-notice-detail', args=[AdoptionNotice.objects.get(name="TestAdoption1").slug]))
         self.assertEqual(response.status_code, 200)
 
     def test_basic_view_logged_in(self):
         self.client.login(username='testuser0', password='12345')
         response = self.client.get(
-            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+            reverse('adoption-notice-detail', args=[AdoptionNotice.objects.get(name="TestAdoption1").slug]))
         self.assertEqual(response.status_code, 200)
 
     def test_subscribe(self):
         self.client.login(username='testuser0', password='12345')
         response = self.client.post(
-            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
+            reverse('adoption-notice-detail', args=[AdoptionNotice.objects.get(name="TestAdoption1").slug]),
             data={"action": "subscribe"})
         self.assertTrue(Subscriptions.objects.filter(owner__username="testuser0").exists())
 
@@ -222,15 +222,16 @@ class AdoptionDetailTest(TestCase):
         self.assertFalse(Subscriptions.objects.filter(owner__username="testuser0").exists())
 
     def test_login_required(self):
+        slug = AdoptionNotice.objects.get(name="TestAdoption1").slug
         response = self.client.post(
-            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
+            reverse('adoption-notice-detail', args=[slug]),
             data={"action": "subscribe"})
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, "/accounts/login/?next=/vermittlung/1/")
+        self.assertEqual(response.url, f"/accounts/login/?next=/vermittlung/{slug}/")
 
     def test_unauthenticated_comment(self):
         response = self.client.post(
-            reverse('adoption-notice-detail', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)),
+            reverse('adoption-notice-detail', args=[AdoptionNotice.objects.get(name="TestAdoption1").slug]),
             data={"action": "comment"})
         self.assertEqual(response.status_code, 403)
 
@@ -240,7 +241,7 @@ class AdoptionDetailTest(TestCase):
         Subscriptions.objects.create(owner=self.test_user1, adoption_notice=an1)
         self.client.login(username='testuser0', password='12345')
         response = self.client.post(
-            reverse('adoption-notice-detail', args=str(an1.pk)),
+            reverse('adoption-notice-detail', args=[an1.slug]),
             data={"action": "comment", "text": "Test"})
         self.assertTrue(Comment.objects.filter(user__username="testuser0").exists())
         self.assertFalse(Notification.objects.filter(user_to_notify__username="testuser0",
@@ -268,19 +269,19 @@ class AdoptionEditTest(TestCase):
 
     def test_basic_view(self):
         response = self.client.get(
-            reverse('adoption-notice-edit', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+            reverse('adoption-notice-edit', args=[AdoptionNotice.objects.get(name="TestAdoption1").pk]), )
         self.assertEqual(response.status_code, 302)
 
     def test_basic_view_logged_in_unauthorized(self):
         self.client.login(username='testuser1', password='12345')
         response = self.client.get(
-            reverse('adoption-notice-edit', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+            reverse('adoption-notice-edit', args=[AdoptionNotice.objects.get(name="TestAdoption1").pk]), )
         self.assertEqual(response.status_code, 403)
 
     def test_basic_view_logged_in(self):
         self.client.login(username='testuser0', password='12345')
         response = self.client.get(
-            reverse('adoption-notice-edit', args=str(AdoptionNotice.objects.get(name="TestAdoption1").pk)), )
+            reverse('adoption-notice-edit', args=[AdoptionNotice.objects.get(name="TestAdoption1").pk]), )
         self.assertEqual(response.status_code, 200)
 
     def test_edit(self):

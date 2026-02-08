@@ -496,7 +496,7 @@ class AdoptionNotice(models.Model):
 
     def get_absolute_url(self):
         """Returns the url to access a detailed page for the adoption notice."""
-        return reverse('adoption-notice-detail', args=[str(self.id)])
+        return reverse('adoption-notice-detail', args=[str(self.slug)])
 
     def get_full_url(self):
         """Returns the url including protocol and domain"""
