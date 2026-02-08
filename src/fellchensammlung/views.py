@@ -111,6 +111,7 @@ def handle_an_check_actions(request, action, adoption_notice=None):
         adoption_notice.save()
     return None
 
+
 def adoption_notice_detail(request, adoption_notice):
     if adoption_notice.is_disabled and not user_is_owner_or_trust_level(request.user, adoption_notice):
         error_message = _("Die Vermittlung wurde versteckt und ist nur Admins zugänglich. Grund dafür kann z.b. ein "
@@ -138,13 +139,13 @@ def adoption_notice_detail(request, adoption_notice):
 
                 if comment_form.is_valid():
                     comment_instance = comment_form.save(commit=False)
-                    comment_instance.adoption_notice_id = adoption_notice_id
+                    comment_instance.adoption_notice_id = adoption_notice.id
                     comment_instance.user = request.user
                     comment_instance.save()
 
                     """Log"""
                     Log.objects.create(user=request.user, action="comment",
-                                       text=f"{request.user} hat Kommentar {comment_instance.pk} zur Vermittlung {adoption_notice_id} hinzugefügt")
+                                       text=f"{request.user} hat Kommentar {comment_instance.pk} zur Vermittlung {adoption_notice.id} hinzugefügt")
 
                     # Auto-subscribe user to adoption notice
                     subscription, created = Subscriptions.objects.get_or_create(adoption_notice=adoption_notice,
@@ -196,10 +197,10 @@ def adoption_notice_detail_by_id(request, adoption_notice_id):
     return adoption_notice_detail(request, adoption_notice)
 
 
-
 def adoption_notice_detail_by_slug(request, adoption_notice_slug):
     adoption_notice = get_object_or_404(AdoptionNotice, slug=adoption_notice_slug)
     return adoption_notice_detail(request, adoption_notice)
+
 
 @login_required()
 def adoption_notice_edit(request, adoption_notice_id):
@@ -1035,7 +1036,7 @@ def adoption_notice_sharepic(request, adoption_notice_id):
     adoption_notice = get_object_or_404(AdoptionNotice, pk=adoption_notice_id)
     svg_data = img.export_svg(adoption_notice)
     return HttpResponse(svg_data, content_type="image/svg+xml",
-                        headers={"Content-Disposition": f'attachment; filename="{adoption_notice.name}-post.svg"'},)
+                        headers={"Content-Disposition": f'attachment; filename="{adoption_notice.name}-post.svg"'}, )
 
 
 def adoption_notice_story_pic(request, adoption_notice_id):
